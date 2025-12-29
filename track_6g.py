@@ -110,15 +110,12 @@ def find_rss_feed(url, headers):
         # Look for RSS/Atom feed links
         for link in soup.find_all('link', rel='alternate'):
             link_type = link.get('type', '')
-            if 'rss' in link_type.lower() or 'atom' in link_type.lower() or 'xml' in link_type.lower():
+            # Check for common RSS/Atom MIME types
+            if link_type in ['application/rss+xml', 'application/atom+xml', 'application/xml', 'text/xml']:
                 feed_url = link.get('href')
                 if feed_url:
-                    # Handle relative URLs
-                    if feed_url.startswith('http'):
-                        return feed_url
-                    else:
-                        # Handle all relative URLs (starting with '/' or not)
-                        return urljoin(url, feed_url)
+                    # Handle relative URLs - urljoin handles both absolute and relative URLs
+                    return urljoin(url, feed_url)
         
         return None
     except Exception as e:
@@ -149,9 +146,6 @@ def fetch_feed_with_retry(source, url, retries=MAX_RETRIES):
             content_type = response.headers.get('content-type', '').lower()
             if 'html' in content_type and 'xml' not in content_type:
                 print(f"⚠️ {source} returned HTML instead of RSS/XML")
-                # Only try auto-detection if we haven't already done it
-                if not auto_detected:
-                    return None
                 return None
             
             # Parse the feed
