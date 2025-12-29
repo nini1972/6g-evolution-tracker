@@ -164,13 +164,6 @@ def fetch_feed_with_retry(source, url, retries=MAX_RETRIES):
             content_type = response.headers.get('content-type', '').lower()
             if 'html' in content_type and 'xml' not in content_type:
                 print(f"⚠️ {source} returned HTML instead of RSS/XML")
-                if attempt == 0:
-                    # Try auto-detection on first attempt
-                    detected_url = find_rss_feed(url, headers)
-                    if detected_url and detected_url != url:
-                        print(f"🔍 Found alternative feed URL for {source}: {detected_url}")
-                        url = detected_url
-                        continue
                 return None
             
             # Parse the feed
