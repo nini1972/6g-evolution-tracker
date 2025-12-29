@@ -8,6 +8,8 @@ on:
 jobs:
   run-script:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - name: Cache pip
         uses: actions/cache@v3
@@ -27,17 +29,15 @@ jobs:
 
       - name: Install dependencies
         run: pip install -r requirements.txt
-
-      - name: Run tracker script
-        run: python track_6g.py
         
-      - name: Run tracker script   #future enhancement
+      - name: Run tracker script and save output
         run: python track_6g.py > output.log
         
       - name: Commit and push results
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
-          git add 6g_digest_*.md output.log
+          git add 6g_digest_*.md
+          git add -f output.log
           git diff --quiet && git diff --staged --quiet || git commit -m "📊 Monthly 6G digest - $(date +'%Y-%m-%d')"
           git push
