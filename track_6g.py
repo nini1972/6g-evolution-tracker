@@ -2,17 +2,20 @@ import feedparser
 import json
 import hashlib
 import time
+import requests
 from datetime import datetime, timedelta
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
+from bs4 import BeautifulSoup
+from urllib.parse import urljoin
 
 # 🌐 RSS sources to monitor
 # Note: Some feeds may be temporarily unavailable or have parsing issues
 FEEDS = {
-    "Ericsson": "https://www.ericsson.com/en/blog/rss",
+    "Ericsson": "https://www.ericsson.com/en/blog",  # Fixed: removed '/rss'
     "Thales": "https://www.thalesgroup.com/en/rss.xml",
-    "MDPI Engineering": "https://www.mdpi.com/rss/journal/engineering",
-    "Nokia": "https://www.nokia.com/about-us/news/rss/",
+    "MDPI Engineering": "https://www.mdpi.com/rss",  # Fixed: changed to main RSS feed
+    "Nokia": "https://nokia.com",  # Fixed: removed 'www' and path
     "IEEE Spectrum": "https://spectrum.ieee.org/feeds/feed.rss",
     "ArXiv CS Networking": "http://export.arxiv.org/rss/cs.NI",
     # Additional sources can be added as they become available:
@@ -87,33 +90,113 @@ def relevance_score(entry):
     
     return score
 
+def find_rss_feed(url, headers):
+    """
+    Try to find RSS/Atom feed URL from an HTML page.
+    Looks for <link> tags with type="application/rss+xml" or "application/atom+xml"
+    """
+    try:
+        response = requests.get(url, headers=headers, timeout=10)
+        response.raise_for_status()
+        
+        # Check if it's already XML/RSS
+        content_type = response.headers.get('content-type', '').lower()
+        if 'xml' in content_type or 'rss' in content_type:
+            return url
+        
+        # Parse HTML to find RSS feed links
+        soup = BeautifulSoup(response.content, 'html.parser')
+        
+        # Look for RSS/Atom feed links
+        for link in soup.find_all('link', rel='alternate'):
+            link_type = link.get('type', '')
+            # Check for common RSS/Atom MIME types
+            if link_type in ['application/rss+xml', 'application/atom+xml', 'application/xml', 'text/xml']:
+                feed_url = link.get('href')
+                if feed_url:
+                    # Handle relative URLs - urljoin handles both absolute and relative URLs
+                    return urljoin(url, feed_url)
+        
+        return None
+    except Exception:
+        # Silently fail if auto-detection doesn't work
+        return None
+
 def fetch_feed_with_retry(source, url, retries=MAX_RETRIES):
-    """Fetch a feed with retry logic and exponential backoff."""
+    """Fetch a feed with retry logic, auto-detection, and better error handling."""
+    headers = {
+        'User-Agent': 'Mozilla/5.0 (compatible; RSS Reader; +http://github.com)',
+        'Accept': 'application/rss+xml, application/atom+xml, application/xml, text/xml, */*'
+    }
+    
+    # Try to auto-detect RSS feed if URL points to HTML (only once at the start)
+    detected_feed_url = find_rss_feed(url, headers)
+    if detected_feed_url and detected_feed_url != url:
+        print(f"🔍 Auto-detected RSS feed for {source}: {detected_feed_url}")
+        url = detected_feed_url
+    
     for attempt in range(retries):
         try:
-            feed = feedparser.parse(url)
+            # Fetch with requests to have more control (using 10s timeout for consistency)
+            response = requests.get(url, headers=headers, timeout=10, allow_redirects=True)
+            response.raise_for_status()
+            
+            # Check content type
+            content_type = response.headers.get('content-type', '').lower()
+            if 'html' in content_type and 'xml' not in content_type:
+                print(f"⚠️ {source} returned HTML instead of RSS/XML")
+                return None
+            
+            # Parse the feed
+            feed = feedparser.parse(response.content)
             
             # Check for parsing errors
             if hasattr(feed, 'bozo') and feed.bozo:
+                exception = feed.get('bozo_exception', 'Unknown error')
+                
                 if attempt < retries - 1:
                     wait_time = RETRY_DELAY * (2 ** attempt)
                     print(f"⚠️ Parsing error for {source}, retrying in {wait_time}s... (attempt {attempt + 1}/{retries})")
                     time.sleep(wait_time)
                     continue
                 else:
-                    print(f"❌ Persistent parsing error for {source}: {feed.get('bozo_exception', 'Unknown error')}")
+                    print(f"❌ Persistent parsing error for {source}: {exception}")
+                    return None
+            
+            # Verify we got actual entries
+            if not hasattr(feed, 'entries') or len(feed.entries) == 0:
+                if attempt < retries - 1:
+                    wait_time = RETRY_DELAY * (2 ** attempt)
+                    print(f"⚠️ No entries found for {source}, retrying in {wait_time}s... (attempt {attempt + 1}/{retries})")
+                    time.sleep(wait_time)
+                    continue
+                else:
+                    print(f"⚠️ {source}: Feed parsed but contains no entries")
                     return None
             
             return feed
             
-        except Exception as e:
+        except requests.exceptions.Timeout:
             if attempt < retries - 1:
                 wait_time = RETRY_DELAY * (2 ** attempt)
-                print(f"⚠️ Error fetching {source}: {e}, retrying in {wait_time}s... (attempt {attempt + 1}/{retries})")
+                print(f"⚠️ Timeout fetching {source}, retrying in {wait_time}s... (attempt {attempt + 1}/{retries})")
+                time.sleep(wait_time)
+            else:
+                print(f"❌ Failed to fetch {source}: Connection timeout after {retries} attempts")
+                return None
+                
+        except requests.exceptions.RequestException as e:
+            if attempt < retries - 1:
+                wait_time = RETRY_DELAY * (2 ** attempt)
+                print(f"⚠️ Network error fetching {source}: {e}, retrying in {wait_time}s... (attempt {attempt + 1}/{retries})")
                 time.sleep(wait_time)
             else:
                 print(f"❌ Failed to fetch {source} after {retries} attempts: {e}")
                 return None
+                
+        except Exception as e:
+            print(f"❌ Unexpected error for {source}: {type(e).__name__}: {e}")
+            return None
     
     return None
 
