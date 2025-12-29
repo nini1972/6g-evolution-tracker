@@ -1,0 +1,85 @@
+🚀 6G Sentinel started its monthly sweep.
+
+📡 Fetching 6 RSS feeds in parallel...
+⚠️ Parsing error for Ericsson, retrying in 2s... (attempt 1/3)
+⚠️ Parsing error for MDPI Engineering, retrying in 2s... (attempt 1/3)
+⚠️ Parsing error for Nokia, retrying in 2s... (attempt 1/3)
+✓ IEEE Spectrum: 30 total entries fetched
+✓ Thales: 10 total entries fetched
+✓ ArXiv CS Networking: 8 total entries fetched
+⚠️ Parsing error for MDPI Engineering, retrying in 4s... (attempt 2/3)
+⚠️ Parsing error for Ericsson, retrying in 4s... (attempt 2/3)
+⚠️ Parsing error for Nokia, retrying in 4s... (attempt 2/3)
+❌ Persistent parsing error for MDPI Engineering: <unknown>:10:2: mismatched tag
+✗ MDPI Engineering: Failed to fetch
+❌ Persistent parsing error for Ericsson: <unknown>:2:751: not well-formed (invalid token)
+✗ Ericsson: Failed to fetch
+❌ Persistent parsing error for Nokia: <unknown>:10:2: mismatched tag
+✗ Nokia: Failed to fetch
+
+🔎 IEEE Spectrum: 27 new relevant updates found.
+  • [5] AI Data Centers Demand More Than Copper Can Deliver
+    https://spectrum.ieee.org/rf-over-fiber
+  • [5] The Top 7 Telecommunications Stories of 2025
+    https://spectrum.ieee.org/top-telecom-stories-2025
+  • [2] The Top 5 Climate Tech Stories of 2025
+    https://spectrum.ieee.org/top-climate-tech-stories-2025
+  • [2] First Air Taxi Service to Launch in Dubai in 2026
+    https://spectrum.ieee.org/joby-air-taxi
+  • [2] The Top 7 Consumer Electronics Stories of 2025
+    https://spectrum.ieee.org/top-consumer-tech-stories-2025
+  • [2] Video Friday: Holiday Robot Helpers Send Season’s Greetings
+    https://spectrum.ieee.org/holiday-robot-videos
+  • [2] The Top 8 Magnets and Motors Stories of 2025
+    https://spectrum.ieee.org/best-rare-earth-elements-2025
+  • [2] How to Stay Ahead of AI as an Early-Career Engineer
+    https://spectrum.ieee.org/ai-effect-entry-level-jobs
+  • [2] The Top 8 Computing Stories of 2025
+    https://spectrum.ieee.org/top-computing-stories-2025
+  • [2] Mesh Networks Are About to Escape Apple, Amazon, and Google Silos
+    https://spectrum.ieee.org/mesh-network-interoperable-thread
+  • [2] Hermetic Sealing Solutions for High-Performance Miniaturized Battery Systems
+    https://content.knowledgehub.wiley.com/dual-seal-method-for-the-hermetic-sealing-of-microbatteries/
+  • [2] IEEE’s Role in ABET Accreditation Explained
+    https://spectrum.ieee.org/ieee-abet-accreditation-programs
+  • [2] The Top 6 Robotics Stories of 2025
+    https://spectrum.ieee.org/top-robotics-stories-2025
+  • [2] Drones Compete to Spot and Extinguish Brushfires
+    https://spectrum.ieee.org/wildfire-drones
+  • [2] The Top 5 Transportation Stories for 2025
+    https://spectrum.ieee.org/top-ev-charging-stories-2025
+  • [2] Next-Level Quantum Computers Will Almost Be Useful
+    https://spectrum.ieee.org/neutral-atom-quantum-computing
+  • [2] IEEE Summit Yields Better Equipped STEM Educators
+    https://spectrum.ieee.org/ieee-stem-summit-2025
+  • [2] Ultrasound Treatment Takes on Cancer’s Toughest Tumors
+    https://spectrum.ieee.org/ultrasound-cancer-treatment
+  • [2] The Top 6 Biomedical Stories of 2025
+    https://spectrum.ieee.org/top-biomedical-stories-2025
+  • [2] Grid-Scale Bubble Batteries Will Soon Be Everywhere
+    https://spectrum.ieee.org/co2-battery-energy-storage
+  • [2] How to Accelerate Radar Cross Section Simulations for Large Structures
+    https://content.knowledgehub.wiley.com/efficient-ways-to-calculate-scattering-from-electrically-large-objects-method-of-moments-physical-optics-and-extrapolation-techniques/
+  • [2] Interconnections With Renewables Turn Existing Power Plants Green
+    https://spectrum.ieee.org/renewables-existing-power-plants-green
+  • [2] Video Friday: Happy Robot Holidays
+    https://spectrum.ieee.org/happy-holidays-robot
+  • [2] The U.S. CHIPS Act Takes Another Hit
+    https://spectrum.ieee.org/semiconductor-digital-twins-funding
+  • [2] This Valve Could Halve EV Fast-Charge Times
+    https://spectrum.ieee.org/breaking-ev-charging-bottlenecks
+  • [2] Advice on Leading and Mentoring for Greater Innovation
+    https://spectrum.ieee.org/advice-leading-mentoring-greater-innovation
+  • [2] A Chip That Keeps Time (Almost) Like an Atomic Clock
+    https://spectrum.ieee.org/silicon-clock
+
+🔎 Thales: 1 new relevant updates found.
+  • [2] Thales revolutionises the underwater battlespace with new Sonar 76Nano
+    https://www.thalesgroup.com/en/news-centre/press-releases/thales-revolutionises-underwater-battlespace-new-sonar-76nano
+
+📭 ArXiv CS Networking: No new keyword-matching updates this cycle.
+
+✅ 6G Sentinel completed its sweep.
+📊 Total new articles processed: 28
+💾 Cache updated with 28 unique articles.
+🔮 The future is still under construction.
