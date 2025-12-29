@@ -11,7 +11,10 @@ jobs:
     permissions:
       contents: write
     steps:
-      - name: Cache pip
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Cache pip dependencies
         uses: actions/cache@v3
         with:
           path: ~/.cache/pip
@@ -19,8 +22,13 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-pip-
 
-      - name: Checkout repository
-        uses: actions/checkout@v4
+      - name: Cache article database
+        uses: actions/cache@v3
+        with:
+          path: seen_articles.json
+          key: ${{ runner.os }}-articles-${{ github.run_number }}
+          restore-keys: |
+            ${{ runner.os }}-articles-
 
       - name: Set up Python
         uses: actions/setup-python@v5
