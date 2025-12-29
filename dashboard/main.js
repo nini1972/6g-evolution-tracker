@@ -8,9 +8,7 @@ let allArticles = [];
 // Fetch data from the generated JSON
 async function loadData() {
     try {
-        // In local dev, we might need to point to the correct path
-        // In production (GitHub Pages), it will be in the same root or accessible path
-        const response = await fetch('../latest_digest.json');
+        const response = await fetch('./latest_digest.json');
         if (!response.ok) throw new Error('Could not load data');
 
         const data = await response.json();
