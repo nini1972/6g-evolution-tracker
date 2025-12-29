@@ -54,9 +54,9 @@ jobs:
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
-          git add 6g_digest_*.md
-          git add seen_articles.json
-          git add latest_digest.json
+          git add -f 6g_digest_*.md
+          git add -f seen_articles.json
+          git add -f latest_digest.json
           git diff --quiet && git diff --staged --quiet || git commit -m "📊 Monthly 6G digest & Dashboard update - $(date +'%Y-%m-%d')"
           git push
 
