@@ -118,23 +118,22 @@ def find_rss_feed(url, headers):
                     return urljoin(url, feed_url)
         
         return None
-    except Exception as e:
+    except Exception:
+        # Silently fail if auto-detection doesn't work
         return None
 
 def fetch_feed_with_retry(source, url, retries=MAX_RETRIES):
     """Fetch a feed with retry logic, auto-detection, and better error handling."""
     headers = {
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+        'User-Agent': 'Mozilla/5.0 (compatible; RSS Reader; +http://github.com)',
         'Accept': 'application/rss+xml, application/atom+xml, application/xml, text/xml, */*'
     }
     
     # Try to auto-detect RSS feed if URL points to HTML (only once at the start)
     detected_feed_url = find_rss_feed(url, headers)
-    auto_detected = False
     if detected_feed_url and detected_feed_url != url:
         print(f"🔍 Auto-detected RSS feed for {source}: {detected_feed_url}")
         url = detected_feed_url
-        auto_detected = True
     
     for attempt in range(retries):
         try:
