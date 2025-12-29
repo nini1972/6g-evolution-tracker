@@ -3,6 +3,7 @@ import json
 import hashlib
 import time
 import requests
+import random
 from datetime import datetime, timedelta
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
@@ -12,10 +13,10 @@ from urllib.parse import urljoin
 # 🌐 RSS sources to monitor
 # Note: Some feeds may be temporarily unavailable or have parsing issues
 FEEDS = {
-    "Ericsson": "https://www.ericsson.com/en/blog",  # Fixed: removed '/rss'
+    "Ericsson": "https://www.ericsson.com/en/blog/rss",  # Fixed: add back '/rss' suffix
     "Thales": "https://www.thalesgroup.com/en/rss.xml",
-    "MDPI Engineering": "https://www.mdpi.com/rss",  # Fixed: changed to main RSS feed
-    "Nokia": "https://nokia.com",  # Fixed: removed 'www' and path
+    "MDPI Engineering": "https://www.mdpi.com/rss",  # Already working
+    "Nokia": "https://www.nokia.com/newsroom/feed/en-us/",  # Fixed: use newsroom feed path
     "IEEE Spectrum": "https://spectrum.ieee.org/feeds/feed.rss",
     "ArXiv CS Networking": "http://export.arxiv.org/rss/cs.NI",
     # Additional sources can be added as they become available:
@@ -23,6 +24,15 @@ FEEDS = {
     # "Samsung Research": "https://research.samsung.com/blog/rss",
     # "ITU News": "https://www.itu.int/en/mediacentre/Pages/feeds.aspx",
 }
+
+# 🔄 User agents for rotating to bypass bot detection
+USER_AGENTS = [
+    'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+    'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+    'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+    'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:121.0) Gecko/20100101 Firefox/121.0',
+    'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.2 Safari/605.1.15',
+]
 
 # 🔍 Keywords with weighted priorities
 HIGH_PRIORITY = ["IMT-2030", "AI-native", "terahertz"]
@@ -124,27 +134,43 @@ def find_rss_feed(url, headers):
 
 def fetch_feed_with_retry(source, url, retries=MAX_RETRIES):
     """Fetch a feed with retry logic, auto-detection, and better error handling."""
-    headers = {
-        'User-Agent': 'Mozilla/5.0 (compatible; RSS Reader; +http://github.com)',
-        'Accept': 'application/rss+xml, application/atom+xml, application/xml, text/xml, */*'
-    }
-    
-    # Try to auto-detect RSS feed if URL points to HTML (only once at the start)
-    detected_feed_url = find_rss_feed(url, headers)
-    if detected_feed_url and detected_feed_url != url:
-        print(f"🔍 Auto-detected RSS feed for {source}: {detected_feed_url}")
-        url = detected_feed_url
     
     for attempt in range(retries):
+        # Rotate user agent on each retry
+        headers = {
+            'User-Agent': random.choice(USER_AGENTS),
+            'Accept': 'application/rss+xml, application/atom+xml, application/xml, text/xml, text/html, */*',
+            'Accept-Language': 'en-US,en;q=0.9',
+            'Accept-Encoding': 'gzip, deflate, br',
+            'Connection': 'keep-alive',
+            'Upgrade-Insecure-Requests': '1',
+            'Cache-Control': 'max-age=0',
+            'DNT': '1',
+        }
+        
         try:
-            # Fetch with requests to have more control (using 10s timeout for consistency)
-            response = requests.get(url, headers=headers, timeout=10, allow_redirects=True)
+            # Try to auto-detect RSS feed if URL points to HTML (only on first attempt)
+            if attempt == 0:
+                detected_feed_url = find_rss_feed(url, headers)
+                if detected_feed_url and detected_feed_url != url:
+                    print(f"🔍 Auto-detected RSS feed for {source}: {detected_feed_url}")
+                    url = detected_feed_url
+            
+            # Fetch with requests to have more control
+            response = requests.get(url, headers=headers, timeout=15, allow_redirects=True)
             response.raise_for_status()
             
             # Check content type
             content_type = response.headers.get('content-type', '').lower()
             if 'html' in content_type and 'xml' not in content_type:
                 print(f"⚠️ {source} returned HTML instead of RSS/XML")
+                if attempt == 0:
+                    # Try auto-detection on first attempt
+                    detected_url = find_rss_feed(url, headers)
+                    if detected_url and detected_url != url:
+                        print(f"🔍 Found alternative feed URL for {source}: {detected_url}")
+                        url = detected_url
+                        continue
                 return None
             
             # Parse the feed
@@ -176,6 +202,25 @@ def fetch_feed_with_retry(source, url, retries=MAX_RETRIES):
             
             return feed
             
+        except requests.exceptions.HTTPError as e:
+            if e.response.status_code == 403:
+                if attempt < retries - 1:
+                    wait_time = RETRY_DELAY * (2 ** attempt)
+                    print(f"⚠️ 403 Forbidden for {source}, rotating user agent and retrying in {wait_time}s... (attempt {attempt + 1}/{retries})")
+                    time.sleep(wait_time)
+                    continue
+                else:
+                    print(f"❌ Failed to fetch {source}: 403 Forbidden after {retries} attempts with different user agents")
+                    return None
+            else:
+                if attempt < retries - 1:
+                    wait_time = RETRY_DELAY * (2 ** attempt)
+                    print(f"⚠️ HTTP error {e.response.status_code} for {source}, retrying in {wait_time}s... (attempt {attempt + 1}/{retries})")
+                    time.sleep(wait_time)
+                else:
+                    print(f"❌ Failed to fetch {source} after {retries} attempts: {e}")
+                    return None
+                    
         except requests.exceptions.Timeout:
             if attempt < retries - 1:
                 wait_time = RETRY_DELAY * (2 ** attempt)
