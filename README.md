@@ -1,95 +1,51 @@
 # 6G Evolution Tracker
 
 This repository is dedicated to tracking the evolution of 6G technologies.  
-A scheduled Python script runs monthly using GitHub Actions to monitor news, publications, and updates related to 6G.
+A scheduled Python script runs monthly using GitHub Actions to monitor news, publications, and updates related to 6G, providing AI-powered insights and a premium web dashboard.
 
 ## 🚀 Features
 
-### Intelligent Tracking
-- **🎯 Weighted Keyword Scoring**: Articles are scored based on relevance with high-priority (weight 3) and medium-priority (weight 2) keywords
-- **📅 Date Filtering**: Only processes articles from the last 30 days to focus on recent developments
-- **🚫 Duplicate Prevention**: Maintains a cache (`seen_articles.json`) to prevent reprocessing of articles
+### 🤖 AI-Powered Intelligence
+- **✨ Gemini 3 Flash Summaries**: Every relevant article is analyzed by Gemini 3 Flash to provide a 6G-specific context.
+- **📊 Impact Scoring**: Assigns a "6G Impact Score" (1-10) to help prioritize breakthrough developments.
+- **🎯 Weighted Keyword Scoring**: Articles are pre-filtered based on relevance with high-priority and medium-priority keywords.
 
-### Performance Enhancements
-- **⚡ Parallel Feed Fetching**: Uses concurrent processing to fetch multiple RSS feeds simultaneously (5 workers)
-- **🔄 Retry Logic**: Implements exponential backoff with up to 3 retry attempts for transient failures
-- **🛡️ Error Handling**: Robust error handling with feed validation and informative error messages
+### 🌐 Interactive Dashboard
+- **🎨 Glassmorphism UI**: A premium, dark-mode web interface to browse historical insights.
+- **🔍 Dynamic Filtering**: Instantly search by keyword or filter by source (Ericsson, Nokia, etc.).
+- **📱 Responsive Design**: Optimized for both desktop and mobile viewing.
 
-### Comprehensive Coverage
-Monitors industry-leading 6G sources including:
-- Ericsson Blog
-- Thales Group
-- MDPI Engineering
-- Nokia
-- IEEE Spectrum
-- ArXiv (Computer Science - Networking)
-
-Additional sources can be easily added by updating the `FEEDS` dictionary in the script.
-
-### Enhanced Reporting
-- **📊 Relevance Scores**: Each article includes a calculated relevance score
-- **📝 Article Summaries**: Shows first 200 characters of article content
-- **📅 Publication Dates**: Displays when articles were published
-- **🎨 Improved Formatting**: Better markdown formatting for readability
+### Performance & Reliability
+- **⚡ Parallel Fetching**: Concurrently fetches multiple RSS feeds simultaneously.
+- **🚫 Duplicate Prevention**: Prevents reprocessing of articles and avoids double-logging in reports.
+- **🔄 GitHub Actions**: Fully automated monthly runs with state persistence via cache.
 
 ## Workflow
 
 - **Language:** Python
+- **AI Model:** Gemini 3 Flash
+- **Dashboard:** Vanilla JS + CSS (Glassmorphism)
 - **Schedule:** Monthly (via GitHub Actions)
-- **Dependencies:**  
-  - [feedparser](https://pypi.org/project/feedparser/)  
-  - [requests](https://pypi.org/project/requests/)
 
-## How it works
+## Setup & Configuration
 
-The main script `track_6g.py` performs the following:
+### 🔑 API Key
+To enable the AI summarization, add a `GOOGLE_API_KEY` to your GitHub Repository Secrets:
+1. Get a key from [Google AI Studio](https://aistudio.google.com/app/apikey).
+2. Add it to **Settings > Secrets and variables > Actions** as `GOOGLE_API_KEY`.
 
-1. **Loads Cache**: Reads `seen_articles.json` to identify previously processed articles
-2. **Fetches Feeds**: Concurrently fetches RSS feeds from all configured sources
-3. **Filters Articles**: 
-   - Checks if article was previously seen
-   - Verifies article is from the last 30 days
-   - Calculates relevance score based on weighted keywords
-   - Only processes articles with score ≥ 2
-4. **Generates Report**: Creates a markdown digest file with enhanced details
-5. **Updates Cache**: Saves processed article URLs to prevent future duplicates
-
-### Keyword Scoring System
-
-**High Priority Keywords** (weight: 3):
-- IMT-2030
-- AI-native
-- terahertz
-
-**Medium Priority Keywords** (weight: 2):
-- spectrum
-- 6G architecture
-- Release 21
-
-Articles must score at least 2 points to be included in the digest.
-
-## Customization
-
-To track additional sources, update the `FEEDS` dictionary in `track_6g.py`.  
-You can also adjust keyword priorities, relevance thresholds, and date filtering in the configuration section.
-
-## Getting Started
-
+### 🖥️ Local Development
 1. Install dependencies:
     ```bash
     pip install -r requirements.txt
     ```
-2. Run the script:
+2. Run the tracker:
     ```bash
     python track_6g.py
     ```
 
-The workflow will run automatically every month, and all logs are available in the GitHub Actions tab.
+The dashboard can be viewed by opening `dashboard/index.html` (Note: for local view, ensure `latest_digest.json` is generated).
 
 ## Cache Management
 
-The `seen_articles.json` file maintains a history of processed articles. This file:
-- Is automatically created on first run
-- Prevents duplicate processing across runs
-- Is excluded from version control (via `.gitignore`)
-- Can be safely deleted to reprocess all articles
+The `seen_articles.json` file maintains a history of processed articles to prevent duplicates. This is automatically handled by the GitHub Action.
