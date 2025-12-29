@@ -37,8 +37,8 @@ USER_AGENTS = [
 ]
 
 # 🔍 Keywords with weighted priorities
-HIGH_PRIORITY = ["IMT-2030", "AI-native", "terahertz"]
-MEDIUM_PRIORITY = ["spectrum", "6G architecture", "Release 21"]
+HIGH_PRIORITY = ["IMT-2030", "AI-native", "terahertz", "6G"]
+MEDIUM_PRIORITY = ["radio spectrum", "6G architecture", "Release 21", "millimeter wave", "sub-THz"]
 
 # ⚙️ Configuration
 CACHE_FILE = "seen_articles.json"
@@ -64,17 +64,19 @@ def get_ai_summary(title, summary, site_name):
         return None
     
     prompt = f"""
-    Analyze the following article related to 6G or telecommunications.
+    Analyze the following article for its relevance to 6G technology, telecommunications evolution, or core network infrastructure.
+    
     Source: {site_name}
     Title: {title}
     Snippet: {summary}
     
     Task:
-    1. Provide a concise 1-2 sentence summary of its relevance to 6G evolution (IMT-2030).
-    2. Assign a '6G Impact Score' from 1 to 10 (where 10 is a major breakthrough or standard milestone).
+    1. Determine if this article is genuinely relevant to 6G (IMT-2030) or its foundational technologies (radios, networking, AI-native comms, etc.).
+    2. If NOT relevant (e.g., general medicine, unrelated consumer electronics, general climate news), set 'is_6g_relevant' to false.
+    3. If relevant, provide a concise 1-2 sentence summary and assign a '6G Impact Score' from 1 to 10.
     
     Return the response in this exact JSON format:
-    {{"summary": "your summary here", "impact_score": 7}}
+    {{"is_6g_relevant": true/false, "summary": "your summary here", "impact_score": 7}}
     """
     
     try:
@@ -397,9 +399,14 @@ def main():
             # Calculate relevance score
             score = relevance_score(entry)
             if score >= RELEVANCE_THRESHOLD:
-                # Try to get AI summary
+                # Try to get AI summary and relevance check
                 print(f"  ✨ Generating AI insights for: {entry.get('title')[:50]}...")
                 ai_insights = get_ai_summary(entry.get("title", ""), entry.get("summary", ""), source)
+                
+                # Check for AI rejection
+                if ai_insights and not ai_insights.get("is_6g_relevant", True):
+                    print(f"  🚫 AI rejected as irrelevant: {entry.get('title')[:50]}")
+                    continue
                 
                 entry["_relevance_score"] = score
                 entry["_ai_insights"] = ai_insights
