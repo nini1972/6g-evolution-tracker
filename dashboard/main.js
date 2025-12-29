@@ -45,7 +45,17 @@ function renderArticles(articles) {
     }
 
     articlesGrid.innerHTML = articles.map(article => {
-        const impact = article.ai_insights ? article.ai_insights.impact_score : '?';
+        let impact = '?';
+        let impactLabel = 'Impact';
+
+        if (article.ai_insights && article.ai_insights.impact_score) {
+            impact = article.ai_insights.impact_score;
+        } else if (article.score) {
+            // Fallback to keyword relevance score if AI failed
+            impact = article.score;
+            impactLabel = 'Relevance';
+        }
+
         const summary = article.ai_insights ? article.ai_insights.summary : article.summary;
 
         return `
@@ -54,7 +64,7 @@ function renderArticles(articles) {
                 <h3>${article.title}</h3>
                 <p class="article-summary">${summary}</p>
                 <div class="article-footer">
-                    <div class="impact-badge">Impact: ${impact}/10</div>
+                    <div class="impact-badge">${impactLabel}: ${impact}/10</div>
                     <div class="date-text">${article.date}</div>
                 </div>
             </div>

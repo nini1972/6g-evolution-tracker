@@ -88,7 +88,7 @@ def get_ai_summary(title, summary, site_name):
         data = json.loads(text)
         return data
     except Exception as e:
-        print(f"⚠️ AI Summary failed: {e}")
+        print(f"  ⚠️ AI Summary failed for '{title[:30]}...': {e}")
         return None
 
 def load_cache():
@@ -356,6 +356,13 @@ def export_to_json(all_entries):
 def main():
     print("🚀 6G Sentinel started its monthly sweep.\n")
     
+    # AI Status Check
+    if not model:
+        print("⚠️  Warning: GOOGLE_API_KEY not found in environment.")
+        print("   AI insights and Rigorous Filtering are DISABLED.")
+    else:
+        print("🤖 Gemini AI Intelligence is ACTIVE. (Model: gemini-3-flash)")
+    print()
     # Load cache
     cache = load_cache()
     new_articles_count = 0
