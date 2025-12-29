@@ -217,6 +217,7 @@ def fetch_feed_with_retry(source, url, retries=MAX_RETRIES):
                     wait_time = RETRY_DELAY * (2 ** attempt)
                     print(f"⚠️ HTTP error {e.response.status_code} for {source}, retrying in {wait_time}s... (attempt {attempt + 1}/{retries})")
                     time.sleep(wait_time)
+                    continue
                 else:
                     print(f"❌ Failed to fetch {source} after {retries} attempts: {e}")
                     return None
@@ -226,6 +227,7 @@ def fetch_feed_with_retry(source, url, retries=MAX_RETRIES):
                 wait_time = RETRY_DELAY * (2 ** attempt)
                 print(f"⚠️ Timeout fetching {source}, retrying in {wait_time}s... (attempt {attempt + 1}/{retries})")
                 time.sleep(wait_time)
+                continue
             else:
                 print(f"❌ Failed to fetch {source}: Connection timeout after {retries} attempts")
                 return None
@@ -235,6 +237,7 @@ def fetch_feed_with_retry(source, url, retries=MAX_RETRIES):
                 wait_time = RETRY_DELAY * (2 ** attempt)
                 print(f"⚠️ Network error fetching {source}: {e}, retrying in {wait_time}s... (attempt {attempt + 1}/{retries})")
                 time.sleep(wait_time)
+                continue
             else:
                 print(f"❌ Failed to fetch {source} after {retries} attempts: {e}")
                 return None
