@@ -14,6 +14,18 @@ async function loadData() {
         const data = await response.json();
         allArticles = data.articles;
 
+        // Try to load momentum data (optional for now)
+        try {
+            const momResponse = await fetch('./momentum_data.json');
+            if (momResponse.ok) {
+                const momentumData = await momResponse.json();
+                console.log('Deep Analysis Momentum Data Loaded:', momentumData);
+                // Future: renderMomentumCharts(momentumData);
+            }
+        } catch (mErr) {
+            console.log('Momentum data not yet available.');
+        }
+
         lastUpdateBadge.textContent = `Last Update: ${data.date}`;
 
         populateSourceFilter(allArticles);
