@@ -6,12 +6,11 @@ A scheduled Python script runs monthly using GitHub Actions to monitor news, pub
 ## 🚀 Features
 
 ### 🤖 AI-Powered Intelligence
-- **✨ Gemini 3 Flash Summaries**: Every relevant article is analyzed by Gemini 3 Flash to provide a 6G-specific context.
-- **📊 Impact Scoring**: Assigns a "6G Impact Score" (1-10) to help prioritize breakthrough developments.
-- **🎯 Weighted Keyword Scoring**: Articles are pre-filtered based on relevance with high-priority and medium-priority keywords.
-
-### 🌐 Interactive Dashboard
-- **🎨 Glassmorphism UI**: A premium, dark-mode web interface to browse historical insights.
+- **Deep Intelligence Analysis**: Uses `gemini-3-flash-preview` to perform a 15-point strategic analysis per article.
+- **World Power Mapping**: Tracks 6G momentum across the US, EU, China, Japan, Korea, and India.
+- **Quarterly Momentum Tracking**: Aggregates data into stable quarterly trends to visualize technical and geopolitical shifts.
+- **Interactive Dashboard**: Modern glassmorphism UI showing AI insights and impact scores.
+- **Automated Workflow**: Fully automated monthly tracking via GitHub Actions.
 - **🔍 Dynamic Filtering**: Instantly search by keyword or filter by source (Ericsson, Nokia, etc.).
 - **📱 Responsive Design**: Optimized for both desktop and mobile viewing.
 

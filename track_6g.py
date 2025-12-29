@@ -64,27 +64,53 @@ def get_ai_summary(title, summary, site_name):
         return None
     
     prompt = f"""
-    Analyze the following article for its relevance to 6G technology, telecommunications evolution, or core network infrastructure.
+    You are a 6G strategy and technology analyst. Analyze the following article for its relevance to 6G (IMT-2030).
     
     Source: {site_name}
     Title: {title}
     Snippet: {summary}
     
     Task:
-    1. Determine if this article is genuinely relevant to 6G (IMT-2030) or its foundational technologies (radios, networking, AI-native comms, etc.).
-    2. If NOT relevant (e.g., general medicine, unrelated consumer electronics, general climate news), set 'is_6g_relevant' to false.
-    3. If relevant, provide a concise 1-2 sentence summary and assign a '6G Impact Score' from 1 to 10.
+    1. Determine if this article is genuinely relevant to 6G. If not, set 'is_6g_relevant': false.
+    2. If relevant, perform a deep analysis following these definitions:
+       - Topics: sub-THz, AI-native RAN, semantic communications, ISAC, NTN, zero-energy devices, security & trust, network automation, sustainability, spectrum & policy, standardization, device ecosystem, cloud-edge integration, Open RAN, quantum-safe networking.
+       - Dimensions (0-5 scale): research_intensity, standardization_influence, industrial_deployment, spectrum_policy_signal, ecosystem_maturity.
+       - Time Horizon: near-term (<= 2028), mid-term (2028-2032), long-term (>= 2032).
+       - World Powers (0-5 scale): US, EU, China, Japan, Korea, India (Score based on how the article affects their 6G position).
     
     Return the response in this exact JSON format:
-    {{"is_6g_relevant": true/false, "summary": "your summary here", "impact_score": 7}}
+    {{
+      "is_6g_relevant": true,
+      "summary": "1-2 sentence 6G-focused summary",
+      "impact_score": 0,
+      "6g_topics": [],
+      "impact_dimensions": {{
+        "research_intensity": 0,
+        "standardization_influence": 0,
+        "industrial_deployment": 0,
+        "spectrum_policy_signal": 0,
+        "ecosystem_maturity": 0
+      }},
+      "time_horizon": "near-term/mid-term/long-term",
+      "world_power_impact": {{
+        "US": 0, "EU": 0, "China": 0, "Japan": 0, "Korea": 0, "India": 0
+      }},
+      "emerging_concepts": [],
+      "key_evidence": []
+    }}
     """
     
     try:
         response = model.generate_content(prompt)
-        # Extract JSON from response (handling potential markdown formatting)
         text = response.text.strip()
         if "```json" in text:
             text = text.split("```json")[1].split("```")[0].strip()
+        elif "{" in text:
+            # Fallback if markdown is missing but JSON is present
+            start = text.find("{")
+            end = text.rfind("}") + 1
+            text = text[start:end]
+            
         data = json.loads(text)
         return data
     except Exception as e:
@@ -349,9 +375,79 @@ def export_to_json(all_entries):
     try:
         with open("latest_digest.json", "w", encoding="utf-8") as f:
             json.dump(output_data, f, indent=2)
-        print(f"📊 Exported {len(all_entries)} articles to latest_digest.json")
+        print(f"📊 JSON data exported to latest_digest.json")
     except Exception as e:
-        print(f"⚠️ Error exporting to JSON: {e}")
+        print(f"❌ JSON export failed: {e}")
+
+def aggregate_momentum(articles):
+    """Compute world-power momentum per quarterly time window."""
+    # region -> quarter -> scores
+    aggregation = {}
+    regions = ["US", "EU", "China", "Japan", "Korea", "India"]
+    
+    for article in articles:
+        try:
+            # Parse date and get quarter
+            article_date = datetime.strptime(article["date"], "%Y-%m-%d")
+            quarter = f"{article_date.year}-Q{(article_date.month - 1) // 3 + 1}"
+        except:
+            quarter = f"{DATE[:4]}-Q{(int(DATE[5:7]) - 1) // 3 + 1}"
+
+        ai = article.get("ai_insights")
+        if not ai or not ai.get("is_6g_relevant"):
+            continue
+            
+        wp_impact = ai.get("world_power_impact", {})
+        dimensions = ai.get("impact_dimensions", {})
+        importance = ai.get("impact_score", 1) # weight
+        
+        # Calculate momentum = weighted average of dimensions
+        dim_values = [v for v in dimensions.values() if isinstance(v, (int, float))]
+        article_momentum = sum(dim_values) / len(dim_values) if dim_values else 0
+        
+        for region in regions:
+            impact = wp_impact.get(region, 0)
+            if impact > 0:
+                if region not in aggregation: aggregation[region] = {}
+                if quarter not in aggregation[region]: 
+                    aggregation[region][quarter] = {
+                        "research_intensity": [],
+                        "standardization_influence": [],
+                        "industrial_deployment": [],
+                        "spectrum_policy_signal": [],
+                        "ecosystem_maturity": [],
+                        "momenta": []
+                    }
+                
+                # Store weighted values
+                for dim in aggregation[region][quarter]:
+                    if dim == "momenta":
+                        aggregation[region][quarter][dim].append(article_momentum * importance)
+                    else:
+                        val = dimensions.get(dim, 0)
+                        aggregation[region][quarter][dim].append(val * importance)
+
+    # Final Average
+    final_data = []
+    for region, quarters in aggregation.items():
+        for quarter, metrics in quarters.items():
+            entry = {
+                "region": region,
+                "time_window": quarter,
+                "momentum_score": round(sum(metrics["momenta"]) / len(metrics["momenta"]), 2) if metrics["momenta"] else 0
+            }
+            # Average other dimensions
+            for dim in metrics:
+                if dim != "momenta":
+                    entry[dim] = round(sum(metrics[dim]) / len(metrics[dim]), 2) if metrics[dim] else 0
+            final_data.append(entry)
+            
+    try:
+        with open("momentum_data.json", "w", encoding="utf-8") as f:
+            json.dump(final_data, f, indent=2)
+        print(f"📈 Momentum data aggregated for {len(final_data)} region-quarter windows.")
+    except Exception as e:
+        print(f"❌ Momentum aggregation failed: {e}")
 
 def main():
     print("🚀 6G Sentinel started its monthly sweep.\n")
@@ -457,6 +553,8 @@ def main():
     # Export to JSON for dashboard
     if all_processed_entries:
         export_to_json(all_processed_entries)
+        # Deep Analysis Aggregation
+        aggregate_momentum(all_processed_entries)
     
     # Save cache
     save_cache(cache)
