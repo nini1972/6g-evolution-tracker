@@ -116,7 +116,8 @@ def find_rss_feed(url, headers):
                     # Handle relative URLs
                     if feed_url.startswith('http'):
                         return feed_url
-                    elif feed_url.startswith('/'):
+                    else:
+                        # Handle all relative URLs (starting with '/' or not)
                         return urljoin(url, feed_url)
         
         return None
@@ -130,29 +131,27 @@ def fetch_feed_with_retry(source, url, retries=MAX_RETRIES):
         'Accept': 'application/rss+xml, application/atom+xml, application/xml, text/xml, */*'
     }
     
-    # Try to auto-detect RSS feed if URL points to HTML
+    # Try to auto-detect RSS feed if URL points to HTML (only once at the start)
     detected_feed_url = find_rss_feed(url, headers)
+    auto_detected = False
     if detected_feed_url and detected_feed_url != url:
         print(f"🔍 Auto-detected RSS feed for {source}: {detected_feed_url}")
         url = detected_feed_url
+        auto_detected = True
     
     for attempt in range(retries):
         try:
-            # Fetch with requests to have more control
-            response = requests.get(url, headers=headers, timeout=15, allow_redirects=True)
+            # Fetch with requests to have more control (using 10s timeout for consistency)
+            response = requests.get(url, headers=headers, timeout=10, allow_redirects=True)
             response.raise_for_status()
             
             # Check content type
             content_type = response.headers.get('content-type', '').lower()
             if 'html' in content_type and 'xml' not in content_type:
                 print(f"⚠️ {source} returned HTML instead of RSS/XML")
-                if attempt == 0:
-                    # Try auto-detection on first attempt
-                    detected_url = find_rss_feed(url, headers)
-                    if detected_url:
-                        print(f"🔍 Found alternative feed URL for {source}")
-                        url = detected_url
-                        continue
+                # Only try auto-detection if we haven't already done it
+                if not auto_detected:
+                    return None
                 return None
             
             # Parse the feed
