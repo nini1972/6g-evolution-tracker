@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>6G Evolution Tracker | Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body class="dark-mode">
+    <div class="container">
+        <header>
+            <div class="logo">
+                <span class="pulse"></span>
+                <h1>6G Sentinel</h1>
+            </div>
+            <div class="status-badge" id="last-update">
+                Last Update: Loading...
+            </div>
+        </header>
+
+        <main>
+            <section class="hero">
+                <h2>6G Evolution Intelligence</h2>
+                <p>Tracking the path towards IMT-2030 with AI-powered insights.</p>
+                <div class="controls">
+                    <input type="text" id="search" placeholder="Search insights...">
+                    <select id="source-filter">
+                        <option value="all">All Sources</option>
+                    </select>
+                </div>
+            </section>
+
+            <div id="articles-grid" class="articles-grid">
+                <!-- Articles will be injected here -->
+                <div class="loading-state">
+                    <div class="loader"></div>
+                    <p>Fetching 6G signals...</p>
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            <p>&copy; 2025 6G Evolution Tracker | Built with Gemini Intelligence</p>
+        </footer>
+    </div>
+
+    <!-- Modal for details -->
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <div id="modal-body"></div>
+        </div>
+    </div>
+
+    <script type="module" src="main.js"></script>
+</body>
+</html>

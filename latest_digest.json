@@ -1,0 +1,29 @@
+{
+    "date": "2025-12-29",
+    "articles": [
+        {
+            "source": "IEEE Spectrum",
+            "title": "AI Data Centers Demand More Than Copper Can Deliver",
+            "link": "https://spectrum.ieee.org/rf-over-fiber",
+            "score": 5,
+            "ai_insights": {
+                "summary": "This article discusses the shift from copper to optical interconnects in AI data centers, which is a key infrastructure prerequisite for 6G's high-bandwidth, low-latency requirements.",
+                "impact_score": 8
+            },
+            "summary": "AI Data Centers Demand More Than Copper Can Deliver...",
+            "date": "2025-12-27"
+        },
+        {
+            "source": "Nokia",
+            "title": "Demands of AI supercycle spur infrastructure evolution",
+            "link": "https://www.nokia.com/newsroom/",
+            "score": 2,
+            "ai_insights": {
+                "summary": "Nokia highlights the necessity of network evolution to support AI, aligning with the AI-native goals of early 6G frameworks.",
+                "impact_score": 6
+            },
+            "summary": "Espoo, Finland – An overwhelming majority of technology leaders...",
+            "date": "2025-12-16"
+        }
+    ]
+}

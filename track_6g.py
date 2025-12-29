@@ -9,6 +9,8 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
 from bs4 import BeautifulSoup
 from urllib.parse import urljoin
+import google.generativeai as genai
+import os
 
 # 🌐 RSS sources to monitor
 # Note: Some feeds may be temporarily unavailable or have parsing issues
@@ -47,6 +49,45 @@ DAYS_LOOKBACK = 30
 MAX_WORKERS = 5
 MAX_RETRIES = 3
 RETRY_DELAY = 2  # seconds
+
+# 🤖 Gemini AI Config
+GEMINI_API_KEY = os.environ.get("GOOGLE_API_KEY")
+if GEMINI_API_KEY:
+    genai.configure(api_key=GEMINI_API_KEY)
+    model = genai.GenerativeModel('gemini-3-flash')
+else:
+    model = None
+
+def get_ai_summary(title, summary, site_name):
+    """Get an AI-powered summary and 6G impact score from Gemini."""
+    if not model:
+        return None
+    
+    prompt = f"""
+    Analyze the following article related to 6G or telecommunications.
+    Source: {site_name}
+    Title: {title}
+    Snippet: {summary}
+    
+    Task:
+    1. Provide a concise 1-2 sentence summary of its relevance to 6G evolution (IMT-2030).
+    2. Assign a '6G Impact Score' from 1 to 10 (where 10 is a major breakthrough or standard milestone).
+    
+    Return the response in this exact JSON format:
+    {{"summary": "your summary here", "impact_score": 7}}
+    """
+    
+    try:
+        response = model.generate_content(prompt)
+        # Extract JSON from response (handling potential markdown formatting)
+        text = response.text.strip()
+        if "```json" in text:
+            text = text.split("```json")[1].split("```")[0].strip()
+        data = json.loads(text)
+        return data
+    except Exception as e:
+        print(f"⚠️ AI Summary failed: {e}")
+        return None
 
 def load_cache():
     """Load the cache of previously seen articles."""
@@ -247,17 +288,40 @@ def fetch_feed_wrapper(args):
     return source, fetch_feed_with_retry(source, url)
 
 def log_to_markdown(source, entries):
-    """Log relevant entries to markdown file with enhanced details."""
+    """Log relevant entries to markdown file with enhanced details and duplicate check."""
+    existing_content = ""
+    if Path(LOG_FILE).exists():
+        with open(LOG_FILE, "r", encoding="utf-8") as f:
+            existing_content = f.read()
+
     with open(LOG_FILE, "a", encoding="utf-8") as f:
-        f.write(f"## {source} — {DATE}\n\n")
+        # Only write the source header if it's not already there for today
+        header = f"## {source} — {DATE}"
+        if header not in existing_content:
+            f.write(f"{header}\n\n")
+        
         for entry in entries:
             title = entry.get("title", "No Title")
             link = entry.get("link", "#")
+            
+            # Skip if this specific link is already in the file
+            if link in existing_content:
+                continue
+                
             score = entry.get("_relevance_score", 0)
+            ai_data = entry.get("_ai_insights")
+            
             summary = entry.get("summary", "")[:200]
             if len(entry.get("summary", "")) > 200:
                 summary += "..."
             
+            if ai_data:
+                summary = ai_data.get("summary", summary)
+                impact_score = ai_data.get("impact_score", "N/A")
+                score_str = f"{score} (AI Impact: {impact_score})"
+            else:
+                score_str = str(score)
+
             # Format published date if available
             pub_date = ""
             if hasattr(entry, "published_parsed") and entry.published_parsed:
@@ -268,11 +332,24 @@ def log_to_markdown(source, entries):
                     pass
             
             f.write(f"### [{title}]({link})\n")
-            f.write(f"**Relevance Score:** {score}{pub_date}\n\n")
+            f.write(f"> **Relevance Score:** {score_str}{pub_date}\n\n")
             if summary:
                 f.write(f"{summary}\n\n")
             f.write("---\n\n")
         f.write("\n")
+
+def export_to_json(all_entries):
+    """Export all processed entries to a JSON file for the dashboard."""
+    output_data = {
+        "date": DATE,
+        "articles": all_entries
+    }
+    try:
+        with open("latest_digest.json", "w", encoding="utf-8") as f:
+            json.dump(output_data, f, indent=2)
+        print(f"📊 Exported {len(all_entries)} articles to latest_digest.json")
+    except Exception as e:
+        print(f"⚠️ Error exporting to JSON: {e}")
 
 def main():
     print("🚀 6G Sentinel started its monthly sweep.\n")
@@ -299,6 +376,7 @@ def main():
     print()
     
     # Process each feed
+    all_processed_entries = []
     for source, feed in feeds_data.items():
         relevant_entries = []
         
@@ -319,7 +397,13 @@ def main():
             # Calculate relevance score
             score = relevance_score(entry)
             if score >= RELEVANCE_THRESHOLD:
+                # Try to get AI summary
+                print(f"  ✨ Generating AI insights for: {entry.get('title')[:50]}...")
+                ai_insights = get_ai_summary(entry.get("title", ""), entry.get("summary", ""), source)
+                
                 entry["_relevance_score"] = score
+                entry["_ai_insights"] = ai_insights
+                
                 relevant_entries.append(entry)
                 cache[url_hash] = {
                     "url": article_url,
@@ -341,8 +425,24 @@ def main():
             print()
             
             log_to_markdown(source, relevant_entries)
+            
+            # Prepare for JSON export
+            for entry in relevant_entries:
+                all_processed_entries.append({
+                    "source": source,
+                    "title": entry.get("title", ""),
+                    "link": entry.get("link", ""),
+                    "score": entry.get("_relevance_score", 0),
+                    "ai_insights": entry.get("_ai_insights"),
+                    "summary": entry.get("summary", ""),
+                    "date": datetime(*entry.published_parsed[:6]).strftime("%Y-%m-%d") if hasattr(entry, "published_parsed") and entry.published_parsed else DATE
+                })
         else:
             print(f"📭 {source}: No new keyword-matching updates this cycle.\n")
+    
+    # Export to JSON for dashboard
+    if all_processed_entries:
+        export_to_json(all_processed_entries)
     
     # Save cache
     save_cache(cache)
