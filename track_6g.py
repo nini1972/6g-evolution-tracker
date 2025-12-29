@@ -54,7 +54,7 @@ RETRY_DELAY = 2  # seconds
 GEMINI_API_KEY = os.environ.get("GOOGLE_API_KEY")
 if GEMINI_API_KEY:
     genai.configure(api_key=GEMINI_API_KEY)
-    model = genai.GenerativeModel('gemini-3-flash')
+    model = genai.GenerativeModel('gemini-3-flash-preview')
 else:
     model = None
 
