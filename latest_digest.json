@@ -1,14 +1,146 @@
 {
-  "date": "2025-12-29",
+  "date": "2025-12-30",
   "articles": [
     {
       "source": "ArXiv CS Networking",
-      "title": "Meta-Learning-Based Handover Management in NextG O-RAN",
-      "link": "https://arxiv.org/abs/2512.22022",
+      "title": "SANet: A Semantic-aware Agentic AI Networking Framework for Cross-layer Optimization in 6G",
+      "link": "https://arxiv.org/abs/2512.22579",
+      "score": 6,
+      "ai_insights": {
+        "is_6g_relevant": true,
+        "summary": "This research introduces SANet, a 6G-centric framework that leverages decentralized AI agents and semantic goal inference to achieve cross-layer autonomous network optimization with high efficiency.",
+        "impact_score": 8.5,
+        "6g_topics": [
+          "AI-native RAN",
+          "semantic communications",
+          "network automation",
+          "cloud-edge integration"
+        ],
+        "impact_dimensions": {
+          "research_intensity": 5,
+          "standardization_influence": 3,
+          "industrial_deployment": 2,
+          "spectrum_policy_signal": 0,
+          "ecosystem_maturity": 2
+        },
+        "time_horizon": "mid-term",
+        "world_power_impact": {
+          "US": 4,
+          "EU": 3,
+          "China": 5,
+          "Japan": 3,
+          "Korea": 3,
+          "India": 2
+        },
+        "emerging_concepts": [
+          "Agentic AI Networking (AgentNet)",
+          "Semantic Goal Inference",
+          "Model Partition and Sharing (MoPS)",
+          "Multi-agent Multi-objective Pareto-optimization"
+        ],
+        "key_evidence": [
+          "Proposed a novel semantic-aware AgentNet architecture specifically for wireless cross-layer optimization.",
+          "Developed a hardware prototype using open-source RAN and core networks to validate agent interaction.",
+          "Demonstrated performance gains of 14.61% with a 55.63% reduction in FLOPs compared to current state-of-the-art AI methods.",
+          "Derived theoretical bounds for the tradeoff between optimization, generalization, and conflicting agent objectives."
+        ]
+      },
+      "summary": "arXiv:2512.22579v1 Announce Type: cross \nAbstract: Agentic AI networking (AgentNet) is a novel AI-native networking paradigm in which a large number of specialized AI agents collaborate to perform autonomous decision-making, dynamic environmental adaptation, and complex missions. It has the potential to facilitate real-time network management and optimization functions, including self-configuration, self-optimization, and self-adaptation across diverse and complex environments. This paper proposes SANet, a novel semantic-aware AgentNet architecture for wireless networks that can infer the semantic goal of the user and automatically assign agents associated with different layers of the network to fulfill the inferred goal. Motivated by the fact that AgentNet is a decentralized framework in which collaborating agents may generally have different and even conflicting objectives, we formulate the decentralized optimization of SANet as a multi-agent multi-objective problem, and focus on finding the Pareto-optimal solution for agents with distinct and potentially conflicting objectives. We propose three novel metrics for evaluating SANet. Furthermore, we develop a model partition and sharing (MoPS) framework in which large models, e.g., deep learning models, of different agents can be partitioned into shared and agent-specific parts that are jointly constructed and deployed according to agents' local computational resources. Two decentralized optimization algorithms are proposed. We derive theoretical bounds and prove that there exists a three-way tradeoff among optimization, generalization, and conflicting errors. We develop an open-source RAN and core network-based hardware prototype that implements agents to interact with three different layers of the network. Experimental results show that the proposed framework achieved performance gains of up to 14.61% while requiring only 44.37% of FLOPs required by state-of-the-art algorithms.",
+      "date": "2025-12-30"
+    },
+    {
+      "source": "ArXiv CS Networking",
+      "title": "A Lightweight Coordinate-Conditioned Diffusion Approach for 6G C-V2X Radio Environment Maps",
+      "link": "https://arxiv.org/abs/2512.22535",
       "score": 3,
-      "ai_insights": null,
-      "summary": "arXiv:2512.22022v1 Announce Type: new \nAbstract: While traditional handovers (THOs) have served as a backbone for mobile connectivity, they increasingly suffer from failures and delays, especially in dense deployments and high-frequency bands. To address these limitations, 3GPP introduced Conditional Handovers (CHOs) that enable proactive cell reservations and user-driven execution. However, both handover (HO) types present intricate trade-offs in signaling, resource usage, and reliability. This paper presents unique, countrywide mobility management datasets from a top-tier mobile network operator (MNO) that offer fresh insights into these issues and call for adaptive and robust HO control in next-generation networks. Motivated by these findings, we propose CONTRA, a framework that, for the first time, jointly optimizes THOs and CHOs within the O-RAN architecture. We study two variants of CONTRA: one where users are a priori assigned to one of the HO types, reflecting distinct service or user-specific requirements, as well as a more dynamic formulation where the controller decides on-the-fly the HO type, based on system conditions and needs. To this end, it relies on a practical meta-learning algorithm that adapts to runtime observations and guarantees performance comparable to an oracle with perfect future information (universal no-regret). CONTRA is specifically designed for near-real-time deployment as an O-RAN xApp and aligns with the 6G goals of flexible and intelligent control. Extensive evaluations leveraging crowdsourced datasets show that CONTRA improves user throughput and reduces both THO and CHO switching costs, outperforming 3GPP-compliant and Reinforcement Learning (RL) baselines in dynamic and real-world scenarios.",
-      "date": "2025-12-29"
+      "ai_insights": {
+        "is_6g_relevant": true,
+        "summary": "This research introduces a lightweight generative AI framework (CCDDPM) to produce high-fidelity 6G Radio Environment Maps, enabling C-V2X systems to predict signal dynamics and optimize PHY-layer performance for autonomous vehicles.",
+        "impact_score": 7,
+        "6g_topics": [
+          "AI-native RAN",
+          "Network automation",
+          "Cloud-edge integration",
+          "ISAC"
+        ],
+        "impact_dimensions": {
+          "research_intensity": 5,
+          "standardization_influence": 3,
+          "industrial_deployment": 2,
+          "spectrum_policy_signal": 1,
+          "ecosystem_maturity": 2
+        },
+        "time_horizon": "mid-term",
+        "world_power_impact": {
+          "US": 4,
+          "EU": 4,
+          "China": 5,
+          "Japan": 3,
+          "Korea": 4,
+          "India": 2
+        },
+        "emerging_concepts": [
+          "Coordinate-Conditioned Denoising Diffusion Probabilistic Model (CCDDPM)",
+          "Generative Radio Environment Maps",
+          "Scenario-consistent REM prediction",
+          "Lightweight conditional U-Net architecture"
+        ],
+        "key_evidence": [
+          "Addresses 6G C-V2X PHY issues using dynamic high-fidelity Radio Environment Maps (REM).",
+          "Utilizes a diffusion-based generative approach to predict REMs from limited historical data.",
+          "Proposes a lightweight two-channel conditional U-Net architecture for rapid, real-time vehicle deployment.",
+          "Demonstrates superior stability and statistical accuracy compared to existing generative AI approaches."
+        ]
+      },
+      "summary": "arXiv:2512.22535v1 Announce Type: new \nAbstract: Transmitter vehicles that broadcast 6G Cellular Vehicle-to-Everything (C-V2X)-based messages, e.g., Basic Safety Messages (BSMs), are prone to be impacted by PHY issues due to the lack of dynamic high-fidelity Radio Environment Map (REM) with dynamic location variation. This paper explores a lightweight diffusion-based generative approach, the Coordinate-Conditioned Denoising Diffusion Probabilistic Model (CCDDPM), that leverages the signal intensity-based 6G V2X Radio Environment Map (REM) from limited historical transmitter vehicles in a specific region, to predict the REMs for a transmitter vehicle with arbitrary coordinates across the same region. The transmitter vehicle coordinate is encoded as a smooth Gaussian prior and fused with the Gaussian noise through a lightweight two-channel conditional U-Net architecture. We demonstrate that the predicted REM closely matches the statistics and structure of ground-truth REM while exhibiting the improved stability and over other widely applied generative AI approaches. The resulting predictor enables rapid and scenario-consistent REM with arbitrary transmitter coordinates, which thereby supports more efficient 6G C-V2X communications where transmitter vehicles are less likely to suffer from the PHY issues.",
+      "date": "2025-12-30"
+    },
+    {
+      "source": "ArXiv CS Networking",
+      "title": "Hierarchical Decision Mamba Meets Agentic AI: A Novel Approach for RAN Slicing in 6G",
+      "link": "https://arxiv.org/abs/2512.23502",
+      "score": 3,
+      "ai_insights": {
+        "is_6g_relevant": true,
+        "summary": "This research introduces an Agentic AI framework using Hierarchical Decision Mamba and LLMs to automate 6G RAN slicing through intent-driven orchestration, addressing the complexities of multi-slice SLA management.",
+        "impact_score": 8,
+        "6g_topics": [
+          "AI-native RAN",
+          "network automation",
+          "cloud-edge integration",
+          "Open RAN"
+        ],
+        "impact_dimensions": {
+          "research_intensity": 5,
+          "standardization_influence": 3,
+          "industrial_deployment": 2,
+          "spectrum_policy_signal": 1,
+          "ecosystem_maturity": 2
+        },
+        "time_horizon": "mid-term",
+        "world_power_impact": {
+          "US": 4,
+          "EU": 3,
+          "China": 5,
+          "Japan": 3,
+          "Korea": 3,
+          "India": 2
+        },
+        "emerging_concepts": [
+          "Hierarchical Decision Mamba (HDM)",
+          "Agentic AI",
+          "Intent-driven Orchestration",
+          "Super Agent Architecture",
+          "Self-healing Agents"
+        ],
+        "key_evidence": [
+          "Proposed framework replaces traditional RL with Hierarchical Decision Mamba for better coordination of inter/intra-slice resources.",
+          "Integration of LLMs allows for natural language operator intents to be translated into actionable network goals.",
+          "Demonstrated performance gains in throughput, cell-edge reliability, and latency compared to transformer-based baselines."
+        ]
+      },
+      "summary": "arXiv:2512.23502v1 Announce Type: new \nAbstract: Radio Access Network (RAN) slicing enables multiple logical networks to exist on top of the same physical infrastructure by allocating resources to distinct service groups, where radio resource scheduling plays a key role in ensuring compliance with slice-specific Service-Level Agreements (SLAs). Existing configuration-based or intent-driven Reinforcement Learning (RL) approaches usually rely on static mappings and SLA conversions. The current literature does not integrate natural language understanding with coordinated decision-making. To address these limitations, we propose an Agentic AI framework for 6G RAN slicing, driven by a super agent built using Hierarchical Decision Mamba (HDM) controllers and a Large Language Model (LLM). The super agent interprets operator intents and translates them into actionable goals using the LLM, which are used by HDM to coordinate inter-slice, intra-slice, and self-healing agents. Compared to transformer-based and reward-driven baselines, the proposed Agentic AI framework demonstrates consistent improvements across key performance indicators, including higher throughput, improved cell-edge performance, and reduced latency across different slices.",
+      "date": "2025-12-30"
     }
   ]
 }
