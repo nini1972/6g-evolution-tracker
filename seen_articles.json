@@ -173,5 +173,20 @@
     "url": "https://arxiv.org/abs/2512.22022",
     "title": "Meta-Learning-Based Handover Management in NextG O-RAN",
     "processed_date": "2025-12-29"
+  },
+  "9fdb5968408d082a9b4ca32a0b43adf3": {
+    "url": "https://arxiv.org/abs/2512.22535",
+    "title": "A Lightweight Coordinate-Conditioned Diffusion Approach for 6G C-V2X Radio Environment Maps",
+    "processed_date": "2025-12-30"
+  },
+  "89fda58976eb9a29f0cab1d27f0e2b56": {
+    "url": "https://arxiv.org/abs/2512.23502",
+    "title": "Hierarchical Decision Mamba Meets Agentic AI: A Novel Approach for RAN Slicing in 6G",
+    "processed_date": "2025-12-30"
+  },
+  "ee0745d884a1b383b41dd251203dc0cd": {
+    "url": "https://arxiv.org/abs/2512.22579",
+    "title": "SANet: A Semantic-aware Agentic AI Networking Framework for Cross-layer Optimization in 6G",
+    "processed_date": "2025-12-30"
   }
 }
