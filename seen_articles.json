@@ -163,30 +163,5 @@
     "url": "https://spectrum.ieee.org/weight-loss-devices",
     "title": "Devices Target the Gut to Maintain Weight Loss from GLP-1 Drugs",
     "processed_date": "2025-12-29"
-  },
-  "59b83cd39149d4d0b81cc1e48cf3c56f": {
-    "url": "https://www.nokia.com/newsroom/demands-of-ai-supercycle-spur-cross-industry-consensus-to-evolve-us-and-european-network-infrastructure---new-study/",
-    "title": "Demands of AI supercycle spur cross-industry consensus to evolve US and European network infrastructure - new study",
-    "processed_date": "2025-12-29"
-  },
-  "ebd7b87a55b4192d1c898de872b83da8": {
-    "url": "https://arxiv.org/abs/2512.22022",
-    "title": "Meta-Learning-Based Handover Management in NextG O-RAN",
-    "processed_date": "2025-12-29"
-  },
-  "9fdb5968408d082a9b4ca32a0b43adf3": {
-    "url": "https://arxiv.org/abs/2512.22535",
-    "title": "A Lightweight Coordinate-Conditioned Diffusion Approach for 6G C-V2X Radio Environment Maps",
-    "processed_date": "2025-12-30"
-  },
-  "89fda58976eb9a29f0cab1d27f0e2b56": {
-    "url": "https://arxiv.org/abs/2512.23502",
-    "title": "Hierarchical Decision Mamba Meets Agentic AI: A Novel Approach for RAN Slicing in 6G",
-    "processed_date": "2025-12-30"
-  },
-  "ee0745d884a1b383b41dd251203dc0cd": {
-    "url": "https://arxiv.org/abs/2512.22579",
-    "title": "SANet: A Semantic-aware Agentic AI Networking Framework for Cross-layer Optimization in 6G",
-    "processed_date": "2025-12-30"
   }
-}
+ }
