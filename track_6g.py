@@ -64,40 +64,80 @@ def get_ai_summary(title, summary, site_name):
         return None
     
     prompt = f"""
-    You are a 6G strategy and technology analyst. Analyze the following article for its relevance to 6G (IMT-2030).
-    
+    You are a 6G strategy and technology analyst. Analyze the following article for its relevance to 6G (IMT‑2030) and produce a structured geopolitical intelligence profile.
+
     Source: {site_name}
     Title: {title}
     Snippet: {summary}
-    
-    Task:
-    1. Determine if this article is genuinely relevant to 6G. If not, set 'is_6g_relevant': false.
-    2. If relevant, perform a deep analysis following these definitions:
-       - Topics: sub-THz, AI-native RAN, semantic communications, ISAC, NTN, zero-energy devices, security & trust, network automation, sustainability, spectrum & policy, standardization, device ecosystem, cloud-edge integration, Open RAN, quantum-safe networking.
-       - Dimensions (0-5 scale): research_intensity, standardization_influence, industrial_deployment, spectrum_policy_signal, ecosystem_maturity.
-       - Time Horizon: near-term (<= 2028), mid-term (2028-2032), long-term (>= 2032).
-       - World Powers (0-5 scale): US, EU, China, Japan, Korea, India (Score based on how the article affects their 6G position).
-    
-    Return the response in this exact JSON format:
-    {{
-      "is_6g_relevant": true,
-      "summary": "1-2 sentence 6G-focused summary",
-      "impact_score": 0,
-      "6g_topics": [],
-      "impact_dimensions": {{
+
+    Your tasks:
+
+    1. Determine if this article is genuinely relevant to 6G. If not, return:
+    {
+        "is_6g_relevant": false
+    }
+
+    2. If relevant, perform a deep analysis using the following definitions:
+
+    **Source Region (Emitter Region):**
+    Identify the region the article originates from based on the publisher or organization.
+    Use one of: US, EU, China, Japan, Korea, India, Other.
+
+    **6G Topics (choose all that apply):**
+    sub-THz, AI-native RAN, semantic communications, ISAC, NTN, zero-energy devices,
+    security & trust fabrics, network automation, sustainability, spectrum & policy,
+    standardization, device ecosystem, cloud-edge integration, Open RAN, quantum-safe networking.
+
+    **Impact Dimensions (0–5 scale):**
+    - research_intensity
+    - standardization_influence
+    - industrial_deployment
+    - spectrum_policy_signal
+    - ecosystem_maturity
+
+    **Time Horizon:**
+    - near-term (<= 2028)
+    - mid-term (2028–2032)
+    - long-term (>= 2032)
+
+    **World Power Impact (0–5 scale):**
+    US, EU, China, Japan, Korea, India
+    Score based on how the article affects each region’s 6G position.
+
+    **Overall 6G Importance (0–10):**
+    A single score representing the strategic weight of this article.
+
+    **Emerging Concepts:**
+    Extract 1–5 novel or forward-looking ideas mentioned in the article.
+
+    **Key Evidence:**
+    Extract 1–5 short bullet points quoting or paraphrasing the most important factual signals.
+
+    Return ONLY valid JSON in this exact format:
+
+    {
+    "is_6g_relevant": true,
+    "source_region": "",
+    "summary": "1–2 sentence 6G-focused summary.",
+    "overall_6g_importance": 0,
+    "6g_topics": [],
+    "impact_dimensions": {
         "research_intensity": 0,
         "standardization_influence": 0,
         "industrial_deployment": 0,
         "spectrum_policy_signal": 0,
         "ecosystem_maturity": 0
-      }},
-      "time_horizon": "near-term/mid-term/long-term",
-      "world_power_impact": {{
+    },
+    "time_horizon": "near-term/mid-term/long-term",
+    "world_power_impact": {
         "US": 0, "EU": 0, "China": 0, "Japan": 0, "Korea": 0, "India": 0
-      }},
-      "emerging_concepts": [],
-      "key_evidence": []
-    }}
+    },
+    "emerging_concepts": [],
+    "key_evidence": []
+    }
+
+    Return ONLY JSON. No commentary. No markdown.
+
     """
     
     try:
@@ -422,32 +462,74 @@ def aggregate_momentum(articles):
                 # Store weighted values
                 for dim in aggregation[region][quarter]:
                     if dim == "momenta":
-                        aggregation[region][quarter][dim].append(article_momentum * importance)
+                        aggregation[region][quarter][dim].append((article_momentum, importance))
                     else:
                         val = dimensions.get(dim, 0)
-                        aggregation[region][quarter][dim].append(val * importance)
+                        aggregation[region][quarter][dim].append((val, importance))
 
-    # Final Average
+    # Final Weighted Averages
     final_data = []
     for region, quarters in aggregation.items():
         for quarter, metrics in quarters.items():
             entry = {
                 "region": region,
-                "time_window": quarter,
-                "momentum_score": round(sum(metrics["momenta"]) / len(metrics["momenta"]), 2) if metrics["momenta"] else 0
+                "time_window": quarter
             }
-            # Average other dimensions
+
+            # Weighted momentum score
+            if metrics["momenta"]:
+                momentum_sum = sum(m * w for m, w in metrics["momenta"])
+                momentum_weight = sum(w for m, w in metrics["momenta"])
+                entry["momentum_score"] = round(momentum_sum / momentum_weight, 2)
+            else:
+                entry["momentum_score"] = 0
+
+            # Weighted averages for each dimension
             for dim in metrics:
-                if dim != "momenta":
-                    entry[dim] = round(sum(metrics[dim]) / len(metrics[dim]), 2) if metrics[dim] else 0
+                if dim == "momenta":
+                    continue
+
+                values = metrics[dim]
+                if values:
+                    weighted_sum = sum(v * w for v, w in values)
+                    total_weight = sum(w for v, w in values)
+                    entry[dim] = round(weighted_sum / total_weight, 2)
+                else:
+                    entry[dim] = 0
+
             final_data.append(entry)
-            
+
+    # Save output
     try:
         with open("momentum_data.json", "w", encoding="utf-8") as f:
             json.dump(final_data, f, indent=2)
         print(f"📈 Momentum data aggregated for {len(final_data)} region-quarter windows.")
     except Exception as e:
         print(f"❌ Momentum aggregation failed: {e}")
+
+def generate_source_target_matrix(articles):
+    regions = ["US", "EU", "China", "Japan", "Korea", "India"]
+    matrix = {src: {tgt: 0 for tgt in regions} for src in regions}
+
+    for article in articles:
+        ai = article.get("ai_insights")
+        if not ai or not ai.get("is_6g_relevant"):
+            continue
+
+        source_region = ai.get("source_region", "Other")
+        if source_region not in regions:
+            continue
+
+        wp_impact = ai.get("world_power_impact", {})
+
+        for target_region, score in wp_impact.items():
+            if target_region in regions and score > 0:
+                matrix[source_region][target_region] += 1
+
+    with open("source_target_matrix.json", "w", encoding="utf-8") as f:
+        json.dump(matrix, f, indent=2)
+
+    print("🌐 Source→Target matrix generated.")
 
 def main():
     print("🚀 6G Sentinel started its monthly sweep.\n")
@@ -471,12 +553,15 @@ def main():
         
         feeds_data = {}
         for future in as_completed(future_to_source):
-            source, feed = future.result()
-            if feed and hasattr(feed, 'entries'):
-                feeds_data[source] = feed
-                print(f"✓ {source}: {len(feed.entries)} total entries fetched")
-            else:
-                print(f"✗ {source}: Failed to fetch")
+            try:
+                source, feed = future.result()
+                if feed and hasattr(feed, 'entries'):
+                    feeds_data[source] = feed
+                    print(f"✓ {source}: {len(feed.entries)} total entries fetched")
+                else:
+                    print(f"✗ {source}: Failed to fetch")
+            except Exception as e:
+                print(f"❌ Error fetching source: {e}")
     
     print()
     
@@ -511,6 +596,10 @@ def main():
                     print(f"  🚫 AI rejected as irrelevant: {entry.get('title')[:50]}")
                     continue
                 
+                # Map AI overall_6g_importance to impact_score for the dashboard
+                if ai_insights:
+                    ai_insights["impact_score"] = ai_insights.get("overall_6g_importance", 0)
+                
                 entry["_relevance_score"] = score
                 entry["_ai_insights"] = ai_insights
                 
@@ -538,22 +627,25 @@ def main():
             
             # Prepare for JSON export
             for entry in relevant_entries:
+                ai = entry.get("_ai_insights")
                 all_processed_entries.append({
                     "source": source,
                     "title": entry.get("title", ""),
                     "link": entry.get("link", ""),
                     "score": entry.get("_relevance_score", 0),
-                    "ai_insights": entry.get("_ai_insights"),
+                    "ai_insights": ai,
+                    "source_region": ai.get("source_region", "Other") if ai else "Other",
                     "summary": entry.get("summary", ""),
                     "date": datetime(*entry.published_parsed[:6]).strftime("%Y-%m-%d") if hasattr(entry, "published_parsed") and entry.published_parsed else DATE
                 })
         else:
             print(f"📭 {source}: No new keyword-matching updates this cycle.\n")
     
-    # Export to JSON for dashboard
+    # Export for dashboard
     if all_processed_entries:
         export_to_json(all_processed_entries)
         # Deep Analysis Aggregation
+        generate_source_target_matrix(all_processed_entries)
         aggregate_momentum(all_processed_entries)
     
     # Save cache
@@ -566,3 +658,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
