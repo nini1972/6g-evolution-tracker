@@ -444,7 +444,7 @@ def aggregate_momentum(articles):
             
         wp_impact = ai.get("world_power_impact", {})
         dimensions = ai.get("impact_dimensions", {})
-        importance = ai.get("impact_score", 1) # weight
+        importance = ai.get("overall_6g_importance", 1) # weight
         
         # Calculate momentum = weighted average of dimensions
         dim_values = [v for v in dimensions.values() if isinstance(v, (int, float))]
