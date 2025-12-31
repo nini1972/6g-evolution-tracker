@@ -55,9 +55,7 @@ client = genai.Client(api_key=os.getenv("GOOGLE_API_KEY"))
 
 def get_ai_summary(title, summary, site_name):
     """Get an AI-powered summary and 6G impact score from Gemini."""
-    if not model:
-        return None
-    
+       
     prompt = f"""
     You are a 6G strategy and technology analyst. Analyze the following article for its relevance to 6G (IMT‑2030) and produce a structured geopolitical intelligence profile.
 
