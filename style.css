@@ -22,13 +22,15 @@ body {
     color: var(--text-main);
     line-height: 1.6;
     overflow-x: hidden;
-    background-image: 
+    background-image:
         radial-gradient(circle at 10% 20%, rgba(112, 0, 255, 0.1) 0%, transparent 40%),
         radial-gradient(circle at 90% 80%, rgba(0, 242, 255, 0.1) 0%, transparent 40%);
     min-height: 100vh;
 }
 
-h1, h2, h3 {
+h1,
+h2,
+h3 {
     font-family: 'Outfit', sans-serif;
 }
 
@@ -71,9 +73,20 @@ header {
 }
 
 @keyframes pulse {
-    0% { transform: scale(0.95); opacity: 0.5; }
-    50% { transform: scale(1.1); opacity: 1; }
-    100% { transform: scale(0.95); opacity: 0.5; }
+    0% {
+        transform: scale(0.95);
+        opacity: 0.5;
+    }
+
+    50% {
+        transform: scale(1.1);
+        opacity: 1;
+    }
+
+    100% {
+        transform: scale(0.95);
+        opacity: 0.5;
+    }
 }
 
 .status-badge {
@@ -115,7 +128,8 @@ header {
     margin: 0 auto;
 }
 
-input, select {
+input,
+select {
     background: var(--card-bg);
     border: 1px solid var(--glass-border);
     color: white;
@@ -126,10 +140,16 @@ input, select {
     transition: all 0.3s ease;
 }
 
-input { flex: 2; }
-select { flex: 1; }
+input {
+    flex: 2;
+}
 
-input:focus, select:focus {
+select {
+    flex: 1;
+}
+
+input:focus,
+select:focus {
     border-color: var(--primary);
     box-shadow: 0 0 10px var(--primary-glow);
 }
@@ -236,8 +256,13 @@ input:focus, select:focus {
 }
 
 @keyframes rotation {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
 }
 
 /* Footer */
@@ -252,8 +277,63 @@ footer {
 
 /* Responsive */
 @media (max-width: 768px) {
-    .container { padding: 1rem; }
-    .hero h2 { font-size: 2.2rem; }
-    .controls { flex-direction: column; }
-    header { flex-direction: column; gap: 1rem; }
+    .container {
+        padding: 1rem;
+    }
+
+    .hero h2 {
+        font-size: 2.2rem;
+    }
+
+    .controls {
+        flex-direction: column;
+    }
+
+    header {
+        flex-direction: column;
+        gap: 1rem;
+    }
+}
+
+.flow-section {
+    margin-top: 40px;
+    padding: 20px;
+    background: #1a1f27;
+    border-radius: 12px;
+}
+
+.flow-section h2 {
+    margin-bottom: 10px;
+}
+
+.flow-subtitle {
+    opacity: 0.7;
+    margin-bottom: 20px;
+}
+
+.flow-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: center;
+    font-size: 14px;
+}
+
+.flow-table th,
+.flow-table td {
+    padding: 10px;
+    border: 1px solid #2a2f38;
+}
+
+.flow-table th {
+    background: #2a2f38;
+    font-weight: 600;
+}
+
+.row-label {
+    font-weight: 600;
+    background: #2a2f38;
+}
+
+.flow-cell {
+    transition: background-color 0.3s ease;
 }

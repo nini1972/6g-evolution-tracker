@@ -25,6 +25,17 @@ async function loadData() {
         } catch (mErr) {
             console.log('Momentum data not yet available.');
         }
+        // Load Source → Target Region Matrix
+        try {
+            const flowResponse = await fetch('./source_target_matrix.json');
+            if (flowResponse.ok) {
+                const flowMatrix = await flowResponse.json();
+                console.log("Source→Target Matrix Loaded:", flowMatrix);
+                renderFlowMatrix(flowMatrix);
+            }
+        } catch (err) {
+            console.log("Flow matrix not available yet.");
+        }
 
         lastUpdateBadge.textContent = `Last Update: ${data.date}`;
 
@@ -82,6 +93,50 @@ function renderArticles(articles) {
             </div>
         `;
     }).join('');
+}
+function renderFlowMatrix(matrix) {
+    const container = document.getElementById('flow-matrix');
+    if (!container) return;
+
+    const regions = ["US", "EU", "China", "Japan", "Korea", "India"];
+
+    let html = `
+        <table class="flow-table">
+            <thead>
+                <tr>
+                    <th>Source ↓ / Target →</th>
+                    ${regions.map(r => `<th>${r}</th>`).join('')}
+                </tr>
+            </thead>
+            <tbody>
+    `;
+
+    regions.forEach(source => {
+        html += `<tr><td class="row-label">${source}</td>`;
+        regions.forEach(target => {
+            const value = matrix[source]?.[target] ?? 0;
+            html += `<td class="flow-cell" data-value="${value}">${value}</td>`;
+        });
+        html += `</tr>`;
+    });
+
+    html += `
+            </tbody>
+        </table>
+    `;
+
+    container.innerHTML = html;
+
+    // Optional: heatmap coloring
+    const cells = container.querySelectorAll('.flow-cell');
+    let max = 0;
+    cells.forEach(c => max = Math.max(max, parseInt(c.dataset.value)));
+
+    cells.forEach(cell => {
+        const v = parseInt(cell.dataset.value);
+        const intensity = max > 0 ? v / max : 0;
+        cell.style.backgroundColor = `rgba(0, 150, 255, ${intensity * 0.6})`;
+    });
 }
 
 // Filtering logic
