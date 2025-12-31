@@ -9,7 +9,7 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
 from bs4 import BeautifulSoup
 from urllib.parse import urljoin
-import google.generativeai as genai
+import google.genai as genai
 import os
 
 # 🌐 RSS sources to monitor
@@ -51,12 +51,7 @@ MAX_RETRIES = 3
 RETRY_DELAY = 2  # seconds
 
 # 🤖 Gemini AI Config
-GEMINI_API_KEY = os.environ.get("GOOGLE_API_KEY")
-if GEMINI_API_KEY:
-    genai.configure(api_key=GEMINI_API_KEY)
-    model = genai.GenerativeModel('gemini-3-flash-preview')
-else:
-    model = None
+client = genai.Client(api_key=os.getenv("GOOGLE_API_KEY"))
 
 def get_ai_summary(title, summary, site_name):
     """Get an AI-powered summary and 6G impact score from Gemini."""
@@ -146,8 +141,12 @@ def get_ai_summary(title, summary, site_name):
     """
     
     try:
-        response = model.generate_content(prompt)
+        response = client.models.generate_content(
+        model="gemini-3-flash-preview",
+        contents=prompt
+        )
         text = response.text.strip()
+
         if "```json" in text:
             text = text.split("```json")[1].split("```")[0].strip()
         elif "{" in text:
