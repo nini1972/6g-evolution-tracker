@@ -177,14 +177,15 @@ def get_ai_summary(title, summary, site_name):
         if "is_6g_relevant" in data:
             if isinstance(data["is_6g_relevant"], str):
                 val = data["is_6g_relevant"].strip().lower()
-                # Handle numeric strings explicitly
+                # Handle common string representations of boolean values
                 if val in ("0", "false", "no", ""):
                     data["is_6g_relevant"] = False
                 elif val in ("1", "true", "yes"):
                     data["is_6g_relevant"] = True
                 else:
-                    # For any other string, check if it's truthy
-                    data["is_6g_relevant"] = val == "true"
+                    # For any other string value, use Python's default truthiness
+                    # (non-empty strings are truthy, but we default to False for safety)
+                    data["is_6g_relevant"] = False
             elif not isinstance(data["is_6g_relevant"], bool):
                 data["is_6g_relevant"] = bool(data["is_6g_relevant"])
 
