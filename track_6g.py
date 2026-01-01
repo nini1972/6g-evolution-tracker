@@ -147,9 +147,17 @@ def get_ai_summary(title, summary, site_name):
 
         # Remove markdown code blocks if present
         if "```json" in text: 
-            text = text.split("```json")[1].split("```")[0].strip()
+            # Find first occurrence of ```json and first ``` after it
+            start_marker = text.find("```json") + len("```json")
+            end_marker = text.find("```", start_marker)
+            if end_marker != -1:
+                text = text[start_marker:end_marker].strip()
         elif "```" in text:
-            text = text.split("```")[1].split("```")[0].strip()
+            # Find first occurrence of ``` and first ``` after it
+            start_marker = text.find("```") + len("```")
+            end_marker = text.find("```", start_marker)
+            if end_marker != -1:
+                text = text[start_marker:end_marker].strip()
         elif "{" in text:
             # Fallback if markdown is missing but JSON is present
             start = text.find("{")
@@ -168,7 +176,15 @@ def get_ai_summary(title, summary, site_name):
         # Ensure is_6g_relevant is a boolean
         if "is_6g_relevant" in data:
             if isinstance(data["is_6g_relevant"], str):
-                data["is_6g_relevant"] = data["is_6g_relevant"].strip().lower() == "true"
+                val = data["is_6g_relevant"].strip().lower()
+                # Handle numeric strings explicitly
+                if val in ("0", "false", "no", ""):
+                    data["is_6g_relevant"] = False
+                elif val in ("1", "true", "yes"):
+                    data["is_6g_relevant"] = True
+                else:
+                    # For any other string, check if it's truthy
+                    data["is_6g_relevant"] = val == "true"
             elif not isinstance(data["is_6g_relevant"], bool):
                 data["is_6g_relevant"] = bool(data["is_6g_relevant"])
 
