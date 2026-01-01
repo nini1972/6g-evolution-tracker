@@ -52,7 +52,7 @@ RETRY_DELAY = 2  # seconds
 
 # 🤖 Gemini AI Config
 client = genai.Client(api_key=os.getenv("GOOGLE_API_KEY"))
-
+model="gemini-3-flash-preview"
 def get_ai_summary(title, summary, site_name):
     """Get an AI-powered summary and 6G impact score from Gemini."""
        
@@ -140,7 +140,7 @@ def get_ai_summary(title, summary, site_name):
     
     try:
         response = client.models.generate_content(
-        model="gemini-3-flash-preview",
+        model=model,
         contents=prompt
         )
         text = response.text.strip()
