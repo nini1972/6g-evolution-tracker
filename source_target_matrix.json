@@ -1,0 +1,50 @@
+{
+  "US": {
+    "US": 1,
+    "EU": 1,
+    "China": 1,
+    "Japan": 1,
+    "Korea": 1,
+    "India": 1
+  },
+  "EU": {
+    "US": 0,
+    "EU": 0,
+    "China": 0,
+    "Japan": 0,
+    "Korea": 0,
+    "India": 0
+  },
+  "China": {
+    "US": 2,
+    "EU": 2,
+    "China": 2,
+    "Japan": 2,
+    "Korea": 2,
+    "India": 2
+  },
+  "Japan": {
+    "US": 0,
+    "EU": 0,
+    "China": 0,
+    "Japan": 0,
+    "Korea": 0,
+    "India": 0
+  },
+  "Korea": {
+    "US": 0,
+    "EU": 0,
+    "China": 0,
+    "Japan": 0,
+    "Korea": 0,
+    "India": 0
+  },
+  "India": {
+    "US": 0,
+    "EU": 0,
+    "China": 0,
+    "Japan": 0,
+    "Korea": 0,
+    "India": 0
+  }
+}

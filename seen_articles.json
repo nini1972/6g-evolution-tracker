@@ -168,5 +168,40 @@
     "url": "https://www.nokia.com/newsroom/demands-of-ai-supercycle-spur-cross-industry-consensus-to-evolve-us-and-european-network-infrastructure---new-study/",
     "title": "Demands of AI supercycle spur cross-industry consensus to evolve US and European network infrastructure - new study",
     "processed_date": "2025-12-29"
+  },
+  "ebd7b87a55b4192d1c898de872b83da8": {
+    "url": "https://arxiv.org/abs/2512.22022",
+    "title": "Meta-Learning-Based Handover Management in NextG O-RAN",
+    "processed_date": "2025-12-29"
+  },
+  "9fdb5968408d082a9b4ca32a0b43adf3": {
+    "url": "https://arxiv.org/abs/2512.22535",
+    "title": "A Lightweight Coordinate-Conditioned Diffusion Approach for 6G C-V2X Radio Environment Maps",
+    "processed_date": "2025-12-30"
+  },
+  "89fda58976eb9a29f0cab1d27f0e2b56": {
+    "url": "https://arxiv.org/abs/2512.23502",
+    "title": "Hierarchical Decision Mamba Meets Agentic AI: A Novel Approach for RAN Slicing in 6G",
+    "processed_date": "2025-12-30"
+  },
+  "ee0745d884a1b383b41dd251203dc0cd": {
+    "url": "https://arxiv.org/abs/2512.22579",
+    "title": "SANet: A Semantic-aware Agentic AI Networking Framework for Cross-layer Optimization in 6G",
+    "processed_date": "2025-12-30"
+  },
+  "95ed526a2fce8a1748787593924e615b": {
+    "url": "https://arxiv.org/abs/2512.23897",
+    "title": "Wireless Multimodal Foundation Model (WMFM): Integrating Vision and Communication Modalities for 6G ISAC Systems",
+    "processed_date": "2026-01-01"
+  },
+  "a05f56dbb4dc722b90ba38c9c5481f5d": {
+    "url": "https://arxiv.org/abs/2512.18582",
+    "title": "Wireless Copilot: An AI-Powered Partner for Navigating Next-Generation Wireless Complexity",
+    "processed_date": "2026-01-01"
+  },
+  "6541081140b78360ff15669604dc2b16": {
+    "url": "https://arxiv.org/abs/2507.09627",
+    "title": "Lightweight Deep Learning-Based Channel Estimation for RIS-Aided Extremely Large-Scale MIMO Systems on Resource-Limited Edge Devices",
+    "processed_date": "2026-01-01"
   }
- }
+}
