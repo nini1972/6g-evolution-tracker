@@ -183,8 +183,8 @@ def get_ai_summary(title, summary, site_name):
                 elif val in ("1", "true", "yes"):
                     data["is_6g_relevant"] = True
                 else:
-                    # For any other string value, use Python's default truthiness
-                    # (non-empty strings are truthy, but we default to False for safety)
+                    # For any other string value, default to False for safety
+                    # (instead of using Python's truthiness where non-empty strings are True)
                     data["is_6g_relevant"] = False
             elif not isinstance(data["is_6g_relevant"], bool):
                 data["is_6g_relevant"] = bool(data["is_6g_relevant"])
