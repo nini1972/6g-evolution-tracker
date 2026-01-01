@@ -145,15 +145,33 @@ def get_ai_summary(title, summary, site_name):
         )
         text = response.text.strip()
 
-        if "```json" in text:
+        # Remove markdown code blocks if present
+        if "```json" in text: 
             text = text.split("```json")[1].split("```")[0].strip()
+        elif "```" in text:
+            text = text.split("```")[1].split("```")[0].strip()
         elif "{" in text:
             # Fallback if markdown is missing but JSON is present
             start = text.find("{")
             end = text.rfind("}") + 1
             text = text[start:end]
+
+        # Clean up any whitespace issues
+        text = text.strip()
             
         data = json.loads(text)
+
+        # Validate the response structure
+        if not isinstance(data, dict):
+            raise ValueError("AI response is not a valid JSON object")
+            
+        # Ensure is_6g_relevant is a boolean
+        if "is_6g_relevant" in data:
+            if isinstance(data["is_6g_relevant"], str):
+                data["is_6g_relevant"] = data["is_6g_relevant"].strip().lower() == "true"
+            elif not isinstance(data["is_6g_relevant"], bool):
+                data["is_6g_relevant"] = bool(data["is_6g_relevant"])
+
         return data
     except Exception as e:
         print(f"  ⚠️ AI Summary failed for '{title[:30]}...': {e}")
