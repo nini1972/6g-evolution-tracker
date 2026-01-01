@@ -1,114 +1,125 @@
 {
-  "date": "2025-12-30",
+  "date": "2026-01-01",
   "articles": [
     {
       "source": "ArXiv CS Networking",
-      "title": "SANet: A Semantic-aware Agentic AI Networking Framework for Cross-layer Optimization in 6G",
-      "link": "https://arxiv.org/abs/2512.22579",
-      "score": 6,
+      "title": "Wireless Multimodal Foundation Model (WMFM): Integrating Vision and Communication Modalities for 6G ISAC Systems",
+      "link": "https://arxiv.org/abs/2512.23897",
+      "score": 3,
       "ai_insights": {
         "is_6g_relevant": true,
-        "summary": "This research introduces SANet, a 6G-centric framework that leverages decentralized AI agents and semantic goal inference to achieve cross-layer autonomous network optimization with high efficiency.",
-        "impact_score": 8.5,
+        "source_region": "US",
+        "summary": "The article proposes a Wireless Multimodal Foundation Model (WMFM) that uses contrastive self-supervised learning to align wireless channel data with visual imagery. Designed for 6G ISAC systems, it demonstrates significant performance gains in user localization and LoS/nLoS classification while drastically reducing training data requirements and time.",
+        "overall_6g_importance": 8,
         "6g_topics": [
           "AI-native RAN",
-          "semantic communications",
-          "network automation",
+          "ISAC",
           "cloud-edge integration"
         ],
         "impact_dimensions": {
           "research_intensity": 5,
           "standardization_influence": 3,
           "industrial_deployment": 2,
-          "spectrum_policy_signal": 0,
-          "ecosystem_maturity": 2
-        },
-        "time_horizon": "mid-term",
-        "world_power_impact": {
-          "US": 4,
-          "EU": 3,
-          "China": 5,
-          "Japan": 3,
-          "Korea": 3,
-          "India": 2
-        },
-        "emerging_concepts": [
-          "Agentic AI Networking (AgentNet)",
-          "Semantic Goal Inference",
-          "Model Partition and Sharing (MoPS)",
-          "Multi-agent Multi-objective Pareto-optimization"
-        ],
-        "key_evidence": [
-          "Proposed a novel semantic-aware AgentNet architecture specifically for wireless cross-layer optimization.",
-          "Developed a hardware prototype using open-source RAN and core networks to validate agent interaction.",
-          "Demonstrated performance gains of 14.61% with a 55.63% reduction in FLOPs compared to current state-of-the-art AI methods.",
-          "Derived theoretical bounds for the tradeoff between optimization, generalization, and conflicting agent objectives."
-        ]
-      },
-      "summary": "arXiv:2512.22579v1 Announce Type: cross \nAbstract: Agentic AI networking (AgentNet) is a novel AI-native networking paradigm in which a large number of specialized AI agents collaborate to perform autonomous decision-making, dynamic environmental adaptation, and complex missions. It has the potential to facilitate real-time network management and optimization functions, including self-configuration, self-optimization, and self-adaptation across diverse and complex environments. This paper proposes SANet, a novel semantic-aware AgentNet architecture for wireless networks that can infer the semantic goal of the user and automatically assign agents associated with different layers of the network to fulfill the inferred goal. Motivated by the fact that AgentNet is a decentralized framework in which collaborating agents may generally have different and even conflicting objectives, we formulate the decentralized optimization of SANet as a multi-agent multi-objective problem, and focus on finding the Pareto-optimal solution for agents with distinct and potentially conflicting objectives. We propose three novel metrics for evaluating SANet. Furthermore, we develop a model partition and sharing (MoPS) framework in which large models, e.g., deep learning models, of different agents can be partitioned into shared and agent-specific parts that are jointly constructed and deployed according to agents' local computational resources. Two decentralized optimization algorithms are proposed. We derive theoretical bounds and prove that there exists a three-way tradeoff among optimization, generalization, and conflicting errors. We develop an open-source RAN and core network-based hardware prototype that implements agents to interact with three different layers of the network. Experimental results show that the proposed framework achieved performance gains of up to 14.61% while requiring only 44.37% of FLOPs required by state-of-the-art algorithms.",
-      "date": "2025-12-30"
-    },
-    {
-      "source": "ArXiv CS Networking",
-      "title": "A Lightweight Coordinate-Conditioned Diffusion Approach for 6G C-V2X Radio Environment Maps",
-      "link": "https://arxiv.org/abs/2512.22535",
-      "score": 3,
-      "ai_insights": {
-        "is_6g_relevant": true,
-        "summary": "This research introduces a lightweight generative AI framework (CCDDPM) to produce high-fidelity 6G Radio Environment Maps, enabling C-V2X systems to predict signal dynamics and optimize PHY-layer performance for autonomous vehicles.",
-        "impact_score": 7,
-        "6g_topics": [
-          "AI-native RAN",
-          "Network automation",
-          "Cloud-edge integration",
-          "ISAC"
-        ],
-        "impact_dimensions": {
-          "research_intensity": 5,
-          "standardization_influence": 3,
-          "industrial_deployment": 2,
           "spectrum_policy_signal": 1,
           "ecosystem_maturity": 2
         },
         "time_horizon": "mid-term",
         "world_power_impact": {
-          "US": 4,
-          "EU": 4,
-          "China": 5,
+          "US": 5,
+          "EU": 3,
+          "China": 4,
           "Japan": 3,
-          "Korea": 4,
+          "Korea": 3,
           "India": 2
         },
         "emerging_concepts": [
-          "Coordinate-Conditioned Denoising Diffusion Probabilistic Model (CCDDPM)",
-          "Generative Radio Environment Maps",
-          "Scenario-consistent REM prediction",
-          "Lightweight conditional U-Net architecture"
+          "Wireless Multimodal Foundation Model (WMFM)",
+          "Contrastive learning for radio-vision alignment",
+          "Cross-modal self-supervised pretraining",
+          "Data-efficient radio sensing",
+          "Zero-label channel embedding"
         ],
         "key_evidence": [
-          "Addresses 6G C-V2X PHY issues using dynamic high-fidelity Radio Environment Maps (REM).",
-          "Utilizes a diffusion-based generative approach to predict REMs from limited historical data.",
-          "Proposes a lightweight two-channel conditional U-Net architecture for rapid, real-time vehicle deployment.",
-          "Demonstrates superior stability and statistical accuracy compared to existing generative AI approaches."
-        ]
+          "Achieved a 48.5% reduction in localization error compared to end-to-end benchmarks.",
+          "Reduced training time by up to 90-fold through the use of frozen pretrained encoders.",
+          "Demonstrated robustness by outperforming supervised models even when using only 20% of the training data.",
+          "Proposed a framework for aligning camera imagery and wireless channel coefficients without explicit labels.",
+          "Validation performed on the DeepVerse6G dataset, targeting 6G Integrated Sensing and Communication (ISAC) applications."
+        ],
+        "impact_score": 8
       },
-      "summary": "arXiv:2512.22535v1 Announce Type: new \nAbstract: Transmitter vehicles that broadcast 6G Cellular Vehicle-to-Everything (C-V2X)-based messages, e.g., Basic Safety Messages (BSMs), are prone to be impacted by PHY issues due to the lack of dynamic high-fidelity Radio Environment Map (REM) with dynamic location variation. This paper explores a lightweight diffusion-based generative approach, the Coordinate-Conditioned Denoising Diffusion Probabilistic Model (CCDDPM), that leverages the signal intensity-based 6G V2X Radio Environment Map (REM) from limited historical transmitter vehicles in a specific region, to predict the REMs for a transmitter vehicle with arbitrary coordinates across the same region. The transmitter vehicle coordinate is encoded as a smooth Gaussian prior and fused with the Gaussian noise through a lightweight two-channel conditional U-Net architecture. We demonstrate that the predicted REM closely matches the statistics and structure of ground-truth REM while exhibiting the improved stability and over other widely applied generative AI approaches. The resulting predictor enables rapid and scenario-consistent REM with arbitrary transmitter coordinates, which thereby supports more efficient 6G C-V2X communications where transmitter vehicles are less likely to suffer from the PHY issues.",
-      "date": "2025-12-30"
+      "source_region": "US",
+      "summary": "arXiv:2512.23897v1 Announce Type: new \nAbstract: The emergence of multimodal foundation models has revolutionized learning paradigms by enabling joint understanding across diverse data types. In the context of next-generation wireless networks, integrating sensing and communication modalities presents a unique opportunity to develop generalizable and data-efficient models. In this work, we introduce the contrastive learning based Wireless Multimodal Foundation Model (WMFM), a large-scale framework that jointly learns from wireless channel coefficients and visual imagery. The WMFM is pretrained using contrastive learning, a self-supervised learning technique that aligns embeddings of camera and channel data without requiring explicit labels. The pretrained encoders are then frozen and employed as feature extractors, with lightweight task-specific heads, fine-tuned for downstream tasks, including user localization and LoS/nLoS classification. Extensive experiments on the DeepVerse6G dataset demonstrate that the proposed WMFM achieves a 17% improvement in balanced accuracy for LoS/nLoS classification and a 48.5% reduction in localization error compared to the end-to-end (E2E) benchmark, while reducing training time by up to 90-fold. Even when trained with as little as 20% of the data, the WMFM-based heads outperform the fully supervised E2E model, underscoring their robustness and data-efficient learning. The proposed approach establishes a foundation for scalable, multimodal learning in Integrated Sensing and Communication (ISAC) systems, paving the way for intelligent and adaptive 6G networks.",
+      "date": "2026-01-01"
     },
     {
       "source": "ArXiv CS Networking",
-      "title": "Hierarchical Decision Mamba Meets Agentic AI: A Novel Approach for RAN Slicing in 6G",
-      "link": "https://arxiv.org/abs/2512.23502",
+      "title": "Wireless Copilot: An AI-Powered Partner for Navigating Next-Generation Wireless Complexity",
+      "link": "https://arxiv.org/abs/2512.18582",
       "score": 3,
       "ai_insights": {
         "is_6g_relevant": true,
-        "summary": "This research introduces an Agentic AI framework using Hierarchical Decision Mamba and LLMs to automate 6G RAN slicing through intent-driven orchestration, addressing the complexities of multi-slice SLA management.",
-        "impact_score": 8,
+        "source_region": "China",
+        "summary": "This paper proposes the 'Wireless Copilot,' an AI-native framework utilizing Large Language Models (LLMs) to manage the operational complexity of 6G networks. It introduces a cognitive layer between infrastructure and operators, specifically focusing on translating high-level human intent into network actions for Low-Altitude Wireless Networks (LAWNets).",
+        "overall_6g_importance": 8,
         "6g_topics": [
           "AI-native RAN",
           "network automation",
+          "NTN",
+          "security & trust fabrics",
+          "cloud-edge integration"
+        ],
+        "impact_dimensions": {
+          "research_intensity": 4,
+          "standardization_influence": 2,
+          "industrial_deployment": 1,
+          "spectrum_policy_signal": 1,
+          "ecosystem_maturity": 2
+        },
+        "time_horizon": "mid-term",
+        "world_power_impact": {
+          "US": 3,
+          "EU": 2,
+          "China": 5,
+          "Japan": 2,
+          "Korea": 3,
+          "India": 2
+        },
+        "emerging_concepts": [
+          "Wireless Copilot",
+          "Low-Altitude Wireless Networks (LAWNets)",
+          "Intent-based resource allocation",
+          "Human-AI collaborative ecosystem",
+          "Cognitive framework for 6G LLMs"
+        ],
+        "key_evidence": [
+          "Integrates Large Language Models (LLMs) with a robust cognitive framework to surpass existing AI tools.",
+          "Functions as a novel layer between wireless infrastructure and network operators.",
+          "Translates high-level human intent into precise, optimized, and verifiable network actions.",
+          "Addresses 6G complexity that exceeds traditional automation and manual oversight limits.",
+          "Focuses on Low-Altitude Wireless Networks (LAWNets) as a primary application for 6G network design and optimization."
+        ],
+        "impact_score": 8
+      },
+      "source_region": "China",
+      "summary": "arXiv:2512.18582v2 Announce Type: replace \nAbstract: The sixth-generation (6G) of wireless networks introduces a level of operational complexity that exceeds the limits of traditional automation and manual oversight. This paper introduces the \"Wireless Copilot\", an AI-powered technical assistant designed to function as a collaborative partner for human network designers, engineers, and operators. We posit that by integrating Large Language Models (LLMs) with a robust cognitive framework. It will surpass the existing AI tools and interact with wireless devices, transmitting the user's intentions into the actual network execution process. Then, Wireless Copilot can translate high-level human intent into precise, optimized, and verifiable network actions. This framework bridges the gap between human expertise and machine-scale complexity, enabling more efficient, intelligent, and trustworthy management of 6G systems. Wireless Copilot will be a novel layer between the wireless infrastructure and the network operators. Moreover, we explore Wireless Copilot's methodology and analyze its application in Low-Altitude Wireless Networks (LAWNets) assisting 6G networking, including network design, configuration, evaluation, and optimization. Additionally, we present a case study on intent-based LAWNets resource allocation, demonstrating its superior adaptability compared to others. Finally, we outline future research directions toward creating a comprehensive human-AI collaborative ecosystem for the 6G era.",
+      "date": "2026-01-01"
+    },
+    {
+      "source": "ArXiv CS Networking",
+      "title": "Lightweight Deep Learning-Based Channel Estimation for RIS-Aided Extremely Large-Scale MIMO Systems on Resource-Limited Edge Devices",
+      "link": "https://arxiv.org/abs/2507.09627",
+      "score": 3,
+      "ai_insights": {
+        "is_6g_relevant": true,
+        "source_region": "China",
+        "summary": "This research addresses a critical 6G bottleneck: the high computational and energy costs of Channel State Information (CSI) estimation in XL-MIMO and RIS-aided systems. By introducing a patch-based training mechanism and a lightweight deep learning framework, the study enables accurate cascaded channel estimation on resource-constrained edge devices, facilitating the practical deployment of extremely large-scale antenna arrays.",
+        "overall_6g_importance": 8,
+        "6g_topics": [
+          "AI-native RAN",
+          "sustainability",
           "cloud-edge integration",
-          "Open RAN"
+          "device ecosystem"
         ],
         "impact_dimensions": {
           "research_intensity": 5,
@@ -119,28 +130,32 @@
         },
         "time_horizon": "mid-term",
         "world_power_impact": {
-          "US": 4,
-          "EU": 3,
+          "US": 3,
+          "EU": 4,
           "China": 5,
           "Japan": 3,
           "Korea": 3,
           "India": 2
         },
         "emerging_concepts": [
-          "Hierarchical Decision Mamba (HDM)",
-          "Agentic AI",
-          "Intent-driven Orchestration",
-          "Super Agent Architecture",
-          "Self-healing Agents"
+          "Patch-based training mechanism",
+          "Cascaded channel estimation",
+          "Extremely Large-Scale MIMO (XL-MIMO)",
+          "Lightweight PHY-layer Deep Learning",
+          "Resource-constrained edge CSI"
         ],
         "key_evidence": [
-          "Proposed framework replaces traditional RL with Hierarchical Decision Mamba for better coordination of inter/intra-slice resources.",
-          "Integration of LLMs allows for natural language operator intents to be translated into actionable network goals.",
-          "Demonstrated performance gains in throughput, cell-edge reliability, and latency compared to transformer-based baselines."
-        ]
+          "XL-MIMO and RIS are identified as key enablers for 6G spectral and energy efficiency.",
+          "Proposes a lightweight DL framework specifically designed for resource-limited edge devices to overcome hardware barriers.",
+          "Introduces a patch-based training mechanism to reduce input dimensionality while preserving essential channel information.",
+          "Addresses the 'drastically increasing data volume' and 'computational complexity' inherent in large-scale 6G antenna systems.",
+          "Simulation results show improved accuracy and scalability regardless of the increasing number of antennas or RIS elements."
+        ],
+        "impact_score": 8
       },
-      "summary": "arXiv:2512.23502v1 Announce Type: new \nAbstract: Radio Access Network (RAN) slicing enables multiple logical networks to exist on top of the same physical infrastructure by allocating resources to distinct service groups, where radio resource scheduling plays a key role in ensuring compliance with slice-specific Service-Level Agreements (SLAs). Existing configuration-based or intent-driven Reinforcement Learning (RL) approaches usually rely on static mappings and SLA conversions. The current literature does not integrate natural language understanding with coordinated decision-making. To address these limitations, we propose an Agentic AI framework for 6G RAN slicing, driven by a super agent built using Hierarchical Decision Mamba (HDM) controllers and a Large Language Model (LLM). The super agent interprets operator intents and translates them into actionable goals using the LLM, which are used by HDM to coordinate inter-slice, intra-slice, and self-healing agents. Compared to transformer-based and reward-driven baselines, the proposed Agentic AI framework demonstrates consistent improvements across key performance indicators, including higher throughput, improved cell-edge performance, and reduced latency across different slices.",
-      "date": "2025-12-30"
+      "source_region": "China",
+      "summary": "arXiv:2507.09627v2 Announce Type: replace-cross \nAbstract: Next-generation wireless technologies such as 6G aim to meet demanding requirements such as ultra-high data rates, low latency, and enhanced connectivity. Extremely Large-Scale MIMO (XL-MIMO) and Reconfigurable Intelligent Surface (RIS) are key enablers, with XL-MIMO boosting spectral and energy efficiency through numerous antennas, and RIS offering dynamic control over the wireless environment via passive reflective elements. However, realizing their full potential depends on accurate Channel State Information (CSI). Recent advances in deep learning have facilitated efficient cascaded channel estimation. However, the scalability and practical deployment of existing estimation models in XL-MIMO systems remain limited. The growing number of antennas and RIS elements introduces a significant barrier to real-time and efficient channel estimation, drastically increasing data volume, escalating computational complexity, requiring advanced hardware, and resulting in substantial energy consumption. To address these challenges, we propose a lightweight deep learning framework for efficient cascaded channel estimation in XL-MIMO systems, designed to minimize computational complexity and make it suitable for deployment on resource-constrained edge devices. Using spatial correlations in the channel, we introduce a patch-based training mechanism that reduces the dimensionality of input to patch-level representations while preserving essential information, allowing scalable training for large-scale systems. Simulation results under diverse conditions demonstrate that our framework significantly improves estimation accuracy and reduces computational complexity, regardless of the increasing number of antennas and RIS elements in XL-MIMO systems.",
+      "date": "2026-01-01"
     }
   ]
 }
