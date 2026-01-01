@@ -145,15 +145,50 @@ def get_ai_summary(title, summary, site_name):
         )
         text = response.text.strip()
 
-        if "```json" in text:
-            text = text.split("```json")[1].split("```")[0].strip()
+        # Remove markdown code blocks if present
+        if "```json" in text: 
+            # Find first occurrence of ```json and first ``` after it
+            start_marker = text.find("```json") + len("```json")
+            end_marker = text.find("```", start_marker)
+            if end_marker != -1:
+                text = text[start_marker:end_marker].strip()
+        elif "```" in text:
+            # Find first occurrence of ``` and first ``` after it
+            start_marker = text.find("```") + len("```")
+            end_marker = text.find("```", start_marker)
+            if end_marker != -1:
+                text = text[start_marker:end_marker].strip()
         elif "{" in text:
             # Fallback if markdown is missing but JSON is present
             start = text.find("{")
             end = text.rfind("}") + 1
             text = text[start:end]
+
+        # Clean up any whitespace issues
+        text = text.strip()
             
         data = json.loads(text)
+
+        # Validate the response structure
+        if not isinstance(data, dict):
+            raise ValueError("AI response is not a valid JSON object")
+            
+        # Ensure is_6g_relevant is a boolean
+        if "is_6g_relevant" in data:
+            if isinstance(data["is_6g_relevant"], str):
+                val = data["is_6g_relevant"].strip().lower()
+                # Handle common string representations of boolean values
+                if val in ("0", "false", "no", ""):
+                    data["is_6g_relevant"] = False
+                elif val in ("1", "true", "yes"):
+                    data["is_6g_relevant"] = True
+                else:
+                    # For any other string value, default to False for safety
+                    # (instead of using Python's truthiness where non-empty strings are True)
+                    data["is_6g_relevant"] = False
+            elif not isinstance(data["is_6g_relevant"], bool):
+                data["is_6g_relevant"] = bool(data["is_6g_relevant"])
+
         return data
     except Exception as e:
         print(f"  ⚠️ AI Summary failed for '{title[:30]}...': {e}")
