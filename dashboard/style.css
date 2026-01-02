@@ -517,3 +517,23 @@ footer {
     padding: 0.9rem 1.2rem;
     border-radius: 12px;
     transition
+
+.flow-table th {
+    font-size: 0.85rem;
+    padding: 12px 6px;
+}
+
+.flow-table th br {
+    line-height: 0.5;
+}
+
+.flow-cell {
+    cursor: help;
+    transition: background-color 0.25s ease, transform 0.15s ease;
+}
+
+.flow-cell:hover {
+    transform: scale(1.05);
+    border: 1px solid var(--primary);
+}
+
