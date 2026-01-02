@@ -1,1 +1,50 @@
-
+{
+  "US": {
+    "US": 40,
+    "EU": 16,
+    "China": 24,
+    "Japan": 16,
+    "Korea": 32,
+    "India": 8
+  },
+  "EU": {
+    "US": 0,
+    "EU": 0,
+    "China": 0,
+    "Japan": 0,
+    "Korea": 0,
+    "India": 0
+  },
+  "China": {
+    "US": 0,
+    "EU": 0,
+    "China": 0,
+    "Japan": 0,
+    "Korea": 0,
+    "India": 0
+  },
+  "Japan": {
+    "US": 0,
+    "EU": 0,
+    "China": 0,
+    "Japan": 0,
+    "Korea": 0,
+    "India": 0
+  },
+  "Korea": {
+    "US": 0,
+    "EU": 0,
+    "China": 0,
+    "Japan": 0,
+    "Korea": 0,
+    "India": 0
+  },
+  "India": {
+    "US": 0,
+    "EU": 0,
+    "China": 0,
+    "Japan": 0,
+    "Korea": 0,
+    "India": 0
+  }
+}
