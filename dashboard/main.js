@@ -20,8 +20,8 @@ async function loadData() {
             if (momResponse.ok) {
                 const momentumData = await momResponse.json();
                 console.log('Deep Analysis Momentum Data Loaded:', momentumData);
-                // Future: renderMomentumCharts(momentumData);
-            }
+                renderMomentumPanel(momentumData);
+                                  }
         } catch (mErr) {
             console.log('Momentum data not yet available.');
         }
@@ -94,6 +94,54 @@ function renderArticles(articles) {
         `;
     }).join('');
 }
+function renderMomentumPanel(momentumData) {
+    const container = document.getElementById('momentum-content');
+    if (!container) return;
+
+    if (!momentumData || momentumData.length === 0) {
+        container.innerHTML = `<p>No momentum data available.</p>`;
+        return;
+    }
+
+    // For now, momentumData is an array of region-quarter entries
+    const cards = momentumData.map(entry => {
+        const flag = getRegionFlag(entry.region);
+        return `
+            <div class="momentum-card">
+                <div class="momentum-header">
+                    <span class="region-flag">${flag}</span>
+                    <span class="region-name">${entry.region}</span>
+                </div>
+                <div class="momentum-score">Momentum: <strong>${entry.momentum_score.toFixed(1)}</strong></div>
+                <div class="momentum-quarter">${entry.time_window}</div>
+
+                <div class="momentum-breakdown">
+                    <div>Research: ${entry.research_intensity}</div>
+                    <div>Standardization: ${entry.standardization_influence}</div>
+                    <div>Deployment: ${entry.industrial_deployment}</div>
+                    <div>Spectrum: ${entry.spectrum_policy_signal}</div>
+                    <div>Ecosystem: ${entry.ecosystem_maturity}</div>
+                </div>
+            </div>
+        `;
+    }).join('');
+
+    container.innerHTML = cards;
+}
+
+function getRegionFlag(region) {
+    const flags = {
+        "US": "🇺🇸",
+        "EU": "🇪🇺",
+        "China": "🇨🇳",
+        "Japan": "🇯🇵",
+        "Korea": "🇰🇷",
+        "India": "🇮🇳"
+    };
+    return flags[region] || "🌍";
+}
+
+
 function renderFlowMatrix(matrix) {
     const container = document.getElementById('flow-matrix');
     if (!container) return;
