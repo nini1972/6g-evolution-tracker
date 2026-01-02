@@ -42,6 +42,8 @@ async function loadData() {
         populateSourceFilter(allArticles);
         renderArticles(allArticles);
         renderConceptsPanel(allArticles);
+        renderEvidencePanel(allArticles);
+
     } catch (err) {
         console.error('Error loading 6G data:', err);
         articlesGrid.innerHTML = `
@@ -154,6 +156,35 @@ function renderConceptsPanel(articles) {
     // Render as concept tags
     const html = concepts.map(c => `
         <span class="concept-tag">${c}</span>
+    `).join('');
+
+    container.innerHTML = html;
+}
+
+function renderEvidencePanel(articles) {
+    const container = document.getElementById('evidence-content');
+    if (!container) return;
+
+    let evidenceList = [];
+
+    // Collect all evidence from all articles
+    articles.forEach(article => {
+        if (article.ai_insights && article.ai_insights.key_evidence) {
+            evidenceList.push(...article.ai_insights.key_evidence);
+        }
+    });
+
+    if (evidenceList.length === 0) {
+        container.innerHTML = `<p>No technical evidence available.</p>`;
+        return;
+    }
+
+    // Render each evidence point as a card
+    const html = evidenceList.map(item => `
+        <div class="evidence-card">
+            <span class="evidence-bullet">•</span>
+            <p>${item}</p>
+        </div>
     `).join('');
 
     container.innerHTML = html;
