@@ -546,5 +546,11 @@ footer {
     color: var(--text-dim);
     font-size: 0.95rem;
 }
+.momentum-trend {
+    font-size: 1.3rem;
+    margin-left: auto;
+    color: var(--accent-gold);
+    font-weight: 700;
+}
 
 
