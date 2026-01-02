@@ -546,9 +546,7 @@ def aggregate_momentum(articles):
     
     print(f"📈 Region-specific momentum aggregated for {len(final_data)} region-quarter windows.")
 
-    except Exception as e:
-        print(f"❌ Momentum aggregation failed: {e}")
-
+    
 def generate_source_target_matrix(articles):
     regions = ["US", "EU", "China", "Japan", "Korea", "India"]
 
