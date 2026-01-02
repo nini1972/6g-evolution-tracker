@@ -70,6 +70,7 @@ function renderArticles(articles) {
     articlesGrid.innerHTML = articles.map(article => {
         let impact = '?';
         let impactLabel = 'Impact';
+        const regionFlag = article.ai_insights ? getRegionFlag(article.ai_insights.source_region) : "🌍";
 
         if (article.ai_insights && article.ai_insights.impact_score) {
             impact = article.ai_insights.impact_score;
