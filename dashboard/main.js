@@ -41,6 +41,7 @@ async function loadData() {
 
         populateSourceFilter(allArticles);
         renderArticles(allArticles);
+        checkQuietMonth(allArticles);
         renderConceptsPanel(allArticles);
         renderEvidencePanel(allArticles);
 
@@ -188,6 +189,38 @@ function renderEvidencePanel(articles) {
     `).join('');
 
     container.innerHTML = html;
+}
+
+function checkQuietMonth(articles) {
+    const banner = document.getElementById('quiet-banner');
+
+    if (!banner) return;
+
+    // If no articles were fetched this cycle
+    if (articles.length === 0) {
+        banner.style.display = "block";
+
+        // Load fallback: last 5 articles from cache (if available)
+        fetch('./latest_digest.json')
+            .then(r => r.json())
+            .then(data => {
+                const fallback = data.articles.slice(-5);
+                renderArticles(fallback);
+            });
+
+        return;
+    }
+
+    // Otherwise hide the banner
+    banner.style.display = "none";
+    
+    const lastUpdate = new Date(lastUpdateBadge.textContent.replace("Last Update: ", ""));
+    const now = new Date();
+    const diffDays = (now - lastUpdate) / (1000 * 60 * 60 * 24);
+
+    if (diffDays > 30) {
+        banner.style.display = "block";
+        }
 }
 
 
