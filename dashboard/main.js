@@ -196,6 +196,10 @@ function checkQuietMonth(articles) {
 
     if (!banner) return;
 
+function checkQuietMonth(articles) {
+    const banner = document.getElementById('quiet-banner');
+    if (!banner) return;
+
     // If no articles were fetched this cycle
     if (articles.length === 0) {
         banner.style.display = "block";
@@ -211,16 +215,18 @@ function checkQuietMonth(articles) {
         return;
     }
 
-    // Otherwise hide the banner
-    banner.style.display = "none";
-    
+    // Check if last update is older than 30 days
     const lastUpdate = new Date(lastUpdateBadge.textContent.replace("Last Update: ", ""));
     const now = new Date();
     const diffDays = (now - lastUpdate) / (1000 * 60 * 60 * 24);
 
     if (diffDays > 30) {
         banner.style.display = "block";
-        }
+        return;
+    }
+
+    // Otherwise hide the banner
+    banner.style.display = "none";
 }
 
 
