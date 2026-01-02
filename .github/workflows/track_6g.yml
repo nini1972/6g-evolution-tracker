@@ -64,6 +64,7 @@ jobs:
           git add -f latest_digest.json
           git add -f momentum_data.json || echo "momentum_data.json not found, skipping"
           git add -f source_target_matrix.json || echo "source_target_matrix.json not found, skipping"
+          git add -f output.log
           # Only commit if there are actual changes
           if ! git diff --cached --quiet; then
             git commit -m "📊 Monthly 6G digest & Dashboard update - $(date +'%Y-%m-%d')"
@@ -71,6 +72,7 @@ jobs:
           else
             echo "No new articles found. Skipping commit."
           fi
+
 
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4
