@@ -421,3 +421,10 @@ footer {
     grid-template-columns: 1fr 1fr;
     gap: 0.4rem 1rem;
 }
+.source-tag {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.75rem;
+}
+
