@@ -41,6 +41,7 @@ async function loadData() {
 
         populateSourceFilter(allArticles);
         renderArticles(allArticles);
+        renderConceptsPanel(allArticles);
     } catch (err) {
         console.error('Error loading 6G data:', err);
         articlesGrid.innerHTML = `
@@ -129,6 +130,35 @@ function renderMomentumPanel(momentumData) {
 
     container.innerHTML = cards;
 }
+function renderConceptsPanel(articles) {
+    const container = document.getElementById('concepts-content');
+    if (!container) return;
+
+    // Collect all emerging concepts from all articles
+    let concepts = [];
+
+    articles.forEach(article => {
+        if (article.ai_insights && article.ai_insights.emerging_concepts) {
+            concepts.push(...article.ai_insights.emerging_concepts);
+        }
+    });
+
+    // Remove duplicates
+    concepts = [...new Set(concepts)];
+
+    if (concepts.length === 0) {
+        container.innerHTML = `<p>No emerging concepts detected.</p>`;
+        return;
+    }
+
+    // Render as concept tags
+    const html = concepts.map(c => `
+        <span class="concept-tag">${c}</span>
+    `).join('');
+
+    container.innerHTML = html;
+}
+
 
 function getRegionFlag(region) {
     const flags = {
