@@ -457,54 +457,60 @@ def export_to_json(all_entries):
         print(f"❌ JSON export failed: {e}")
 
 def aggregate_momentum(articles):
-    """Compute world-power momentum per quarterly time window."""
-    # region -> quarter -> scores
-    aggregation = {}
+    """Compute region-specific 6G momentum per quarterly time window."""
+    
     regions = ["US", "EU", "China", "Japan", "Korea", "India"]
+    aggregation = {}   # region -> quarter -> metrics
     
     for article in articles:
-        try:
-            # Parse date and get quarter
-            article_date = datetime.strptime(article["date"], "%Y-%m-%d")
-            quarter = f"{article_date.year}-Q{(article_date.month - 1) // 3 + 1}"
-        except:
-            quarter = f"{DATE[:4]}-Q{(int(DATE[5:7]) - 1) // 3 + 1}"
-
         ai = article.get("ai_insights")
         if not ai or not ai.get("is_6g_relevant"):
             continue
-            
-        wp_impact = ai.get("world_power_impact", {})
-        dimensions = ai.get("impact_dimensions", {})
-        importance = ai.get("overall_6g_importance", 1) # weight
         
-        # Calculate momentum = weighted average of dimensions
+        # Determine region of origin
+        src_region = ai.get("source_region")
+        if src_region not in regions:
+            continue
+        
+        # Determine quarter
+        try:
+            article_date = datetime.strptime(article["date"], "%Y-%m-%d")
+            quarter = f"{article_date.year}-Q{(article_date.month - 1) // 3 + 1}"
+        except:
+            quarter = "unknown"
+        
+        # Extract dimensions
+        dimensions = ai.get("impact_dimensions", {})
+        importance = ai.get("overall_6g_importance", 1)
+        
+        # Compute article momentum (average of dimensions)
         dim_values = [v for v in dimensions.values() if isinstance(v, (int, float))]
         article_momentum = sum(dim_values) / len(dim_values) if dim_values else 0
         
-        for region in regions:
-            impact = wp_impact.get(region, 0)
-            if impact > 0:
-                if region not in aggregation: aggregation[region] = {}
-                if quarter not in aggregation[region]: 
-                    aggregation[region][quarter] = {
-                        "research_intensity": [],
-                        "standardization_influence": [],
-                        "industrial_deployment": [],
-                        "spectrum_policy_signal": [],
-                        "ecosystem_maturity": [],
-                        "momenta": []
-                    }
-                
-                # Store weighted values
-                for dim in aggregation[region][quarter]:
-                    if dim == "momenta":
-                        aggregation[region][quarter][dim].append((article_momentum, importance))
-                    else:
-                        val = dimensions.get(dim, 0)
-                        aggregation[region][quarter][dim].append((val, importance))
-
-    # Final Weighted Averages
+        # Initialize region + quarter bucket
+        if src_region not in aggregation:
+            aggregation[src_region] = {}
+        if quarter not in aggregation[src_region]:
+            aggregation[src_region][quarter] = {
+                "research_intensity": [],
+                "standardization_influence": [],
+                "industrial_deployment": [],
+                "spectrum_policy_signal": [],
+                "ecosystem_maturity": [],
+                "momenta": []
+            }
+        
+        bucket = aggregation[src_region][quarter]
+        
+        # Store weighted values
+        bucket["momenta"].append((article_momentum, importance))
+        for dim in bucket:
+            if dim == "momenta":
+                continue
+            val = dimensions.get(dim, 0)
+            bucket[dim].append((val, importance))
+    
+    # Compute weighted averages
     final_data = []
     for region, quarters in aggregation.items():
         for quarter, metrics in quarters.items():
@@ -512,35 +518,34 @@ def aggregate_momentum(articles):
                 "region": region,
                 "time_window": quarter
             }
-
-            # Weighted momentum score
+            
+            # Momentum score
             if metrics["momenta"]:
-                momentum_sum = sum(m * w for m, w in metrics["momenta"])
-                momentum_weight = sum(w for m, w in metrics["momenta"])
-                entry["momentum_score"] = round(momentum_sum / momentum_weight, 2)
+                total = sum(m * w for m, w in metrics["momenta"])
+                weight = sum(w for m, w in metrics["momenta"])
+                entry["momentum_score"] = round(total / weight, 2)
             else:
                 entry["momentum_score"] = 0
-
-            # Weighted averages for each dimension
-            for dim in metrics:
+            
+            # Dimensions
+            for dim, values in metrics.items():
                 if dim == "momenta":
                     continue
-
-                values = metrics[dim]
                 if values:
-                    weighted_sum = sum(v * w for v, w in values)
-                    total_weight = sum(w for v, w in values)
-                    entry[dim] = round(weighted_sum / total_weight, 2)
+                    total = sum(v * w for v, w in values)
+                    weight = sum(w for v, w in values)
+                    entry[dim] = round(total / weight, 2)
                 else:
                     entry[dim] = 0
-
+            
             final_data.append(entry)
-
+    
     # Save output
-    try:
-        with open("momentum_data.json", "w", encoding="utf-8") as f:
-            json.dump(final_data, f, indent=2)
-        print(f"📈 Momentum data aggregated for {len(final_data)} region-quarter windows.")
+    with open("momentum_data.json", "w", encoding="utf-8") as f:
+        json.dump(final_data, f, indent=2)
+    
+    print(f"📈 Region-specific momentum aggregated for {len(final_data)} region-quarter windows.")
+
     except Exception as e:
         print(f"❌ Momentum aggregation failed: {e}")
 
