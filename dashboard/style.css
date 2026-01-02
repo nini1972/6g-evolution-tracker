@@ -337,3 +337,87 @@ footer {
 .flow-cell {
     transition: background-color 0.3s ease;
 }
+
+/* ============================
+   Momentum Panel
+   ============================ */
+
+.momentum-panel {
+    margin: 40px 0;
+    padding: 25px;
+    background: #1a1f27;
+    border-radius: 16px;
+    border: 1px solid var(--glass-border);
+}
+
+.momentum-panel h2 {
+    margin-bottom: 10px;
+    font-size: 1.8rem;
+    font-weight: 700;
+    background: linear-gradient(to right, var(--primary), var(--secondary));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.momentum-subtitle {
+    opacity: 0.7;
+    margin-bottom: 25px;
+    font-size: 0.95rem;
+}
+
+.momentum-content {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 1.5rem;
+}
+
+/* Momentum Card */
+.momentum-card {
+    background: var(--card-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: 14px;
+    padding: 1.2rem 1.4rem;
+    transition: all 0.3s ease;
+}
+
+.momentum-card:hover {
+    transform: translateY(-6px);
+    border-color: var(--primary);
+    background: rgba(30, 32, 45, 0.8);
+}
+
+.momentum-header {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin-bottom: 0.8rem;
+}
+
+.region-flag {
+    font-size: 1.4rem;
+}
+
+.region-name {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--primary);
+}
+
+.momentum-score {
+    font-size: 1rem;
+    margin-bottom: 0.3rem;
+}
+
+.momentum-quarter {
+    font-size: 0.85rem;
+    color: var(--text-dim);
+    margin-bottom: 1rem;
+}
+
+.momentum-breakdown {
+    font-size: 0.85rem;
+    color: var(--text-dim);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.4rem 1rem;
+}
