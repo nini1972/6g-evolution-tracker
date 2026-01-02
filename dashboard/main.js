@@ -215,18 +215,18 @@ function renderFlowMatrix(matrix) {
             <thead>
                 <tr>
                     <th>Source ↓ / Target →</th>
-                    ${regions.map(r => `<th>${r}</th>`).join('')}
+                   ${regions.map(r => `<th>${getRegionFlag(r)}<br>${r}</th>`).join('')}
                 </tr>
             </thead>
             <tbody>
     `;
 
     regions.forEach(source => {
-        html += `<tr><td class="row-label">${source}</td>`;
+        html += `<tr><td class="row-label">${getRegionFlag(source)} ${source}</td>`;
         regions.forEach(target => {
             const value = matrix[source]?.[target] ?? 0;
-            html += `<td class="flow-cell" data-value="${value}">${value}</td>`;
-        });
+           html += ` <td class="flow-cell" data-value="${value}" title="Influence from ${source} → ${target}: ${value}"> ${value} </td>`;
+           });
         html += `</tr>`;
     });
 
@@ -245,7 +245,18 @@ function renderFlowMatrix(matrix) {
     cells.forEach(cell => {
         const v = parseInt(cell.dataset.value);
         const intensity = max > 0 ? v / max : 0;
-        cell.style.backgroundColor = `rgba(0, 150, 255, ${intensity * 0.6})`;
+        cells.forEach(cell => {
+    const v = parseInt(cell.dataset.value);
+    const intensity = max > 0 ? v / max : 0;
+
+    // Smooth gradient: dark blue → cyan → white
+    const r = Math.floor(0 + intensity * 180);
+    const g = Math.floor(60 + intensity * 195);
+    const b = Math.floor(120 + intensity * 135);
+
+    cell.style.backgroundColor = `rgba(${r}, ${g}, ${b}, 0.35)`;
+});
+
     });
 }
 
