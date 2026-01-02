@@ -108,16 +108,45 @@ function renderMomentumPanel(momentumData) {
         return;
     }
 
-    // For now, momentumData is an array of region-quarter entries
+    // Sort by region + time_window (ensures chronological order)
+    momentumData.sort((a, b) => {
+        if (a.region !== b.region) return a.region.localeCompare(b.region);
+        return a.time_window.localeCompare(b.time_window);
+    });
+
+    // Compute trends
+    const trends = {};
+    for (let i = 0; i < momentumData.length; i++) {
+        const entry = momentumData[i];
+        const prev = momentumData[i - 1];
+
+        if (!prev || prev.region !== entry.region) {
+            trends[entry.region] = "•"; // No previous data
+        } else {
+            const diff = entry.momentum_score - prev.momentum_score;
+            if (diff > 0.1) trends[entry.region] = "↑";
+            else if (diff < -0.1) trends[entry.region] = "↓";
+            else trends[entry.region] = "→";
+        }
+    }
+
+    // Render cards
     const cards = momentumData.map(entry => {
         const flag = getRegionFlag(entry.region);
+        const trend = trends[entry.region];
+
         return `
             <div class="momentum-card">
                 <div class="momentum-header">
                     <span class="region-flag">${flag}</span>
                     <span class="region-name">${entry.region}</span>
+                    <span class="momentum-trend">${trend}</span>
                 </div>
-                <div class="momentum-score">Momentum: <strong>${entry.momentum_score.toFixed(1)}</strong></div>
+
+                <div class="momentum-score">
+                    Momentum: <strong>${entry.momentum_score.toFixed(1)}</strong>
+                </div>
+
                 <div class="momentum-quarter">${entry.time_window}</div>
 
                 <div class="momentum-breakdown">
@@ -133,6 +162,7 @@ function renderMomentumPanel(momentumData) {
 
     container.innerHTML = cards;
 }
+
 function renderConceptsPanel(articles) {
     const container = document.getElementById('concepts-content');
     if (!container) return;
