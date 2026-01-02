@@ -551,27 +551,37 @@ def aggregate_momentum(articles):
 
 def generate_source_target_matrix(articles):
     regions = ["US", "EU", "China", "Japan", "Korea", "India"]
-    matrix = {src: {tgt: 0 for tgt in regions} for src in regions}
+
+    # Load previous matrix if available (cumulative influence)
+    try:
+        with open("source_target_matrix.json", "r", encoding="utf-8") as f:
+            matrix = json.load(f)
+    except:
+        matrix = {src: {tgt: 0 for tgt in regions} for src in regions}
 
     for article in articles:
         ai = article.get("ai_insights")
         if not ai or not ai.get("is_6g_relevant"):
             continue
 
-        source_region = ai.get("source_region", "Other")
+        source_region = ai.get("source_region")
         if source_region not in regions:
             continue
 
         wp_impact = ai.get("world_power_impact", {})
+        importance = ai.get("overall_6g_importance", 1)
 
         for target_region, score in wp_impact.items():
             if target_region in regions and score > 0:
-                matrix[source_region][target_region] += 1
+                # Weighted influence
+                matrix[source_region][target_region] += score * importance
 
+    # Save updated matrix
     with open("source_target_matrix.json", "w", encoding="utf-8") as f:
         json.dump(matrix, f, indent=2)
 
-    print("🌐 Source→Target matrix generated.")
+    print("🌐 Weighted Source→Target matrix updated.")
+
 
 def main():
     print("🚀 6G Sentinel started its monthly sweep.\n")
