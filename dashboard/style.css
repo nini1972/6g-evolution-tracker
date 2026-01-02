@@ -427,4 +427,52 @@ footer {
     gap: 0.4rem;
     font-size: 0.75rem;
 }
+/* ============================
+   Emerging Concepts Panel
+   ============================ */
+
+.concepts-panel {
+    margin: 40px 0;
+    padding: 25px;
+    background: #1a1f27;
+    border-radius: 16px;
+    border: 1px solid var(--glass-border);
+}
+
+.concepts-panel h2 {
+    margin-bottom: 10px;
+    font-size: 1.8rem;
+    font-weight: 700;
+    background: linear-gradient(to right, var(--primary), var(--secondary));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.concepts-subtitle {
+    opacity: 0.7;
+    margin-bottom: 20px;
+    font-size: 0.95rem;
+}
+
+.concepts-content {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+}
+
+.concept-tag {
+    background: rgba(0, 242, 255, 0.1);
+    border: 1px solid rgba(0, 242, 255, 0.2);
+    color: var(--primary);
+    padding: 0.4rem 0.8rem;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.concept-tag:hover {
+    background: rgba(0, 242, 255, 0.2);
+    transform: translateY(-3px);
+}
 
