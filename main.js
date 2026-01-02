@@ -20,8 +20,8 @@ async function loadData() {
             if (momResponse.ok) {
                 const momentumData = await momResponse.json();
                 console.log('Deep Analysis Momentum Data Loaded:', momentumData);
-                // Future: renderMomentumCharts(momentumData);
-            }
+                renderMomentumPanel(momentumData);
+                                  }
         } catch (mErr) {
             console.log('Momentum data not yet available.');
         }
@@ -41,6 +41,12 @@ async function loadData() {
 
         populateSourceFilter(allArticles);
         renderArticles(allArticles);
+        checkQuietMonth(allArticles);
+        renderConceptsPanel(allArticles);
+        renderEvidencePanel(allArticles);
+        renderTopicFrequencyChart(allArticles);
+
+
     } catch (err) {
         console.error('Error loading 6G data:', err);
         articlesGrid.innerHTML = `
@@ -70,6 +76,7 @@ function renderArticles(articles) {
     articlesGrid.innerHTML = articles.map(article => {
         let impact = '?';
         let impactLabel = 'Impact';
+        const regionFlag = article.ai_insights ? getRegionFlag(article.ai_insights.source_region) : "🌍";
 
         if (article.ai_insights && article.ai_insights.impact_score) {
             impact = article.ai_insights.impact_score;
@@ -94,6 +101,225 @@ function renderArticles(articles) {
         `;
     }).join('');
 }
+function renderMomentumPanel(momentumData) {
+    const container = document.getElementById('momentum-content');
+    if (!container) return;
+
+    if (!momentumData || momentumData.length === 0) {
+        container.innerHTML = `<p>No momentum data available.</p>`;
+        return;
+    }
+
+    // Sort by region + time_window (ensures chronological order)
+    momentumData.sort((a, b) => {
+        if (a.region !== b.region) return a.region.localeCompare(b.region);
+        return a.time_window.localeCompare(b.time_window);
+    });
+
+    // Compute trends
+    const trends = {};
+    for (let i = 0; i < momentumData.length; i++) {
+        const entry = momentumData[i];
+        const prev = momentumData[i - 1];
+
+        if (!prev || prev.region !== entry.region) {
+            trends[entry.region] = "•"; // No previous data
+        } else {
+            const diff = entry.momentum_score - prev.momentum_score;
+            if (diff > 0.1) trends[entry.region] = "↑";
+            else if (diff < -0.1) trends[entry.region] = "↓";
+            else trends[entry.region] = "→";
+        }
+    }
+
+    // Render cards
+    const cards = momentumData.map(entry => {
+        const flag = getRegionFlag(entry.region);
+        const trend = trends[entry.region];
+
+        return `
+            <div class="momentum-card">
+                <div class="momentum-header">
+                    <span class="region-flag">${flag}</span>
+                    <span class="region-name">${entry.region}</span>
+                    <span class="momentum-trend">${trend}</span>
+                </div>
+
+                <div class="momentum-score">
+                    Momentum: <strong>${entry.momentum_score.toFixed(1)}</strong>
+                </div>
+
+                <div class="momentum-quarter">${entry.time_window}</div>
+
+                <div class="momentum-breakdown">
+                    <div>Research: ${entry.research_intensity}</div>
+                    <div>Standardization: ${entry.standardization_influence}</div>
+                    <div>Deployment: ${entry.industrial_deployment}</div>
+                    <div>Spectrum: ${entry.spectrum_policy_signal}</div>
+                    <div>Ecosystem: ${entry.ecosystem_maturity}</div>
+                </div>
+            </div>
+        `;
+    }).join('');
+
+    container.innerHTML = cards;
+}
+
+function renderConceptsPanel(articles) {
+    const container = document.getElementById('concepts-content');
+    if (!container) return;
+
+    // Collect all emerging concepts from all articles
+    let concepts = [];
+
+    articles.forEach(article => {
+        if (article.ai_insights && article.ai_insights.emerging_concepts) {
+            concepts.push(...article.ai_insights.emerging_concepts);
+        }
+    });
+
+    // Remove duplicates
+    concepts = [...new Set(concepts)];
+
+    if (concepts.length === 0) {
+        container.innerHTML = `<p>No emerging concepts detected.</p>`;
+        return;
+    }
+
+    // Render as concept tags
+    const html = concepts.map(c => `
+        <span class="concept-tag">${c}</span>
+    `).join('');
+
+    container.innerHTML = html;
+}
+
+function renderEvidencePanel(articles) {
+    const container = document.getElementById('evidence-content');
+    if (!container) return;
+
+    let evidenceList = [];
+
+    // Collect all evidence from all articles
+    articles.forEach(article => {
+        if (article.ai_insights && article.ai_insights.key_evidence) {
+            evidenceList.push(...article.ai_insights.key_evidence);
+        }
+    });
+
+    if (evidenceList.length === 0) {
+        container.innerHTML = `<p>No technical evidence available.</p>`;
+        return;
+    }
+
+    // Render each evidence point as a card
+    const html = evidenceList.map(item => `
+        <div class="evidence-card">
+            <span class="evidence-bullet">•</span>
+            <p>${item}</p>
+        </div>
+    `).join('');
+
+    container.innerHTML = html;
+}
+function renderTopicFrequencyChart(articles) {
+    const container = document.getElementById('topics-chart');
+    if (!container) return;
+
+    let topicCounts = {};
+
+    // Collect all emerging concepts
+    articles.forEach(article => {
+        if (article.ai_insights && article.ai_insights.emerging_concepts) {
+            article.ai_insights.emerging_concepts.forEach(topic => {
+                topicCounts[topic] = (topicCounts[topic] || 0) + 1;
+            });
+        }
+    });
+
+    const topics = Object.entries(topicCounts)
+        .sort((a, b) => b[1] - a[1]) // sort by frequency
+        .slice(0, 10); // top 10 topics
+
+    if (topics.length === 0) {
+        container.innerHTML = `<p>No topic data available.</p>`;
+        return;
+    }
+
+    // Find max count for scaling
+    const maxCount = Math.max(...topics.map(t => t[1]));
+
+    // Build bar chart
+    const html = topics.map(([topic, count]) => {
+        const width = (count / maxCount) * 100;
+
+        return `
+            <div class="topic-row">
+                <span class="topic-label">${topic}</span>
+                <div class="topic-bar">
+                    <div class="topic-bar-fill" style="width: ${width}%"></div>
+                </div>
+                <span class="topic-count">${count}</span>
+            </div>
+        `;
+    }).join('');
+
+    container.innerHTML = html;
+}
+
+
+function checkQuietMonth(articles) {
+    const banner = document.getElementById('quiet-banner');
+
+    if (!banner) return;
+
+function checkQuietMonth(articles) {
+    const banner = document.getElementById('quiet-banner');
+    if (!banner) return;
+
+    // If no articles were fetched this cycle
+    if (articles.length === 0) {
+        banner.style.display = "block";
+
+        // Load fallback: last 5 articles from cache (if available)
+        fetch('./latest_digest.json')
+            .then(r => r.json())
+            .then(data => {
+                const fallback = data.articles.slice(-5);
+                renderArticles(fallback);
+            });
+
+        return;
+    }
+
+    // Check if last update is older than 30 days
+    const lastUpdate = new Date(lastUpdateBadge.textContent.replace("Last Update: ", ""));
+    const now = new Date();
+    const diffDays = (now - lastUpdate) / (1000 * 60 * 60 * 24);
+
+    if (diffDays > 30) {
+        banner.style.display = "block";
+        return;
+    }
+
+    // Otherwise hide the banner
+    banner.style.display = "none";
+}
+
+
+function getRegionFlag(region) {
+    const flags = {
+        "US": "🇺🇸",
+        "EU": "🇪🇺",
+        "China": "🇨🇳",
+        "Japan": "🇯🇵",
+        "Korea": "🇰🇷",
+        "India": "🇮🇳"
+    };
+    return flags[region] || "🌍";
+}
+
+
 function renderFlowMatrix(matrix) {
     const container = document.getElementById('flow-matrix');
     if (!container) return;
@@ -105,18 +331,18 @@ function renderFlowMatrix(matrix) {
             <thead>
                 <tr>
                     <th>Source ↓ / Target →</th>
-                    ${regions.map(r => `<th>${r}</th>`).join('')}
+                   ${regions.map(r => `<th>${getRegionFlag(r)}<br>${r}</th>`).join('')}
                 </tr>
             </thead>
             <tbody>
     `;
 
     regions.forEach(source => {
-        html += `<tr><td class="row-label">${source}</td>`;
+        html += `<tr><td class="row-label">${getRegionFlag(source)} ${source}</td>`;
         regions.forEach(target => {
             const value = matrix[source]?.[target] ?? 0;
-            html += `<td class="flow-cell" data-value="${value}">${value}</td>`;
-        });
+           html += ` <td class="flow-cell" data-value="${value}" title="Influence from ${source} → ${target}: ${value}"> ${value} </td>`;
+           });
         html += `</tr>`;
     });
 
@@ -135,7 +361,18 @@ function renderFlowMatrix(matrix) {
     cells.forEach(cell => {
         const v = parseInt(cell.dataset.value);
         const intensity = max > 0 ? v / max : 0;
-        cell.style.backgroundColor = `rgba(0, 150, 255, ${intensity * 0.6})`;
+        cells.forEach(cell => {
+    const v = parseInt(cell.dataset.value);
+    const intensity = max > 0 ? v / max : 0;
+
+    // Smooth gradient: dark blue → cyan → white
+    const r = Math.floor(0 + intensity * 180);
+    const g = Math.floor(60 + intensity * 195);
+    const b = Math.floor(120 + intensity * 135);
+
+    cell.style.backgroundColor = `rgba(${r}, ${g}, ${b}, 0.35)`;
+});
+
     });
 }
 

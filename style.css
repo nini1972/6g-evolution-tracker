@@ -337,3 +337,280 @@ footer {
 .flow-cell {
     transition: background-color 0.3s ease;
 }
+
+/* ============================
+   Momentum Panel
+   ============================ */
+
+.momentum-panel {
+    margin: 40px 0;
+    padding: 25px;
+    background: #1a1f27;
+    border-radius: 16px;
+    border: 1px solid var(--glass-border);
+}
+
+.momentum-panel h2 {
+    margin-bottom: 10px;
+    font-size: 1.8rem;
+    font-weight: 700;
+    background: linear-gradient(to right, var(--primary), var(--secondary));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.momentum-subtitle {
+    opacity: 0.7;
+    margin-bottom: 25px;
+    font-size: 0.95rem;
+}
+
+.momentum-content {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 1.5rem;
+}
+
+/* Momentum Card */
+.momentum-card {
+    background: var(--card-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: 14px;
+    padding: 1.2rem 1.4rem;
+    transition: all 0.3s ease;
+}
+
+.momentum-card:hover {
+    transform: translateY(-6px);
+    border-color: var(--primary);
+    background: rgba(30, 32, 45, 0.8);
+}
+
+.momentum-header {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin-bottom: 0.8rem;
+}
+
+.region-flag {
+    font-size: 1.4rem;
+}
+
+.region-name {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--primary);
+}
+
+.momentum-score {
+    font-size: 1rem;
+    margin-bottom: 0.3rem;
+}
+
+.momentum-quarter {
+    font-size: 0.85rem;
+    color: var(--text-dim);
+    margin-bottom: 1rem;
+}
+
+.momentum-breakdown {
+    font-size: 0.85rem;
+    color: var(--text-dim);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.4rem 1rem;
+}
+.source-tag {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.75rem;
+}
+/* ============================
+   Emerging Concepts Panel
+   ============================ */
+
+.concepts-panel {
+    margin: 40px 0;
+    padding: 25px;
+    background: #1a1f27;
+    border-radius: 16px;
+    border: 1px solid var(--glass-border);
+}
+
+.concepts-panel h2 {
+    margin-bottom: 10px;
+    font-size: 1.8rem;
+    font-weight: 700;
+    background: linear-gradient(to right, var(--primary), var(--secondary));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.concepts-subtitle {
+    opacity: 0.7;
+    margin-bottom: 20px;
+    font-size: 0.95rem;
+}
+
+.concepts-content {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+}
+
+.concept-tag {
+    background: rgba(0, 242, 255, 0.1);
+    border: 1px solid rgba(0, 242, 255, 0.2);
+    color: var(--primary);
+    padding: 0.4rem 0.8rem;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.concept-tag:hover {
+    background: rgba(0, 242, 255, 0.2);
+    transform: translateY(-3px);
+}
+/* ============================
+   Key Evidence Panel
+   ============================ */
+
+.evidence-panel {
+    margin: 40px 0;
+    padding: 25px;
+    background: #1a1f27;
+    border-radius: 16px;
+    border: 1px solid var(--glass-border);
+}
+
+.evidence-panel h2 {
+    margin-bottom: 10px;
+    font-size: 1.8rem;
+    font-weight: 700;
+    background: linear-gradient(to right, var(--primary), var(--secondary));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.evidence-subtitle {
+    opacity: 0.7;
+    margin-bottom: 20px;
+    font-size: 0.95rem;
+}
+
+.evidence-content {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.evidence-card {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.8rem;
+    background: var(--card-bg);
+    border: 1px solid var(--glass-border);
+    padding: 0.9rem 1.2rem;
+    border-radius: 12px;
+    transition
+
+.flow-table th {
+    font-size: 0.85rem;
+    padding: 12px 6px;
+}
+
+.flow-table th br {
+    line-height: 0.5;
+}
+
+.flow-cell {
+    cursor: help;
+    transition: background-color 0.25s ease, transform 0.15s ease;
+}
+
+.flow-cell:hover {
+    transform: scale(1.05);
+    border: 1px solid var(--primary);
+}
+.quiet-banner {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--glass-border);
+    padding: 1rem 1.5rem;
+    border-radius: 12px;
+    margin-bottom: 2rem;
+    text-align: center;
+    color: var(--text-dim);
+    font-size: 0.95rem;
+}
+.momentum-trend {
+    font-size: 1.3rem;
+    margin-left: auto;
+    color: var(--accent-gold);
+    font-weight: 700;
+}
+/* ============================
+   Topic Frequency Chart
+   ============================ */
+
+.topics-panel {
+    margin: 40px 0;
+    padding: 25px;
+    background: #1a1f27;
+    border-radius: 16px;
+    border: 1px solid var(--glass-border);
+}
+
+.topics-panel h2 {
+    margin-bottom: 10px;
+    font-size: 1.8rem;
+    font-weight: 700;
+    background: linear-gradient(to right, var(--primary), var(--secondary));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.topics-subtitle {
+    opacity: 0.7;
+    margin-bottom: 20px;
+    font-size: 0.95rem;
+}
+
+.topic-row {
+    display: grid;
+    grid-template-columns: 1fr 4fr 40px;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 0.8rem;
+}
+
+.topic-label {
+    font-size: 0.9rem;
+    color: var(--text-main);
+}
+
+.topic-bar {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+    height: 12px;
+    overflow: hidden;
+}
+
+.topic-bar-fill {
+    height: 100%;
+    background: linear-gradient(to right, var(--primary), var(--secondary));
+    border-radius: 8px;
+    transition: width 0.4s ease;
+}
+
+.topic-count {
+    font-size: 0.9rem;
+    color: var(--text-dim);
+    text-align: right;
+}
+
+
+
