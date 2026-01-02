@@ -44,6 +44,8 @@ async function loadData() {
         checkQuietMonth(allArticles);
         renderConceptsPanel(allArticles);
         renderEvidencePanel(allArticles);
+        renderTopicFrequencyChart(allArticles);
+
 
     } catch (err) {
         console.error('Error loading 6G data:', err);
@@ -220,6 +222,51 @@ function renderEvidencePanel(articles) {
 
     container.innerHTML = html;
 }
+function renderTopicFrequencyChart(articles) {
+    const container = document.getElementById('topics-chart');
+    if (!container) return;
+
+    let topicCounts = {};
+
+    // Collect all emerging concepts
+    articles.forEach(article => {
+        if (article.ai_insights && article.ai_insights.emerging_concepts) {
+            article.ai_insights.emerging_concepts.forEach(topic => {
+                topicCounts[topic] = (topicCounts[topic] || 0) + 1;
+            });
+        }
+    });
+
+    const topics = Object.entries(topicCounts)
+        .sort((a, b) => b[1] - a[1]) // sort by frequency
+        .slice(0, 10); // top 10 topics
+
+    if (topics.length === 0) {
+        container.innerHTML = `<p>No topic data available.</p>`;
+        return;
+    }
+
+    // Find max count for scaling
+    const maxCount = Math.max(...topics.map(t => t[1]));
+
+    // Build bar chart
+    const html = topics.map(([topic, count]) => {
+        const width = (count / maxCount) * 100;
+
+        return `
+            <div class="topic-row">
+                <span class="topic-label">${topic}</span>
+                <div class="topic-bar">
+                    <div class="topic-bar-fill" style="width: ${width}%"></div>
+                </div>
+                <span class="topic-count">${count}</span>
+            </div>
+        `;
+    }).join('');
+
+    container.innerHTML = html;
+}
+
 
 function checkQuietMonth(articles) {
     const banner = document.getElementById('quiet-banner');
