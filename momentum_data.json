@@ -1,1 +1,12 @@
-
+[
+  {
+    "region": "US",
+    "time_window": "2025-Q4",
+    "momentum_score": 2.4,
+    "research_intensity": 4.0,
+    "standardization_influence": 2.0,
+    "industrial_deployment": 3.0,
+    "spectrum_policy_signal": 1.0,
+    "ecosystem_maturity": 2.0
+  }
+]
