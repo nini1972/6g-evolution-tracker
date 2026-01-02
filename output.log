@@ -5,13 +5,13 @@
 📡 Fetching 6 RSS feeds in parallel...
 ⚠️ Thales returned HTML instead of RSS/XML
 ✗ Thales: Failed to fetch
-⚠️ 403 Forbidden for MDPI Engineering, rotating user agent and retrying in 2s... (attempt 1/3)
 ⚠️ 403 Forbidden for Ericsson, rotating user agent and retrying in 2s... (attempt 1/3)
-⚠️ No entries found for ArXiv CS Networking, retrying in 2s... (attempt 1/3)
+⚠️ 403 Forbidden for MDPI Engineering, rotating user agent and retrying in 2s... (attempt 1/3)
 ✓ IEEE Spectrum: 30 total entries fetched
 ✓ Nokia: 25 total entries fetched
-⚠️ 403 Forbidden for MDPI Engineering, rotating user agent and retrying in 4s... (attempt 2/3)
+⚠️ No entries found for ArXiv CS Networking, retrying in 2s... (attempt 1/3)
 ⚠️ 403 Forbidden for Ericsson, rotating user agent and retrying in 4s... (attempt 2/3)
+⚠️ 403 Forbidden for MDPI Engineering, rotating user agent and retrying in 4s... (attempt 2/3)
 ⚠️ No entries found for ArXiv CS Networking, retrying in 4s... (attempt 2/3)
 ❌ Failed to fetch MDPI Engineering: 403 Forbidden after 3 attempts with different user agents
 ✗ MDPI Engineering: Failed to fetch
