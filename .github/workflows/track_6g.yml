@@ -40,6 +40,27 @@ jobs:
 
       - name: Install dependencies
         run: pip install -r requirements.txt
+
+      - name: Test Gemini API
+        env:
+          GOOGLE_API_KEY: ${{ secrets.GOOGLE_API_KEY }}
+        run: |
+          python - << 'EOF'
+          import google.genai as genai
+          import os
+
+          client = genai.Client(api_key=os.getenv("GOOGLE_API_KEY"))
+
+          try:
+              response = client.models.generate_content(
+                  model="gemini-1.5-flash",
+                  contents="Hello from GitHub Actions"
+              )
+              print("Gemini test OK:", response.text)
+          except Exception as e:
+              print("Gemini test FAILED:", e)
+          EOF
+
         
       - name: Run tracker script and save output
         env:
