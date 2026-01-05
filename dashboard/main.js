@@ -289,7 +289,6 @@ function checkQuietMonth(articles) {
     // Otherwise hide the banner
     banner.style.display = "none";
 
-
     // Check if last update is older than 30 days
     const lastUpdate = new Date(lastUpdateBadge.textContent.replace("Last Update: ", ""));
     const now = new Date();
