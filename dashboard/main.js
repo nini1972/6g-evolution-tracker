@@ -272,7 +272,10 @@ function checkQuietMonth(articles) {
     const banner = document.getElementById('quiet-banner');
     if (!banner) return;
 
-    // If no articles were fetched this cycle
+    // Default to hidden
+    banner.style.display = "none";
+
+    // 1. If no articles were fetched this cycle
     if (articles.length === 0) {
         banner.style.display = "block";
 
@@ -280,28 +283,27 @@ function checkQuietMonth(articles) {
         fetch('./latest_digest.json')
             .then(r => r.json())
             .then(data => {
-                const fallback = data.articles.slice(-5);
-                renderArticles(fallback);
-            });
+                if (data && data.articles) {
+                    const fallback = data.articles.slice(-5);
+                    renderArticles(fallback);
+                }
+            })
+            .catch(e => console.error("Fallback load error:", e));
 
         return;
     }
-    // Otherwise hide the banner
-    banner.style.display = "none";
 
+    // 2. Check if last update is older than 30 days
+    if (lastUpdateBadge && lastUpdateBadge.textContent) {
+        const lastUpdateStr = lastUpdateBadge.textContent.replace("Last Update: ", "").trim();
+        const lastUpdate = new Date(lastUpdateStr);
+        const now = new Date();
+        const diffDays = (now - lastUpdate) / (1000 * 60 * 60 * 24);
 
-    // Check if last update is older than 30 days
-    const lastUpdate = new Date(lastUpdateBadge.textContent.replace("Last Update: ", ""));
-    const now = new Date();
-    const diffDays = (now - lastUpdate) / (1000 * 60 * 60 * 24);
-
-    if (diffDays > 30) {
-        banner.style.display = "block";
-        return;
+        if (!isNaN(diffDays) && diffDays > 30) {
+            banner.style.display = "block";
+        }
     }
-
-    // Otherwise hide the banner
-    banner.style.display = "none";
 }
 
 
