@@ -21,7 +21,7 @@ async function loadData() {
                 const momentumData = await momResponse.json();
                 console.log('Deep Analysis Momentum Data Loaded:', momentumData);
                 renderMomentumPanel(momentumData);
-                                  }
+            }
         } catch (mErr) {
             console.log('Momentum data not yet available.');
         }
@@ -272,7 +272,10 @@ function checkQuietMonth(articles) {
     const banner = document.getElementById('quiet-banner');
     if (!banner) return;
 
-    // If no articles were fetched this cycle
+    // Default to hidden
+    banner.style.display = "none";
+
+    // 1. If no articles were fetched this cycle
     if (articles.length === 0) {
         banner.style.display = "block";
 
@@ -280,28 +283,26 @@ function checkQuietMonth(articles) {
         fetch('./latest_digest.json')
             .then(r => r.json())
             .then(data => {
-                const fallback = data.articles.slice(-5);
-                renderArticles(fallback);
-            });
-
-        return;
-    }
-    // Otherwise hide the banner
-    banner.style.display = "none";
-}
-
-    // Check if last update is older than 30 days
-    const lastUpdate = new Date(lastUpdateBadge.textContent.replace("Last Update: ", ""));
-    const now = new Date();
-    const diffDays = (now - lastUpdate) / (1000 * 60 * 60 * 24);
-
-    if (diffDays > 30) {
-        banner.style.display = "block";
+                if (data && data.articles) {
+                    const fallback = data.articles.slice(-5);
+                    renderArticles(fallback);
+                }
+            })
+            .catch(e => console.error("Fallback load error:", e));
         return;
     }
 
-    // Otherwise hide the banner
-    banner.style.display = "none";
+    // 2. Check if last update is older than 30 days
+    if (lastUpdateBadge && lastUpdateBadge.textContent) {
+        const lastUpdateStr = lastUpdateBadge.textContent.replace("Last Update: ", "").trim();
+        const lastUpdate = new Date(lastUpdateStr);
+        const now = new Date();
+        const diffDays = (now - lastUpdate) / (1000 * 60 * 60 * 24);
+
+        if (!isNaN(diffDays) && diffDays > 30) {
+            banner.style.display = "block";
+        }
+    }
 }
 
 
@@ -339,8 +340,8 @@ function renderFlowMatrix(matrix) {
         html += `<tr><td class="row-label">${getRegionFlag(source)} ${source}</td>`;
         regions.forEach(target => {
             const value = matrix[source]?.[target] ?? 0;
-           html += ` <td class="flow-cell" data-value="${value}" title="Influence from ${source} → ${target}: ${value}"> ${value} </td>`;
-           });
+            html += ` <td class="flow-cell" data-value="${value}" title="Influence from ${source} → ${target}: ${value}"> ${value} </td>`;
+        });
         html += `</tr>`;
     });
 
@@ -359,13 +360,13 @@ function renderFlowMatrix(matrix) {
     cells.forEach(cell => {
         const v = parseInt(cell.dataset.value);
         const intensity = max > 0 ? v / max : 0;
-        
-    // Smooth gradient: dark blue → cyan → white
-    const r = Math.floor(0 + intensity * 180);
-    const g = Math.floor(60 + intensity * 195);
-    const b = Math.floor(120 + intensity * 135);
 
-    cell.style.backgroundColor = `rgba(${r}, ${g}, ${b}, 0.35)`;
+        // Smooth gradient: dark blue → cyan → white
+        const r = Math.floor(0 + intensity * 180);
+        const g = Math.floor(60 + intensity * 195);
+        const b = Math.floor(120 + intensity * 135);
+
+        cell.style.backgroundColor = `rgba(${r}, ${g}, ${b}, 0.35)`;
     });
 }
 
