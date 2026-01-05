@@ -21,7 +21,7 @@ async function loadData() {
                 const momentumData = await momResponse.json();
                 console.log('Deep Analysis Momentum Data Loaded:', momentumData);
                 renderMomentumPanel(momentumData);
-                                  }
+            }
         } catch (mErr) {
             console.log('Momentum data not yet available.');
         }
@@ -288,7 +288,7 @@ function checkQuietMonth(articles) {
     }
     // Otherwise hide the banner
     banner.style.display = "none";
-}
+
 
     // Check if last update is older than 30 days
     const lastUpdate = new Date(lastUpdateBadge.textContent.replace("Last Update: ", ""));
@@ -339,8 +339,8 @@ function renderFlowMatrix(matrix) {
         html += `<tr><td class="row-label">${getRegionFlag(source)} ${source}</td>`;
         regions.forEach(target => {
             const value = matrix[source]?.[target] ?? 0;
-           html += ` <td class="flow-cell" data-value="${value}" title="Influence from ${source} → ${target}: ${value}"> ${value} </td>`;
-           });
+            html += ` <td class="flow-cell" data-value="${value}" title="Influence from ${source} → ${target}: ${value}"> ${value} </td>`;
+        });
         html += `</tr>`;
     });
 
@@ -359,13 +359,13 @@ function renderFlowMatrix(matrix) {
     cells.forEach(cell => {
         const v = parseInt(cell.dataset.value);
         const intensity = max > 0 ? v / max : 0;
-        
-    // Smooth gradient: dark blue → cyan → white
-    const r = Math.floor(0 + intensity * 180);
-    const g = Math.floor(60 + intensity * 195);
-    const b = Math.floor(120 + intensity * 135);
 
-    cell.style.backgroundColor = `rgba(${r}, ${g}, ${b}, 0.35)`;
+        // Smooth gradient: dark blue → cyan → white
+        const r = Math.floor(0 + intensity * 180);
+        const g = Math.floor(60 + intensity * 195);
+        const b = Math.floor(120 + intensity * 135);
+
+        cell.style.backgroundColor = `rgba(${r}, ${g}, ${b}, 0.35)`;
     });
 }
 
