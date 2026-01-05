@@ -270,11 +270,6 @@ function renderTopicFrequencyChart(articles) {
 
 function checkQuietMonth(articles) {
     const banner = document.getElementById('quiet-banner');
-
-    if (!banner) return;
-
-function checkQuietMonth(articles) {
-    const banner = document.getElementById('quiet-banner');
     if (!banner) return;
 
     // If no articles were fetched this cycle
@@ -291,6 +286,9 @@ function checkQuietMonth(articles) {
 
         return;
     }
+    // Otherwise hide the banner
+    banner.style.display = "none";
+}
 
     // Check if last update is older than 30 days
     const lastUpdate = new Date(lastUpdateBadge.textContent.replace("Last Update: ", ""));
