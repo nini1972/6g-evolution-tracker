@@ -270,11 +270,6 @@ function renderTopicFrequencyChart(articles) {
 
 function checkQuietMonth(articles) {
     const banner = document.getElementById('quiet-banner');
-
-    if (!banner) return;
-
-function checkQuietMonth(articles) {
-    const banner = document.getElementById('quiet-banner');
     if (!banner) return;
 
     // If no articles were fetched this cycle
@@ -291,6 +286,9 @@ function checkQuietMonth(articles) {
 
         return;
     }
+    // Otherwise hide the banner
+    banner.style.display = "none";
+}
 
     // Check if last update is older than 30 days
     const lastUpdate = new Date(lastUpdateBadge.textContent.replace("Last Update: ", ""));
@@ -361,18 +359,13 @@ function renderFlowMatrix(matrix) {
     cells.forEach(cell => {
         const v = parseInt(cell.dataset.value);
         const intensity = max > 0 ? v / max : 0;
-        cells.forEach(cell => {
-    const v = parseInt(cell.dataset.value);
-    const intensity = max > 0 ? v / max : 0;
-
+        
     // Smooth gradient: dark blue → cyan → white
     const r = Math.floor(0 + intensity * 180);
     const g = Math.floor(60 + intensity * 195);
     const b = Math.floor(120 + intensity * 135);
 
     cell.style.backgroundColor = `rgba(${r}, ${g}, ${b}, 0.35)`;
-});
-
     });
 }
 
