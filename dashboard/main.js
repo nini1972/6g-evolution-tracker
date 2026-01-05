@@ -361,10 +361,7 @@ function renderFlowMatrix(matrix) {
     cells.forEach(cell => {
         const v = parseInt(cell.dataset.value);
         const intensity = max > 0 ? v / max : 0;
-        cells.forEach(cell => {
-    const v = parseInt(cell.dataset.value);
-    const intensity = max > 0 ? v / max : 0;
-
+        
     // Smooth gradient: dark blue → cyan → white
     const r = Math.floor(0 + intensity * 180);
     const g = Math.floor(60 + intensity * 195);
