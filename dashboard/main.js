@@ -292,6 +292,9 @@ function checkQuietMonth(articles) {
 
         return;
     }
+    // Otherwise hide the banner
+    banner.style.display = "none";
+
 
     // 2. Check if last update is older than 30 days
     if (lastUpdateBadge && lastUpdateBadge.textContent) {
