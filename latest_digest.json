@@ -1,58 +1,107 @@
 {
-  "date": "2026-01-02",
+  "date": "2026-01-05",
   "articles": [
     {
-      "source": "IEEE Spectrum",
-      "title": "AI Data Centers Demand More Than Copper Can Deliver",
-      "link": "https://spectrum.ieee.org/rf-over-fiber",
+      "source": "ArXiv CS Networking",
+      "title": "CTMap: LLM-Enabled Connectivity-Aware Path Planning in Millimeter-Wave Digital Twin Networks",
+      "link": "https://arxiv.org/abs/2601.00110",
       "score": 3,
       "ai_insights": {
         "is_6g_relevant": true,
         "source_region": "US",
-        "summary": "This article discusses the transition from copper and optical interconnects to millimeter-wave and terahertz radio-based cables for AI data centers. As AI scaling demands exceed copper's physical limits (the 'copper cliff'), startups like Point2 and AttoTude are leveraging high-frequency radio (sub-THz/THz) to deliver low-power, high-bandwidth, and low-latency connections essential for the high-density GPU clusters that will underpin 6G AI-native architectures.",
-        "overall_6g_importance": 8,
+        "summary": "The article introduces CTMAP, a framework combining Large Language Models (LLMs) and Digital Twins to solve connectivity issues in mmWave 6G networks. By using ray-tracing simulations to create signal-aware maps, it trains a GPT-4 based model to provide semantic, connectivity-optimized navigation, significantly outperforming traditional distance-based path planning.",
+        "overall_6g_importance": 7,
         "6g_topics": [
-          "sub-THz",
-          "cloud-edge integration",
-          "sustainability",
-          "device ecosystem",
-          "network automation"
+          "AI-native RAN",
+          "semantic communications",
+          "network automation",
+          "cloud-edge integration"
         ],
         "impact_dimensions": {
           "research_intensity": 4,
           "standardization_influence": 2,
-          "industrial_deployment": 3,
+          "industrial_deployment": 2,
           "spectrum_policy_signal": 1,
+          "ecosystem_maturity": 3
+        },
+        "time_horizon": "mid-term",
+        "world_power_impact": {
+          "US": 4,
+          "EU": 2,
+          "China": 3,
+          "Japan": 2,
+          "Korea": 2,
+          "India": 1
+        },
+        "emerging_concepts": [
+          "Connectivity-Aware Path Planning",
+          "LLM-Enabled Digital Twins",
+          "Semantic Route Queries",
+          "Instruction-tuned Network Reasoning",
+          "Ray-tracing integrated instruction datasets"
+        ],
+        "key_evidence": [
+          "CTMAP achieves up to a tenfold improvement in cumulative signal strength compared to shortest-distance baselines.",
+          "The framework utilizes NVIDIA Sionna's ray-tracing engine to simulate realistic received signal strength (RSS) maps.",
+          "Instruction-tuned GPT-4 is used to enable interpretable, semantic route navigation based on network connectivity.",
+          "The system addresses the critical 6G challenge of signal blockage in dense urban mmWave environments."
+        ],
+        "impact_score": 7
+      },
+      "source_region": "US",
+      "summary": "arXiv:2601.00110v1 Announce Type: new \nAbstract: In this paper, we present \\textit{CTMAP}, a large language model (LLM) empowered digital twin framework for connectivity-aware route navigation in millimeter-wave (mmWave) wireless networks. Conventional navigation tools optimize only distance, time, or cost, overlooking network connectivity degradation caused by signal blockage in dense urban environments. The proposed framework constructs a digital twin of the physical mmWave network using OpenStreetMap, Blender, and NVIDIA Sionna's ray-tracing engine to simulate realistic received signal strength (RSS) maps. A modified Dijkstra algorithm then generates optimal routes that maximize cumulative RSS, forming the training data for instruction-tuned GPT-4-based reasoning. This integration enables semantic route queries such as ``find the strongest-signal path'' and returns connectivity-optimized paths that are interpretable by users and adaptable to real-time environmental updates. Experimental results demonstrate that CTMAP achieves up to a tenfold improvement in cumulative signal strength compared to shortest-distance baselines, while maintaining high path validity. The synergy of digital twin simulation and LLM reasoning establishes a scalable foundation for intelligent, interpretable, and connectivity-driven navigation, advancing the design of AI-empowered 6G mobility systems.",
+      "date": "2026-01-05"
+    },
+    {
+      "source": "ArXiv CS Networking",
+      "title": "Multi-Satellite NOMA-Irregular Repetition Slotted ALOHA for IoT Networks",
+      "link": "https://arxiv.org/abs/2601.00341",
+      "score": 3,
+      "ai_insights": {
+        "is_6g_relevant": true,
+        "source_region": "Other",
+        "summary": "This research addresses the challenges of massive IoT connectivity in the 6G era by proposing a Multi-Satellite NOMA-Irregular Repetition Slotted ALOHA (IRSA) protocol. It leverages the receiver diversity provided by mega-constellations to mitigate collision probabilities and enhance system capacity in Non-Terrestrial Networks (NTNs).",
+        "overall_6g_importance": 7,
+        "6g_topics": [
+          "NTN",
+          "sustainability",
+          "spectrum & policy",
+          "device ecosystem"
+        ],
+        "impact_dimensions": {
+          "research_intensity": 4,
+          "standardization_influence": 3,
+          "industrial_deployment": 2,
+          "spectrum_policy_signal": 2,
           "ecosystem_maturity": 2
         },
         "time_horizon": "mid-term",
         "world_power_impact": {
-          "US": 5,
-          "EU": 2,
-          "China": 3,
+          "US": 4,
+          "EU": 3,
+          "China": 4,
           "Japan": 2,
-          "Korea": 4,
-          "India": 1
+          "Korea": 2,
+          "India": 2
         },
         "emerging_concepts": [
-          "Active Radio Cables (ARC)",
-          "The Copper Cliff",
-          "THz Polymer Waveguides",
-          "Radio-based Co-packaged Transceivers",
-          "Scale-up vs. Scale-out Compute-Connectivity"
+          "Multi-Satellite Receiver Diversity",
+          "NOMA-Irregular Repetition Slotted ALOHA (NOMA-IRSA)",
+          "Mega-constellation collision mitigation",
+          "Satellite-based massive random access",
+          "NTN Energy Efficiency Trade-offs"
         ],
         "key_evidence": [
-          "Point2 Technology is manufacturing 1.6-terabit-per-second cables using 90 GHz and 225 GHz frequencies.",
-          "AttoTude demonstrated 4-meter data transmission at 970 GHz, targeting the terahertz regime for interconnects.",
-          "Radio-based cables offer 1/3 the power consumption and 1/1000th the latency of traditional optical fiber solutions.",
-          "Nvidia plans an eightfold increase in GPUs per system (to 576) by 2027, necessitating these high-frequency breakthroughs.",
-          "Point2's collaboration with KAIST utilizes standard 28nm CMOS technology to produce high-frequency radio chips, lowering manufacturing barriers."
+          "Integration of Non-Terrestrial Networks (NTNs) is deemed necessary to accommodate the 6G surge in IoT devices.",
+          "Visibility of just one additional satellite as a receiver yields significant gains in overall system performance.",
+          "The study derives a lower bound of system performance to serve as a fast tool for 6G network behavior evaluation.",
+          "NOMA-IRSA protocol is utilized to manage high-density user access and collision probability in large satellite coverage areas."
         ],
-        "impact_score": 8
+        "impact_score": 7
       },
-      "source_region": "US",
-      "summary": "<img src=\"https://spectrum.ieee.org/media-library/a-computer-cable-connector-with-its-cover-off-to-show-the-fibers-and-circuits.jpg?id=62604018&amp;width=1200&amp;height=800&amp;coordinates=178%2C0%2C179%2C0\" /><br /><br /><div class=\"ieee-summary\"><h2>Summary</h2><ul><li>In data-center terms, scaling out involves linking computers, while scaling up packs more GPUs into a computer, challenging copper\u2019s physical limits.</li><li><a href=\"#copper\">Copper cables face a phenomenon at high data rates</a> at high data rates that necessitate wider wires and more power, complicating a data center\u2019s dense connections.</li><li><a href=\"#reach\">Point2 and AttoTude propose radio-based cables</a>, offering longer reach, lower power consumption, and narrower cables than copper, without the cost and complexity of optics.</li><li><a href=\"#scaleup\">Startups aim to directly integrate radio cables</a> with GPUs, easing cooling needs and enhancing data-center efficiency.</li></ul></div><p class=\"drop-caps\"><strong>How fast you can</strong> train gigantic new AI models boils down to two words: <em><em>up</em></em> and <em><em>out</em></em>.</p><p>In data-center terms, scaling out means increasing how many AI computers you can link together to tackle a big problem in chunks. Scaling up, on the other hand, means jamming as many GPUs as possible into each of those computers, linking them so that they act like a single gigantic GPU, and allowing them to do bigger pieces of a problem faster.</p><p>The two domains rely on two different physical connections. Scaling out mostly relies on <a href=\"https://spectrum.ieee.org/optical-interconnects-imec-silicon-photonics\" target=\"_self\">photonic chips and optical fiber</a>, which together can sling data hundreds or thousands of meters. Scaling up, which results in networks that are roughly 10 times as dense, is the domain of much simpler and less costly technology\u2014copper cables that often span no more than a meter or two.</p><div class=\"ieee-sidebar-small\"><p>This article is part of our special report <a href=\"https://spectrum.ieee.org/special-reports/top-tech-2026\" target=\"_blank\">Top Tech 2026</a>.</p></div><p>But the increasingly high GPU-to-GPU data rates needed to make more powerful computers work are coming up against the physical limits of copper. As the bandwidth demands on copper cables approach the terabit-per-second realm, physics demands that they be made shorter and thicker, says <a href=\"https://www.linkedin.com/in/david-kuo-6233274/\" target=\"_blank\">David Kuo</a>, vice president of product marketing and business development at the data-center-interconnect startup <a href=\"https://point2tech.com/\" target=\"_blank\">Point2 Technology</a>. That\u2019s a big problem, given the congestion inside computer racks today and the fact that Nvidia, the leading AI hardware company, <a href=\"https://www.nextplatform.com/2025/03/19/nvidia-draws-gpu-system-roadmap-out-to-2028/\" target=\"_blank\">plans an eightfold increase in the maximum number of GPUs</a> per system, from 72 to 576 by 2027.</p><p>\u201cWe call it the copper cliff,\u201d says Kuo.</p><p>The industry is working on ways to unclog data centers by extending copper\u2019s reach and bringing slim, long-reaching optical fiber closer to the GPUs themselves. But Point2 and another startup, <a href=\"https://www.attotude.com/\" target=\"_blank\">AttoTude</a>, advocate for a solution that\u2019s simultaneously in between the two technologies and completely different from them. They claim the tech will deliver the low cost and reliability of copper as well as some of the narrow gauge and distance of optical\u2014a combination that will handily meet the needs of future AI systems.</p><p>Their answer? Radio.</p><h3></h3><br /><div class=\"rblad-ieee_in_content\"></div><p>Later this year, Point2 will begin manufacturing the chips behind a 1.6-terabit-per-second cable consisting of eight slender polymer waveguides, each capable of carrying 448 gigabits per second using two frequencies, 90 gigahertz and 225 GHz. At each end of the waveguide are plug-in modules that turn electronic bits into modulated radio waves and back again. AttoTude is planning essentially the same thing, but at terahertz frequencies and with a different kind of svelte, flexible cable.</p><p>Both companies say their technologies can easily outdo copper in reach\u2014spanning 10 to 20 meters without significant loss, which is certainly long enough to handle Nvidia\u2019s announced scale-up plans. And in Point2\u2019s case, the system consumes one-third of optical\u2019s power, costs one-third as much, and offers as little as one-thousandth the latency.</p><p>According to its proponents, radio\u2019s reliability and ease of manufacturing compared with those of optics mean that it might beat photonics in the race to bring low-energy processor-to-processor connections all the way to GPU, eliminating some copper even on the printed circuit board.</p><h2 class=\"rm-anchors\" id=\"copper\">What\u2019s wrong with copper? </h2><p>So, what\u2019s wrong with copper? Nothing, so long as the data rate isn\u2019t too high and the distance it has to go isn\u2019t too far. At high data rates, though, conductors like copper fall prey to what\u2019s called the skin effect.</p><p class=\"shortcode-media shortcode-media-rebelmouse-image\"> <img alt=\"Comparison of two cables: direct-attach and e-Tube. e-Tube is smaller, reaching 20 meters.\" class=\"rm-shortcode\" id=\"31ae0\" src=\"https://spectrum.ieee.org/media-library/comparison-of-two-cables-direct-attach-and-e-tube-e-tube-is-smaller-reaching-20-meters.png?id=62604012&amp;width=980\" /> <small class=\"image-media media-caption\">A 1.6-terabit-per-second e-Tube cable has half the area of a 32-gauge copper cable and has up to 20 times the reach.  </small><small class=\"image-media media-photo-credit\">Point2 Technology  </small></p><p>The skin effect occurs because the signal\u2019s rapidly changing current leads to a changing magnetic field that tries to counter the current. This countering force is concentrated at the middle of the wire, so most of the current is confined to flowing at the wire\u2019s outer edge\u2014the \u201cskin\u201d\u2014which increases resistance. At 60 hertz\u2014the mains frequency in many countries\u2014most of the current is in the outer 8 millimeters of copper. But at 10 GHz, the <a href=\"https://en.wikipedia.org/wiki/Skin_effect\" target=\"_blank\">skin is just 0.65</a> micrometers deep. So to push high-frequency data through copper, the wire needs to be wider, and you need more power. Both requirements work against packing more and more connections into a smaller space to scale up computing.</p><p>To counteract the skin effect and other signal-degrading issues, companies have developed copper cables with specialized electronics at either end. With the most promising, called <a href=\"https://credosemi.com/products/zeroflapaec/\" target=\"_blank\">active electrical cables, or AECs,</a> the terminating chip is called a <a href=\"https://w.kandou.com/matterhorn/2024-06-05-what-is-a-retimer/\" target=\"_blank\">retimer</a> (pronounced \u201c<em><em>re</em></em>-timer\u201d). This IC cleans up the data signal and the clock signal as they arrive from the processor. The circuit then retransmits them down the copper cable\u2019s typically eight pairs of wires, or lanes. (There is a second set for transmitting in the other direction.) At the other end, the chip\u2019s twin takes care of any noise or clock issues that accumulate during the journey and sends the data on to the receiving processor. Thus, at the cost of electronic complexity and power consumption, an AEC can extend the distance that copper can reach.</p><p><a href=\"https://www.linkedin.com/in/donbarnetson/\" target=\"_blank\">Don Barnetson</a>, senior vice president and head of product at <a href=\"https://credosemi.com/\" target=\"_blank\">Credo</a>, which provides network hardware to data centers, says his company has developed an AEC that can deliver 800 Gb/s as far as 7 meters\u2014a distance that\u2019s likely needed as computers hit 500 to 600 GPUs and span multiple racks. The first use of AECs will probably be to link individual GPUs to the network switches that form the scale-out network. This first stage in the scale-out network is important, says Barnetson, because \u201cit\u2019s the only nonredundant hop in the network.\u201d Losing that link, even momentarily, can cause an AI training run to collapse.</p><p>But even if retimers manage to push the copper cliff a bit farther into the future, physics will eventually win. Point2 and AttoTude are betting that point is coming soon.</p><h2 class=\"rm-anchors\" id=\"reach\">Terahertz radio\u2019s reach </h2><p>AttoTude grew out of founder and CEO <a href=\"https://en.wikipedia.org/wiki/David_Welch_(optical_engineer)\" target=\"_blank\">Dave Welch</a>\u2019s deep investigations into photonics. A cofounder of <a href=\"https://www.nokia.com/newsroom/nokia-completes-acquisition-of-infinera-to-create-innovation-powerhouse-in-optical-networks-with-the-scale-to-power-the-data-center-revolution/\" target=\"_blank\">Infinera, an optical telecom\u2013equipment maker purchased by Nokia</a> in 2025, Welch developed photonic systems for decades. He knows the technology\u2019s weaknesses well: It consumes too much power (about 10 percent of a data center\u2019s compute budget, <a href=\"https://spectrum.ieee.org/co-packaged-optics\" target=\"_self\">according to Nvidia</a>); it\u2019s extremely sensitive to temperature; getting light into and out of photonics chips requires micrometer-precision manufacturing; and the technology\u2019s lack of long-term reliability is notorious. (There\u2019s even a term for it: \u201clink flap.\u201d)</p><p>\u201cCustomers love fiber. But what they hate is the photonics,\u201d says Welch. \u201cElectronics have been demonstrated to be inherently more reliable than optics.\u201d</p><p>Fresh off Nokia\u2019s US $2.3 billion purchase of Infinera, Welch asked himself some fundamental questions as he contemplated his next startup, beginning with \u201cIf I didn\u2019t have to be at [an optical wavelength], where should I be?\u201d The answer was the highest frequency that\u2019s achievable purely with electronics\u2014the <a href=\"https://spectrum.ieee.org/the-truth-about-terahertz\" target=\"_self\">terahertz</a> regime, 300 to 3,000 GHz.</p><p class=\"pull-quote\"><span><span>\u201cYou start with passive copper, and you do everything you can to run in passive copper as long as you can</span><span>.</span><span>\u201d</span> <span><strong>\u2014</strong></span></span><span><strong><span>Don </span><span>Barnetson</span></strong><span><strong>, Credo</strong></span></span></p><p>So Welch and his team set about building a system that consists of a digital component to interface with the GPU, a terahertz-frequency generator, and a mixer to encode the data on the terahertz signal. An antenna then funnels the signal into a narrow, flexible waveguide.</p><p>As for the waveguide, it\u2019s made of a dielectric at the center, which channels the terahertz signal, surrounded by cladding. One early version was just a narrow, hollow copper tube. Welch says that the second-generation cable\u2014made up of fibers only about 200 \u00b5m across\u2014 points to a system with losses down to 0.3 decibels per meter\u2014a small fraction of the loss from a typical copper cable carrying 224 Gb/s.</p><p>Welch predicts this waveguide will be able to carry data as far as 20 meters. That \u201chappens to be a beautiful distance for scale-up in data centers,\u201d he says.</p><p>So far, AttoTude has made the individual components\u2014the digital data chip, the terahertz-signal generator, the circuit that mixes the two\u2014along with a couple generations of waveguides. But the company hasn\u2019t yet integrated them into a single pluggable form. Still, Welch says, the combination delivers enough bandwidth for at least 224 Gb/s transmission, and the startup demonstrated 4-meter transmission at 970 GHz last April at the <a href=\"https://www.ofcconference.org/\" target=\"_blank\">Optical Fiber Communications Conference</a>, in San Francisco.</p><h2>Radio\u2019s reach in the data center </h2><p>Point2 has been aiming to bring radio to the data center longer than AttoTude has. Formed nine years ago by <a href=\"https://point2tech.com/company/team/\" target=\"_blank\">veterans</a> of <a href=\"https://www.marvell.com/\" target=\"_blank\">Marvell</a>, <a href=\"https://www.nvidia.com/en-us/\" target=\"_blank\">Nvidia</a>, and <a href=\"https://semiconductor.samsung.com/\" target=\"_blank\">Samsung</a>, the startup has pulled in $55 million in venture funding, most notably from computer cables and connections maker <a href=\"https://www.molex.com/en-us/home\" target=\"_blank\">Molex</a>. The latter\u2019s backing \u201cis critical, because they\u2019re a major part of the cable-and-connector ecosystem,\u201d says Kuo. Molex has already shown that it can make Point2\u2019s cable without modifying its existing manufacturing lines, and now Foxconn Interconnect Technology, which makes cables and connectors, is partnering with the startup. The support could be a big selling point for the hyperscalers who would be Point2\u2019s customers.</p><p class=\"shortcode-media shortcode-media-rebelmouse-image rm-float-left rm-resized-container rm-resized-container-25\" style=\"float: left;\"> <img alt=\"Bundles of grey cables cascade down the back of a black computer rack.\" class=\"rm-shortcode\" id=\"27f16\" src=\"https://spectrum.ieee.org/media-library/bundles-of-grey-cables-cascade-down-the-back-of-a-black-computer-rack.jpg?id=62604023&amp;width=980\" /> <small class=\"image-media media-caption\">Nvidia\u2019s GB200 NVL72 rack-scale computer relies on many copper cables to link its 72 processors together.</small><small class=\"image-media media-photo-credit\">NVIDIA </small></p><p>Each end of the Point2 cable, called an e-Tube, consists of a single silicon chip that converts the incoming digital data into modulated millimeter-wave frequencies and an antenna that radiates into the waveguide. The waveguide itself is a plastic core with metal cladding, all wrapped in a metal shield. A 1.6-Tb/s cable, called an active radio cable (ARC), is made up of eight e-Tube cores. At 8.1 millimeters across, that cable takes up half the volume of a comparable AEC cable.</p><p>One of the benefits of operating at RF frequencies is that the chips that handle them can be made in a standard silicon foundry, says Kuo. A collaboration between engineers at Point2 and the Korea Advanced Institute of Science and Technology, reported this year in the <a href=\"https://ieeexplore.ieee.org/document/10966033\" target=\"_blank\"><em><em>IEEE Journal of Solid-State Circuits</em></em></a>, used <a href=\"https://en.wikipedia.org/wiki/28_nm_process\" target=\"_blank\">28-nanometer CMOS</a> technology, which hasn\u2019t been cutting edge since 2010.</p><h2 class=\"rm-anchors\" id=\"scaleup\">The scale-up network market </h2><p>As promising as their tech sounds, Point2 and AttoTude will have to overcome the data-center industry\u2019s long history with copper. \u201cYou start with passive copper,\u201d says Credo\u2019s Barnetson. \u201cAnd you do everything you can to run in passive copper as long as you can.\u201d</p><p>The boom in <a href=\"https://spectrum.ieee.org/data-center-liquid-cooling\" target=\"_self\">liquid cooling for data-center computing</a> is evidence of that, he says. \u201cThe entire reason people have gone to liquid cooling is to keep [scaling up] in passive copper,\u201d Barnetson says. To connect more GPUs in a scale-up network with passive copper, they must be packed in at densities too high for air cooling alone to handle. Getting the same kind of scale-up from a more spread-out set of GPUs connected by millimeter-wave ARCs would ease the need for cooling, suggests Kuo.</p><p>Meanwhile, both startups are also chasing a version of the technology that will attach directly to the GPU.</p><p>Nvidia and Broadcom recently deployed optical transceivers that live inside the same package as a processor, separating the electronics and optics by micrometers rather than centimeters or meters. Right now, the technology is limited to the network-switch chips that connect to a scale-out network. But big players and startups alike are trying to extend its use all the way to the GPU.</p><p>Both Welch and Kuo say their companies\u2019 technologies could have a big advantage over optical tech in such a transceiver-processor package. <a href=\"https://spectrum.ieee.org/co-packaged-optics\" target=\"_self\">Nvidia and Broadcom\u2014separately\u2014had to do a mountain of engineering</a> to make their systems possible to manufacture and reliable enough to exist in the same package as a very expensive processor. One of the many challenges is how to attach an optical fiber to a waveguide on a photonic chip with micrometer accuracy. Because of its short wavelength, infrared laser light must be lined up very precisely with the core of an optical fiber, which is only around 10 \u00b5m across. By contrast, millimeter-wave and terahertz signals have a much longer wavelength, so you don\u2019t need as much precision to attach the waveguide. In one demo system it was done by hand, says Kuo.</p><p>Pluggable connections will be the technology\u2019s first use, but radio transceivers co-packaged with processors are \u201cthe real prize,\u201d says Welch. <span class=\"ieee-end-mark\"></span></p>",
-      "date": "2025-12-27"
+      "source_region": "Other",
+      "summary": "arXiv:2601.00341v1 Announce Type: new \nAbstract: As the transition from 5G to 6G unfolds, a substantial increase in Internet of Things (IoT) devices is expected, enabling seamless and pervasive connectivity across various applications. Accommodating this surge and meeting the high capacity demands will necessitate the integration of NonTerrestrial Networks (NTNs). However, the extensive coverage area of satellites, relative to terrestrial receivers, will lead to a high density of users attempting to access the channel at the same time, increasing the collision probability. In turn, the deployment of mega constellations make it possible for ground users to be in visibility of more than one satellite at the same time, enabling receiver diversity. Therefore, in this paper, we evaluate the impact of multi-receivers in scenarios where IoT nodes share the channel following a non-orthogonal multiple access (NOMA)irregular repetition slotted ALOHA (IRSA) protocol. Considering the impairments of satellite channels, we derive a lower bound of system performance, serving as a fast tool for initial evaluation of network behavior. Additionally, we identify the trade-offs inherent to the network design parameters, with a focus on packet loss rate and energy efficiency. Notably, in the visibility of only one extra satellite as receiver yields significant gains in overall system performance.",
+      "date": "2026-01-05"
     }
   ]
 }
