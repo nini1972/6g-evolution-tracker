@@ -366,8 +366,6 @@ function renderFlowMatrix(matrix) {
     const b = Math.floor(120 + intensity * 135);
 
     cell.style.backgroundColor = `rgba(${r}, ${g}, ${b}, 0.35)`;
-});
-
     });
 }
 
