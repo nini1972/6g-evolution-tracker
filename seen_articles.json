@@ -3,5 +3,15 @@
     "url": "https://spectrum.ieee.org/rf-over-fiber",
     "title": "AI Data Centers Demand More Than Copper Can Deliver",
     "processed_date": "2026-01-02"
+  },
+  "78e70ed6b5f140b99a107d08223ddb0c": {
+    "url": "https://arxiv.org/abs/2601.00110",
+    "title": "CTMap: LLM-Enabled Connectivity-Aware Path Planning in Millimeter-Wave Digital Twin Networks",
+    "processed_date": "2026-01-05"
+  },
+  "039d0d34bd601ea81d2461cd3249771f": {
+    "url": "https://arxiv.org/abs/2601.00341",
+    "title": "Multi-Satellite NOMA-Irregular Repetition Slotted ALOHA for IoT Networks",
+    "processed_date": "2026-01-05"
   }
 }
