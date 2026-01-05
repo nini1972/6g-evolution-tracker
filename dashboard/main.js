@@ -289,12 +289,8 @@ function checkQuietMonth(articles) {
                 }
             })
             .catch(e => console.error("Fallback load error:", e));
-
         return;
     }
-    // Otherwise hide the banner
-    banner.style.display = "none";
-
 
     // 2. Check if last update is older than 30 days
     if (lastUpdateBadge && lastUpdateBadge.textContent) {
