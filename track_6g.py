@@ -4,6 +4,7 @@ import hashlib
 import time
 import requests
 import random
+import asyncio
 from datetime import datetime, timedelta
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
@@ -11,6 +12,19 @@ from bs4 import BeautifulSoup
 from urllib.parse import urljoin
 import google.genai as genai
 import os
+from typing import Optional
+from fetchers.hybrid_fetcher import HybridFetcher
+import structlog
+
+# Configure structured logging
+structlog.configure(
+    processors=[
+        structlog.processors.TimeStamper(fmt="iso"),
+        structlog.processors.add_log_level,
+        structlog.processors.JSONRenderer()
+    ]
+)
+logger = structlog.get_logger()
 
 # 🌐 RSS sources to monitor
 # Note: Some feeds may be temporarily unavailable or have parsing issues
@@ -26,15 +40,6 @@ FEEDS = {
     # "Samsung Research": "https://research.samsung.com/blog/rss",
     # "ITU News": "https://www.itu.int/en/mediacentre/Pages/feeds.aspx",
 }
-
-# 🔄 User agents for rotating to bypass bot detection
-USER_AGENTS = [
-    'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
-    'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
-    'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
-    'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:121.0) Gecko/20100101 Firefox/121.0',
-    'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.2 Safari/605.1.15',
-]
 
 # 🔍 Keywords with weighted priorities
 HIGH_PRIORITY = ["IMT-2030", "AI-native", "terahertz", "6G"]
@@ -53,6 +58,17 @@ RETRY_DELAY = 2  # seconds
 # 🤖 Gemini AI Config
 client = genai.Client(api_key=os.getenv("GOOGLE_API_KEY"))
 model="gemini-3-flash-preview"
+
+# Global fetcher instance
+fetcher: Optional[HybridFetcher] = None
+
+async def get_fetcher() -> HybridFetcher:
+    """Get or create global fetcher instance"""
+    global fetcher
+    if fetcher is None:
+        fetcher = HybridFetcher()
+    return fetcher
+
 def get_ai_summary(title, summary, site_name):
     """Get an AI-powered summary and 6G impact score from Gemini."""
        
@@ -278,6 +294,53 @@ def find_rss_feed(url, headers):
         # Silently fail if auto-detection doesn't work
         return None
 
+async def fetch_feed_with_hybrid(source: str, url: str) -> Optional[dict]:
+    """
+    Fetch feed using hybrid strategy (httpx → Playwright fallback).
+    """
+    hybrid_fetcher = await get_fetcher()
+    
+    logger.info("fetch_started", source=source, url=url)
+    
+    result = await hybrid_fetcher.fetch(url)
+    
+    if result.success:
+        # Parse the content with feedparser
+        feed = feedparser.parse(result.content)
+        
+        # Check if feed is valid
+        if feed.bozo and not feed.entries:
+            logger.warning(
+                "feed_parse_error",
+                source=source,
+                error=getattr(feed, 'bozo_exception', 'Unknown parsing error')
+            )
+            return None
+        
+        if not feed.entries:
+            logger.warning("feed_empty", source=source)
+            return None
+        
+        logger.info(
+            "fetch_success",
+            source=source,
+            method=result.method_used,
+            entries=len(feed.entries)
+        )
+        print(f"✓ {source}: {len(feed.entries)} total entries fetched (via {result.method_used})")
+        
+        return feed
+    else:
+        logger.error(
+            "fetch_failed",
+            source=source,
+            status_code=result.status_code,
+            error=result.error,
+            method=result.method_used
+        )
+        print(f"✗ {source}: Failed to fetch")
+        return None
+
 def fetch_feed_with_retry(source, url, retries=MAX_RETRIES):
     """Fetch a feed with retry logic, auto-detection, and better error handling."""
     
@@ -391,6 +454,27 @@ def fetch_feed_wrapper(args):
     """Wrapper function for parallel feed fetching."""
     source, url = args
     return source, fetch_feed_with_retry(source, url)
+
+async def fetch_all_feeds() -> dict:
+    """Fetch all feeds in parallel using hybrid strategy"""
+    print(f"📡 Fetching {len(FEEDS)} RSS feeds in parallel...")
+    
+    tasks = [
+        fetch_feed_with_hybrid(source, url)
+        for source, url in FEEDS.items()
+    ]
+    
+    results = await asyncio.gather(*tasks, return_exceptions=True)
+    
+    # Combine results
+    feeds = {}
+    for (source, url), result in zip(FEEDS.items(), results):
+        if isinstance(result, Exception):
+            logger.error("feed_exception", source=source, error=str(result))
+        elif result is not None:
+            feeds[source] = result
+    
+    return feeds
 
 def log_to_markdown(source, entries):
     """Log relevant entries to markdown file with enhanced details and duplicate check."""
@@ -581,7 +665,16 @@ def generate_source_target_matrix(articles):
     print("🌐 Weighted Source→Target matrix updated.")
 
 
-def main():
+async def cleanup():
+    """Cleanup resources before exit"""
+    global fetcher
+    if fetcher:
+        await fetcher.close()
+        fetcher = None
+
+
+async def main_async():
+    """Main async execution function"""
     print("🚀 6G Sentinel started its monthly sweep.\n")
     
     # AI Status Check
@@ -589,122 +682,117 @@ def main():
         print("⚠️  Warning: GOOGLE_API_KEY not found in environment.")
         print("   AI insights and Rigorous Filtering are DISABLED.")
     else:
-        print("🤖 Gemini AI Intelligence is ACTIVE. (Model: gemini-3-flash)")
-    print()
-    # Load cache
-    cache = load_cache()
-    new_articles_count = 0
-    
-    # Fetch feeds in parallel
-    print(f"📡 Fetching {len(FEEDS)} RSS feeds in parallel...")
-    with ThreadPoolExecutor(max_workers=MAX_WORKERS) as executor:
-        future_to_source = {executor.submit(fetch_feed_wrapper, (source, url)): source 
-                           for source, url in FEEDS.items()}
-        
-        feeds_data = {}
-        for future in as_completed(future_to_source):
-            try:
-                source, feed = future.result()
-                if feed and hasattr(feed, 'entries'):
-                    feeds_data[source] = feed
-                    print(f"✓ {source}: {len(feed.entries)} total entries fetched")
-                else:
-                    print(f"✗ {source}: Failed to fetch")
-            except Exception as e:
-                print(f"❌ Error fetching source: {e}")
-    
+        print(f"🤖 Gemini AI Intelligence is ACTIVE. (Model: {model})")
     print()
     
-    # Process each feed
-    all_processed_entries = []
-    for source, feed in feeds_data.items():
-        relevant_entries = []
+    try:
+        # Load cache
+        cache = load_cache()
+        new_articles_count = 0
         
-        for entry in feed.entries:
-            # Check if article was already seen
-            article_url = entry.get("link", "")
-            if not article_url:
-                continue
+        # Fetch feeds in parallel using hybrid strategy
+        feeds_data = await fetch_all_feeds()
+        
+        print()
+        
+        # Process each feed
+        all_processed_entries = []
+        for source, feed in feeds_data.items():
+            relevant_entries = []
             
-            url_hash = hash_url(article_url)
-            if url_hash in cache:
-                continue
-            
-            # Check if article is recent
-            if not is_recent(entry):
-                continue
-            
-            # Calculate relevance score
-            score = relevance_score(entry)
-            if score >= RELEVANCE_THRESHOLD:
-                # Try to get AI summary and relevance check
-                print(f"  ✨ Generating AI insights for: {entry.get('title')[:50]}...")
-                ai_insights = get_ai_summary(entry.get("title", ""), entry.get("summary", ""), source)
-                
-                # Check for AI rejection
-                if ai_insights and not ai_insights.get("is_6g_relevant", True):
-                    print(f"  🚫 AI rejected as irrelevant: {entry.get('title')[:50]}")
+            for entry in feed.entries:
+                # Check if article was already seen
+                article_url = entry.get("link", "")
+                if not article_url:
                     continue
                 
-                # Map AI overall_6g_importance to impact_score for the dashboard
-                if ai_insights:
-                    ai_insights["impact_score"] = ai_insights.get("overall_6g_importance", 0)
+                url_hash = hash_url(article_url)
+                if url_hash in cache:
+                    continue
                 
-                entry["_relevance_score"] = score
-                entry["_ai_insights"] = ai_insights
+                # Check if article is recent
+                if not is_recent(entry):
+                    continue
                 
-                relevant_entries.append(entry)
-                cache[url_hash] = {
-                    "url": article_url,
-                    "title": entry.get("title", ""),
-                    "processed_date": DATE
-                }
-                new_articles_count += 1
+                # Calculate relevance score
+                score = relevance_score(entry)
+                if score >= RELEVANCE_THRESHOLD:
+                    # Try to get AI summary and relevance check
+                    print(f"  ✨ Generating AI insights for: {entry.get('title')[:50]}...")
+                    ai_insights = get_ai_summary(entry.get("title", ""), entry.get("summary", ""), source)
+                    
+                    # Check for AI rejection
+                    if ai_insights and not ai_insights.get("is_6g_relevant", True):
+                        print(f"  🚫 AI rejected as irrelevant: {entry.get('title')[:50]}")
+                        continue
+                    
+                    # Map AI overall_6g_importance to impact_score for the dashboard
+                    if ai_insights:
+                        ai_insights["impact_score"] = ai_insights.get("overall_6g_importance", 0)
+                    
+                    entry["_relevance_score"] = score
+                    entry["_ai_insights"] = ai_insights
+                    
+                    relevant_entries.append(entry)
+                    cache[url_hash] = {
+                        "url": article_url,
+                        "title": entry.get("title", ""),
+                        "processed_date": DATE
+                    }
+                    new_articles_count += 1
+            
+            # Log and display results
+            if relevant_entries:
+                # Sort by relevance score (highest first)
+                relevant_entries.sort(key=lambda x: x.get("_relevance_score", 0), reverse=True)
+                
+                print(f"🔎 {source}: {len(relevant_entries)} new relevant updates found.")
+                for entry in relevant_entries:
+                    score = entry.get("_relevance_score", 0)
+                    print(f"  • [{score}] {entry.get('title')}")
+                    print(f"    {entry.get('link')}")
+                print()
+                
+                log_to_markdown(source, relevant_entries)
+                
+                # Prepare for JSON export
+                for entry in relevant_entries:
+                    ai = entry.get("_ai_insights")
+                    all_processed_entries.append({
+                        "source": source,
+                        "title": entry.get("title", ""),
+                        "link": entry.get("link", ""),
+                        "score": entry.get("_relevance_score", 0),
+                        "ai_insights": ai,
+                        "source_region": ai.get("source_region", "Other") if ai else "Other",
+                        "summary": entry.get("summary", ""),
+                        "date": datetime(*entry.published_parsed[:6]).strftime("%Y-%m-%d") if hasattr(entry, "published_parsed") and entry.published_parsed else DATE
+                    })
+            else:
+                print(f"📭 {source}: No new keyword-matching updates this cycle.\n")
         
-        # Log and display results
-        if relevant_entries:
-            # Sort by relevance score (highest first)
-            relevant_entries.sort(key=lambda x: x.get("_relevance_score", 0), reverse=True)
-            
-            print(f"🔎 {source}: {len(relevant_entries)} new relevant updates found.")
-            for entry in relevant_entries:
-                score = entry.get("_relevance_score", 0)
-                print(f"  • [{score}] {entry.get('title')}")
-                print(f"    {entry.get('link')}")
-            print()
-            
-            log_to_markdown(source, relevant_entries)
-            
-            # Prepare for JSON export
-            for entry in relevant_entries:
-                ai = entry.get("_ai_insights")
-                all_processed_entries.append({
-                    "source": source,
-                    "title": entry.get("title", ""),
-                    "link": entry.get("link", ""),
-                    "score": entry.get("_relevance_score", 0),
-                    "ai_insights": ai,
-                    "source_region": ai.get("source_region", "Other") if ai else "Other",
-                    "summary": entry.get("summary", ""),
-                    "date": datetime(*entry.published_parsed[:6]).strftime("%Y-%m-%d") if hasattr(entry, "published_parsed") and entry.published_parsed else DATE
-                })
-        else:
-            print(f"📭 {source}: No new keyword-matching updates this cycle.\n")
+        # Export for dashboard
+        if all_processed_entries:
+            export_to_json(all_processed_entries)
+            # Deep Analysis Aggregation
+            generate_source_target_matrix(all_processed_entries)
+            aggregate_momentum(all_processed_entries)
+        
+        # Save cache
+        save_cache(cache)
+        
+        print(f"✅ 6G Sentinel completed its sweep.")
+        print(f"📊 Total new articles processed: {new_articles_count}")
+        print(f"💾 Cache updated with {len(cache)} unique articles.")
+        print("🔮 The future is still under construction.")
     
-    # Export for dashboard
-    if all_processed_entries:
-        export_to_json(all_processed_entries)
-        # Deep Analysis Aggregation
-        generate_source_target_matrix(all_processed_entries)
-        aggregate_momentum(all_processed_entries)
-    
-    # Save cache
-    save_cache(cache)
-    
-    print(f"✅ 6G Sentinel completed its sweep.")
-    print(f"📊 Total new articles processed: {new_articles_count}")
-    print(f"💾 Cache updated with {len(cache)} unique articles.")
-    print("🔮 The future is still under construction.")
+    finally:
+        await cleanup()
+
+
+def main():
+    """Main entry point - wrapper for async execution"""
+    asyncio.run(main_async())
 
 if __name__ == "__main__":
     main()

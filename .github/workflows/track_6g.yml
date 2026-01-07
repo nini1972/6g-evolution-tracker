@@ -24,11 +24,20 @@ jobs:
       #     restore-keys: |
       #       ${{ runner.os }}-pip-
 
+      - name: Cache Playwright browsers
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: ${{ runner.os }}-playwright-${{ hashFiles('**/requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-playwright-
 
       - name: Cache article database
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
-          path: seen_articles.json
+          path: |
+            seen_articles.json
+            fetch_method_cache.json
           key: ${{ runner.os }}-articles-${{ github.run_number }}
           restore-keys: |
             ${{ runner.os }}-articles-
@@ -39,7 +48,9 @@ jobs:
           python-version: '3.x'
 
       - name: Install dependencies
-        run: pip install -r requirements.txt
+        run: |
+          pip install -r requirements.txt
+          playwright install --with-deps chromium
 
       - name: Test Gemini API
         env:

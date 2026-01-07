@@ -4,6 +4,11 @@ __pycache__/
 .DS_Store
 *.log
 
+# Fetching cache
+fetch_method_cache.json
+
+# Playwright
+.playwright/
 
 #Ignore vscode AI rules
 .github\instructions\codacy.instructions.md
