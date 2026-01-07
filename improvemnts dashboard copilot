@@ -1,0 +1,1666 @@
+1. What the Dashboard Should Show (Core Views)
+A good intelligence dashboard has five essential lenses:
+
+A. Global 6G Situation Overview
+A top‑level summary:
+
+Total relevant articles this week/month
+
+Top 5 topics
+
+Top 5 regions
+
+Average world power impact
+
+Most important article (importance score)
+
+Emerging concepts heatmap
+
+This is your “mission control”.
+
+B. Region Intelligence View
+A map or region selector showing:
+
+US / EU / China / Japan / Korea / India
+
+Number of signals
+
+Average importance
+
+Topic distribution per region
+
+World power impact trend
+
+This lets you see who is moving fastest.
+
+C. Topic Intelligence View
+A topic‑centric view:
+
+sub‑THz
+
+AI‑native RAN
+
+NTN
+
+ISAC
+
+Open RAN
+
+spectrum & policy
+
+sustainability
+
+cloud‑edge integration
+
+For each topic:
+
+number of articles
+
+region contributions
+
+time horizon distribution
+
+emerging concepts
+
+top evidence
+
+This is where strategy teams spend most of their time.
+
+D. Time Horizon View
+A timeline showing:
+
+near‑term (≤ 2028)
+
+mid‑term (2028–2032)
+
+long‑term (≥ 2032)
+
+This reveals where the industry is investing.
+
+E. Article Explorer
+A searchable, filterable list of:
+
+all relevant articles
+
+sorted by importance
+
+with tags, regions, topics, evidence
+
+This is the “raw intelligence” view.
+
+🧠 2. How the Dashboard Reads Data
+Your dashboard JS (like the file you're viewing now) will load:
+
+js
+fetch("latest_digest.json")
+  .then(r => r.json())
+  .then(data => renderDashboard(data));
+From there, you can build:
+
+charts
+
+tables
+
+heatmaps
+
+timelines
+
+The structure of latest_digest.json is already perfect for this.
+
+📊 3. Recommended Dashboard Components
+Here’s a clean component breakdown you can implement in main.js :
+
+1. Summary Cards
+Total relevant articles
+
+Top region
+
+Top topic
+
+Average importance
+
+Most impactful article
+
+2. Region Bar Chart
+X‑axis: regions
+Y‑axis: number of articles
+Color: average importance
+
+3. Topic Frequency Chart
+You already started implementing this in main.js (lines ~1–240) .
+
+4. Time Horizon Donut Chart
+near‑term
+
+mid‑term
+
+long‑term
+
+5. World Power Impact Radar Chart
+Axes: US, EU, China, Japan, Korea, India
+Value: average impact score
+
+6. Emerging Concepts Cloud
+Frequency‑based word cloud of emerging concepts.
+
+7. Article Table
+Columns:
+
+Title
+
+Source
+
+Region
+
+Topics
+
+Importance
+
+Time horizon
+
+Link
+
+🧩 4. How to Structure main.js
+A clean structure for your dashboard JS:
+
+js
+async function loadDigest() {
+  const digest = await fetch("latest_digest.json").then(r => r.json());
+  renderSummary(digest);
+  renderRegionChart(digest);
+  renderTopicChart(digest);
+  renderTimeHorizonChart(digest);
+  renderWorldPowerRadar(digest);
+  renderEmergingConcepts(digest);
+  renderArticles(digest.articles);
+}
+Each renderer becomes a small, focused function.
+
+🚀 5. How This Fits Your Pipeline
+Your full system now looks like:
+
+Code
+Discovery → Fetching → Relevance → Intelligence → Digest → Dashboard
+The dashboard is simply a visualization layer on top of:
+
+latest_digest.json
+
+monthly digests
+
+quarterly digests
+
+No extra processing needed.
+
+🧭 Where do you want to go next?
+We can now:
+
+A. Design the exact UI layout (grid, sections, colors, charts)
+B. Write the actual dashboard code (JS + HTML + CSS)
+C. Add interactive filters (region, topic, time horizon)
+D. Add trend charts using monthly/quarterly digests
+E. Build a “World Power Shift” visualization
+Which direction feels right to you?
+
+We can start with A ( UI layout-) or B (code). Maybe first the Design will make the coding easier.
+Absolutely — starting with A. UI layout design is the smartest move.
+A clear layout will make your coding phase almost mechanical, because every chart, panel, and interaction will already have a defined place and purpose.
+
+Since I can see your current dashboard HTML structure in the open tab , I’ll design the UI to fit naturally into your existing file, while expanding it into a full intelligence dashboard.
+
+Below is a clean, modern, modular layout tailored to your 6G intelligence engine.
+
+🎛️ Proposed Dashboard Layout (High‑Level)
+Think of the dashboard as five horizontal zones, each with a clear purpose:
+
+ZONE 1 — Header & Global Summary
+A compact top bar with:
+
+A. Title + Timestamp
+“6G Evolution Intelligence Dashboard”
+
+“Updated: <generated_at>”
+
+B. Four Key Metrics (cards)
+Total relevant signals
+
+Top region this cycle
+
+Top topic this cycle
+
+Average importance score
+
+These are small rectangular cards arranged in a row.
+
+ZONE 2 — Regional Intelligence Panel
+A two‑column section:
+
+Left: Region Bar Chart
+X‑axis: regions (US, EU, China, Japan, Korea, India)
+
+Y‑axis: number of relevant articles
+
+Color: average importance
+
+Right: Region Details Panel
+When a region is clicked:
+
+top topics in that region
+
+average world power impact
+
+most important article from that region
+
+This makes the dashboard interactive and exploratory.
+
+ZONE 3 — Topic Intelligence Panel
+This is where your existing “topic frequency” panel fits perfectly.
+
+Left: Topic Frequency Chart
+bar chart or bubble chart
+
+counts of each 6G topic
+
+Right: Topic Details Panel
+When a topic is clicked:
+
+region distribution for that topic
+
+time horizon distribution
+
+emerging concepts linked to that topic
+
+top 3 articles for that topic
+
+This is the heart of your strategic analysis.
+
+ZONE 4 — Time Horizon & World Power View
+Left: Time Horizon Donut Chart
+near‑term (≤ 2028)
+
+mid‑term (2028–2032)
+
+long‑term (≥ 2032)
+
+Right: World Power Impact Radar Chart
+Axes:
+
+US
+
+EU
+
+China
+
+Japan
+
+Korea
+
+India
+
+Values:
+
+average world_power_impact scores
+
+This gives a geopolitical snapshot.
+
+ZONE 5 — Article Explorer
+A full‑width searchable table:
+
+Columns:
+
+Title
+
+Source
+
+Region
+
+Topics
+
+Importance
+
+Time horizon
+
+Link
+
+Filters:
+
+region dropdown
+
+topic dropdown
+
+time horizon dropdown
+
+importance slider
+
+This is where analysts dive into the raw intelligence.
+
+🎨 Visual Style Recommendations
+To keep it clean and modern:
+
+Color Palette
+Regions: consistent colors across charts
+
+Topics: muted but distinct
+
+Importance: heat‑based (yellow → red)
+
+Spacing
+24px padding between zones
+
+16px padding inside panels
+
+Typography
+Header: bold, 24px
+
+Cards: 18px
+
+Body: 14–16px
+
+Charts
+Use Chart.js  or ECharts for smooth animations.
+
+📐 How This Fits Your Existing index.html
+Your current dashboard file is simple and ready for expansion.
+The layout above maps directly into:
+
+html
+<div id="summary"></div>
+<div id="region-panel"></div>
+<div id="topic-panel"></div>
+<div id="time-horizon-panel"></div>
+<div id="world-power-panel"></div>
+<div id="article-explorer"></div>
+Each section becomes a self‑contained component.
+
+🚀 Next Step
+Now that the UI layout is clear, we can move to B. Coding the dashboard.
+
+We can proceed in two ways:
+
+Option 1 — Build the HTML structure first
+Skeleton divs + CSS grid layout.
+
+Option 2 — Start coding the JS renderers
+renderSummary()
+
+renderRegionChart()
+
+renderTopicChart()
+
+etc.
+
+Option 3 — Build one panel end‑to‑end
+(e.g., Region Intelligence Panel)
+
+Which approach do you want to take next?
+
+you may choose, what will work best.
+Given everything you’ve built so far — and the fact that your current active tab is the dashboard HTML file  — the most effective next step is:
+
+⭐ Start with the UI layout skeleton (Option A), then layer in the JS renderers (Option B).
+Here’s why this is the optimal sequence:
+
+🎯 Why UI Layout First Is the Best Move
+1. Your dashboard HTML is currently minimal
+The file you have open is essentially a placeholder.
+Before writing any JavaScript, we need a clear structure of containers where charts, cards, and tables will live.
+
+If we start coding JS now, we’ll end up rewriting it once the layout changes.
+
+2. A clean layout makes the JS trivial
+Once the layout is defined, each JS renderer becomes:
+
+js
+renderSummary(digest);
+renderRegionChart(digest);
+renderTopicChart(digest);
+renderTimeHorizonChart(digest);
+renderWorldPowerRadar(digest);
+renderArticleTable(digest);
+Each function knows exactly where to inject content.
+
+3. It keeps your dashboard modular
+You’ll be able to add/remove panels without touching the intelligence pipeline.
+
+4. It aligns with your long‑term vision
+Your system is evolving into a multi‑layer geopolitical intelligence engine.
+A strong UI foundation ensures the dashboard can grow with it.
+
+🧱 So here’s what I propose next (my choice):
+✅ Step 1 — I design the full HTML layout skeleton
+A clean, modern structure with:
+
+Summary zone
+
+Region intelligence zone
+
+Topic intelligence zone
+
+Time horizon zone
+
+World power radar zone
+
+Article explorer zone
+
+This will be pure HTML + CSS grid, no JS yet.
+
+✅ Step 2 — You drop it into your dashboard/index.html
+This gives you a fully structured dashboard with empty containers.
+
+✅ Step 3 — Then we implement the JS renderers
+One panel at a time:
+
+Summary cards
+
+Region bar chart
+
+Topic frequency chart
+
+Time horizon donut
+
+World power radar
+
+Article explorer table
+
+This becomes extremely easy once the layout exists.
+
+🚀 If this plan works for you, I’ll now generate:
+→ The complete HTML layout skeleton
+clean
+
+responsive
+
+modular
+
+ready for your JS
+
+compatible with your existing repo structure
+
+Just say “yes, generate the layout skeleton” and I’ll produce it.
+
+yes, generate the layout skeleton
+Perfect — here is a clean, modern, modular HTML layout skeleton for your 6G Intelligence Dashboard.
+It’s designed to drop directly into your existing dashboard file and give you a fully structured UI ready for your JavaScript renderers.
+
+No styling frameworks, no JS yet — just a semantic, well‑organized layout that will make the coding phase smooth.
+
+🌐 6G Intelligence Dashboard — Layout Skeleton (HTML)
+html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>6G Evolution Intelligence Dashboard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Basic reset + layout structure -->
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: system-ui, sans-serif;
+            background: #f5f7fa;
+            color: #222;
+        }
+
+        header {
+            padding: 24px;
+            background: #ffffff;
+            border-bottom: 1px solid #ddd;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 28px;
+            font-weight: 700;
+        }
+
+        .timestamp {
+            margin-top: 4px;
+            font-size: 14px;
+            color: #666;
+        }
+
+        /* Grid layout for dashboard zones */
+        .dashboard-container {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 32px;
+            padding: 32px;
+        }
+
+        /* Summary cards */
+        .summary-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 16px;
+        }
+
+        .summary-card {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid #e0e0e0;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+        }
+
+        .summary-card h3 {
+            margin: 0;
+            font-size: 16px;
+            color: #555;
+        }
+
+        .summary-card .value {
+            margin-top: 8px;
+            font-size: 28px;
+            font-weight: 600;
+        }
+
+        /* Panel containers */
+        .panel {
+            background: #fff;
+            padding: 24px;
+            border-radius: 8px;
+            border: 1px solid #e0e0e0;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+        }
+
+        .panel h2 {
+            margin-top: 0;
+            font-size: 20px;
+            margin-bottom: 16px;
+        }
+
+        /* Two-column panels */
+        .two-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+        }
+
+        /* Article table */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+        }
+
+        th, td {
+            padding: 10px;
+            border-bottom: 1px solid #eee;
+            text-align: left;
+        }
+
+        th {
+            background: #fafafa;
+            font-weight: 600;
+        }
+
+        tr:hover {
+            background: #f0f4ff;
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h1>6G Evolution Intelligence Dashboard</h1>
+    <div class="timestamp" id="timestamp">Updated: --</div>
+</header>
+
+<div class="dashboard-container">
+
+    <!-- ZONE 1: SUMMARY -->
+    <section class="summary-cards" id="summary-cards">
+        <div class="summary-card">
+            <h3>Total Relevant Signals</h3>
+            <div class="value" id="summary-total">--</div>
+        </div>
+        <div class="summary-card">
+            <h3>Top Region</h3>
+            <div class="value" id="summary-top-region">--</div>
+        </div>
+        <div class="summary-card">
+            <h3>Top Topic</h3>
+            <div class="value" id="summary-top-topic">--</div>
+        </div>
+        <div class="summary-card">
+            <h3>Avg Importance</h3>
+            <div class="value" id="summary-importance">--</div>
+        </div>
+    </section>
+
+    <!-- ZONE 2: REGION INTELLIGENCE -->
+    <section class="panel">
+        <h2>Regional Intelligence</h2>
+        <div class="two-column">
+            <div id="region-chart"></div>
+            <div id="region-details"></div>
+        </div>
+    </section>
+
+    <!-- ZONE 3: TOPIC INTELLIGENCE -->
+    <section class="panel">
+        <h2>Topic Intelligence</h2>
+        <div class="two-column">
+            <div id="topic-chart"></div>
+            <div id="topic-details"></div>
+        </div>
+    </section>
+
+    <!-- ZONE 4: TIME HORIZON + WORLD POWER -->
+    <section class="panel">
+        <h2>Time Horizon & World Power Impact</h2>
+        <div class="two-column">
+            <div id="time-horizon-chart"></div>
+            <div id="world-power-radar"></div>
+        </div>
+    </section>
+
+    <!-- ZONE 5: ARTICLE EXPLORER -->
+    <section class="panel">
+        <h2>Article Explorer</h2>
+        <div id="article-filters"></div>
+        <table id="article-table">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Source</th>
+                    <th>Region</th>
+                    <th>Topics</th>
+                    <th>Importance</th>
+                    <th>Time Horizon</th>
+                    <th>Link</th>
+                </tr>
+            </thead>
+            <tbody id="article-table-body">
+                <!-- Filled by JS -->
+            </tbody>
+        </table>
+    </section>
+
+</div>
+
+<!-- Placeholder for your JS -->
+<script src="main.js"></script>
+
+</body>
+</html>
+🎉 What you now have
+A fully structured, responsive, modern dashboard layout with:
+
+Summary cards
+
+Region intelligence panel
+
+Topic intelligence panel
+
+Time horizon + world power panel
+
+Article explorer table
+
+Everything is cleanly separated into containers so your JS can simply:
+
+js
+renderSummary(digest);
+renderRegionChart(digest);
+renderTopicChart(digest);
+renderTimeHorizonChart(digest);
+renderWorldPowerRadar(digest);
+renderArticleTable(digest);
+🚀 Next Step
+Now that the layout skeleton is ready, we can move to:
+
+B. Implementing the JavaScript renderers (main.js)
+We can start with:
+
+renderSummary()
+
+then renderRegionChart()
+
+then renderTopicChart()
+
+Just tell me “let’s start coding the JS” and I’ll generate the first renderer.
+
+ok, lets start coding the JS
+Perfect — let’s start building main.js step by step, dominique.
+We’ll begin with the foundation: loading the digest and wiring the renderers.
+Then we’ll implement the first real renderer: the Summary Cards.
+
+This gives you a working dashboard immediately, and we can layer the charts on top.
+
+🧱 Step 1 — Create the main.js foundation
+This loads latest_digest.json, updates the timestamp, and calls all renderers (even if they’re empty for now).
+
+javascript
+// main.js
+
+async function loadDigest() {
+    const digest = await fetch("latest_digest.json").then(r => r.json());
+
+    // Update timestamp
+    document.getElementById("timestamp").textContent =
+        "Updated: " + digest.generated_at;
+
+    // Call renderers
+    renderSummary(digest);
+    renderRegionChart(digest);
+    renderTopicChart(digest);
+    renderTimeHorizonChart(digest);
+    renderWorldPowerRadar(digest);
+    renderArticleTable(digest.articles);
+}
+
+loadDigest();
+This ensures your dashboard loads automatically.
+
+🧱 Step 2 — Implement the Summary Renderer
+This fills the four summary cards:
+
+Total relevant signals
+
+Top region
+
+Top topic
+
+Average importance
+
+We’ll compute these from the digest.
+
+javascript
+function renderSummary(digest) {
+    const articles = digest.articles;
+
+    // Total relevant signals
+    document.getElementById("summary-total").textContent =
+        articles.length;
+
+    // Compute region counts
+    const regionCounts = {};
+    for (const art of articles) {
+        const region = art.source.region;
+        regionCounts[region] = (regionCounts[region] || 0) + 1;
+    }
+
+    // Top region
+    const topRegion = Object.entries(regionCounts)
+        .sort((a, b) => b[1] - a[1])[0]?.[0] || "--";
+    document.getElementById("summary-top-region").textContent = topRegion;
+
+    // Compute topic counts
+    const topicCounts = {};
+    for (const art of articles) {
+        for (const t of art["6g_topics"]) {
+            topicCounts[t] = (topicCounts[t] || 0) + 1;
+        }
+    }
+
+    // Top topic
+    const topTopic = Object.entries(topicCounts)
+        .sort((a, b) => b[1] - a[1])[0]?.[0] || "--";
+    document.getElementById("summary-top-topic").textContent = topTopic;
+
+    // Average importance
+    const avgImportance =
+        articles.reduce((sum, a) => sum + (a.overall_6g_importance || 0), 0)
+        / (articles.length || 1);
+
+    document.getElementById("summary-importance").textContent =
+        avgImportance.toFixed(1);
+}
+This gives you a fully working summary zone.
+
+🧱 Step 3 — Add empty renderers for the other panels
+We’ll fill these in next, but for now they prevent errors:
+
+javascript
+function renderRegionChart(digest) {
+    document.getElementById("region-chart").innerHTML =
+        "<p>Region chart coming soon…</p>";
+}
+
+function renderTopicChart(digest) {
+    document.getElementById("topic-chart").innerHTML =
+        "<p>Topic chart coming soon…</p>";
+}
+
+function renderTimeHorizonChart(digest) {
+    document.getElementById("time-horizon-chart").innerHTML =
+        "<p>Time horizon chart coming soon…</p>";
+}
+
+function renderWorldPowerRadar(digest) {
+    document.getElementById("world-power-radar").innerHTML =
+        "<p>World power radar coming soon…</p>";
+}
+
+function renderArticleTable(articles) {
+    const tbody = document.getElementById("article-table-body");
+    tbody.innerHTML = "";
+
+    for (const art of articles) {
+        const tr = document.createElement("tr");
+
+        tr.innerHTML = `
+            <td>${art.title}</td>
+            <td>${art.source.name}</td>
+            <td>${art.source.region}</td>
+            <td>${art["6g_topics"].join(", ")}</td>
+            <td>${art.overall_6g_importance}</td>
+            <td>${art.time_horizon}</td>
+            <td><a href="${art.url}" target="_blank">Open</a></td>
+        `;
+
+        tbody.appendChild(tr);
+    }
+}
+This gives you a working Article Explorer immediately.
+
+🎉 What you now have
+With just this code:
+
+Your dashboard loads real data
+
+Summary cards work
+
+Article table works
+
+Other panels show placeholders
+
+The layout is fully functional
+
+This is the perfect foundation.
+
+🚀 Next Step
+We can now implement the first real chart.
+
+You can choose:
+
+A. Region Chart (bar chart)
+B. Topic Chart (bar or bubble)
+C. Time Horizon Donut
+D. World Power Radar
+Which one do you want to build next?
+
+All of them, but start with A
+Perfect — let’s build A. The Region Intelligence Chart first.
+This will be your dashboard’s first real visualization, and it will plug directly into the layout skeleton you already added.
+
+I’ll give you:
+
+The data extraction logic
+
+The Chart.js  setup
+
+The full renderRegionChart() implementation
+
+A small enhancement to show region details when clicking a bar
+
+This will give you a fully working, interactive Region Intelligence panel.
+
+🎨 Step 1 — Add Chart.js to your HTML
+In your index.html, add this inside <head>:
+
+html
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+This gives you access to bar charts, radar charts, donuts, etc.
+
+🧠 Step 2 — Region Data Extraction
+We need to compute:
+
+number of articles per region
+
+average importance per region
+
+This will feed the chart.
+
+📊 Step 3 — Implement renderRegionChart()
+Add this to main.js, replacing the placeholder function:
+
+javascript
+function renderRegionChart(digest) {
+    const articles = digest.articles;
+
+    // Count articles per region + compute avg importance
+    const regionCounts = {};
+    const regionImportance = {};
+
+    for (const art of articles) {
+        const region = art.source.region;
+        const importance = art.overall_6g_importance || 0;
+
+        regionCounts[region] = (regionCounts[region] || 0) + 1;
+        regionImportance[region] = (regionImportance[region] || 0) + importance;
+    }
+
+    const regions = Object.keys(regionCounts);
+    const counts = regions.map(r => regionCounts[r]);
+    const avgImportance = regions.map(r =>
+        (regionImportance[r] / regionCounts[r]).toFixed(1)
+    );
+
+    // Clear previous chart if any
+    document.getElementById("region-chart").innerHTML =
+        '<canvas id="regionChartCanvas"></canvas>';
+
+    const ctx = document.getElementById("regionChartCanvas").getContext("2d");
+
+    // Create bar chart
+    const chart = new Chart(ctx, {
+        type: "bar",
+        data: {
+            labels: regions,
+            datasets: [
+                {
+                    label: "Number of Signals",
+                    data: counts,
+                    backgroundColor: "rgba(54, 162, 235, 0.6)",
+                    borderColor: "rgba(54, 162, 235, 1)",
+                    borderWidth: 1
+                },
+                {
+                    label: "Avg Importance",
+                    data: avgImportance,
+                    type: "line",
+                    yAxisID: "y1",
+                    borderColor: "rgba(255, 99, 132, 1)",
+                    backgroundColor: "rgba(255, 99, 132, 0.2)",
+                    borderWidth: 2,
+                    tension: 0.3
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    title: { text: "Signals", display: true }
+                },
+                y1: {
+                    beginAtZero: true,
+                    position: "right",
+                    title: { text: "Avg Importance", display: true }
+                }
+            },
+            plugins: {
+                legend: { position: "bottom" }
+            },
+            onClick: (evt, elements) => {
+                if (elements.length > 0) {
+                    const index = elements[0].index;
+                    const region = regions[index];
+                    renderRegionDetails(region, articles);
+                }
+            }
+        }
+    });
+}
+This gives you:
+
+a bar chart showing number of signals per region
+
+a line chart overlay showing average importance
+
+click interaction to show region details
+
+🧩 Step 4 — Implement Region Details Panel
+Add this to main.js:
+
+javascript
+function renderRegionDetails(region, articles) {
+    const panel = document.getElementById("region-details");
+
+    const filtered = articles.filter(a => a.source.region === region);
+
+    // Count topics in this region
+    const topicCounts = {};
+    for (const art of filtered) {
+        for (const t of art["6g_topics"]) {
+            topicCounts[t] = (topicCounts[t] || 0) + 1;
+        }
+    }
+
+    const topTopics = Object.entries(topicCounts)
+        .sort((a, b) => b[1] - a[1])
+        .slice(0, 5)
+        .map(([topic, count]) => `<li>${topic} (${count})</li>`)
+        .join("");
+
+    // Most important article
+    const topArticle = filtered.sort(
+        (a, b) => b.overall_6g_importance - a.overall_6g_importance
+    )[0];
+
+    panel.innerHTML = `
+        <h3>${region} — Details</h3>
+        <p><strong>Total Signals:</strong> ${filtered.length}</p>
+
+        <h4>Top Topics</h4>
+        <ul>${topTopics}</ul>
+
+        <h4>Most Important Article</h4>
+        <p><strong>${topArticle.title}</strong><br>
+        Importance: ${topArticle.overall_6g_importance}<br>
+        <a href="${topArticle.url}" target="_blank">Open</a></p>
+    `;
+}
+This gives you:
+
+top topics in the region
+
+most important article
+
+total signals
+
+clickable link
+
+🎉 What you now have
+A fully working Region Intelligence Panel:
+
+Bar chart of signals per region
+
+Line chart of average importance
+
+Click interaction
+
+Dynamic region details panel
+
+This is the first major interactive component of your dashboard.
+
+🚀 Next Step
+We can now move to:
+
+B. Topic Intelligence Chart
+(bar chart or bubble chart)
+
+or
+
+C. Time Horizon Donut Chart
+or
+
+D. World Power Radar Chart
+Which one do you want to build next?
+
+lets go for B, as we have already a chart, lets go for the Bubble.
+Perfect — let’s build the Topic Intelligence Bubble Chart, dominique.
+This will be one of the most visually expressive parts of your dashboard because bubbles naturally show:
+
+topic frequency (bubble size)
+
+average importance (bubble color)
+
+optionally: region dominance (bubble border or color variant)
+
+We’ll keep it clean and elegant using Chart.js  Bubble Charts.
+
+Your dashboard will gain a powerful “topic landscape” visualization.
+
+🎨 Step 1 — Data Model for the Bubble Chart
+For each topic, we compute:
+
+x → topic index (just spacing on the axis)
+
+y → average importance
+
+r → bubble radius (based on frequency)
+
+label → topic name
+
+Example:
+
+js
+{
+  x: 1,
+  y: 6.2,
+  r: 18,
+  label: "AI-native RAN"
+}
+🧠 Step 2 — Implement renderTopicChart()
+Replace your placeholder with this full implementation:
+
+javascript
+function renderTopicChart(digest) {
+    const articles = digest.articles;
+
+    // Count topics + compute average importance
+    const topicCounts = {};
+    const topicImportance = {};
+
+    for (const art of articles) {
+        const importance = art.overall_6g_importance || 0;
+
+        for (const topic of art["6g_topics"]) {
+            topicCounts[topic] = (topicCounts[topic] || 0) + 1;
+            topicImportance[topic] = (topicImportance[topic] || 0) + importance;
+        }
+    }
+
+    const topics = Object.keys(topicCounts);
+
+    // Prepare bubble dataset
+    const bubbleData = topics.map((topic, i) => {
+        const count = topicCounts[topic];
+        const avgImportance = topicImportance[topic] / count;
+
+        return {
+            x: i + 1,                 // spread bubbles horizontally
+            y: avgImportance,         // importance on Y-axis
+            r: Math.sqrt(count) * 8,  // bubble size scaled by frequency
+            label: topic
+        };
+    });
+
+    // Clear previous chart
+    document.getElementById("topic-chart").innerHTML =
+        '<canvas id="topicChartCanvas"></canvas>';
+
+    const ctx = document.getElementById("topicChartCanvas").getContext("2d");
+
+    new Chart(ctx, {
+        type: "bubble",
+        data: {
+            datasets: [{
+                label: "6G Topics",
+                data: bubbleData,
+                backgroundColor: "rgba(75, 192, 192, 0.5)",
+                borderColor: "rgba(75, 192, 192, 1)",
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            const d = context.raw;
+                            return `${d.label}: freq=${topicCounts[d.label]}, avg importance=${d.y.toFixed(1)}`;
+                        }
+                    }
+                }
+            },
+            scales: {
+                x: {
+                    title: { display: true, text: "Topics" },
+                    ticks: {
+                        callback: function(value, index) {
+                            return topics[index];
+                        }
+                    }
+                },
+                y: {
+                    beginAtZero: true,
+                    title: { display: true, text: "Average Importance" }
+                }
+            },
+            onClick: (evt, elements) => {
+                if (elements.length > 0) {
+                    const index = elements[0].index;
+                    const topic = topics[index];
+                    renderTopicDetails(topic, articles);
+                }
+            }
+        }
+    });
+}
+🧩 Step 3 — Implement Topic Details Panel
+This mirrors the region details panel but focuses on topics.
+
+Add this to main.js:
+
+javascript
+function renderTopicDetails(topic, articles) {
+    const panel = document.getElementById("topic-details");
+
+    const filtered = articles.filter(a => a["6g_topics"].includes(topic));
+
+    // Region distribution for this topic
+    const regionCounts = {};
+    for (const art of filtered) {
+        const region = art.source.region;
+        regionCounts[region] = (regionCounts[region] || 0) + 1;
+    }
+
+    const regionList = Object.entries(regionCounts)
+        .sort((a, b) => b[1] - a[1])
+        .map(([region, count]) => `<li>${region}: ${count}</li>`)
+        .join("");
+
+    // Time horizon distribution
+    const horizonCounts = {};
+    for (const art of filtered) {
+        const h = art.time_horizon;
+        horizonCounts[h] = (horizonCounts[h] || 0) + 1;
+    }
+
+    const horizonList = Object.entries(horizonCounts)
+        .map(([h, count]) => `<li>${h}: ${count}</li>`)
+        .join("");
+
+    // Top 3 articles
+    const topArticles = filtered
+        .sort((a, b) => b.overall_6g_importance - a.overall_6g_importance)
+        .slice(0, 3)
+        .map(a => `<li><a href="${a.url}" target="_blank">${a.title}</a> (${a.overall_6g_importance})</li>`)
+        .join("");
+
+    panel.innerHTML = `
+        <h3>${topic} — Details</h3>
+        <p><strong>Total Signals:</strong> ${filtered.length}</p>
+
+        <h4>Region Distribution</h4>
+        <ul>${regionList}</ul>
+
+        <h4>Time Horizon</h4>
+        <ul>${horizonList}</ul>
+
+        <h4>Top Articles</h4>
+        <ul>${topArticles}</ul>
+    `;
+}
+🎉 What you now have
+A fully interactive Topic Intelligence Bubble Chart:
+
+Bubble size = topic frequency
+
+Bubble position = topic index
+
+Bubble color = consistent
+
+Bubble Y‑axis = average importance
+
+Click → detailed topic intelligence panel
+
+This is a major upgrade to your dashboard’s analytical power.
+
+🚀 Next Step
+We can now move to:
+
+C. Time Horizon Donut Chart
+or
+
+D. World Power Radar Chart
+Which one do you want to build next?
+
+Lets go for C
+Great — let’s build C. The Time Horizon Donut Chart, dominique.
+This one is visually simple but strategically powerful because it shows how the global 6G ecosystem is distributing its attention across:
+
+near‑term (≤ 2028)
+
+mid‑term (2028–2032)
+
+long‑term (≥ 2032)
+
+It plugs directly into your existing dashboard layout and uses the same Chart.js  library you already loaded.
+
+Let’s build it cleanly and elegantly.
+
+🎨 Step 1 — Extract Time Horizon Data
+We need to count how many articles fall into each horizon:
+
+near-term
+
+mid-term
+
+long-term
+
+📊 Step 2 — Implement renderTimeHorizonChart()
+Replace your placeholder with this full implementation in main.js:
+
+javascript
+function renderTimeHorizonChart(digest) {
+    const articles = digest.articles;
+
+    // Count time horizons
+    const horizonCounts = {
+        "near-term": 0,
+        "mid-term": 0,
+        "long-term": 0
+    };
+
+    for (const art of articles) {
+        const h = art.time_horizon;
+        if (horizonCounts[h] !== undefined) {
+            horizonCounts[h]++;
+        }
+    }
+
+    const labels = Object.keys(horizonCounts);
+    const values = Object.values(horizonCounts);
+
+    // Clear previous chart
+    document.getElementById("time-horizon-chart").innerHTML =
+        '<canvas id="timeHorizonCanvas"></canvas>';
+
+    const ctx = document.getElementById("timeHorizonCanvas").getContext("2d");
+
+    new Chart(ctx, {
+        type: "doughnut",
+        data: {
+            labels: labels,
+            datasets: [{
+                data: values,
+                backgroundColor: [
+                    "rgba(75, 192, 192, 0.7)",   // near-term
+                    "rgba(255, 205, 86, 0.7)",   // mid-term
+                    "rgba(255, 99, 132, 0.7)"    // long-term
+                ],
+                borderColor: [
+                    "rgba(75, 192, 192, 1)",
+                    "rgba(255, 205, 86, 1)",
+                    "rgba(255, 99, 132, 1)"
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: { position: "bottom" },
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            const label = context.label;
+                            const value = context.raw;
+                            return `${label}: ${value} signals`;
+                        }
+                    }
+                }
+            }
+        }
+    });
+}
+🎉 What this gives you
+A fully functional Time Horizon Donut Chart that:
+
+shows the distribution of 6G signals across time horizons
+
+uses clean, intuitive colors
+
+updates automatically when new digests are generated
+
+fits perfectly into your dashboard’s Zone 4
+
+This is a key strategic visualization — it tells you whether the ecosystem is focusing on immediate deployment, mid‑term architecture, or long‑term research.
+
+🚀 Next Step
+We can now move to:
+
+D. The World Power Radar Chart
+This one is visually striking and shows:
+
+US
+
+EU
+
+China
+
+Japan
+
+Korea
+
+India
+
+…with their average world_power_impact scores.
+
+Just say “Let’s build the radar chart” and I’ll generate it.
+
+lets build the radar chart :)
+Absolutely, dominique — let’s build the World Power Impact Radar Chart, one of the most visually striking and geopolitically meaningful components of your dashboard.
+
+This chart will show the average world_power_impact scores across:
+
+US
+
+EU
+
+China
+
+Japan
+
+Korea
+
+India
+
+…based on the intelligence layer’s output.
+
+Once this is in place, your dashboard will have a complete strategic geopolitics panel.
+
+Let’s build it cleanly.
+
+🌐 Step 1 — Extract World Power Impact Data
+Each article contains:
+
+json
+"world_power_impact": {
+  "US": 3,
+  "EU": 4,
+  "China": 5,
+  "Japan": 2,
+  "Korea": 1,
+  "India": 0
+}
+We need to compute the average score per region across all relevant articles.
+
+📊 Step 2 — Implement renderWorldPowerRadar()
+Replace your placeholder with this full implementation in main.js:
+
+javascript
+function renderWorldPowerRadar(digest) {
+    const articles = digest.articles;
+
+    // Initialize sums
+    const regions = ["US", "EU", "China", "Japan", "Korea", "India"];
+    const impactSums = { US: 0, EU: 0, China: 0, Japan: 0, Korea: 0, India: 0 };
+    const counts = { US: 0, EU: 0, China: 0, Japan: 0, Korea: 0, India: 0 };
+
+    // Aggregate impact scores
+    for (const art of articles) {
+        const impact = art.world_power_impact;
+        for (const region of regions) {
+            if (impact[region] !== undefined) {
+                impactSums[region] += impact[region];
+                counts[region] += 1;
+            }
+        }
+    }
+
+    // Compute averages
+    const averages = regions.map(r =>
+        counts[r] > 0 ? (impactSums[r] / counts[r]).toFixed(2) : 0
+    );
+
+    // Clear previous chart
+    document.getElementById("world-power-radar").innerHTML =
+        '<canvas id="worldPowerCanvas"></canvas>';
+
+    const ctx = document.getElementById("worldPowerCanvas").getContext("2d");
+
+    new Chart(ctx, {
+        type: "radar",
+        data: {
+            labels: regions,
+            datasets: [{
+                label: "World Power Impact (avg)",
+                data: averages,
+                backgroundColor: "rgba(153, 102, 255, 0.3)",
+                borderColor: "rgba(153, 102, 255, 1)",
+                borderWidth: 2,
+                pointBackgroundColor: "rgba(153, 102, 255, 1)"
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                r: {
+                    beginAtZero: true,
+                    min: 0,
+                    max: 5,
+                    ticks: { stepSize: 1 },
+                    grid: { color: "rgba(0,0,0,0.1)" }
+                }
+            },
+            plugins: {
+                legend: { position: "bottom" },
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            return `${context.label}: ${context.raw}`;
+                        }
+                    }
+                }
+            }
+        }
+    });
+}
+🎉 What you now have
+A fully functional World Power Impact Radar Chart that:
+
+visualizes geopolitical influence across six major regions
+
+uses average impact scores from your intelligence layer
+
+updates automatically with new digests
+
+fits perfectly into your Zone 4 panel
+
+gives a strategic snapshot of global 6G power dynamics
+
+This is a major milestone — your dashboard now has regional, topical, temporal, and geopolitical intelligence.
+
+🚀 Next Step
+You now have:
+
+Summary cards
+
+Region chart
+
+Topic bubble chart
+
+Time horizon donut
+
+World power radar
+
+Article explorer
+
+If you want, we can now:
+
+A. Add interactive filters (region/topic/time horizon)
+B. Add trend charts using monthly/quarterly digests
+C. Add a “Top Signals” panel with AI‑generated summaries
+D. Add animations and transitions
+E. Add a global search bar
+Which direction do you want to explore next?
+
+keep the next step in a follow up list. I will first make the adaptions in my code base  and come back for addtional dashboard items.
+Absolutely, dominique — here’s a clean, structured follow‑up list of the next dashboard upgrades we can build together once you’ve integrated the current changes into your codebase.
+
+I’ve organized them from “most foundational” to “most advanced”, so you can pick up exactly where you want when you return.
+
+📌 Dashboard Follow‑Up List (Next Steps)
+1. Interactive Filters (high impact, easy to add)
+Region dropdown
+
+Topic dropdown
+
+Time horizon dropdown
+
+Importance slider
+
+Combined filtering logic for the Article Explorer
+
+This will make the dashboard feel alive and analyst‑friendly.
+
+2. Trend Charts (using monthly & quarterly digests)
+Topic momentum over time
+
+Region activity over time
+
+World power impact trend lines
+
+Emerging concept frequency evolution
+
+This turns your dashboard into a temporal intelligence system.
+
+3. “Top Signals” Panel
+A curated panel showing:
+
+Top 5 most important articles
+
+AI‑generated summaries
+
+Key evidence bullets
+
+Emerging concepts
+
+This becomes your “executive briefing” view.
+
+4. Region–Topic Matrix
+A heatmap showing:
+
+rows = regions
+
+columns = topics
+
+cell = number of signals
+
+This is extremely powerful for spotting geopolitical asymmetries.
+
+5. Topic Clustering (semantic map)
+Using your intelligence layer’s topics + emerging concepts to create:
+
+a bubble cluster map
+
+or a force‑directed graph
+
+This reveals conceptual relationships across the 6G landscape.
+
+6. World Power Shift Visualization
+A geopolitical panel showing:
+
+quarter‑over‑quarter changes
+
+rising vs declining influence
+
+radar deltas
+
+This is where your system becomes a strategic forecasting tool.
+
+7. Search Bar (full‑text search across titles & summaries)
+instant filtering
+
+fuzzy matching
+
+highlight matches
+
+Useful for analysts scanning for specific signals.
+
+8. UI Polish & Animations
+smooth transitions
+
+hover effects
+
+animated chart updates
+
+dark mode
+
+Makes the dashboard feel premium and modern.
+
+🌟 When you’re ready
+Just come back and say something like:
+
+“Let’s add filters”
+
+“Let’s build the trend charts”
+
+“Let’s implement the region–topic matrix”
+
+“Let’s add the Top Signals panel”
+
+…and we’ll continue exactly where you want.
+
+Take your time integrating everything — you’ve built a seriously impressive intelligence engine already.
+
+return;   // ❌ illegal here
