@@ -1,16 +1,23 @@
 import feedparser
 import json
 import hashlib
-import time
-import requests
+import asyncio
+import httpx
 import random
 from datetime import datetime, timedelta
-from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
 from bs4 import BeautifulSoup
 from urllib.parse import urljoin
 import google.genai as genai
 import os
+import structlog
+from tenacity import (
+    retry,
+    stop_after_attempt,
+    wait_exponential,
+    retry_if_exception_type,
+    RetryError
+)
 
 # 🌐 RSS sources to monitor
 # Note: Some feeds may be temporarily unavailable or have parsing issues
@@ -53,6 +60,21 @@ RETRY_DELAY = 2  # seconds
 # 🤖 Gemini AI Config
 client = genai.Client(api_key=os.getenv("GOOGLE_API_KEY"))
 model="gemini-3-flash-preview"
+
+# 📝 Configure structured logging
+structlog.configure(
+    processors=[
+        structlog.processors.add_log_level,
+        structlog.processors.TimeStamper(fmt="iso"),
+        structlog.dev.ConsoleRenderer()
+    ],
+    wrapper_class=structlog.make_filtering_bound_logger(logging_level=20),  # INFO level
+    context_class=dict,
+    logger_factory=structlog.PrintLoggerFactory(),
+    cache_logger_on_first_use=True,
+)
+
+logger = structlog.get_logger()
 def get_ai_summary(title, summary, site_name):
     """Get an AI-powered summary and 6G impact score from Gemini."""
        
@@ -246,13 +268,13 @@ def relevance_score(entry):
     
     return score
 
-def find_rss_feed(url, headers):
+async def find_rss_feed(url, headers, client):
     """
     Try to find RSS/Atom feed URL from an HTML page.
     Looks for <link> tags with type="application/rss+xml" or "application/atom+xml"
     """
     try:
-        response = requests.get(url, headers=headers, timeout=10)
+        response = await client.get(url, headers=headers, timeout=10, follow_redirects=True)
         response.raise_for_status()
         
         # Check if it's already XML/RSS
@@ -278,11 +300,20 @@ def find_rss_feed(url, headers):
         # Silently fail if auto-detection doesn't work
         return None
 
-def fetch_feed_with_retry(source, url, retries=MAX_RETRIES):
-    """Fetch a feed with retry logic, auto-detection, and better error handling."""
+async def fetch_feed_with_retry_async(source: str, url: str, retries: int = MAX_RETRIES):
+    """Fetch a feed with retry logic using httpx, tenacity, and structured logging."""
     
-    for attempt in range(retries):
-        # Rotate user agent on each retry
+    # Custom retry decorator with exponential backoff
+    @retry(
+        stop=stop_after_attempt(retries),
+        wait=wait_exponential(multiplier=RETRY_DELAY, min=RETRY_DELAY, max=60),
+        retry=retry_if_exception_type((httpx.HTTPStatusError, httpx.TimeoutException, httpx.RequestError)),
+        reraise=True
+    )
+    async def _fetch_with_retry(attempt_num: int = 0):
+        nonlocal url
+        
+        # Rotate user agent on each attempt
         headers = {
             'User-Agent': random.choice(USER_AGENTS),
             'Accept': 'application/rss+xml, application/atom+xml, application/xml, text/xml, text/html, */*',
@@ -294,103 +325,262 @@ def fetch_feed_with_retry(source, url, retries=MAX_RETRIES):
             'DNT': '1',
         }
         
+        async with httpx.AsyncClient(http2=True, follow_redirects=True) as client:
+            try:
+                # Try to auto-detect RSS feed if URL points to HTML (only on first attempt)
+                if attempt_num == 0:
+                    detected_feed_url = await find_rss_feed(url, headers, client)
+                    if detected_feed_url and detected_feed_url != url:
+                        logger.info("🔍 Auto-detected RSS feed", source=source, url=detected_feed_url)
+                        print(f"🔍 Auto-detected RSS feed for {source}: {detected_feed_url}")
+                        url = detected_feed_url
+                
+                # Fetch with httpx
+                response = await client.get(url, headers=headers, timeout=15)
+                response.raise_for_status()
+                
+                # Check content type
+                content_type = response.headers.get('content-type', '').lower()
+                if 'html' in content_type and 'xml' not in content_type:
+                    logger.warning("⚠️ Source returned HTML instead of RSS/XML", source=source, content_type=content_type)
+                    print(f"⚠️ {source} returned HTML instead of RSS/XML")
+                    return None
+                
+                # Parse the feed
+                feed = feedparser.parse(response.content)
+                
+                # Check for parsing errors
+                if hasattr(feed, 'bozo') and feed.bozo:
+                    exception = feed.get('bozo_exception', 'Unknown error')
+                    logger.warning("⚠️ Parsing error", source=source, error=str(exception), attempt=attempt_num+1, max_retries=retries)
+                    raise httpx.RequestError(f"Feed parsing error: {exception}")
+                
+                # Verify we got actual entries
+                if not hasattr(feed, 'entries') or len(feed.entries) == 0:
+                    logger.warning("⚠️ No entries found", source=source, attempt=attempt_num+1, max_retries=retries)
+                    raise httpx.RequestError("No entries found in feed")
+                
+                logger.info("✓ Successfully fetched feed", source=source, entries=len(feed.entries))
+                return feed
+                
+            except httpx.HTTPStatusError as e:
+                status_code = e.response.status_code
+                logger.warning(
+                    f"⚠️ HTTP error {status_code}",
+                    source=source,
+                    url=url,
+                    status_code=status_code,
+                    attempt=attempt_num+1,
+                    max_retries=retries
+                )
+                if status_code == 403:
+                    print(f"⚠️ 403 Forbidden for {source}, rotating user agent and retrying in {RETRY_DELAY * (2 ** attempt_num)}s... (attempt {attempt_num + 1}/{retries})")
+                else:
+                    print(f"⚠️ HTTP error {status_code} for {source}, retrying in {RETRY_DELAY * (2 ** attempt_num)}s... (attempt {attempt_num + 1}/{retries})")
+                raise
+                
+            except httpx.TimeoutException:
+                logger.warning("⚠️ Timeout", source=source, url=url, attempt=attempt_num+1, max_retries=retries)
+                print(f"⚠️ Timeout fetching {source}, retrying in {RETRY_DELAY * (2 ** attempt_num)}s... (attempt {attempt_num + 1}/{retries})")
+                raise
+                
+            except httpx.RequestError as e:
+                logger.warning("⚠️ Network error", source=source, url=url, error=str(e), attempt=attempt_num+1, max_retries=retries)
+                print(f"⚠️ Network error fetching {source}: {e}, retrying in {RETRY_DELAY * (2 ** attempt_num)}s... (attempt {attempt_num + 1}/{retries})")
+                raise
+    
+    # Try fetching with retries
+    for attempt in range(retries):
         try:
-            # Try to auto-detect RSS feed if URL points to HTML (only on first attempt)
-            if attempt == 0:
-                detected_feed_url = find_rss_feed(url, headers)
-                if detected_feed_url and detected_feed_url != url:
-                    print(f"🔍 Auto-detected RSS feed for {source}: {detected_feed_url}")
-                    url = detected_feed_url
-            
-            # Fetch with requests to have more control
-            response = requests.get(url, headers=headers, timeout=15, allow_redirects=True)
-            response.raise_for_status()
-            
-            # Check content type
-            content_type = response.headers.get('content-type', '').lower()
-            if 'html' in content_type and 'xml' not in content_type:
-                print(f"⚠️ {source} returned HTML instead of RSS/XML")
-                return None
-            
-            # Parse the feed
-            feed = feedparser.parse(response.content)
-            
-            # Check for parsing errors
-            if hasattr(feed, 'bozo') and feed.bozo:
-                exception = feed.get('bozo_exception', 'Unknown error')
-                
-                if attempt < retries - 1:
-                    wait_time = RETRY_DELAY * (2 ** attempt)
-                    print(f"⚠️ Parsing error for {source}, retrying in {wait_time}s... (attempt {attempt + 1}/{retries})")
-                    time.sleep(wait_time)
-                    continue
-                else:
-                    print(f"❌ Persistent parsing error for {source}: {exception}")
-                    return None
-            
-            # Verify we got actual entries
-            if not hasattr(feed, 'entries') or len(feed.entries) == 0:
-                if attempt < retries - 1:
-                    wait_time = RETRY_DELAY * (2 ** attempt)
-                    print(f"⚠️ No entries found for {source}, retrying in {wait_time}s... (attempt {attempt + 1}/{retries})")
-                    time.sleep(wait_time)
-                    continue
-                else:
-                    print(f"⚠️ {source}: Feed parsed but contains no entries")
-                    return None
-            
-            return feed
-            
-        except requests.exceptions.HTTPError as e:
-            if e.response.status_code == 403:
-                if attempt < retries - 1:
-                    wait_time = RETRY_DELAY * (2 ** attempt)
-                    print(f"⚠️ 403 Forbidden for {source}, rotating user agent and retrying in {wait_time}s... (attempt {attempt + 1}/{retries})")
-                    time.sleep(wait_time)
-                    continue
-                else:
-                    print(f"❌ Failed to fetch {source}: 403 Forbidden after {retries} attempts with different user agents")
-                    return None
-            else:
-                if attempt < retries - 1:
-                    wait_time = RETRY_DELAY * (2 ** attempt)
-                    print(f"⚠️ HTTP error {e.response.status_code} for {source}, retrying in {wait_time}s... (attempt {attempt + 1}/{retries})")
-                    time.sleep(wait_time)
-                    continue
-                else:
-                    print(f"❌ Failed to fetch {source} after {retries} attempts: {e}")
-                    return None
-                    
-        except requests.exceptions.Timeout:
-            if attempt < retries - 1:
-                wait_time = RETRY_DELAY * (2 ** attempt)
-                print(f"⚠️ Timeout fetching {source}, retrying in {wait_time}s... (attempt {attempt + 1}/{retries})")
-                time.sleep(wait_time)
-                continue
-            else:
-                print(f"❌ Failed to fetch {source}: Connection timeout after {retries} attempts")
-                return None
-                
-        except requests.exceptions.RequestException as e:
-            if attempt < retries - 1:
-                wait_time = RETRY_DELAY * (2 ** attempt)
-                print(f"⚠️ Network error fetching {source}: {e}, retrying in {wait_time}s... (attempt {attempt + 1}/{retries})")
-                time.sleep(wait_time)
-                continue
-            else:
+            return await _fetch_with_retry(attempt)
+        except (httpx.HTTPStatusError, httpx.TimeoutException, httpx.RequestError) as e:
+            if attempt == retries - 1:
+                # Last attempt failed
+                logger.error("❌ Failed after all retries", source=source, error=str(e), attempts=retries)
                 print(f"❌ Failed to fetch {source} after {retries} attempts: {e}")
                 return None
-                
+            # Wait before next retry with exponential backoff
+            wait_time = RETRY_DELAY * (2 ** attempt)
+            await asyncio.sleep(wait_time)
         except Exception as e:
+            logger.error("❌ Unexpected error", source=source, error_type=type(e).__name__, error=str(e))
             print(f"❌ Unexpected error for {source}: {type(e).__name__}: {e}")
             return None
     
     return None
 
-def fetch_feed_wrapper(args):
-    """Wrapper function for parallel feed fetching."""
-    source, url = args
-    return source, fetch_feed_with_retry(source, url)
+def generate_source_target_matrix(articles):
+    regions = ["US", "EU", "China", "Japan", "Korea", "India"]
+
+    # Load previous matrix if available (cumulative influence)
+    try:
+        with open("source_target_matrix.json", "r", encoding="utf-8") as f:
+            matrix = json.load(f)
+    except:
+        matrix = {src: {tgt: 0 for tgt in regions} for src in regions}
+
+    for article in articles:
+        ai = article.get("ai_insights")
+        if not ai or not ai.get("is_6g_relevant"):
+            continue
+
+        source_region = ai.get("source_region")
+        if source_region not in regions:
+            continue
+
+        wp_impact = ai.get("world_power_impact", {})
+        importance = ai.get("overall_6g_importance", 1)
+
+        for target_region, score in wp_impact.items():
+            if target_region in regions and score > 0:
+                # Weighted influence
+                matrix[source_region][target_region] += score * importance
+
+    # Save updated matrix
+    with open("source_target_matrix.json", "w", encoding="utf-8") as f:
+        json.dump(matrix, f, indent=2)
+
+    print("🌐 Weighted Source→Target matrix updated.")
+
+
+async def fetch_all_feeds():
+    """Fetch all RSS feeds concurrently using asyncio.gather()."""
+    tasks = [fetch_feed_with_retry_async(source, url) for source, url in FEEDS.items()]
+    results = await asyncio.gather(*tasks, return_exceptions=True)
+    
+    # Combine source names with results
+    feeds_data = {}
+    for (source, url), result in zip(FEEDS.items(), results):
+        if isinstance(result, Exception):
+            logger.error("❌ Exception during fetch", source=source, error=str(result))
+            print(f"❌ Exception fetching {source}: {result}")
+        elif result and hasattr(result, 'entries'):
+            feeds_data[source] = result
+            print(f"✓ {source}: {len(result.entries)} total entries fetched")
+        else:
+            print(f"✗ {source}: Failed to fetch")
+    
+    return feeds_data
+
+
+async def main_async():
+    """Main async function that coordinates the feed fetching and processing."""
+    print("🚀 6G Sentinel started its monthly sweep.\n")
+    
+    # AI Status Check
+    if not model:
+        print("⚠️  Warning: GOOGLE_API_KEY not found in environment.")
+        print("   AI insights and Rigorous Filtering are DISABLED.")
+    else:
+        print("🤖 Gemini AI Intelligence is ACTIVE. (Model: gemini-3-flash)")
+    print()
+    
+    # Load cache
+    cache = load_cache()
+    new_articles_count = 0
+    
+    # Fetch feeds in parallel using asyncio
+    print(f"📡 Fetching {len(FEEDS)} RSS feeds in parallel...")
+    feeds_data = await fetch_all_feeds()
+    
+    print()
+    
+    # Process each feed
+    all_processed_entries = []
+    for source, feed in feeds_data.items():
+        relevant_entries = []
+        
+        for entry in feed.entries:
+            # Check if article was already seen
+            article_url = entry.get("link", "")
+            if not article_url:
+                continue
+            
+            url_hash = hash_url(article_url)
+            if url_hash in cache:
+                continue
+            
+            # Check if article is recent
+            if not is_recent(entry):
+                continue
+            
+            # Calculate relevance score
+            score = relevance_score(entry)
+            if score >= RELEVANCE_THRESHOLD:
+                # Try to get AI summary and relevance check
+                print(f"  ✨ Generating AI insights for: {entry.get('title')[:50]}...")
+                ai_insights = get_ai_summary(entry.get("title", ""), entry.get("summary", ""), source)
+                
+                # Check for AI rejection
+                if ai_insights and not ai_insights.get("is_6g_relevant", True):
+                    print(f"  🚫 AI rejected as irrelevant: {entry.get('title')[:50]}")
+                    continue
+                
+                # Map AI overall_6g_importance to impact_score for the dashboard
+                if ai_insights:
+                    ai_insights["impact_score"] = ai_insights.get("overall_6g_importance", 0)
+                
+                entry["_relevance_score"] = score
+                entry["_ai_insights"] = ai_insights
+                
+                relevant_entries.append(entry)
+                cache[url_hash] = {
+                    "url": article_url,
+                    "title": entry.get("title", ""),
+                    "processed_date": DATE
+                }
+                new_articles_count += 1
+        
+        # Log and display results
+        if relevant_entries:
+            # Sort by relevance score (highest first)
+            relevant_entries.sort(key=lambda x: x.get("_relevance_score", 0), reverse=True)
+            
+            print(f"🔎 {source}: {len(relevant_entries)} new relevant updates found.")
+            for entry in relevant_entries:
+                score = entry.get("_relevance_score", 0)
+                print(f"  • [{score}] {entry.get('title')}")
+                print(f"    {entry.get('link')}")
+            print()
+            
+            log_to_markdown(source, relevant_entries)
+            
+            # Prepare for JSON export
+            for entry in relevant_entries:
+                ai = entry.get("_ai_insights")
+                all_processed_entries.append({
+                    "source": source,
+                    "title": entry.get("title", ""),
+                    "link": entry.get("link", ""),
+                    "score": entry.get("_relevance_score", 0),
+                    "ai_insights": ai,
+                    "source_region": ai.get("source_region", "Other") if ai else "Other",
+                    "summary": entry.get("summary", ""),
+                    "date": datetime(*entry.published_parsed[:6]).strftime("%Y-%m-%d") if hasattr(entry, "published_parsed") and entry.published_parsed else DATE
+                })
+        else:
+            print(f"📭 {source}: No new keyword-matching updates this cycle.\n")
+    
+    # Export for dashboard
+    if all_processed_entries:
+        export_to_json(all_processed_entries)
+        # Deep Analysis Aggregation
+        generate_source_target_matrix(all_processed_entries)
+        aggregate_momentum(all_processed_entries)
+    
+    # Save cache
+    save_cache(cache)
+    
+    print(f"✅ 6G Sentinel completed its sweep.")
+    print(f"📊 Total new articles processed: {new_articles_count}")
+    print(f"💾 Cache updated with {len(cache)} unique articles.")
+    print("🔮 The future is still under construction.")
+
+
+def main():
+    """Entry point that runs the async main function."""
+    asyncio.run(main_async())
+
 
 def log_to_markdown(source, entries):
     """Log relevant entries to markdown file with enhanced details and duplicate check."""
@@ -442,6 +632,7 @@ def log_to_markdown(source, entries):
                 f.write(f"{summary}\n\n")
             f.write("---\n\n")
         f.write("\n")
+
 
 def export_to_json(all_entries):
     """Export all processed entries to a JSON file for the dashboard."""
