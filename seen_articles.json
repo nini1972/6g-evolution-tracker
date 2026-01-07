@@ -13,5 +13,25 @@
     "url": "https://arxiv.org/abs/2601.00341",
     "title": "Multi-Satellite NOMA-Irregular Repetition Slotted ALOHA for IoT Networks",
     "processed_date": "2026-01-05"
+  },
+  "8a46c821e51e01b888c4b3cbf997d1da": {
+    "url": "https://arxiv.org/abs/2601.02382",
+    "title": "How to Discover Knowledge for FutureG: Contextual RAG and LLM Prompting for O-RAN",
+    "processed_date": "2026-01-07"
+  },
+  "aac75695c508cb0a009e1766779a5320": {
+    "url": "https://arxiv.org/abs/2601.02385",
+    "title": "Base Station Deployment under EMF constrain by Deep Reinforcement learning",
+    "processed_date": "2026-01-07"
+  },
+  "dcc2cea5b5020d040073255357a1ec4b": {
+    "url": "https://arxiv.org/abs/2601.02398",
+    "title": "AI-Native Integrated Sensing and Communications for Self-Organizing Wireless Networks: Architectures, Learning Paradigms, and System-Level Design",
+    "processed_date": "2026-01-07"
+  },
+  "f75529ea8beb065e756298548ffd8893": {
+    "url": "https://arxiv.org/abs/2601.01791",
+    "title": "Rethinking Secure Semantic Communications in the Age of Generative and Agentic AI: Threats and Opportunities",
+    "processed_date": "2026-01-07"
   }
 }

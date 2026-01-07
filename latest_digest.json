@@ -1,107 +1,45 @@
 {
-  "date": "2026-01-05",
+  "date": "2026-01-07",
   "articles": [
     {
       "source": "ArXiv CS Networking",
-      "title": "CTMap: LLM-Enabled Connectivity-Aware Path Planning in Millimeter-Wave Digital Twin Networks",
-      "link": "https://arxiv.org/abs/2601.00110",
-      "score": 3,
-      "ai_insights": {
-        "is_6g_relevant": true,
-        "source_region": "US",
-        "summary": "The article introduces CTMAP, a framework combining Large Language Models (LLMs) and Digital Twins to solve connectivity issues in mmWave 6G networks. By using ray-tracing simulations to create signal-aware maps, it trains a GPT-4 based model to provide semantic, connectivity-optimized navigation, significantly outperforming traditional distance-based path planning.",
-        "overall_6g_importance": 7,
-        "6g_topics": [
-          "AI-native RAN",
-          "semantic communications",
-          "network automation",
-          "cloud-edge integration"
-        ],
-        "impact_dimensions": {
-          "research_intensity": 4,
-          "standardization_influence": 2,
-          "industrial_deployment": 2,
-          "spectrum_policy_signal": 1,
-          "ecosystem_maturity": 3
-        },
-        "time_horizon": "mid-term",
-        "world_power_impact": {
-          "US": 4,
-          "EU": 2,
-          "China": 3,
-          "Japan": 2,
-          "Korea": 2,
-          "India": 1
-        },
-        "emerging_concepts": [
-          "Connectivity-Aware Path Planning",
-          "LLM-Enabled Digital Twins",
-          "Semantic Route Queries",
-          "Instruction-tuned Network Reasoning",
-          "Ray-tracing integrated instruction datasets"
-        ],
-        "key_evidence": [
-          "CTMAP achieves up to a tenfold improvement in cumulative signal strength compared to shortest-distance baselines.",
-          "The framework utilizes NVIDIA Sionna's ray-tracing engine to simulate realistic received signal strength (RSS) maps.",
-          "Instruction-tuned GPT-4 is used to enable interpretable, semantic route navigation based on network connectivity.",
-          "The system addresses the critical 6G challenge of signal blockage in dense urban mmWave environments."
-        ],
-        "impact_score": 7
-      },
-      "source_region": "US",
-      "summary": "arXiv:2601.00110v1 Announce Type: new \nAbstract: In this paper, we present \\textit{CTMAP}, a large language model (LLM) empowered digital twin framework for connectivity-aware route navigation in millimeter-wave (mmWave) wireless networks. Conventional navigation tools optimize only distance, time, or cost, overlooking network connectivity degradation caused by signal blockage in dense urban environments. The proposed framework constructs a digital twin of the physical mmWave network using OpenStreetMap, Blender, and NVIDIA Sionna's ray-tracing engine to simulate realistic received signal strength (RSS) maps. A modified Dijkstra algorithm then generates optimal routes that maximize cumulative RSS, forming the training data for instruction-tuned GPT-4-based reasoning. This integration enables semantic route queries such as ``find the strongest-signal path'' and returns connectivity-optimized paths that are interpretable by users and adaptable to real-time environmental updates. Experimental results demonstrate that CTMAP achieves up to a tenfold improvement in cumulative signal strength compared to shortest-distance baselines, while maintaining high path validity. The synergy of digital twin simulation and LLM reasoning establishes a scalable foundation for intelligent, interpretable, and connectivity-driven navigation, advancing the design of AI-empowered 6G mobility systems.",
-      "date": "2026-01-05"
+      "title": "AI-Native Integrated Sensing and Communications for Self-Organizing Wireless Networks: Architectures, Learning Paradigms, and System-Level Design",
+      "link": "https://arxiv.org/abs/2601.02398",
+      "score": 6,
+      "ai_insights": null,
+      "source_region": "Other",
+      "summary": "arXiv:2601.02398v1 Announce Type: new \nAbstract: Integrated Sensing and Communications (ISAC) is emerging as a foundational paradigm for next-generation wireless networks, enabling communication infrastructures to simultaneously support data transmission and environment sensing. By tightly coupling radio sensing with communication functions, ISAC unlocks new capabilities for situational awareness, localization, tracking, and network adaptation. At the same time, the increasing scale, heterogeneity, and dynamics of future wireless systems demand self-organizing network intelligence capable of autonomously managing resources, topology, and services. Artificial intelligence (AI), particularly learning-driven and data-centric methods, has become a key enabler for realizing this vision. This survey provides a comprehensive and system-level review of AI-native ISAC-enabled self-organizing wireless networks. We develop a unified taxonomy that spans: (i) ISAC signal models and sensing modalities, (ii) network state abstraction and perception from sensing-aware radio data, (iii) learning-driven self-organization mechanisms for resource allocation, topology control, and mobility management, and (iv) cross-layer architectures integrating sensing, communication, and network intelligence. We further examine emerging learning paradigms, including deep reinforcement learning, graph-based learning, multi-agent coordination, and federated intelligence that enable autonomous adaptation under uncertainty, mobility, and partial observability. Practical considerations such as sensing-communication trade-offs, scalability, latency, reliability, and security are discussed alongside representative evaluation methodologies and performance metrics. Finally, we identify key open challenges and future research directions toward deployable, trustworthy, and scalable AI-native ISAC systems for 6G and beyond.",
+      "date": "2026-01-07"
     },
     {
       "source": "ArXiv CS Networking",
-      "title": "Multi-Satellite NOMA-Irregular Repetition Slotted ALOHA for IoT Networks",
-      "link": "https://arxiv.org/abs/2601.00341",
+      "title": "How to Discover Knowledge for FutureG: Contextual RAG and LLM Prompting for O-RAN",
+      "link": "https://arxiv.org/abs/2601.02382",
       "score": 3,
-      "ai_insights": {
-        "is_6g_relevant": true,
-        "source_region": "Other",
-        "summary": "This research addresses the challenges of massive IoT connectivity in the 6G era by proposing a Multi-Satellite NOMA-Irregular Repetition Slotted ALOHA (IRSA) protocol. It leverages the receiver diversity provided by mega-constellations to mitigate collision probabilities and enhance system capacity in Non-Terrestrial Networks (NTNs).",
-        "overall_6g_importance": 7,
-        "6g_topics": [
-          "NTN",
-          "sustainability",
-          "spectrum & policy",
-          "device ecosystem"
-        ],
-        "impact_dimensions": {
-          "research_intensity": 4,
-          "standardization_influence": 3,
-          "industrial_deployment": 2,
-          "spectrum_policy_signal": 2,
-          "ecosystem_maturity": 2
-        },
-        "time_horizon": "mid-term",
-        "world_power_impact": {
-          "US": 4,
-          "EU": 3,
-          "China": 4,
-          "Japan": 2,
-          "Korea": 2,
-          "India": 2
-        },
-        "emerging_concepts": [
-          "Multi-Satellite Receiver Diversity",
-          "NOMA-Irregular Repetition Slotted ALOHA (NOMA-IRSA)",
-          "Mega-constellation collision mitigation",
-          "Satellite-based massive random access",
-          "NTN Energy Efficiency Trade-offs"
-        ],
-        "key_evidence": [
-          "Integration of Non-Terrestrial Networks (NTNs) is deemed necessary to accommodate the 6G surge in IoT devices.",
-          "Visibility of just one additional satellite as a receiver yields significant gains in overall system performance.",
-          "The study derives a lower bound of system performance to serve as a fast tool for 6G network behavior evaluation.",
-          "NOMA-IRSA protocol is utilized to manage high-density user access and collision probability in large satellite coverage areas."
-        ],
-        "impact_score": 7
-      },
+      "ai_insights": null,
       "source_region": "Other",
-      "summary": "arXiv:2601.00341v1 Announce Type: new \nAbstract: As the transition from 5G to 6G unfolds, a substantial increase in Internet of Things (IoT) devices is expected, enabling seamless and pervasive connectivity across various applications. Accommodating this surge and meeting the high capacity demands will necessitate the integration of NonTerrestrial Networks (NTNs). However, the extensive coverage area of satellites, relative to terrestrial receivers, will lead to a high density of users attempting to access the channel at the same time, increasing the collision probability. In turn, the deployment of mega constellations make it possible for ground users to be in visibility of more than one satellite at the same time, enabling receiver diversity. Therefore, in this paper, we evaluate the impact of multi-receivers in scenarios where IoT nodes share the channel following a non-orthogonal multiple access (NOMA)irregular repetition slotted ALOHA (IRSA) protocol. Considering the impairments of satellite channels, we derive a lower bound of system performance, serving as a fast tool for initial evaluation of network behavior. Additionally, we identify the trade-offs inherent to the network design parameters, with a focus on packet loss rate and energy efficiency. Notably, in the visibility of only one extra satellite as receiver yields significant gains in overall system performance.",
-      "date": "2026-01-05"
+      "summary": "arXiv:2601.02382v1 Announce Type: new \nAbstract: We present a retrieval-augmented question answering framework for 5G/6G networks, where the Open Radio Access Network (O-RAN) has become central to disaggregated, virtualized, and AI-driven wireless systems. While O-RAN enables multi-vendor interoperability and cloud-native deployments, its fast-changing specifications and interfaces pose major challenges for researchers and practitioners. Manual navigation of these complex documents is labor-intensive and error-prone, slowing system design, integration, and deployment. To address this challenge, we adopt Contextual Retrieval-Augmented Generation (Contextual RAG), a strategy in which candidate answer choices guide document retrieval and chunk-specific context to improve large language model (LLM) performance. This improvement over traditional RAG achieves more targeted and context-aware retrieval, which improves the relevance of documents passed to the LLM, particularly when the query alone lacks sufficient context for accurate grounding. Our framework is designed for dynamic domains where data evolves rapidly and models must be continuously updated or redeployed, all without requiring LLM fine-tuning. We evaluate this framework using the ORANBenchmark-13K dataset, and compare three LLMs, namely, Llama3.2, Qwen2.5-7B, and Qwen3.0-4B, across both Direct Question Answering (Direct Q&amp;A) and Chain-of-Thought (CoT) prompting strategies. We show that Contextual RAG consistently improves accuracy over standard RAG and base prompting, while maintaining competitive runtime and CO2 emissions. These results highlight the potential of Contextual RAG to serve as a scalable and effective solution for domain-specific Q&amp;A in ORAN and broader 5G/6G environments, enabling more accurate interpretation of evolving standards while preserving efficiency and sustainability.",
+      "date": "2026-01-07"
+    },
+    {
+      "source": "ArXiv CS Networking",
+      "title": "Base Station Deployment under EMF constrain by Deep Reinforcement learning",
+      "link": "https://arxiv.org/abs/2601.02385",
+      "score": 3,
+      "ai_insights": null,
+      "source_region": "Other",
+      "summary": "arXiv:2601.02385v1 Announce Type: new \nAbstract: As 5G networks rapidly expand and 6G technologies emerge, characterized by dense deployments, millimeter-wave communications, and dynamic beamforming, the need for scalable simulation tools becomes increasingly critical. These tools must support efficient evaluation of key performance metrics such as coverage and radio-frequency electromagnetic field (RF-EMF) exposure, inform network design decisions, and ensure compliance with safety regulations. Moreover, base station (BS) placement is a crucial task in the network design, where satisfying coverage requirements is essential. To address these, based on our previous work, we first propose a conditional generative adversarial network (cGAN) that predicts location specific received signal strength (RSS), and EMF exposure simultaneously from the network topology, as images. As a network designing application, we propose a Deep Q Network (DQN) framework, using the trained cGAN, for optimal base station (BS) deployment in the network. Compared to conventional ray tracing simulations, the proposed cGAN reduces inference and deployment time from several hours to seconds. Unlike a standalone cGAN, which provides static performance maps, the proposed GAN-DQN framework enables sequential decision making under coverage and exposure constraints, learning effective deployment strategies that directly solve the BS placement problem. Thus making it well suited for real time design and adaptation in dynamic scenarios in order to satisfy pre defined network specific heterogeneous performance goals.",
+      "date": "2026-01-07"
+    },
+    {
+      "source": "ArXiv CS Networking",
+      "title": "Rethinking Secure Semantic Communications in the Age of Generative and Agentic AI: Threats and Opportunities",
+      "link": "https://arxiv.org/abs/2601.01791",
+      "score": 3,
+      "ai_insights": null,
+      "source_region": "Other",
+      "summary": "arXiv:2601.01791v2 Announce Type: replace-cross \nAbstract: Semantic communication (SemCom) improves communication efficiency by transmitting task-relevant information instead of raw bits and is expected to be a key technology for 6G networks. Recent advances in generative AI (GenAI) further enhance SemCom by enabling robust semantic encoding and decoding under limited channel conditions. However, these efficiency gains also introduce new security and privacy vulnerabilities. Due to the broadcast nature of wireless channels, eavesdroppers can also use powerful GenAI-based semantic decoders to recover private information from intercepted signals. Moreover, rapid advances in agentic AI enable eavesdroppers to perform long-term and adaptive inference through the integration of memory, external knowledge, and reasoning capabilities. This allows eavesdroppers to further infer user private behavior and intent beyond the transmitted content. Motivated by these emerging challenges, this paper comprehensively rethinks the security and privacy of SemCom systems in the age of generative and agentic AI. We first present a systematic taxonomy of eavesdropping threat models in SemCom systems. Then, we provide insights into how GenAI and agentic AI can enhance eavesdropping threats. Meanwhile, we also highlight potential opportunities for leveraging GenAI and agentic AI to design privacy-preserving SemCom systems.",
+      "date": "2026-01-07"
     }
   ]
 }
