@@ -8,9 +8,8 @@ from config.user_agents import USER_AGENTS
 class HttpxFetcher(BaseFetcher):
     """Fast HTTP fetching using httpx (from Phase 1)"""
     
-    def __init__(self, timeout: float = 30.0, max_retries: int = 3):
+    def __init__(self, timeout: float = 30.0):
         self.timeout = timeout
-        self.max_retries = max_retries
         self.client: Optional[httpx.AsyncClient] = None
     
     async def _ensure_client(self):

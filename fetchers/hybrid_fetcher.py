@@ -26,7 +26,7 @@ class HybridFetcher(BaseFetcher):
             try:
                 with open(self.cache_file, 'r') as f:
                     return json.load(f)
-            except:
+            except (json.JSONDecodeError, IOError, FileNotFoundError):
                 return {}
         return {}
     

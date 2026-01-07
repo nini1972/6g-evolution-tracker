@@ -447,8 +447,6 @@ def fetch_feed_with_retry(source, url, retries=MAX_RETRIES):
         except Exception as e:
             print(f"❌ Unexpected error for {source}: {type(e).__name__}: {e}")
             return None
-    
-    return None
 
 def fetch_feed_wrapper(args):
     """Wrapper function for parallel feed fetching."""

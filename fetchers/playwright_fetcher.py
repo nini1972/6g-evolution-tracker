@@ -176,7 +176,8 @@ class PlaywrightFetcher(BaseFetcher):
                 await page.click(selector, timeout=2000)
                 logger.info("cookie_consent_dismissed", selector=selector)
                 break
-            except:
+            except Exception:
+                # Selector not found or not clickable, try next one
                 continue
     
     def _is_blocked(self, content: str) -> bool:
@@ -203,7 +204,6 @@ class PlaywrightFetcher(BaseFetcher):
         if '<pre' in content.lower() and ('<?xml' in content or '&lt;?xml' in content):
             # Try to extract content from <pre> tags
             from bs4 import BeautifulSoup
-            import html
             try:
                 soup = BeautifulSoup(content, 'html.parser')
                 pre_tag = soup.find('pre')
@@ -214,7 +214,8 @@ class PlaywrightFetcher(BaseFetcher):
                     if xml_content.strip().startswith('<?xml'):
                         logger.info("extracted_xml_from_html_wrapper")
                         return xml_content
-            except:
+            except (ImportError, Exception):
+                # If BeautifulSoup is not available or parsing fails, return original content
                 pass
         
         return content
