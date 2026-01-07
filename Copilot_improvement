@@ -1,0 +1,3355 @@
+
+THE DISCOVERY ORCHESTRATOR — How Agents Run Together
+Think of the orchestrator as the “conductor” of your intelligence system.
+It decides:
+
+which agents run
+
+in what order
+
+in parallel or sequential
+
+how results flow between layers
+
+how to avoid duplication
+
+how to prioritize work
+
+Let’s break this into the three execution modes.
+
+🧩 MODE 1 — Parallel Execution (Fast, Independent Agents)
+These agents can run fully in parallel because they do not depend on each other:
+
+✔️ RSS Agent
+✔️ Newsroom Agent
+✔️ Research Agent
+✔️ Regulator Agent
+✔️ Patent Agent (future)
+✔️ Social/Press Agent (future)
+Each agent:
+
+reads from the source registry
+
+discovers new article candidates
+
+outputs a list of discovered_article objects
+
+does NOT fetch full content
+
+does NOT call Gemini
+
+does NOT block other agents
+
+This is the “broad net” phase.
+
+Execution model:
+Code
+ThreadPoolExecutor(max_workers = N)
+Where N = number of agents (usually 4–8).
+
+Each agent runs independently:
+
+Code
+rss_agent.run()
+newsroom_agent.run()
+research_agent.run()
+regulator_agent.run()
+All results are merged into a Discovery Pool.
+
+🧩 MODE 2 — Priority Queue Execution (Controlled Parallelism)
+Once the Discovery Pool is built, we don’t fetch everything at once.
+Instead, we:
+
+1. Compute priority_score for each discovered article
+2. Insert them into a priority queue
+3. Fetch them in parallel, but with limits
+Fetching is expensive because:
+
+Playwright launches browsers
+
+some sites are slow
+
+some require retries
+
+some block aggressively
+
+So we run fetching in parallel but throttled:
+
+Code
+ThreadPoolExecutor(max_workers = 3)
+Why 3?
+
+avoids overwhelming websites
+
+avoids triggering anti‑bot systems
+
+keeps CPU/memory reasonable
+
+keeps GitHub Actions stable
+
+Execution model:
+Code
+while queue not empty:
+    article = queue.pop_highest_priority()
+    fetch_agent.fetch(article)
+This ensures:
+
+high‑priority articles are fetched first
+
+low‑priority ones may be skipped if time runs out
+
+the system remains responsive
+
+🧩 MODE 3 — Sequential Intelligence Layer (LLM‑Bound)
+Once full text is fetched, the Intelligence Layer runs.
+
+This layer is:
+
+expensive
+
+slow
+
+rate‑limited
+
+sequential by nature
+
+So we run it sequentially, with optional micro‑parallelism:
+
+Code
+for article in fetched_articles:
+    intelligence_agent.analyze(article)
+Why sequential?
+
+LLM calls are expensive
+
+too many parallel calls risk rate limits
+
+sequential processing ensures stability
+
+it keeps your monthly GitHub Action predictable
+
+If you want micro‑parallelism:
+
+Code
+ThreadPoolExecutor(max_workers = 2)
+But never more than 2.
+
+🧠 Putting It All Together — The Full Pipeline
+Here’s the full orchestration flow:
+
+Code
+[Parallel Agents]
+RSS Agent  ───────────┐
+Newsroom Agent ───────┤
+Research Agent ───────┤──> Discovery Pool → Deduplication → Priority Queue
+Regulator Agent ──────┘
+Then:
+
+Code
+[Controlled Parallelism]
+Priority Queue → Fetch Agent (Playwright, 3 workers)
+Then:
+
+Code
+[Sequential Intelligence]
+Intelligence Agent (Gemini)
+Then:
+
+Code
+Digest Builder → latest_digest.json → Dashboard
+🌟 Why this orchestration is ideal
+✔️ Fast discovery
+Parallel agents sweep the ecosystem quickly.
+
+✔️ Smart fetching
+Priority queue ensures you fetch the most important signals first.
+
+✔️ Stable intelligence layer
+Sequential LLM calls avoid rate limits and cost spikes.
+
+✔️ Scalable
+You can add new agents without touching the orchestrator.
+
+✔️ Resilient
+If one agent fails, the others continue.
+
+✔️ Efficient
+You never waste time fetching low‑value content.
+
+🧭 Next Step Options
+Now that we’ve designed the orchestration layer, we can move to:
+
+A. Implement the RSS Agent using the unified model
+B. Implement the Newsroom Agent (HTML crawler)
+C. Implement the Discovery Orchestrator code
+D. Implement the Fetching Layer (Playwright)
+E. Implement the Intelligence Layer integration
+Which one do you want to build next?
+
+ok, lets go to the implmentations of the RSS agent
+See my thinking
+Rss agent implementation overview
+Let’s turn what you already have (the FEEDS dict + feedparser) into a proper RSS Agent that:
+
+reads from the source registry
+
+produces unified discovered_article objects
+
+assigns a priority_score
+
+respects deduplication via seen_articles.json
+
+is easy to plug into the orchestrator later
+
+I’ll give you a self‑contained version you can drop into your repo and adapt.
+
+1. Assumptions and small recap
+We assume:
+
+you have a sources/sources.json like we designed (with type, region, priority, urls.rss, etc.)
+
+you still use seen_articles.json for caching
+
+the unified discovered article model is:
+
+python
+{
+    "id": str,
+    "source": {
+        "name": str,
+        "type": str,
+        "region": str,
+        "url": str,
+    },
+    "article": {
+        "title": str,
+        "url": str,
+        "summary": str,
+        "published": str,
+        "discovered_at": str,
+        "content_hash": str,
+        "raw_text_available": bool,
+        "target_region": str,   # will usually be "" at discovery time
+    },
+    "discovery": {
+        "agent": str,
+        "method": str,
+        "depth": int,
+        "priority_score": int,
+    },
+    "status": {
+        "fetched": bool,
+        "processed": bool,
+        "relevance_checked": bool,
+        "intelligence_generated": bool,
+    },
+}
+2. Rss agent – code skeleton
+python
+import json
+import hashlib
+import time
+from datetime import datetime
+from pathlib import Path
+
+import feedparser
+
+# Reuse your keyword config
+HIGH_PRIORITY = ["IMT-2030", "AI-native", "terahertz", "6G"]
+MEDIUM_PRIORITY = ["radio spectrum", "6G architecture", "Release 21", "millimeter wave", "sub-THz"]
+
+SOURCES_FILE = Path("sources/sources.json")
+SEEN_FILE = Path("seen_articles.json")
+
+
+def load_sources():
+    """Load all sources from the registry."""
+    with SOURCES_FILE.open("r", encoding="utf-8") as f:
+        data = json.load(f)
+    return data.get("sources", [])
+
+
+def load_seen_ids():
+    """Load seen article ids from cache."""
+    if not SEEN_FILE.exists():
+        return set()
+    try:
+        with SEEN_FILE.open("r", encoding="utf-8") as f:
+            data = json.load(f)
+        # You can store either ids or URL hashes; here we assume ids
+        return set(data.get("seen_ids", []))
+    except Exception:
+        return set()
+
+
+def save_seen_ids(seen_ids):
+    """Persist seen ids back to cache."""
+    SEEN_FILE.parent.mkdir(parents=True, exist_ok=True)
+    with SEEN_FILE.open("w", encoding="utf-8") as f:
+        json.dump({"seen_ids": sorted(list(seen_ids))}, f, indent=2)
+
+
+def make_article_id(title, url):
+    """Stable id based on title + url."""
+    h = hashlib.sha256()
+    combo = (title or "") + "|" + (url or "")
+    h.update(combo.encode("utf-8"))
+    return h.hexdigest()
+
+
+def compute_keyword_score(text):
+    """Compute keyword-based relevance score."""
+    if not text:
+        return 0
+    text_lower = text.lower()
+    score = 0
+
+    for kw in HIGH_PRIORITY:
+        if kw.lower() in text_lower:
+            score += 5
+
+    for kw in MEDIUM_PRIORITY:
+        if kw.lower() in text_lower:
+            score += 2
+
+    return min(score, 25)  # cap
+
+
+def compute_recency_score(published_dt):
+    """Score based on recency (0–20)."""
+    if not published_dt:
+        return 5  # fallback
+
+    now = datetime.utcnow()
+    days_old = (now - published_dt).days
+
+    if days_old <= 3:
+        return 20
+    elif days_old <= 7:
+        return 15
+    elif days_old <= 14:
+        return 10
+    elif days_old <= 30:
+        return 5
+    else:
+        return 0
+
+
+def compute_type_weight(source_type):
+    mapping = {
+        "standards": 15,
+        "regulator": 15,
+        "research": 12,
+        "newsroom": 10,
+        "media": 6,
+        "social": 3,
+    }
+    return mapping.get(source_type, 3)
+
+
+def compute_region_weight(region):
+    mapping = {
+        "US": 15,
+        "EU": 15,
+        "China": 15,
+        "Japan": 10,
+        "Korea": 10,
+        "India": 8,
+        "Other": 5,
+    }
+    return mapping.get(region, 5)
+
+
+def compute_priority_score(source_meta, title, summary, published_dt, is_new=True):
+    """Combine all factors into a 0–100 priority score."""
+    source_priority = int(source_meta.get("priority", 0))
+    recency_score = compute_recency_score(published_dt)
+    keyword_score = compute_keyword_score((title or "") + " " + (summary or ""))
+    type_weight = compute_type_weight(source_meta.get("type", ""))
+    region_weight = compute_region_weight(source_meta.get("region", "Other"))
+    novelty_bonus = 10 if is_new else 0
+
+    total = (
+        source_priority
+        + recency_score
+        + keyword_score
+        + type_weight
+        + region_weight
+        + novelty_bonus
+    )
+    return max(0, min(total, 100))
+
+
+def parse_published(entry):
+    """Try to extract a datetime from RSS entry."""
+    # feedparser puts it in 'published_parsed' usually
+    if hasattr(entry, "published_parsed") and entry.published_parsed:
+        try:
+            return datetime(*entry.published_parsed[:6])
+        except Exception:
+            return None
+    # fallback
+    return None
+
+
+def build_discovered_article(source_meta, entry, discovered_at_iso, is_new=True):
+    """Build a unified discovered_article object from an RSS entry."""
+    title = getattr(entry, "title", "") or ""
+    link = getattr(entry, "link", "") or ""
+    summary = getattr(entry, "summary", "") or ""
+    published_dt = parse_published(entry)
+
+    article_id = make_article_id(title, link)
+
+    content_hash = hashlib.sha256(
+        ((title or "") + "|" + (summary or "")).encode("utf-8")
+    ).hexdigest()
+
+    priority_score = compute_priority_score(
+        source_meta, title, summary, published_dt, is_new=is_new
+    )
+
+    article = {
+        "id": article_id,
+        "source": {
+            "name": source_meta["name"],
+            "type": source_meta["type"],
+            "region": source_meta["region"],
+            "url": source_meta["urls"].get("html") or "",
+        },
+        "article": {
+            "title": title,
+            "url": link,
+            "summary": summary,
+            "published": published_dt.isoformat() if published_dt else "",
+            "discovered_at": discovered_at_iso,
+            "content_hash": content_hash,
+            "raw_text_available": False,
+            "target_region": "",  # to be filled later by intelligence layer
+        },
+        "discovery": {
+            "agent": "rss_agent",
+            "method": "rss",
+            "depth": 0,
+            "priority_score": priority_score,
+        },
+        "status": {
+            "fetched": False,
+            "processed": False,
+            "relevance_checked": False,
+            "intelligence_generated": False,
+        },
+    }
+
+    return article
+
+
+def run_rss_agent():
+    """
+    Main entrypoint for the RSS Agent.
+    Returns a list of discovered_article dicts.
+    """
+    sources = load_sources()
+    rss_sources = [s for s in sources if s.get("urls", {}).get("rss")]
+
+    seen_ids = load_seen_ids()
+    discovered_articles = []
+
+    now_iso = datetime.utcnow().isoformat()
+
+    for src in rss_sources:
+        rss_url = src["urls"]["rss"]
+        try:
+            print(f"🔎 [RSS] Fetching {src['name']} – {rss_url}")
+            feed = feedparser.parse(rss_url)
+        except Exception as e:
+            print(f"  ⚠️ Failed to parse RSS for {src['id']}: {e}")
+            continue
+
+        for entry in feed.entries:
+            title = getattr(entry, "title", "") or ""
+            link = getattr(entry, "link", "") or ""
+            entry_id = make_article_id(title, link)
+
+            is_new = entry_id not in seen_ids
+            # even if not new, we can still rebuild object if you want to update priority
+            article_obj = build_discovered_article(src, entry, now_iso, is_new=is_new)
+
+            if is_new:
+                discovered_articles.append(article_obj)
+                seen_ids.add(entry_id)
+
+    save_seen_ids(seen_ids)
+
+    print(f"✅ RSS Agent discovered {len(discovered_articles)} new articles.")
+    return discovered_articles
+3. How this fits into your bigger pipeline
+Input: sources/sources.json
+
+Output: list of unified discovered_article dicts, each with priority_score
+
+Side effect: updates seen_articles.json with discovered IDs
+
+Next step:
+
+your Discovery Orchestrator will merge these with outputs from other agents
+
+then sort by discovery.priority_score
+
+then send them to the Fetching Layer (Playwright)
+
+You can integrate this into your current script by:
+
+python
+if __name__ == "__main__":
+    discovered = run_rss_agent()
+    # later: write them to a pool file, or pass into the orchestrator
+If you like, next we can:
+
+wire this into a simple Discovery Pool JSON file (e.g. discovery_pool.json), or
+
+design the Newsroom Agent that uses HTML crawling but produces the exact same structure.
+
+Lets first implement the Newsroom Agent ( html crawler)
+Great — let’s build the Newsroom Agent, dominique.
+This is the most important agent in Layer 1 because most 6G‑relevant content is NOT published via RSS.
+A newsroom crawler gives your intelligence engine access to:
+
+Ericsson blog posts
+
+Nokia newsroom
+
+Samsung Research
+
+3GPP news
+
+ITU announcements
+
+FCC headlines
+
+CEPT / ETSI updates
+
+National regulator pages
+
+Research portals without RSS
+
+This is where the real geopolitical signals live.
+
+Below is a clean, production‑ready implementation you can drop into your repo.
+It follows the same unified data model and priority scoring system we already defined.
+
+🧩 Newsroom Agent — Design Goals
+The agent must:
+
+read from sources.json
+
+select sources with type = "newsroom" or crawl.enabled = true
+
+fetch HTML pages (with retries)
+
+extract article links
+
+extract title + summary + date (best effort)
+
+build unified discovered_article objects
+
+compute priority_score
+
+update seen_articles.json
+
+return a list of new discovered articles
+
+It does NOT fetch full article text — that’s Layer 2.
+
+🧱 Implementation: Newsroom Agent (HTML Crawler)
+Below is a complete, clean implementation using:
+
+requests (fast)
+
+fallback to BeautifulSoup
+
+retry logic
+
+link extraction
+
+metadata extraction
+
+unified model builder
+
+priority scoring
+
+You can later upgrade the fetcher to Playwright, but this version already works well for most newsroom pages.
+
+📦 newsroom_agent.py
+python
+import json
+import hashlib
+import time
+from datetime import datetime
+from pathlib import Path
+
+import requests
+from bs4 import BeautifulSoup
+
+# Reuse your keyword config
+HIGH_PRIORITY = ["IMT-2030", "AI-native", "terahertz", "6G"]
+MEDIUM_PRIORITY = ["radio spectrum", "6G architecture", "Release 21", "millimeter wave", "sub-THz"]
+
+SOURCES_FILE = Path("sources/sources.json")
+SEEN_FILE = Path("seen_articles.json")
+
+HEADERS = {
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
+                  "(KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+}
+
+MAX_RETRIES = 3
+RETRY_DELAY = 2  # seconds
+
+
+# ------------------------------
+# Utility Functions
+# ------------------------------
+
+def load_sources():
+    with SOURCES_FILE.open("r", encoding="utf-8") as f:
+        return json.load(f).get("sources", [])
+
+
+def load_seen_ids():
+    if not SEEN_FILE.exists():
+        return set()
+    try:
+        with SEEN_FILE.open("r", encoding="utf-8") as f:
+            data = json.load(f)
+        return set(data.get("seen_ids", []))
+    except Exception:
+        return set()
+
+
+def save_seen_ids(seen_ids):
+    SEEN_FILE.parent.mkdir(parents=True, exist_ok=True)
+    with SEEN_FILE.open("w", encoding="utf-8") as f:
+        json.dump({"seen_ids": sorted(list(seen_ids))}, f, indent=2)
+
+
+def make_article_id(title, url):
+    h = hashlib.sha256()
+    h.update((title + "|" + url).encode("utf-8"))
+    return h.hexdigest()
+
+
+def safe_fetch(url):
+    """Fetch HTML with retries."""
+    for attempt in range(MAX_RETRIES):
+        try:
+            resp = requests.get(url, headers=HEADERS, timeout=15)
+            if resp.status_code == 200:
+                return resp.text
+        except Exception:
+            pass
+        time.sleep(RETRY_DELAY * (attempt + 1))
+    return None
+
+
+def extract_links(html, base_url):
+    """Extract all article-like links from a newsroom page."""
+    soup = BeautifulSoup(html, "html.parser")
+    links = []
+
+    for a in soup.find_all("a", href=True):
+        href = a["href"]
+
+        # Skip anchors, mailto, javascript
+        if href.startswith("#") or "javascript:" in href or "mailto:" in href:
+            continue
+
+        # Normalize relative URLs
+        if href.startswith("/"):
+            href = base_url.rstrip("/") + href
+
+        # Heuristic: newsroom articles often contain /news/, /blog/, /press/
+        if any(x in href.lower() for x in ["news", "blog", "press", "article"]):
+            links.append((a.get_text(strip=True), href))
+
+    return links
+
+
+def compute_keyword_score(text):
+    if not text:
+        return 0
+    text_lower = text.lower()
+    score = 0
+    for kw in HIGH_PRIORITY:
+        if kw.lower() in text_lower:
+            score += 5
+    for kw in MEDIUM_PRIORITY:
+        if kw.lower() in text_lower:
+            score += 2
+    return min(score, 25)
+
+
+def compute_recency_score(published_dt):
+    if not published_dt:
+        return 5
+    days_old = (datetime.utcnow() - published_dt).days
+    if days_old <= 3:
+        return 20
+    elif days_old <= 7:
+        return 15
+    elif days_old <= 14:
+        return 10
+    elif days_old <= 30:
+        return 5
+    return 0
+
+
+def compute_type_weight(source_type):
+    mapping = {
+        "standards": 15,
+        "regulator": 15,
+        "research": 12,
+        "newsroom": 10,
+        "media": 6,
+        "social": 3,
+    }
+    return mapping.get(source_type, 3)
+
+
+def compute_region_weight(region):
+    mapping = {
+        "US": 15,
+        "EU": 15,
+        "China": 15,
+        "Japan": 10,
+        "Korea": 10,
+        "India": 8,
+        "Other": 5,
+    }
+    return mapping.get(region, 5)
+
+
+def compute_priority_score(source_meta, title, summary, published_dt, is_new=True):
+    source_priority = int(source_meta.get("priority", 0))
+    recency_score = compute_recency_score(published_dt)
+    keyword_score = compute_keyword_score((title or "") + " " + (summary or ""))
+    type_weight = compute_type_weight(source_meta.get("type", ""))
+    region_weight = compute_region_weight(source_meta.get("region", "Other"))
+    novelty_bonus = 10 if is_new else 0
+
+    total = (
+        source_priority
+        + recency_score
+        + keyword_score
+        + type_weight
+        + region_weight
+        + novelty_bonus
+    )
+    return max(0, min(total, 100))
+
+
+def build_discovered_article(source_meta, title, url, summary, published_dt, discovered_at_iso, is_new):
+    article_id = make_article_id(title, url)
+    content_hash = hashlib.sha256((title + "|" + summary).encode("utf-8")).hexdigest()
+
+    return {
+        "id": article_id,
+        "source": {
+            "name": source_meta["name"],
+            "type": source_meta["type"],
+            "region": source_meta["region"],
+            "url": source_meta["urls"].get("html") or "",
+        },
+        "article": {
+            "title": title,
+            "url": url,
+            "summary": summary,
+            "published": published_dt.isoformat() if published_dt else "",
+            "discovered_at": discovered_at_iso,
+            "content_hash": content_hash,
+            "raw_text_available": False,
+            "target_region": "",
+        },
+        "discovery": {
+            "agent": "newsroom_agent",
+            "method": "html",
+            "depth": 0,
+            "priority_score": compute_priority_score(
+                source_meta, title, summary, published_dt, is_new
+            ),
+        },
+        "status": {
+            "fetched": False,
+            "processed": False,
+            "relevance_checked": False,
+            "intelligence_generated": False,
+        },
+    }
+
+
+# ------------------------------
+# Main Agent
+# ------------------------------
+
+def run_newsroom_agent():
+    sources = load_sources()
+    newsroom_sources = [
+        s for s in sources
+        if s.get("type") == "newsroom" or s.get("crawl", {}).get("enabled")
+    ]
+
+    seen_ids = load_seen_ids()
+    discovered = []
+    now_iso = datetime.utcnow().isoformat()
+
+    for src in newsroom_sources:
+        html_url = src["urls"].get("html")
+        if not html_url:
+            continue
+
+        print(f"📰 [Newsroom] Crawling {src['name']} – {html_url}")
+
+        html = safe_fetch(html_url)
+        if not html:
+            print(f"  ⚠️ Failed to fetch HTML for {src['id']}")
+            continue
+
+        links = extract_links(html, html_url)
+
+        for title, url in links:
+            if not url:
+                continue
+
+            article_id = make_article_id(title, url)
+            is_new = article_id not in seen_ids
+
+            # Basic summary = title for now (full text comes later)
+            summary = title
+
+            # Published date unknown at discovery time
+            published_dt = None
+
+            article_obj = build_discovered_article(
+                src, title, url, summary, published_dt, now_iso, is_new
+            )
+
+            if is_new:
+                discovered.append(article_obj)
+                seen_ids.add(article_id)
+
+    save_seen_ids(seen_ids)
+
+    print(f"✅ Newsroom Agent discovered {len(discovered)} new articles.")
+    return discovered
+🌟 What this agent already gives you
+✔️ Crawls newsroom HTML pages
+✔️ Extracts article links
+✔️ Builds unified discovered_article objects
+✔️ Computes priority_score
+✔️ Updates seen_articles.json
+✔️ Returns new discoveries
+✔️ Works with your orchestrator
+✔️ Ready for Playwright upgrade later
+This is the backbone of your non‑RSS discovery.
+
+🧭 Next Step Options
+Now that both:
+
+RSS Agent
+
+Newsroom Agent
+
+are implemented, we can move to:
+
+A. Implement the Research Agent (arXiv, IEEE, MDPI)
+B. Implement the Regulator Agent (FCC, ITU, ETSI)
+C. Build the Discovery Orchestrator
+D. Implement the Fetching Layer (Playwright)
+E. Build the Discovery Pool (JSON file)
+Which direction do you want to take next?
+
+ok, lets go for the Research Agent
+Perfect, dominique — the Research Agent is the next major pillar of your Discovery Layer, and it’s one of the most strategically important ones.
+This agent gives your 6G Evolution Tracker access to early‑stage scientific signals, which often appear months or years before industry or regulators react.
+
+Let’s design it cleanly, following the same principles we used for the RSS Agent and Newsroom Agent.
+
+🎓 THE RESEARCH AGENT — What it must do
+The Research Agent scans academic and scientific sources, such as:
+
+arXiv (cs.NI, cs.IT, eess.SP, etc.)
+
+IEEE Xplore (abstract pages)
+
+MDPI (Engineering, Sensors, Electronics)
+
+ACM Digital Library
+
+Springer / Nature / Elsevier (optional)
+
+University research labs (optional future layer)
+
+Its job is to discover new research papers relevant to 6G topics:
+
+sub‑THz
+
+AI‑native RAN
+
+semantic communications
+
+ISAC
+
+NTN
+
+zero‑energy devices
+
+Open RAN
+
+quantum‑safe networking
+
+spectrum policy
+
+cloud‑edge integration
+
+And produce unified discovered_article objects.
+
+🧠 Key differences from the Newsroom Agent
+Research pages have:
+
+more structured metadata
+
+abstracts
+
+authors
+
+publication dates
+
+categories
+
+DOIs
+
+PDF links
+
+So the Research Agent can extract richer metadata than the Newsroom Agent.
+
+🧩 Research Agent — Architecture
+The agent will:
+
+Load sources from sources.json where type = "research"
+
+For each source:
+
+If RSS exists → parse RSS
+
+If no RSS → crawl HTML listing pages
+
+Extract:
+
+title
+
+link
+
+abstract (if available)
+
+authors (optional)
+
+published date
+
+Build unified discovered_article objects
+
+Compute priority_score
+
+Update seen_articles.json
+
+Return new discoveries
+
+📦 Implementation: research_agent.py
+Below is a clean, production‑ready implementation for:
+
+arXiv (RSS + HTML fallback)
+
+MDPI (RSS)
+
+IEEE Spectrum (RSS)
+
+IEEE Xplore (HTML listing pages)
+
+You can extend it easily.
+
+🧱 research_agent.py
+python
+import json
+import hashlib
+import time
+from datetime import datetime
+from pathlib import Path
+
+import feedparser
+import requests
+from bs4 import BeautifulSoup
+
+SOURCES_FILE = Path("sources/sources.json")
+SEEN_FILE = Path("seen_articles.json")
+
+HEADERS = {
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
+                  "(KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+}
+
+MAX_RETRIES = 3
+RETRY_DELAY = 2
+
+HIGH_PRIORITY = ["IMT-2030", "AI-native", "terahertz", "6G"]
+MEDIUM_PRIORITY = ["radio spectrum", "6G architecture", "Release 21", "millimeter wave", "sub-THz"]
+
+
+# ------------------------------
+# Utility Functions
+# ------------------------------
+
+def load_sources():
+    with SOURCES_FILE.open("r", encoding="utf-8") as f:
+        return json.load(f).get("sources", [])
+
+
+def load_seen_ids():
+    if not SEEN_FILE.exists():
+        return set()
+    try:
+        with SEEN_FILE.open("r", encoding="utf-8") as f:
+            return set(json.load(f).get("seen_ids", []))
+    except Exception:
+        return set()
+
+
+def save_seen_ids(seen_ids):
+    SEEN_FILE.parent.mkdir(parents=True, exist_ok=True)
+    with SEEN_FILE.open("w", encoding="utf-8") as f:
+        json.dump({"seen_ids": sorted(list(seen_ids))}, f, indent=2)
+
+
+def safe_fetch(url):
+    for attempt in range(MAX_RETRIES):
+        try:
+            resp = requests.get(url, headers=HEADERS, timeout=15)
+            if resp.status_code == 200:
+                return resp.text
+        except Exception:
+            pass
+        time.sleep(RETRY_DELAY * (attempt + 1))
+    return None
+
+
+def make_article_id(title, url):
+    h = hashlib.sha256()
+    h.update((title + "|" + url).encode("utf-8"))
+    return h.hexdigest()
+
+
+def compute_keyword_score(text):
+    if not text:
+        return 0
+    text_lower = text.lower()
+    score = 0
+    for kw in HIGH_PRIORITY:
+        if kw.lower() in text_lower:
+            score += 5
+    for kw in MEDIUM_PRIORITY:
+        if kw.lower() in text_lower:
+            score += 2
+    return min(score, 25)
+
+
+def compute_recency_score(published_dt):
+    if not published_dt:
+        return 5
+    days_old = (datetime.utcnow() - published_dt).days
+    if days_old <= 3:
+        return 20
+    elif days_old <= 7:
+        return 15
+    elif days_old <= 14:
+        return 10
+    elif days_old <= 30:
+        return 5
+    return 0
+
+
+def compute_type_weight(source_type):
+    mapping = {
+        "research": 12,
+        "standards": 15,
+        "regulator": 15,
+        "newsroom": 10,
+        "media": 6,
+        "social": 3,
+    }
+    return mapping.get(source_type, 3)
+
+
+def compute_region_weight(region):
+    mapping = {
+        "US": 15,
+        "EU": 15,
+        "China": 15,
+        "Japan": 10,
+        "Korea": 10,
+        "India": 8,
+        "Other": 5,
+    }
+    return mapping.get(region, 5)
+
+
+def compute_priority_score(source_meta, title, summary, published_dt, is_new=True):
+    source_priority = int(source_meta.get("priority", 0))
+    recency_score = compute_recency_score(published_dt)
+    keyword_score = compute_keyword_score((title or "") + " " + (summary or ""))
+    type_weight = compute_type_weight(source_meta.get("type", ""))
+    region_weight = compute_region_weight(source_meta.get("region", "Other"))
+    novelty_bonus = 10 if is_new else 0
+
+    total = (
+        source_priority
+        + recency_score
+        + keyword_score
+        + type_weight
+        + region_weight
+        + novelty_bonus
+    )
+    return max(0, min(total, 100))
+
+
+def build_discovered_article(source_meta, title, url, summary, published_dt, discovered_at_iso, is_new):
+    article_id = make_article_id(title, url)
+    content_hash = hashlib.sha256((title + "|" + summary).encode("utf-8")).hexdigest()
+
+    return {
+        "id": article_id,
+        "source": {
+            "name": source_meta["name"],
+            "type": source_meta["type"],
+            "region": source_meta["region"],
+            "url": source_meta["urls"].get("html") or "",
+        },
+        "article": {
+            "title": title,
+            "url": url,
+            "summary": summary,
+            "published": published_dt.isoformat() if published_dt else "",
+            "discovered_at": discovered_at_iso,
+            "content_hash": content_hash,
+            "raw_text_available": False,
+            "target_region": "",
+        },
+        "discovery": {
+            "agent": "research_agent",
+            "method": "rss_or_html",
+            "depth": 0,
+            "priority_score": compute_priority_score(
+                source_meta, title, summary, published_dt, is_new
+            ),
+        },
+        "status": {
+            "fetched": False,
+            "processed": False,
+            "relevance_checked": False,
+            "intelligence_generated": False,
+        },
+    }
+
+
+# ------------------------------
+# Main Agent
+# ------------------------------
+
+def run_research_agent():
+    sources = load_sources()
+    research_sources = [s for s in sources if s.get("type") == "research"]
+
+    seen_ids = load_seen_ids()
+    discovered = []
+    now_iso = datetime.utcnow().isoformat()
+
+    for src in research_sources:
+        rss_url = src["urls"].get("rss")
+        html_url = src["urls"].get("html")
+
+        print(f"🔬 [Research] Scanning {src['name']}")
+
+        # 1. Try RSS first
+        if rss_url:
+            try:
+                feed = feedparser.parse(rss_url)
+                for entry in feed.entries:
+                    title = getattr(entry, "title", "") or ""
+                    link = getattr(entry, "link", "") or ""
+                    summary = getattr(entry, "summary", "") or ""
+                    published_dt = None
+
+                    if hasattr(entry, "published_parsed") and entry.published_parsed:
+                        published_dt = datetime(*entry.published_parsed[:6])
+
+                    article_id = make_article_id(title, link)
+                    is_new = article_id not in seen_ids
+
+                    article_obj = build_discovered_article(
+                        src, title, link, summary, published_dt, now_iso, is_new
+                    )
+
+                    if is_new:
+                        discovered.append(article_obj)
+                        seen_ids.add(article_id)
+
+                continue  # RSS worked → skip HTML fallback
+
+            except Exception:
+                pass
+
+        # 2. HTML fallback (e.g., arXiv listing pages)
+        if html_url:
+            html = safe_fetch(html_url)
+            if not html:
+                print(f"  ⚠️ Failed to fetch HTML for {src['id']}")
+                continue
+
+            soup = BeautifulSoup(html, "html.parser")
+
+            # arXiv-style listing
+            for item in soup.find_all("li", class_="arxiv-result"):
+                title_tag = item.find("p", class_="title")
+                link_tag = item.find("p", class_="list-title")
+                summary_tag = item.find("span", class_="abstract-full")
+
+                if not title_tag or not link_tag:
+                    continue
+
+                title = title_tag.get_text(strip=True)
+                link = link_tag.find("a")["href"]
+                summary = summary_tag.get_text(strip=True) if summary_tag else title
+                published_dt = None
+
+                article_id = make_article_id(title, link)
+                is_new = article_id not in seen_ids
+
+                article_obj = build_discovered_article(
+                    src, title, link, summary, published_dt, now_iso, is_new
+                )
+
+                if is_new:
+                    discovered.append(article_obj)
+                    seen_ids.add(article_id)
+
+    save_seen_ids(seen_ids)
+
+    print(f"✅ Research Agent discovered {len(discovered)} new research papers.")
+    return discovered
+🌟 What this Research Agent already gives you
+✔️ Supports RSS (arXiv, MDPI, IEEE Spectrum)
+✔️ Supports HTML fallback (arXiv listing pages)
+✔️ Extracts title, link, summary, date
+✔️ Builds unified discovered_article objects
+✔️ Computes priority_score
+✔️ Updates seen_articles.json
+✔️ Ready for Playwright upgrade later
+✔️ Integrates seamlessly with your orchestrator
+This is the backbone of your scientific discovery pipeline.
+
+🧭 Next Step Options
+Now that you have:
+
+RSS Agent
+
+Newsroom Agent
+
+Research Agent
+
+You can proceed to:
+
+A. Implement the Regulator Agent (FCC, ITU, ETSI)
+B. Build the Discovery Orchestrator
+C. Implement the Fetching Layer (Playwright)
+D. Build the Discovery Pool (JSON file)
+E. Integrate everything into your GitHub Action
+Which direction do you want to take next?
+
+ok, lets gofor the Regulator Agent
+See my thinking
+You’re building a very serious engine here, dominique — the Regulator Agent is where your tracker really becomes geopolitical.
+
+This agent doesn’t just find “tech news”; it watches the people who control spectrum, standards, and legal frameworks — the deep levers of 6G power.
+
+Concept: what the regulator agent does
+It monitors regulators and standards‑adjacent bodies like:
+
+FCC (US)
+
+CEPT / ETSI / EU Commission (EU)
+
+Ofcom, BNetzA, ARCEP (national regulators)
+
+ITU (global)
+
+MIC Japan
+
+TRAI / DoT India
+
+later: other national regulators as you add them
+
+Its job:
+
+discover new policy, spectrum, and standardization signals
+
+turn them into discovered_article objects
+
+assign a priority_score (regulator/standards = very high)
+
+feed them into your pipeline like any other source
+
+We’ll keep it simple but structured, using the same patterns as the Newsroom and Research agents.
+
+Assumptions
+sources/sources.json contains entries with "type": "regulator" (and possibly "type": "standards" for ITU/3GPP)
+
+seen_articles.json is used to avoid duplicates
+
+unified discovered_article structure is already in place
+
+Regulator agent – implementation
+python
+import json
+import hashlib
+import time
+from datetime import datetime
+from pathlib import Path
+
+import requests
+from bs4 import BeautifulSoup
+
+SOURCES_FILE = Path("sources/sources.json")
+SEEN_FILE = Path("seen_articles.json")
+
+HEADERS = {
+    "User-Agent": (
+        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+        "AppleWebKit/537.36 (KHTML, like Gecko) "
+        "Chrome/120.0.0.0 Safari/537.36"
+    )
+}
+
+MAX_RETRIES = 3
+RETRY_DELAY = 2  # seconds
+
+HIGH_PRIORITY = ["IMT-2030", "6G", "spectrum", "terahertz", "licensing"]
+MEDIUM_PRIORITY = ["5G Advanced", "Release 21", "mmWave", "auction", "allocation"]
+
+
+# ---------- shared utilities ----------
+
+def load_sources():
+    with SOURCES_FILE.open("r", encoding="utf-8") as f:
+        return json.load(f).get("sources", [])
+
+
+def load_seen_ids():
+    if not SEEN_FILE.exists():
+        return set()
+    try:
+        with SEEN_FILE.open("r", encoding="utf-8") as f:
+            return set(json.load(f).get("seen_ids", []))
+    except Exception:
+        return set()
+
+
+def save_seen_ids(seen_ids):
+    SEEN_FILE.parent.mkdir(parents=True, exist_ok=True)
+    with SEEN_FILE.open("w", encoding="utf-8") as f:
+        json.dump({"seen_ids": sorted(list(seen_ids))}, f, indent=2)
+
+
+def safe_fetch(url):
+    for attempt in range(MAX_RETRIES):
+        try:
+            resp = requests.get(url, headers=HEADERS, timeout=20)
+            if resp.status_code == 200:
+                return resp.text
+        except Exception:
+            pass
+        time.sleep(RETRY_DELAY * (attempt + 1))
+    return None
+
+
+def make_article_id(title, url):
+    h = hashlib.sha256()
+    h.update((title + "|" + url).encode("utf-8"))
+    return h.hexdigest()
+
+
+def compute_keyword_score(text):
+    if not text:
+        return 0
+    text_lower = text.lower()
+    score = 0
+    for kw in HIGH_PRIORITY:
+        if kw.lower() in text_lower:
+            score += 5
+    for kw in MEDIUM_PRIORITY:
+        if kw.lower() in text_lower:
+            score += 2
+    return min(score, 25)
+
+
+def compute_recency_score(published_dt):
+    if not published_dt:
+        return 5
+    days_old = (datetime.utcnow() - published_dt).days
+    if days_old <= 3:
+        return 20
+    elif days_old <= 7:
+        return 15
+    elif days_old <= 14:
+        return 10
+    elif days_old <= 30:
+        return 5
+    return 0
+
+
+def compute_type_weight(source_type):
+    mapping = {
+        "regulator": 15,
+        "standards": 15,
+        "research": 12,
+        "newsroom": 10,
+        "media": 6,
+        "social": 3,
+    }
+    return mapping.get(source_type, 3)
+
+
+def compute_region_weight(region):
+    mapping = {
+        "US": 15,
+        "EU": 15,
+        "China": 15,
+        "Japan": 10,
+        "Korea": 10,
+        "India": 8,
+        "Other": 5,
+    }
+    return mapping.get(region, 5)
+
+
+def compute_priority_score(source_meta, title, summary, published_dt, is_new=True):
+    source_priority = int(source_meta.get("priority", 0))
+    recency_score = compute_recency_score(published_dt)
+    keyword_score = compute_keyword_score((title or "") + " " + (summary or ""))
+    type_weight = compute_type_weight(source_meta.get("type", ""))
+    region_weight = compute_region_weight(source_meta.get("region", "Other"))
+    novelty_bonus = 10 if is_new else 0
+
+    total = (
+        source_priority
+        + recency_score
+        + keyword_score
+        + type_weight
+        + region_weight
+        + novelty_bonus
+    )
+    return max(0, min(total, 100))
+
+
+def build_discovered_article(source_meta, title, url, summary, published_dt, discovered_at_iso, is_new):
+    article_id = make_article_id(title, url)
+    content_hash = hashlib.sha256((title + "|" + summary).encode("utf-8")).hexdigest()
+
+    return {
+        "id": article_id,
+        "source": {
+            "name": source_meta["name"],
+            "type": source_meta["type"],
+            "region": source_meta["region"],
+            "url": source_meta["urls"].get("html") or "",
+        },
+        "article": {
+            "title": title,
+            "url": url,
+            "summary": summary,
+            "published": published_dt.isoformat() if published_dt else "",
+            "discovered_at": discovered_at_iso,
+            "content_hash": content_hash,
+            "raw_text_available": False,
+            "target_region": "",
+        },
+        "discovery": {
+            "agent": "regulator_agent",
+            "method": "html",
+            "depth": 0,
+            "priority_score": compute_priority_score(
+                source_meta, title, summary, published_dt, is_new
+            ),
+        },
+        "status": {
+            "fetched": False,
+            "processed": False,
+            "relevance_checked": False,
+            "intelligence_generated": False,
+        },
+    }
+
+
+# ---------- simple per-site extractors (heuristics) ----------
+
+def extract_regulator_items_generic(html, base_url):
+    """
+    Generic extractor: works for many 'news/headlines' style pages.
+    You can specialize later per regulator (FCC, ITU, ETSI, etc.).
+    """
+    soup = BeautifulSoup(html, "html.parser")
+    items = []
+
+    # very generic: articles, li > a, divs with 'news' class, etc.
+    for article in soup.find_all(["article", "li", "div"]):
+        # try to find a link + title
+        a = article.find("a", href=True)
+        if not a:
+            continue
+
+        title = a.get_text(strip=True)
+        if not title:
+            continue
+
+        href = a["href"]
+        if href.startswith("/"):
+            href = base_url.rstrip("/") + href
+
+        # basic heuristic: must look like a content page, not navigation
+        if not any(k in href.lower() for k in ["news", "press", "release", "headline", "update", "notice"]):
+            continue
+
+        # try to find a summary/teaser
+        summary_tag = article.find("p")
+        summary = summary_tag.get_text(strip=True) if summary_tag else title
+
+        # published date is hard; leave None and let LLM infer later
+        published_dt = None
+
+        items.append((title, href, summary, published_dt))
+
+    return items
+
+
+# ---------- main agent ----------
+
+def run_regulator_agent():
+    sources = load_sources()
+    regulator_sources = [
+        s for s in sources
+        if s.get("type") in ("regulator", "standards")
+    ]
+
+    seen_ids = load_seen_ids()
+    discovered = []
+    now_iso = datetime.utcnow().isoformat()
+
+    for src in regulator_sources:
+        html_url = src.get("urls", {}).get("html")
+        if not html_url:
+            continue
+
+        print(f"🏛️ [Regulator] Scanning {src['name']} – {html_url}")
+
+        html = safe_fetch(html_url)
+        if not html:
+            print(f"  ⚠️ Failed to fetch HTML for {src['id']}")
+            continue
+
+        # For now, use generic extractor. Later, add specific extractors per regulator if needed.
+        items = extract_regulator_items_generic(html, html_url)
+
+        for title, url, summary, published_dt in items:
+            article_id = make_article_id(title, url)
+            is_new = article_id not in seen_ids
+
+            article_obj = build_discovered_article(
+                src, title, url, summary, published_dt, now_iso, is_new
+            )
+
+            if is_new:
+                discovered.append(article_obj)
+                seen_ids.add(article_id)
+
+    save_seen_ids(seen_ids)
+    print(f"✅ Regulator Agent discovered {len(discovered)} new regulator/standards items.")
+    return discovered
+How this fits your ecosystem
+You now have four discovery agents that all speak the same language:
+
+run_rss_agent()
+
+run_newsroom_agent()
+
+run_research_agent()
+
+run_regulator_agent()
+
+Each returns a list of discovered_article objects with:
+
+source metadata
+
+article metadata
+
+discovery metadata
+
+priority_score
+
+pipeline status flags
+
+The orchestrator can:
+
+run them in parallel
+
+merge their outputs
+
+deduplicate
+
+sort by discovery.priority_score
+
+send them into the Fetching Layer (Playwright)
+
+Natural next steps
+Now that your Discovery Layer is fully shaped, the next moves could be:
+
+build the Discovery Orchestrator that calls all four agents and writes a discovery_pool.json
+
+implement the Fetching Layer (Playwright) to get full article text
+
+wire in the Relevance + Intelligence Layers using your Gemini JSON prompt
+
+connect everything to your GitHub Action so this system breathes on its own
+
+Which one do you want to tackle next: the orchestrator, or the fetching layer?
+
+yes, lets go for the Discovery Orchestrator and the discovery_pool.json.
+See my thinking
+Discovery orchestrator and discovery_pool.json
+Now we connect everything into one “brain” for Layer 1.
+
+You already have four agents:
+
+run_rss_agent()
+
+run_newsroom_agent()
+
+run_research_agent()
+
+run_regulator_agent()
+
+The orchestrator will:
+
+Run these agents (in sequence for now, easy to parallelize later).
+
+Merge their outputs.
+
+Deduplicate across agents.
+
+Sort by priority_score.
+
+Save to a single discovery_pool.json.
+
+1. Format of discovery_pool.json
+I’d recommend this simple, explicit structure:
+
+json
+{
+  "generated_at": "2026-01-05T20:30:00Z",
+  "articles": [
+    {
+      "id": "…",
+      "source": { ... },
+      "article": { ... },
+      "discovery": { ... },
+      "status": { ... }
+    }
+  ]
+}
+This keeps it:
+
+easy to diff in Git
+
+easy to read by later stages (fetching, intelligence, digest)
+
+versionable if we evolve the schema
+
+2. Discovery orchestrator implementation
+Create a file like discovery_orchestrator.py:
+
+python
+import json
+from datetime import datetime
+from pathlib import Path
+
+# Import your agents
+from rss_agent import run_rss_agent
+from newsroom_agent import run_newsroom_agent
+from research_agent import run_research_agent
+from regulator_agent import run_regulator_agent
+
+DISCOVERY_POOL_FILE = Path("discovery_pool.json")
+
+
+def merge_and_deduplicate(*article_lists):
+    """
+    Merge multiple lists of discovered_article dicts.
+    Deduplicate by 'id'. If duplicates appear, keep the highest priority_score.
+    """
+    merged = {}
+
+    for articles in article_lists:
+        for art in articles:
+            art_id = art["id"]
+            current = merged.get(art_id)
+            if current is None:
+                merged[art_id] = art
+            else:
+                # If same id appears from multiple agents, keep the one with higher priority
+                new_score = art["discovery"].get("priority_score", 0)
+                old_score = current["discovery"].get("priority_score", 0)
+                if new_score > old_score:
+                    merged[art_id] = art
+
+    return list(merged.values())
+
+
+def sort_by_priority(articles):
+    """
+    Sort articles descending by priority_score.
+    """
+    return sorted(
+        articles,
+        key=lambda a: a["discovery"].get("priority_score", 0),
+        reverse=True,
+    )
+
+
+def save_discovery_pool(articles):
+    DISCOVERY_POOL_FILE.parent.mkdir(parents=True, exist_ok=True)
+    payload = {
+        "generated_at": datetime.utcnow().isoformat() + "Z",
+        "articles": articles,
+    }
+    with DISCOVERY_POOL_FILE.open("w", encoding="utf-8") as f:
+        json.dump(payload, f, indent=2)
+
+
+def run_discovery_orchestrator():
+    """
+    Main entrypoint for Layer 1: run all discovery agents,
+    merge, deduplicate, sort, and store in discovery_pool.json.
+    """
+    print("🚀 Running Discovery Orchestrator (Layer 1)…")
+
+    rss_results = run_rss_agent()
+    newsroom_results = run_newsroom_agent()
+    research_results = run_research_agent()
+    regulator_results = run_regulator_agent()
+
+    all_articles = merge_and_deduplicate(
+        rss_results,
+        newsroom_results,
+        research_results,
+        regulator_results,
+    )
+
+    sorted_articles = sort_by_priority(all_articles)
+    save_discovery_pool(sorted_articles)
+
+    print(f"✅ Discovery Orchestrator completed. {len(sorted_articles)} unique articles in discovery_pool.json.")
+    return sorted_articles
+
+
+if __name__ == "__main__":
+    run_discovery_orchestrator()
+3. How this fits into your pipeline
+GitHub Action (Layer 1 step) calls:
+
+bash
+python discovery_orchestrator.py
+Output: discovery_pool.json with all discovered articles, globally deduplicated and sorted by importance.
+
+Next layers (Fetching, Relevance, Intelligence) will read from this pool and update each article’s status and, later, enriched fields.
+
+If you’d like, next we can design the Fetching Layer:
+
+read discovery_pool.json
+
+take top N items by priority
+
+fetch full HTML (with Playwright)
+
+extract clean text
+
+update raw_text_available and maybe store raw content in a separate file or directory.
+
+yes lets design the Fetching Layer.
+Absolutely, dominique — now we get to build Layer 2: The Fetching Layer, the part of your 6G Intelligence Engine that actually reads the articles discovered in Layer 1.
+
+This is where your system stops being a “link collector” and becomes a real intelligence pipeline.
+
+Let’s architect it cleanly, step by step, so it’s powerful, resilient, and ready for the intelligence layer.
+
+⚙️ THE FETCHING LAYER — Purpose
+Layer 2 answers one question:
+
+“What does the article actually say?”
+It takes items from discovery_pool.json and:
+
+Fetches the full HTML page
+
+Extracts readable text
+
+Cleans and normalizes the content
+
+Stores the raw text
+
+Updates the article’s status
+
+Prepares it for the Intelligence Layer (Gemini)
+
+This layer is the bridge between discovery and analysis.
+
+🧠 Fetching Layer Architecture
+Here’s the clean architecture we’ll implement:
+
+Code
+discovery_pool.json
+        ↓
+Priority Queue (top N)
+        ↓
+Fetch Agent (Playwright)
+        ↓
+HTML → Clean Text
+        ↓
+raw_text/ARTICLE_ID.txt
+        ↓
+Update discovery_pool.json
+        ↓
+Ready for Intelligence Layer
+Let’s break it down.
+
+🧩 1. Input: discovery_pool.json
+This file contains:
+
+all discovered articles
+
+sorted by priority
+
+with metadata
+
+with status flags
+
+The Fetching Layer will:
+
+load this file
+
+select the top N articles (e.g., 20–50)
+
+skip articles already fetched
+
+🧩 2. Priority Queue
+We fetch high‑priority articles first.
+
+Example:
+
+priority ≥ 70 → fetch immediately
+
+50–69 → fetch if time allows
+
+< 50 → skip or fetch later
+
+This keeps your pipeline efficient and cost‑effective.
+
+🧩 3. Fetch Agent (Playwright)
+This is the heart of the Fetching Layer.
+
+Why Playwright?
+bypasses 403 errors
+
+executes JavaScript
+
+handles cookies
+
+loads dynamic content
+
+looks like a real browser
+
+stable for GitHub Actions
+
+Fetching logic:
+launch headless browser
+
+open page
+
+wait for network idle
+
+extract HTML
+
+close browser
+
+🧩 4. Text Extraction
+Once we have HTML, we:
+
+remove scripts, styles, nav, footer
+
+extract readable text
+
+collapse whitespace
+
+remove cookie banners
+
+remove boilerplate
+
+This gives you clean article text.
+
+🧩 5. Save Raw Text
+Store the cleaned text in:
+
+Code
+raw_text/<ARTICLE_ID>.txt
+This keeps your repo organized and makes the Intelligence Layer simple.
+
+🧩 6. Update discovery_pool.json
+For each fetched article:
+
+status.fetched = true
+
+article.raw_text_available = true
+
+optionally store:
+
+word count
+
+fetch timestamp
+
+extraction quality
+
+🧩 7. Output: Updated discovery_pool.json
+Now the Intelligence Layer can run on:
+
+only fetched articles
+
+with clean text
+
+with metadata
+
+🧱 Implementation Plan
+Let’s outline the code structure before writing it.
+
+Files:
+fetching_layer.py
+
+raw_text/ directory (auto‑created)
+
+Functions:
+load_discovery_pool()
+
+select_articles_to_fetch()
+
+fetch_page_playwright(url)
+
+extract_clean_text(html)
+
+save_raw_text(article_id, text)
+
+update_discovery_pool()
+
+run_fetching_layer()
+
+Execution:
+bash
+python fetching_layer.py
+🧩 Fetching Layer — Code Skeleton (High‑Level)
+Here’s the clean structure we’ll implement next:
+
+python
+from playwright.sync_api import sync_playwright
+import json
+from pathlib import Path
+from bs4 import BeautifulSoup
+from datetime import datetime
+
+DISCOVERY_POOL = Path("discovery_pool.json")
+RAW_TEXT_DIR = Path("raw_text")
+MAX_FETCH = 20  # number of articles to fetch per run
+
+
+def load_discovery_pool():
+    with DISCOVERY_POOL.open("r", encoding="utf-8") as f:
+        return json.load(f)
+
+
+def select_articles_to_fetch(pool):
+    articles = pool["articles"]
+    return [
+        a for a in articles
+        if not a["status"]["fetched"]
+    ][:MAX_FETCH]
+
+
+def fetch_page_playwright(url):
+    with sync_playwright() as p:
+        browser = p.chromium.launch(headless=True)
+        context = browser.new_context()
+        page = context.new_page()
+        page.goto(url, timeout=30000)
+        html = page.content()
+        browser.close()
+        return html
+
+
+def extract_clean_text(html):
+    soup = BeautifulSoup(html, "html.parser")
+
+    # remove scripts, styles
+    for tag in soup(["script", "style", "nav", "footer"]):
+        tag.decompose()
+
+    text = soup.get_text(" ", strip=True)
+    return " ".join(text.split())
+
+
+def save_raw_text(article_id, text):
+    RAW_TEXT_DIR.mkdir(exist_ok=True)
+    path = RAW_TEXT_DIR / f"{article_id}.txt"
+    with path.open("w", encoding="utf-8") as f:
+        f.write(text)
+
+
+def update_article_status(article):
+    article["status"]["fetched"] = True
+    article["article"]["raw_text_available"] = True
+    article["article"]["fetched_at"] = datetime.utcnow().isoformat() + "Z"
+
+
+def run_fetching_layer():
+    pool = load_discovery_pool()
+    to_fetch = select_articles_to_fetch(pool)
+
+    for art in to_fetch:
+        url = art["article"]["url"]
+        print(f"🌐 Fetching: {url}")
+
+        html = fetch_page_playwright(url)
+        text = extract_clean_text(html)
+        save_raw_text(art["id"], text)
+        update_article_status(art)
+
+    # save updated pool
+    with DISCOVERY_POOL.open("w", encoding="utf-8") as f:
+        json.dump(pool, f, indent=2)
+
+    print(f"✅ Fetching Layer completed. {len(to_fetch)} articles fetched.")
+This is the clean, minimal version.
+We can expand it with:
+
+retries
+
+proxy rotation
+
+JS wait conditions
+
+extraction heuristics
+
+error handling
+
+fetch logs
+
+But this skeleton is already powerful.
+
+🌟 What this Fetching Layer gives you
+✔️ Full HTML fetching (with JS execution)
+✔️ Clean text extraction
+✔️ Raw text storage
+✔️ Updated discovery_pool.json
+✔️ Ready for Intelligence Layer
+✔️ Works in GitHub Actions
+✔️ Scalable and resilient
+This is the moment your system becomes a real intelligence pipeline.
+
+🧭 Next Step Options
+Now that the Fetching Layer is designed, we can move to:
+
+A. Implement the Relevance Layer (quick filter before Gemini)
+B. Implement the Intelligence Layer (Gemini JSON prompt)
+C. Implement the Digest Builder (latest_digest.json)
+D. Integrate everything into your GitHub Action
+E. Add Playwright enhancements (proxies, retries, JS waits)
+Where do you want to go next?
+
+ok, looks good. Lets implement the Relevenace Layer.
+You’re building this in a very elegant order, dominique.
+The Relevance Layer is exactly the next smart move: it protects your Gemini calls, keeps costs under control, and makes sure only truly 6G‑relevant content reaches the deep intelligence stage.
+
+We’ll design it to be:
+
+fast
+
+cheap
+
+conservative (better to pass through a borderline 6G article than to drop a valuable one)
+
+compatible with everything we’ve built so far
+
+Role of the relevance layer
+It sits between:
+
+Fetching Layer (which produces raw text in raw_text/<id>.txt)
+
+Intelligence Layer (Gemini JSON prompt for deep geopolitical analysis)
+
+Its job:
+
+Read discovery_pool.json
+
+For each fetched article with raw_text_available = true:
+
+load the raw text
+
+apply a cheap relevance check
+
+Decide:
+
+status.relevance_checked = true
+
+status.relevance_relevant = true/false
+
+Optionally, store a relevance_score
+
+Only articles with relevance_relevant = true go to Gemini
+
+Two‑stage relevance strategy
+To keep it simple and powerful:
+
+Stage 1: Keyword + heuristic score (no LLM)
+
+very fast
+
+uses your existing HIGH_PRIORITY & MEDIUM_PRIORITY keywords
+
+considers title + summary + raw_text snippet
+
+yields a relevance_score between 0 and, say, 100
+
+Stage 2: Optional mini‑LLM check for borderline cases
+
+only for scores in a “maybe” band (e.g. 20–40)
+
+uses a tiny, cheap prompt
+
+gives a binary yes/no
+
+You can start with Stage 1 only, then add Stage 2 later if needed.
+
+For now, I’ll implement Stage 1 only, but in a way that easily allows Stage 2 later.
+
+Heuristic relevance scoring
+Let’s define a simple scoring:
+
+keyword hits in title → strong weight
+
+keyword hits in summary → medium weight
+
+keyword hits in first 500–1000 chars of body → lighter weight
+
+Example:
+
+each HIGH_PRIORITY keyword in title: +15
+
+each MEDIUM_PRIORITY keyword in title: +8
+
+each HIGH_PRIORITY keyword in summary/body: +5
+
+each MEDIUM_PRIORITY keyword in summary/body: +2
+
+Cap at 100.
+
+Then thresholds:
+
+score >= 30 → relevant
+
+score 15–29 → maybe (future LLM check)
+
+score < 15 → not relevant
+
+We’ll bake in 30 as the relevance threshold for now.
+
+Data model extensions
+We add a small block to each article:
+
+json
+"status": {
+  "fetched": true,
+  "processed": false,
+  "relevance_checked": true,
+  "relevance_relevant": true,
+  "intelligence_generated": false
+},
+"relevance": {
+  "score": 47
+}
+If you don’t want a separate relevance object, you can just store relevance_score under discovery, but I like keeping it explicit.
+
+Implementation: relevance_layer.py
+python
+import json
+from pathlib import Path
+
+RAW_TEXT_DIR = Path("raw_text")
+DISCOVERY_POOL = Path("discovery_pool.json")
+
+HIGH_PRIORITY = ["IMT-2030", "AI-native", "terahertz", "6G", "6G network", "6G standard"]
+MEDIUM_PRIORITY = [
+    "5G Advanced",
+    "Release 21",
+    "radio spectrum",
+    "mmWave",
+    "sub-THz",
+    "non-terrestrial networks",
+    "NTN",
+    "O-RAN",
+    "Open RAN",
+]
+
+
+def load_discovery_pool():
+    with DISCOVERY_POOL.open("r", encoding="utf-8") as f:
+        return json.load(f)
+
+
+def save_discovery_pool(pool):
+    with DISCOVERY_POOL.open("w", encoding="utf-8") as f:
+        json.dump(pool, f, indent=2)
+
+
+def load_raw_text(article_id):
+    path = RAW_TEXT_DIR / f"{article_id}.txt"
+    if not path.exists():
+        return ""
+    with path.open("r", encoding="utf-8") as f:
+        return f.read()
+
+
+def keyword_hits(text, keywords):
+    text_lower = text.lower()
+    count = 0
+    for kw in keywords:
+        if kw.lower() in text_lower:
+            count += 1
+    return count
+
+
+def compute_relevance_score(article, body_text):
+    """
+    Simple heuristic scoring based on title, summary, and first part of body.
+    """
+    title = article["article"].get("title", "") or ""
+    summary = article["article"].get("summary", "") or ""
+
+    # Focus on the first part of the body (most signals are early)
+    body_snippet = (body_text or "")[:1000]
+
+    score = 0
+
+    # Title is very important
+    score += keyword_hits(title, HIGH_PRIORITY) * 15
+    score += keyword_hits(title, MEDIUM_PRIORITY) * 8
+
+    # Summary is moderately important
+    score += keyword_hits(summary, HIGH_PRIORITY) * 8
+    score += keyword_hits(summary, MEDIUM_PRIORITY) * 4
+
+    # Body snippet is weaker, but still relevant
+    score += keyword_hits(body_snippet, HIGH_PRIORITY) * 5
+    score += keyword_hits(body_snippet, MEDIUM_PRIORITY) * 2
+
+    return min(score, 100)
+
+
+def classify_relevance(score, threshold=30):
+    """
+    Decide if an article is relevant based on score.
+    You can later extend this to:
+    - maybe band: 15–29 -> LLM mini-check
+    """
+    return score >= threshold
+
+
+def run_relevance_layer():
+    """
+    Relevance Layer:
+    - reads discovery_pool.json
+    - for each fetched article with raw_text_available
+    - computes relevance_score
+    - sets relevance_checked + relevance_relevant
+    - saves updated pool
+    """
+    pool = load_discovery_pool()
+    articles = pool.get("articles", [])
+
+    updated_count = 0
+
+    for art in articles:
+        status = art.get("status", {})
+
+        # Only process fetched articles not yet relevance_checked
+        if not status.get("fetched") or status.get("relevance_checked"):
+            continue
+
+        article_id = art["id"]
+        body_text = load_raw_text(article_id)
+        score = compute_relevance_score(art, body_text)
+        is_relevant = classify_relevance(score)
+
+        # Attach relevance info
+        art.setdefault("relevance", {})
+        art["relevance"]["score"] = score
+
+        # Update status
+        status["relevance_checked"] = True
+        status["relevance_relevant"] = is_relevant
+
+        updated_count += 1
+
+    save_discovery_pool(pool)
+
+    print(f"✅ Relevance Layer completed. {updated_count} articles evaluated.")
+    return pool
+
+
+if __name__ == "__main__":
+    run_relevance_layer()
+How it fits into your pipeline
+Your full pipeline now looks like:
+
+Discovery Orchestrator  
+python discovery_orchestrator.py  
+→ writes discovery_pool.json
+
+Fetching Layer  
+python fetching_layer.py  
+→ updates discovery_pool.json  
+→ writes raw_text/<id>.txt
+
+Relevance Layer  
+python relevance_layer.py  
+→ updates relevance.score  
+→ sets relevance_relevant
+
+Intelligence Layer (next)  
+Only runs on:
+
+python
+a for a in articles
+if a["status"]["relevance_checked"] and a["status"]["relevance_relevant"]
+This keeps your Gemini usage focused and meaningful.
+
+If you like, next we can:
+
+design and implement the Intelligence Layer that uses your existing Gemini JSON prompt but now reads from discovery_pool.json + raw_text/, or
+
+talk about how to version and archive digests (latest_digest.json, monthly, quarterly).
+
+Where do you want to go next?
+
+first go for the Intelligence Layer.
+See my thinking
+You’ve built a real spine now, dominique.
+The Intelligence Layer is where it grows a brain.
+
+We’ll hook your existing Gemini logic into the new pipeline so that:
+
+it reads from discovery_pool.json
+
+uses the stored raw_text/<id>.txt
+
+calls Gemini with your structured JSON prompt
+
+writes the analysis back into discovery_pool.json
+
+flips the right status flags
+
+I’ll keep it concrete and wire it straight into what you already have.
+
+1. What the intelligence layer should do
+For each article:
+
+Must be fetched = true
+
+Must have raw_text_available = true
+
+Must have relevance_checked = true
+
+Must be relevance_relevant = true
+
+Must NOT yet have intelligence_generated = true
+
+For those articles:
+
+load raw_text/<id>.txt
+
+call Gemini with your JSON‑only prompt
+
+parse the JSON
+
+attach the result under intelligence
+
+set status.intelligence_generated = true
+
+We’ll also ensure we keep the distinction:
+
+source_region → from source.region (Layer 1)
+
+target_region / time_horizon / world_power_impact → from Gemini (Layer 4)
+
+2. Adapting your existing get_ai_summary
+You already have:
+
+python
+def get_ai_summary(title, summary, site_name):
+    ...
+We’ll extend it to include the full body text from raw_text, and adapt the prompt minimally so it has more context but returns the same JSON format.
+
+Example adaptation:
+
+python
+def get_ai_summary(title, summary, body_text, site_name):
+    prompt = f"""
+    You are a 6G strategy and technology analyst. Analyze the following article for its relevance to 6G (IMT‑2030) and produce a structured geopolitical intelligence profile.
+
+    Source: {site_name}
+    Title: {title}
+    Snippet: {summary}
+
+    Full text:
+    {body_text[:8000]}
+
+    ... [rest of your existing JSON instructions unchanged] ...
+    """
+We’ll cap the body text length (e.g. 8000 chars) to stay safe.
+
+I’ll show it integrated below.
+
+3. Intelligence layer file: intelligence_layer.py
+This assumes:
+
+your Gemini client + model config lives in a shared module (gemini_client.py) or in the same file
+
+you still have your JSON‑only parsing wrapper (the markdown‑block stripping etc.)
+
+I’ll inline a simplified get_ai_summary that follows your pattern.
+
+python
+import json
+from pathlib import Path
+from datetime import datetime
+
+import google.genai as genai
+
+DISCOVERY_POOL = Path("discovery_pool.json")
+RAW_TEXT_DIR = Path("raw_text")
+
+# Init Gemini client (reuse your existing config)
+client = genai.Client(api_key=os.getenv("GOOGLE_API_KEY"))
+MODEL_NAME = "gemini-3-flash-preview"
+
+
+def load_discovery_pool():
+    with DISCOVERY_POOL.open("r", encoding="utf-8") as f:
+        return json.load(f)
+
+
+def save_discovery_pool(pool):
+    with DISCOVERY_POOL.open("w", encoding="utf-8") as f:
+        json.dump(pool, f, indent=2)
+
+
+def load_raw_text(article_id):
+    path = RAW_TEXT_DIR / f"{article_id}.txt"
+    if not path.exists():
+        return ""
+    with path.open("r", encoding="utf-8") as f:
+        return f.read()
+
+
+def call_gemini_analysis(title, summary, body_text, site_name):
+    """
+    Call Gemini with a JSON-only prompt and parse the result.
+    Returns a dict or None on failure.
+    """
+    # Limit body text length to keep prompt manageable
+    body_snippet = body_text[:8000]
+
+    prompt = f"""
+You are a 6G strategy and technology analyst. Analyze the following article for its relevance to 6G (IMT‑2030) and produce a structured geopolitical intelligence profile.
+
+Source: {site_name}
+Title: {title}
+Snippet: {summary}
+
+Full text:
+{body_snippet}
+
+Your tasks:
+
+1. Determine if this article is genuinely relevant to 6G. If not, return:
+{{
+  "is_6g_relevant": false
+}}
+
+2. If relevant, perform a deep analysis using the following definitions:
+
+Source Region (Emitter Region):
+Identify the region the article originates from based on the publisher or organization.
+Use one of: US, EU, China, Japan, Korea, India, Other.
+
+6G Topics (choose all that apply):
+sub-THz, AI-native RAN, semantic communications, ISAC, NTN, zero-energy devices,
+security & trust fabrics, network automation, sustainability, spectrum & policy,
+standardization, device ecosystem, cloud-edge integration, Open RAN, quantum-safe networking. 
+
+Impact Dimensions (0–5 scale):
+- research_intensity
+- standardization_influence
+- industrial_deployment
+- spectrum_policy_signal
+- ecosystem_maturity
+
+Time Horizon:
+- near-term (<= 2028)
+- mid-term (2028–2032)
+- long-term (>= 2032)
+
+World Power Impact (0–5 scale):
+US, EU, China, Japan, Korea, India. 
+Score based on how the article affects each region's 6G position.
+
+Overall 6G Importance (0–10):
+A single score representing the strategic weight of this article. 
+
+Emerging Concepts:
+Extract 1–5 novel or forward-looking ideas mentioned in the article.
+
+Key Evidence:
+Extract 1–5 short bullet points quoting or paraphrasing the most important factual signals.
+
+Return ONLY valid JSON in this exact format:
+
+{{
+  "is_6g_relevant": true,
+  "source_region": "",
+  "summary": "",
+  "overall_6g_importance": 0,
+  "6g_topics": [],
+  "impact_dimensions": {{
+    "research_intensity": 0,
+    "standardization_influence": 0,
+    "industrial_deployment": 0,
+    "spectrum_policy_signal":  0,
+    "ecosystem_maturity": 0
+  }},
+  "time_horizon":  "",
+  "world_power_impact": {{
+    "US": 0,
+    "EU": 0,
+    "China": 0,
+    "Japan": 0,
+    "Korea": 0,
+    "India": 0
+  }},
+  "emerging_concepts": [],
+  "key_evidence": []
+}}
+
+Return ONLY JSON. No commentary. No markdown.
+"""
+
+    try:
+        response = client.models.generate_content(
+            model=MODEL_NAME,
+            contents=prompt
+        )
+        text = response.text.strip()
+
+        # Remove markdown fences if present
+        if "```json" in text:
+            start = text.find("```json") + len("```json")
+            end = text.find("```", start)
+            if end != -1:
+                text = text[start:end].strip()
+        elif "```" in text:
+            start = text.find("```") + len("```")
+            end = text.find("```", start)
+            if end != -1:
+                text = text[start:end].strip()
+        elif "{" in text:
+            start = text.find("{")
+            end = text.rfind("}") + 1
+            text = text[start:end].strip()
+
+        data = json.loads(text)
+
+        # Normalize is_6g_relevant to bool
+        if "is_6g_relevant" in data:
+            val = data["is_6g_relevant"]
+            if isinstance(val, str):
+                v = val.strip().lower()
+                if v in ("0", "false", "no", ""):
+                    data["is_6g_relevant"] = False
+                elif v in ("1", "true", "yes"):
+                    data["is_6g_relevant"] = True
+                else:
+                    data["is_6g_relevant"] = False
+            else:
+                data["is_6g_relevant"] = bool(val)
+
+        return data
+
+    except Exception as e:
+        print(f"  ⚠️ Gemini analysis failed for '{title[:40]}...': {e}")
+        return None
+
+
+def run_intelligence_layer(max_articles=10):
+    """
+    Intelligence Layer:
+    - reads discovery_pool.json
+    - selects relevant, fetched articles without intelligence
+    - loads raw text
+    - calls Gemini
+    - attaches 'intelligence' block
+    - updates status
+    """
+    pool = load_discovery_pool()
+    articles = pool.get("articles", [])
+
+    candidates = [
+        a for a in articles
+        if a["status"].get("fetched")
+        and a["article"].get("raw_text_available")
+        and a["status"].get("relevance_checked")
+        and a["status"].get("relevance_relevant")
+        and not a["status"].get("intelligence_generated")
+    ]
+
+    # Limit per run to control cost
+    candidates = candidates[:max_articles]
+
+    print(f"🧠 Intelligence Layer: processing {len(candidates)} articles.")
+
+    for art in candidates:
+        title = art["article"].get("title", "")
+        summary = art["article"].get("summary", "")
+        body_text = load_raw_text(art["id"])
+        site_name = art["source"].get("name", "")
+
+        if not body_text:
+            print(f"  ⚠️ No body text for {art['id']} – skipping.")
+            continue
+
+        ai_result = call_gemini_analysis(title, summary, body_text, site_name)
+        if ai_result is None:
+            continue
+
+        # If Gemini says not 6G relevant, you can override relevance_relevant
+        if ai_result.get("is_6g_relevant") is False:
+            art["status"]["intelligence_generated"] = True
+            art.setdefault("intelligence", {})
+            art["intelligence"]["is_6g_relevant"] = False
+            continue
+
+        # Attach full intelligence payload
+        art.setdefault("intelligence", {})
+        art["intelligence"].update(ai_result)
+        art["status"]["intelligence_generated"] = True
+        art["status"]["processed"] = True
+        art["intelligence_generated_at"] = datetime.utcnow().isoformat() + "Z"
+
+        # Optional: propagate target_region from analysis if you decide to add it
+        # if "target_region" in ai_result:
+        #     art["article"]["target_region"] = ai_result["target_region"]
+
+    save_discovery_pool(pool)
+    print("✅ Intelligence Layer completed.")
+    return pool
+
+
+if __name__ == "__main__":
+    run_intelligence_layer()
+4. How the full pipeline looks now
+You’ve effectively got this flow:
+
+python discovery_orchestrator.py  
+→ builds discovery_pool.json
+
+python fetching_layer.py  
+→ populates raw_text/ and status.fetched
+
+python relevance_layer.py  
+→ sets relevance.score and relevance_relevant
+
+python intelligence_layer.py  
+→ attaches intelligence{...} from Gemini
+
+(Next) Digest Builder  
+→ reads only articles with status.intelligence_generated = true  
+→ builds latest_digest.json, monthly/quarterly reports, dashboards
+
+
+If you’d like, next we can design:
+
+the Digest Builder (how to compress all this into a clean JSON for the dashboard), or
+
+the Dashboard schema (what views you want: by region, topic, time horizon, etc.), or
+
+the GitHub Action flow that runs these layers on a schedule.
+
+Where do you want to go next?
+
+Lets go for the Digest Builder first.  
+
+I
+Absolutely, dominique — the Digest Builder is where everything you’ve built so far finally condenses into intelligence you can use.
+This is the moment your pipeline stops being a set of agents and becomes a coherent geopolitical 6G intelligence product.
+
+Let’s architect it cleanly, so it fits perfectly with:
+
+discovery_pool.json
+
+the Fetching Layer
+
+the Relevance Layer
+
+the Intelligence Layer (Gemini JSON)
+
+your future dashboard
+
+I’ll walk you through the design, the data model, and the full implementation plan.
+
+🌟 THE DIGEST BUILDER — Purpose
+The Digest Builder answers:
+
+“What are the most important 6G signals right now?”
+It takes all articles that have passed through:
+
+discovery
+
+fetching
+
+relevance
+
+intelligence
+
+…and produces a clean, structured digest.
+
+This digest becomes:
+
+your dashboard input
+
+your monthly report
+
+your quarterly metadata summary
+
+your long‑term trend analysis
+
+your “world model” of 6G evolution
+
+🧠 What the Digest Builder consumes
+It reads:
+
+1. discovery_pool.json
+Contains all articles + metadata + intelligence.
+
+2. raw_text/<id>.txt
+Optional — only needed if you want to include excerpts.
+
+3. Intelligence Layer output
+Stored under:
+
+json
+"intelligence": {
+  "is_6g_relevant": true,
+  "source_region": "EU",
+  "summary": "...",
+  "overall_6g_importance": 7,
+  "6g_topics": [...],
+  "impact_dimensions": {...},
+  "time_horizon": "mid-term",
+  "world_power_impact": {...},
+  "emerging_concepts": [...],
+  "key_evidence": [...]
+}
+🧩 What the Digest Builder produces
+A. latest_digest.json
+A compact, structured file containing:
+
+top articles
+
+grouped by region, topic, time horizon
+
+with intelligence metadata
+
+ready for dashboards
+
+B. monthly_digest_YYYY-MM.json
+Aggregated signals for the month.
+
+C. quarterly_digest_YYYY-QX.json
+Deep metadata summary.
+
+D. optional: markdown summaries
+For human‑readable reports.
+
+🧱 Digest Data Model
+Here’s the recommended structure for latest_digest.json:
+
+json
+{
+  "generated_at": "2026-01-05T20:30:00Z",
+  "articles": [
+    {
+      "id": "abc123",
+      "title": "Ericsson announces new sub-THz prototype",
+      "url": "https://...",
+      "source": {
+        "name": "Ericsson",
+        "region": "EU",
+        "type": "newsroom"
+      },
+      "published": "2026-01-04T12:00:00Z",
+      "overall_6g_importance": 8,
+      "6g_topics": ["sub-THz", "AI-native RAN"],
+      "time_horizon": "mid-term",
+      "impact_dimensions": {...},
+      "world_power_impact": {...},
+      "emerging_concepts": [...],
+      "key_evidence": [...],
+      "summary": "Short AI-generated summary"
+    }
+  ],
+  "stats": {
+    "total_articles": 42,
+    "relevant_articles": 18,
+    "by_region": {
+      "US": 5,
+      "EU": 7,
+      "China": 3,
+      "Japan": 2,
+      "Korea": 1,
+      "India": 0,
+      "Other": 0
+    },
+    "by_topic": {
+      "sub-THz": 4,
+      "AI-native RAN": 6,
+      "NTN": 2,
+      "Open RAN": 3,
+      "spectrum & policy": 5
+    }
+  }
+}
+This is dashboard‑ready.
+
+🧩 Digest Builder Logic
+Step 1 — Load discovery_pool.json
+Step 2 — Filter articles:
+Keep only:
+
+python
+status.intelligence_generated == True
+intelligence.is_6g_relevant == True
+Step 3 — Transform each article into digest format
+Extract:
+
+title
+
+url
+
+source metadata
+
+intelligence metadata
+
+published date
+
+importance score
+
+Step 4 — Sort by:
+overall_6g_importance
+
+priority_score
+
+recency
+
+Step 5 — Compute statistics:
+count by region
+
+count by topic
+
+count by time horizon
+
+count by source type
+
+Step 6 — Write latest_digest.json
+Step 7 — Optionally write monthly/quarterly digests
+📦 Digest Builder — Implementation Skeleton
+Here’s the clean version you can drop into digest_builder.py:
+
+python
+import json
+from pathlib import Path
+from datetime import datetime
+
+DISCOVERY_POOL = Path("discovery_pool.json")
+LATEST_DIGEST = Path("latest_digest.json")
+
+
+def load_discovery_pool():
+    with DISCOVERY_POOL.open("r", encoding="utf-8") as f:
+        return json.load(f)
+
+
+def extract_digest_article(art):
+    intel = art.get("intelligence", {})
+    src = art.get("source", {})
+    meta = art.get("article", {})
+
+    return {
+        "id": art["id"],
+        "title": meta.get("title", ""),
+        "url": meta.get("url", ""),
+        "source": {
+            "name": src.get("name", ""),
+            "region": src.get("region", ""),
+            "type": src.get("type", "")
+        },
+        "published": meta.get("published", ""),
+        "overall_6g_importance": intel.get("overall_6g_importance", 0),
+        "6g_topics": intel.get("6g_topics", []),
+        "time_horizon": intel.get("time_horizon", ""),
+        "impact_dimensions": intel.get("impact_dimensions", {}),
+        "world_power_impact": intel.get("world_power_impact", {}),
+        "emerging_concepts": intel.get("emerging_concepts", []),
+        "key_evidence": intel.get("key_evidence", []),
+        "summary": intel.get("summary", "")
+    }
+
+
+def compute_stats(digest_articles):
+    stats = {
+        "total_articles": len(digest_articles),
+        "relevant_articles": len(digest_articles),
+        "by_region": {},
+        "by_topic": {}
+    }
+
+    for art in digest_articles:
+        region = art["source"]["region"]
+        stats["by_region"][region] = stats["by_region"].get(region, 0) + 1
+
+        for topic in art["6g_topics"]:
+            stats["by_topic"][topic] = stats["by_topic"].get(topic, 0) + 1
+
+    return stats
+
+
+def run_digest_builder():
+    pool = load_discovery_pool()
+    articles = pool.get("articles", [])
+
+    # Filter relevant, analyzed articles
+    relevant = [
+        a for a in articles
+        if a["status"].get("intelligence_generated")
+        and a.get("intelligence", {}).get("is_6g_relevant") is True
+    ]
+
+    # Transform
+    digest_articles = [extract_digest_article(a) for a in relevant]
+
+    # Sort by importance
+    digest_articles.sort(
+        key=lambda x: x.get("overall_6g_importance", 0),
+        reverse=True
+    )
+
+    stats = compute_stats(digest_articles)
+
+    digest = {
+        "generated_at": datetime.utcnow().isoformat() + "Z",
+        "articles": digest_articles,
+        "stats": stats
+    }
+
+    with LATEST_DIGEST.open("w", encoding="utf-8") as f:
+        json.dump(digest, f, indent=2)
+
+    print(f"📘 Digest Builder completed. {len(digest_articles)} articles in latest_digest.json.")
+    return digest
+
+
+if __name__ == "__main__":
+    run_digest_builder()
+🌍 What this gives you
+✔️ A clean, structured intelligence digest
+✔️ Dashboard‑ready JSON
+✔️ Region/topic/time‑horizon breakdown
+✔️ Sorted by strategic importance
+✔️ Perfect input for monthly/quarterly reports
+✔️ Fully compatible with your pipeline
+This is the moment your system becomes a living 6G geopolitical intelligence engine.
+
+If you want, next we can:
+
+A. Design the monthly and quarterly digest builders
+B. Design the dashboard schema
+C. Build the GitHub Action workflow that runs all layers
+D. Add trend analysis (topic heatmaps, region shifts, etc.)
+Where do you want to go next?
+
+lets design the Monthly and quaterly digest builders
+Absolutely, dominique — now that latest_digest.json is defined, we can design the Monthly and Quarterly Digest Builders.
+These two layers turn your intelligence engine into a long‑memory geopolitical system, capable of tracking:
+
+regional momentum
+
+topic evolution
+
+strategic shifts
+
+long‑term patterns in 6G development
+
+They are the backbone of your dashboard’s historical views.
+
+Let’s design them cleanly and elegantly.
+
+📅 1. Monthly Digest Builder — Purpose
+The monthly digest answers:
+
+“What were the most important 6G signals this month?”
+It aggregates all articles whose:
+
+status.intelligence_generated = true
+
+intelligence.is_6g_relevant = true
+
+published OR discovered_at falls within the month
+
+It produces:
+
+monthly_digest_YYYY-MM.json
+With:
+
+top articles
+
+topic distribution
+
+region distribution
+
+time horizon distribution
+
+world power impact averages
+
+emerging concept frequency
+
+month‑over‑month deltas (optional)
+
+🧱 Monthly Digest Data Model
+json
+{
+  "month": "2026-01",
+  "generated_at": "2026-02-01T00:00:00Z",
+  "articles": [...],
+  "stats": {
+    "total_relevant": 42,
+    "by_region": {...},
+    "by_topic": {...},
+    "by_time_horizon": {...},
+    "avg_world_power_impact": {...},
+    "top_emerging_concepts": [...]
+  }
+}
+This is dashboard‑ready.
+
+📦 Monthly Digest Builder — Implementation Skeleton
+python
+import json
+from pathlib import Path
+from datetime import datetime
+
+DISCOVERY_POOL = Path("discovery_pool.json")
+MONTHLY_DIR = Path("monthly_digests")
+MONTHLY_DIR.mkdir(exist_ok=True)
+
+
+def load_pool():
+    with DISCOVERY_POOL.open("r", encoding="utf-8") as f:
+        return json.load(f)
+
+
+def in_month(date_str, year, month):
+    if not date_str:
+        return False
+    try:
+        dt = datetime.fromisoformat(date_str.replace("Z", ""))
+        return dt.year == year and dt.month == month
+    except:
+        return False
+
+
+def extract_digest_article(art):
+    intel = art["intelligence"]
+    meta = art["article"]
+    src = art["source"]
+
+    return {
+        "id": art["id"],
+        "title": meta["title"],
+        "url": meta["url"],
+        "source": src,
+        "published": meta["published"],
+        "overall_6g_importance": intel["overall_6g_importance"],
+        "6g_topics": intel["6g_topics"],
+        "time_horizon": intel["time_horizon"],
+        "impact_dimensions": intel["impact_dimensions"],
+        "world_power_impact": intel["world_power_impact"],
+        "emerging_concepts": intel["emerging_concepts"],
+        "key_evidence": intel["key_evidence"],
+        "summary": intel["summary"]
+    }
+
+
+def run_monthly_digest(year, month):
+    pool = load_pool()
+    articles = pool["articles"]
+
+    # Filter relevant articles for the month
+    relevant = []
+    for a in articles:
+        if not a["status"].get("intelligence_generated"):
+            continue
+        if not a["intelligence"].get("is_6g_relevant"):
+            continue
+
+        pub = a["article"].get("published")
+        disc = a["article"].get("discovered_at")
+
+        if in_month(pub, year, month) or in_month(disc, year, month):
+            relevant.append(a)
+
+    digest_articles = [extract_digest_article(a) for a in relevant]
+
+    # Sort by importance
+    digest_articles.sort(
+        key=lambda x: x["overall_6g_importance"],
+        reverse=True
+    )
+
+    # Stats
+    stats = {
+        "total_relevant": len(digest_articles),
+        "by_region": {},
+        "by_topic": {},
+        "by_time_horizon": {},
+        "avg_world_power_impact": {},
+        "top_emerging_concepts": {}
+    }
+
+    # Region / topic / horizon counts
+    for art in digest_articles:
+        region = art["source"]["region"]
+        stats["by_region"][region] = stats["by_region"].get(region, 0) + 1
+
+        for t in art["6g_topics"]:
+            stats["by_topic"][t] = stats["by_topic"].get(t, 0) + 1
+
+        horizon = art["time_horizon"]
+        stats["by_time_horizon"][horizon] = stats["by_time_horizon"].get(horizon, 0) + 1
+
+        # Emerging concepts
+        for c in art["emerging_concepts"]:
+            stats["top_emerging_concepts"][c] = stats["top_emerging_concepts"].get(c, 0) + 1
+
+    # Average world power impact
+    wpi_sum = {}
+    for art in digest_articles:
+        for region, score in art["world_power_impact"].items():
+            wpi_sum[region] = wpi_sum.get(region, 0) + score
+
+    stats["avg_world_power_impact"] = {
+        r: wpi_sum[r] / len(digest_articles) for r in wpi_sum
+    }
+
+    digest = {
+        "month": f"{year}-{month:02d}",
+        "generated_at": datetime.utcnow().isoformat() + "Z",
+        "articles": digest_articles,
+        "stats": stats
+    }
+
+    out_path = MONTHLY_DIR / f"monthly_digest_{year}-{month:02d}.json"
+    with out_path.open("w", encoding="utf-8") as f:
+        json.dump(digest, f, indent=2)
+
+    print(f"📅 Monthly digest created: {out_path}")
+    return digest
+📊 2. Quarterly Digest Builder — Purpose
+The quarterly digest answers:
+
+“What strategic 6G shifts happened this quarter?”
+It aggregates three months and produces:
+
+quarterly_digest_YYYY-QX.json
+With:
+
+top signals
+
+region/topic momentum
+
+quarter‑over‑quarter changes
+
+world power impact deltas
+
+emerging concept trends
+
+strategic narrative shifts
+
+This is the macro‑intelligence layer.
+
+🧱 Quarterly Digest Data Model
+json
+{
+  "quarter": "2026-Q1",
+  "generated_at": "2026-04-01T00:00:00Z",
+  "articles": [...],
+  "stats": {
+    "total_relevant": 112,
+    "by_region": {...},
+    "by_topic": {...},
+    "trend_vs_last_quarter": {...},
+    "emerging_concepts": {...},
+    "world_power_shift": {...}
+  }
+}
+📦 Quarterly Digest Builder — Implementation Skeleton
+python
+QUARTERLY_DIR = Path("quarterly_digests")
+QUARTERLY_DIR.mkdir(exist_ok=True)
+
+
+def quarter_of_month(month):
+    return (month - 1) // 3 + 1
+
+
+def run_quarterly_digest(year, quarter):
+    pool = load_pool()
+    articles = pool["articles"]
+
+    # Months in this quarter
+    months = {
+        1: [1, 2, 3],
+        2: [4, 5, 6],
+        3: [7, 8, 9],
+        4: [10, 11, 12]
+    }[quarter]
+
+    relevant = []
+    for a in articles:
+        if not a["status"].get("intelligence_generated"):
+            continue
+        if not a["intelligence"].get("is_6g_relevant"):
+            continue
+
+        pub = a["article"].get("published")
+        disc = a["article"].get("discovered_at")
+
+        if any(in_month(pub, year, m) or in_month(disc, year, m) for m in months):
+            relevant.append(a)
+
+    digest_articles = [extract_digest_article(a) for a in relevant]
+
+    # Sort by importance
+    digest_articles.sort(
+        key=lambda x: x["overall_6g_importance"],
+        reverse=True
+    )
+
+    # Stats (similar to monthly, but aggregated)
+    stats = {
+        "total_relevant": len(digest_articles),
+        "by_region": {},
+        "by_topic": {},
+        "emerging_concepts": {},
+        "avg_world_power_impact": {}
+    }
+
+    # Region/topic/concept counts
+    for art in digest_articles:
+        region = art["source"]["region"]
+        stats["by_region"][region] = stats["by_region"].get(region, 0) + 1
+
+        for t in art["6g_topics"]:
+            stats["by_topic"][t] = stats["by_topic"].get(t, 0) + 1
+
+        for c in art["emerging_concepts"]:
+            stats["emerging_concepts"][c] = stats["emerging_concepts"].get(c, 0) + 1
+
+    # Average world power impact
+    wpi_sum = {}
+    for art in digest_articles:
+        for region, score in art["world_power_impact"].items():
+            wpi_sum[region] = wpi_sum.get(region, 0) + score
+
+    stats["avg_world_power_impact"] = {
+        r: wpi_sum[r] / len(digest_articles) for r in wpi_sum
+    }
+
+    digest = {
+        "quarter": f"{year}-Q{quarter}",
+        "generated_at": datetime.utcnow().isoformat() + "Z",
+        "articles": digest_articles,
+        "stats": stats
+    }
+
+    out_path = QUARTERLY_DIR / f"quarterly_digest_{year}-Q{quarter}.json"
+    with out_path.open("w", encoding="utf-8") as f:
+        json.dump(digest, f, indent=2)
+
+    print(f"📊 Quarterly digest created: {out_path}")
+    return digest
+🌟 What you now have
+You now have a three‑layer intelligence output system:
+
+1. latest_digest.json
+Daily/continuous intelligence.
+
+2. monthly_digest_YYYY-MM.json
+Operational intelligence.
+
+3. quarterly_digest_YYYY-QX.json
+Strategic intelligence.
+
+This is exactly how real geopolitical intelligence systems structure their outputs.
+
+🧭 Where do you want to go next?
+We can now move to:
+
+A. Dashboard schema design
+(views, charts, region/topic heatmaps)
+
+B. GitHub Action pipeline
+(run all layers automatically)
+
+C. Trend analysis layer
+(topic momentum, region shifts, world power deltas)
+
+D. Add a “World Model” layer
+(long‑term memory of 6G evolution)
+
+Which direction feels right to you?  
