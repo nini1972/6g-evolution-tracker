@@ -16,7 +16,7 @@ from tenacity import (
     stop_after_attempt,
     wait_exponential,
     retry_if_exception_type,
-    RetryError
+    before_sleep_log
 )
 
 # 🌐 RSS sources to monitor
@@ -313,6 +313,9 @@ async def find_rss_feed(url, headers, client):
 async def fetch_feed_with_retry_async(source: str, url: str, retries: int = MAX_RETRIES):
     """Fetch a feed with retry logic using httpx, tenacity, and structured logging."""
     
+    original_url = url
+    attempt_counter = {'count': 0}  # Use dict to allow modification in nested function
+    
     # Custom retry decorator with exponential backoff
     @retry(
         stop=stop_after_attempt(retries),
@@ -320,8 +323,10 @@ async def fetch_feed_with_retry_async(source: str, url: str, retries: int = MAX_
         retry=retry_if_exception_type((httpx.HTTPStatusError, httpx.TimeoutException, httpx.RequestError)),
         reraise=True
     )
-    async def _fetch_with_retry(attempt_num: int = 0):
+    async def _fetch_with_retry():
         nonlocal url
+        attempt_counter['count'] += 1
+        attempt_num = attempt_counter['count']
         
         # Rotate user agent on each attempt
         headers = {
@@ -338,7 +343,7 @@ async def fetch_feed_with_retry_async(source: str, url: str, retries: int = MAX_
         async with httpx.AsyncClient(http2=True, follow_redirects=True) as client:
             try:
                 # Try to auto-detect RSS feed if URL points to HTML (only on first attempt)
-                if attempt_num == 0:
+                if attempt_num == 1:
                     detected_feed_url = await find_rss_feed(url, headers, client)
                     if detected_feed_url and detected_feed_url != url:
                         logger.info("🔍 Auto-detected RSS feed", source=source, url=detected_feed_url)
@@ -362,12 +367,12 @@ async def fetch_feed_with_retry_async(source: str, url: str, retries: int = MAX_
                 # Check for parsing errors
                 if hasattr(feed, 'bozo') and feed.bozo:
                     exception = feed.get('bozo_exception', 'Unknown error')
-                    logger.warning("⚠️ Parsing error", source=source, error=str(exception), attempt=attempt_num+1, max_retries=retries)
+                    logger.warning("⚠️ Parsing error", source=source, error=str(exception), attempt=attempt_num, max_retries=retries)
                     raise httpx.RequestError(f"Feed parsing error: {exception}")
                 
                 # Verify we got actual entries
                 if not hasattr(feed, 'entries') or len(feed.entries) == 0:
-                    logger.warning("⚠️ No entries found", source=source, attempt=attempt_num+1, max_retries=retries)
+                    logger.warning("⚠️ No entries found", source=source, attempt=attempt_num, max_retries=retries)
                     raise httpx.RequestError("No entries found in feed")
                 
                 logger.info("✓ Successfully fetched feed", source=source, entries=len(feed.entries))
@@ -380,44 +385,37 @@ async def fetch_feed_with_retry_async(source: str, url: str, retries: int = MAX_
                     source=source,
                     url=url,
                     status_code=status_code,
-                    attempt=attempt_num+1,
+                    attempt=attempt_num,
                     max_retries=retries
                 )
                 if status_code == 403:
-                    print(f"⚠️ 403 Forbidden for {source}, rotating user agent and retrying in {RETRY_DELAY * (2 ** attempt_num)}s... (attempt {attempt_num + 1}/{retries})")
+                    print(f"⚠️ 403 Forbidden for {source}, rotating user agent and retrying... (attempt {attempt_num}/{retries})")
                 else:
-                    print(f"⚠️ HTTP error {status_code} for {source}, retrying in {RETRY_DELAY * (2 ** attempt_num)}s... (attempt {attempt_num + 1}/{retries})")
+                    print(f"⚠️ HTTP error {status_code} for {source}, retrying... (attempt {attempt_num}/{retries})")
                 raise
                 
             except httpx.TimeoutException:
-                logger.warning("⚠️ Timeout", source=source, url=url, attempt=attempt_num+1, max_retries=retries)
-                print(f"⚠️ Timeout fetching {source}, retrying in {RETRY_DELAY * (2 ** attempt_num)}s... (attempt {attempt_num + 1}/{retries})")
+                logger.warning("⚠️ Timeout", source=source, url=url, attempt=attempt_num, max_retries=retries)
+                print(f"⚠️ Timeout fetching {source}, retrying... (attempt {attempt_num}/{retries})")
                 raise
                 
             except httpx.RequestError as e:
-                logger.warning("⚠️ Network error", source=source, url=url, error=str(e), attempt=attempt_num+1, max_retries=retries)
-                print(f"⚠️ Network error fetching {source}: {e}, retrying in {RETRY_DELAY * (2 ** attempt_num)}s... (attempt {attempt_num + 1}/{retries})")
+                logger.warning("⚠️ Network error", source=source, url=url, error=str(e), attempt=attempt_num, max_retries=retries)
+                print(f"⚠️ Network error fetching {source}: {e}, retrying... (attempt {attempt_num}/{retries})")
                 raise
     
-    # Try fetching with retries
-    for attempt in range(retries):
-        try:
-            return await _fetch_with_retry(attempt)
-        except (httpx.HTTPStatusError, httpx.TimeoutException, httpx.RequestError) as e:
-            if attempt == retries - 1:
-                # Last attempt failed
-                logger.error("❌ Failed after all retries", source=source, error=str(e), attempts=retries)
-                print(f"❌ Failed to fetch {source} after {retries} attempts: {e}")
-                return None
-            # Wait before next retry with exponential backoff
-            wait_time = RETRY_DELAY * (2 ** attempt)
-            await asyncio.sleep(wait_time)
-        except Exception as e:
-            logger.error("❌ Unexpected error", source=source, error_type=type(e).__name__, error=str(e))
-            print(f"❌ Unexpected error for {source}: {type(e).__name__}: {e}")
-            return None
-    
-    return None
+    # Try fetching with tenacity handling all retries
+    try:
+        return await _fetch_with_retry()
+    except (httpx.HTTPStatusError, httpx.TimeoutException, httpx.RequestError) as e:
+        # All retries exhausted
+        logger.error("❌ Failed after all retries", source=source, error=str(e), attempts=retries)
+        print(f"❌ Failed to fetch {source} after {retries} attempts: {e}")
+        return None
+    except Exception as e:
+        logger.error("❌ Unexpected error", source=source, error_type=type(e).__name__, error=str(e))
+        print(f"❌ Unexpected error for {source}: {type(e).__name__}: {e}")
+        return None
 
 def generate_source_target_matrix(articles):
     regions = ["US", "EU", "China", "Japan", "Korea", "India"]
