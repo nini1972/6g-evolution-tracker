@@ -123,6 +123,9 @@ class PlaywrightFetcher(BaseFetcher):
                     method_used="playwright"
                 )
             
+            # Extract XML from HTML wrapper if present (e.g., RSS feeds rendered in browser)
+            content = self._extract_xml_from_html(content)
+            
             logger.info("playwright_fetch_success", url=url, content_length=len(content))
             
             return FetchResult(
@@ -190,6 +193,31 @@ class PlaywrightFetcher(BaseFetcher):
         
         content_lower = content.lower()
         return any(indicator.lower() in content_lower for indicator in blocked_indicators)
+    
+    def _extract_xml_from_html(self, content: str) -> str:
+        """
+        Extract XML content from HTML wrapper if present.
+        Some sites wrap RSS/XML feeds in HTML <pre> tags when viewed in a browser.
+        """
+        # Check if content looks like HTML-wrapped XML
+        if '<pre' in content.lower() and ('<?xml' in content or '&lt;?xml' in content):
+            # Try to extract content from <pre> tags
+            from bs4 import BeautifulSoup
+            import html
+            try:
+                soup = BeautifulSoup(content, 'html.parser')
+                pre_tag = soup.find('pre')
+                if pre_tag:
+                    # Get the text content (BeautifulSoup automatically decodes HTML entities)
+                    xml_content = pre_tag.get_text()
+                    # Verify it's actually XML
+                    if xml_content.strip().startswith('<?xml'):
+                        logger.info("extracted_xml_from_html_wrapper")
+                        return xml_content
+            except:
+                pass
+        
+        return content
     
     async def close(self):
         """Close Playwright browser and cleanup"""

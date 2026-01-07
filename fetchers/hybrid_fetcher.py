@@ -45,7 +45,7 @@ class HybridFetcher(BaseFetcher):
         Smart fetch with fallback strategy:
         1. Check cache for known successful method
         2. Try httpx first (fast)
-        3. If httpx fails with 403/bot detection, try Playwright
+        3. If httpx fails with 403/bot detection OR returns HTML, try Playwright
         4. Cache successful method for future use
         """
         domain = self._get_domain(url)
@@ -67,19 +67,32 @@ class HybridFetcher(BaseFetcher):
         logger.info("trying_httpx", url=url)
         result = await self.httpx_fetcher.fetch(url, **kwargs)
         
-        # If httpx succeeded
+        # If httpx succeeded, check if content is valid
         if result.success:
-            logger.info("httpx_success", url=url)
-            self.method_cache[domain] = "httpx"
-            self._save_cache()
-            return result
+            # Check if we got HTML when expecting RSS/XML
+            content_lower = (result.content or "").lower()
+            is_html_response = (
+                'incapsula' in content_lower or
+                'cloudflare' in content_lower or
+                ('<html' in content_lower and '<?xml' not in content_lower[:100])
+            )
+            
+            if is_html_response:
+                logger.warning("httpx_returned_html_trying_playwright", url=url)
+                # Don't cache this as success, try Playwright instead
+            else:
+                logger.info("httpx_success", url=url)
+                self.method_cache[domain] = "httpx"
+                self._save_cache()
+                return result
         
-        # If httpx failed with bot detection indicators, try Playwright
+        # If httpx failed with bot detection indicators or returned HTML, try Playwright
         should_try_playwright = (
             result.status_code == 403 or
             result.status_code == 429 or
             "bot" in (result.error or "").lower() or
-            "cloudflare" in (result.error or "").lower()
+            "cloudflare" in (result.error or "").lower() or
+            (result.success and is_html_response)
         )
         
         if should_try_playwright and not kwargs.get("no_fallback", False):
@@ -87,7 +100,7 @@ class HybridFetcher(BaseFetcher):
                 "httpx_failed_trying_playwright",
                 url=url,
                 status_code=result.status_code,
-                error=result.error
+                error=result.error if not result.success else "HTML response"
             )
             
             playwright_result = await self.playwright_fetcher.fetch(url, **kwargs)
