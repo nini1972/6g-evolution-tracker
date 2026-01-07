@@ -1,13 +1,8 @@
-# Phase 1 dependencies
 feedparser==6.0.11
+beautifulsoup4==4.12.3
+google-genai
 httpx[http2]==0.27.0
 tenacity==8.2.3
 structlog==24.1.0
-
-# Phase 2 additions
 playwright==1.42.0
-
-# Existing dependencies
-beautifulsoup4==4.12.3
-google-genai
 requests
