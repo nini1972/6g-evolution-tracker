@@ -16,7 +16,7 @@ A scheduled Python script runs monthly using GitHub Actions to monitor news, pub
 
 ### 📊 3GPP Standardization Tracking (NEW)
 
-The tracker uses the **`mcp-3gpp-ftp`** package to access official 3GPP technical documents:
+The tracker monitors official 3GPP technical standardization activities:
 
 - **Release 21 Progress**: Tracks completion percentage of 6G Work Items
 - **Working Group Breakdown**: Monitor progress by RAN1, RAN2, SA2, etc.
@@ -26,11 +26,14 @@ The tracker uses the **`mcp-3gpp-ftp`** package to access official 3GPP technica
 - **Quantitative Metrics**: Move beyond qualitative news to track actual standardization milestones
 
 #### Data Sources
-- **Live Data**: 3GPP FTP Server accessed via `mcp-3gpp-ftp` package (https://www.3gpp.org/ftp/)
-- **Fallback**: Sample data is used when FTP access is unavailable or restricted
+- **Live Data**: 3GPP FTP Server (https://www.3gpp.org/ftp/) accessed via HTTP
+- **Fallback**: Sample data is used when FTP access is unavailable or restricted (403 errors)
 - **Cache**: Downloaded data is cached for 24 hours to reduce server load
 
 The dashboard displays a badge indicating whether data is from live sources, cached, or sample data.
+
+#### Future Enhancement
+The codebase includes `mcp-3gpp-ftp>=0.1.8` as a dependency for potential future integration with the MCP 3GPP FTP Explorer server, which would provide enhanced access to 3GPP technical documents including ZIP TDoc extraction and advanced Excel/Word parsing capabilities.
 
 ### Performance & Reliability
 - **⚡ Parallel Fetching**: Concurrently fetches multiple RSS feeds simultaneously.

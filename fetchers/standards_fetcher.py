@@ -1,6 +1,7 @@
 """
 Fetcher for 3GPP standardization data.
-Downloads Work Plan Excel files and meeting reports using mcp-3gpp-ftp package.
+Downloads Work Plan Excel files and meeting reports.
+Falls back to sample data when access is restricted.
 """
 import asyncio
 import httpx
@@ -14,14 +15,6 @@ from bs4 import BeautifulSoup
 import re
 
 logger = structlog.get_logger()
-
-# Try to import mcp-3gpp-ftp, but don't fail if it's not available
-try:
-    from mcp_3gpp_ftp import ThreeGPPClient
-    MCP_3GPP_AVAILABLE = True
-except ImportError:
-    MCP_3GPP_AVAILABLE = False
-    logger.warning("mcp_3gpp_unavailable", msg="mcp-3gpp-ftp package not available, using fallback mode")
 
 
 class StandardsFetcher:
@@ -45,16 +38,6 @@ class StandardsFetcher:
         self.cache_dir = Path(cache_dir)
         self.cache_dir.mkdir(parents=True, exist_ok=True)
         self.client = None
-        self.mcp_client = None
-        
-        # Initialize mcp-3gpp-ftp client if available
-        if MCP_3GPP_AVAILABLE:
-            try:
-                self.mcp_client = ThreeGPPClient()
-                logger.info("mcp_3gpp_initialized", msg="Using mcp-3gpp-ftp for 3GPP data access")
-            except Exception as e:
-                logger.warning("mcp_3gpp_init_failed", error=str(e))
-                self.mcp_client = None
     
     async def __aenter__(self):
         """Async context manager entry"""
@@ -117,7 +100,7 @@ class StandardsFetcher:
     async def fetch_work_plan(self) -> Dict:
         """
         Fetch and parse 3GPP Work Plan Excel file.
-        Uses mcp-3gpp-ftp if available, otherwise falls back to HTTP.
+        Falls back to sample data when access is restricted.
         
         Returns:
             Dict with Release 21 progress data
@@ -138,38 +121,7 @@ class StandardsFetcher:
                         result["data_source"] = "cached"
                     return result
             
-            # Try using mcp-3gpp-ftp first
-            if self.mcp_client:
-                try:
-                    logger.info("fetching_work_plan_via_mcp")
-                    
-                    # Download Work Plan Excel file using mcp-3gpp-ftp
-                    work_plan_path = await asyncio.to_thread(
-                        self.mcp_client.download_file,
-                        "/Information/WORK_PLAN/TSG_Status_Report.xlsx",
-                        str(self.cache_dir)
-                    )
-                    
-                    logger.info("work_plan_downloaded_via_mcp", path=work_plan_path)
-                    
-                    # Copy to our cache location for consistency
-                    if work_plan_path and Path(work_plan_path).exists():
-                        import shutil
-                        shutil.copy(work_plan_path, cache_file)
-                        
-                        # Parse the file
-                        parser = WorkItemParser(str(cache_file))
-                        result = parser.parse()
-                        # Add data source indicator
-                        if result:
-                            result["data_source"] = "live"
-                        return result
-                    
-                except Exception as e:
-                    logger.warning("mcp_work_plan_fetch_failed", error=str(e), 
-                                 msg="Falling back to HTTP method")
-            
-            # Fallback to HTTP method
+            # Try HTTP download
             if not self.client:
                 self.client = httpx.AsyncClient(timeout=30.0, follow_redirects=True)
             
@@ -205,7 +157,7 @@ class StandardsFetcher:
     async def fetch_recent_meetings(self, limit: int = 3) -> List[Dict]:
         """
         Fetch recent meeting reports from RAN1 and SA2.
-        Uses mcp-3gpp-ftp if available, otherwise falls back to HTTP.
+        Falls back to sample data when access is restricted.
         
         Args:
             limit: Maximum number of recent meetings per working group
@@ -215,18 +167,7 @@ class StandardsFetcher:
         """
         meetings = []
         
-        # Try using mcp-3gpp-ftp first
-        if self.mcp_client:
-            try:
-                meetings = await self._fetch_meetings_via_mcp(limit)
-                if meetings:
-                    logger.info("meetings_fetched_via_mcp", count=len(meetings))
-                    return meetings
-            except Exception as e:
-                logger.warning("mcp_meetings_fetch_failed", error=str(e),
-                             msg="Falling back to HTTP method")
-        
-        # Fallback to HTTP method
+        # Try HTTP method for meetings
         for wg, base_url in self.MEETING_REPORT_URLS.items():
             try:
                 wg_meetings = await self._fetch_working_group_meetings(wg, base_url, limit)
@@ -240,96 +181,6 @@ class StandardsFetcher:
         
         # Sort by date (most recent first)
         meetings.sort(key=lambda m: m.get("date", ""), reverse=True)
-        
-        return meetings
-    
-    async def _fetch_meetings_via_mcp(self, limit: int = 3) -> List[Dict]:
-        """Fetch meetings using mcp-3gpp-ftp package"""
-        meetings = []
-        
-        meeting_paths = {
-            "RAN1": "/tsg_ran/WG1_RL1/",
-            "SA2": "/tsg_sa/WG2_Arch/"
-        }
-        
-        for wg, base_path in meeting_paths.items():
-            try:
-                # List meeting directories using mcp-3gpp-ftp
-                meeting_dirs = await asyncio.to_thread(
-                    self.mcp_client.list_directory,
-                    base_path
-                )
-                
-                if not meeting_dirs:
-                    continue
-                
-                # Filter for meeting directories (e.g., TSGR1_115/, TSGS2_165/)
-                meeting_dirs = [d for d in meeting_dirs if re.match(r'TSG[RS]\d+_\d+/?', d)]
-                
-                # Sort and get most recent
-                recent_dirs = sorted(meeting_dirs, reverse=True)[:limit]
-                
-                for meeting_dir in recent_dirs:
-                    meeting_dir = meeting_dir.rstrip('/')
-                    try:
-                        # Try to find report files
-                        report_path = f"{base_path}{meeting_dir}/Report/"
-                        report_files = await asyncio.to_thread(
-                            self.mcp_client.list_directory,
-                            report_path
-                        )
-                        
-                        if not report_files:
-                            # Try without /Report/ subdirectory
-                            report_path = f"{base_path}{meeting_dir}/"
-                            report_files = await asyncio.to_thread(
-                                self.mcp_client.list_directory,
-                                report_path
-                            )
-                        
-                        if not report_files:
-                            continue
-                        
-                        # Find report files (Word/HTML/PDF)
-                        report_file = None
-                        for f in report_files:
-                            if any(ext in f.lower() for ext in ['.doc', '.docx', '.htm', '.html', '.pdf']) and \
-                               any(keyword in f.lower() for keyword in ['report', 'summary', 'final', 'minutes']):
-                                report_file = f
-                                break
-                        
-                        if not report_file:
-                            continue
-                        
-                        # Download and parse the report
-                        file_path = f"{report_path}{report_file}"
-                        local_path = await asyncio.to_thread(
-                            self.mcp_client.download_file,
-                            file_path,
-                            str(self.cache_dir)
-                        )
-                        
-                        if local_path and Path(local_path).exists():
-                            # Parse based on file type
-                            content_type = "html" if any(ext in report_file.lower() for ext in ['.htm', '.html']) else "text"
-                            
-                            # For now, read as text
-                            with open(local_path, 'r', encoding='utf-8', errors='ignore') as f:
-                                content = f.read()
-                            
-                            parser = MeetingReportParser(content, content_type)
-                            meeting_data = parser.parse(meeting_dir, wg)
-                            
-                            if meeting_data:
-                                meetings.append(meeting_data)
-                        
-                    except Exception as e:
-                        logger.warning("mcp_meeting_report_fetch_error", 
-                                     meeting=meeting_dir, error=str(e))
-                        continue
-                
-            except Exception as e:
-                logger.error("mcp_wg_fetch_error", wg=wg, error=str(e))
         
         return meetings
     
