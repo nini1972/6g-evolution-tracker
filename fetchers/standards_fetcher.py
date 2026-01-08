@@ -6,8 +6,9 @@ Falls back to HTTP download, then sample data when MCP is unavailable.
 import asyncio
 import httpx
 import time
+import shutil
 from pathlib import Path
-from typing import Dict, List, Optional
+from typing import Dict, List, Optional, Tuple
 import structlog
 from parsers.work_item_parser import WorkItemParser
 from parsers.meeting_report_parser import MeetingReportParser
@@ -52,6 +53,83 @@ class StandardsFetcher:
         self.mcp_context = None
         self.mcp_session = None
     
+    async def _command_exists(self, cmd: str) -> bool:
+        """Check if a command exists in PATH"""
+        return shutil.which(cmd) is not None
+    
+    async def _detect_mcp_server_command(self) -> Optional[Tuple[str, List[str]]]:
+        """
+        Detect how to start mcp-3gpp-ftp server.
+        Returns (command, args) tuple or None if not found.
+        """
+        logger.info("detecting_mcp_server_command")
+        
+        # Check what's available
+        has_python = await self._command_exists("python")
+        has_npx = await self._command_exists("npx")
+        has_binary = await self._command_exists("mcp-3gpp-ftp")
+        
+        logger.info("mcp_command_detection",
+                   python_available=has_python,
+                   npx_available=has_npx,
+                   binary_available=has_binary)
+        
+        # Try 1: Python module (most likely for pip package)
+        if has_python:
+            return ("python", ["-m", "mcp_3gpp_ftp", "serve"])
+        
+        # Try 2: npx (if it's an npm package)
+        if has_npx:
+            return ("npx", ["mcp-3gpp-ftp", "serve"])
+        
+        # Try 3: Direct binary (if installed globally somehow)
+        if has_binary:
+            return ("mcp-3gpp-ftp", ["serve"])
+        
+        logger.error("mcp_server_command_not_found")
+        return None
+    
+    async def _init_mcp_session(self):
+        """Initialize MCP session (to be wrapped in timeout)"""
+        # Detect command
+        server_cmd = await self._detect_mcp_server_command()
+        if not server_cmd:
+            raise RuntimeError("MCP server command not found")
+        
+        command, args = server_cmd
+        
+        server_params = StdioServerParameters(
+            command=command,
+            args=args,
+            env=None
+        )
+        
+        logger.info("starting_mcp_server", command=command, args=args)
+        
+        # Connect via stdio
+        self.mcp_context = stdio_client(server_params)
+        read_stream, write_stream = await self.mcp_context.__aenter__()
+        
+        logger.info("mcp_streams_connected")
+        
+        # Create ClientSession from streams
+        self.mcp_session = ClientSession(read_stream, write_stream)
+        
+        # Initialize session
+        await self.mcp_session.initialize()
+        
+        logger.info("mcp_session_initialized")
+    
+    async def _test_mcp_health(self) -> bool:
+        """Test if MCP server responds to commands"""
+        try:
+            tools = await self.mcp_session.list_tools()
+            logger.info("mcp_health_check_passed", tool_count=len(tools.tools))
+            return True
+        except Exception as e:
+            logger.error("mcp_health_check_failed", error=str(e), error_type=type(e).__name__)
+            return False
+    
     async def __aenter__(self):
         """Async context manager entry - start MCP client connection"""
         self.client = httpx.AsyncClient(timeout=30.0, follow_redirects=True)
@@ -61,28 +139,41 @@ class StandardsFetcher:
             try:
                 logger.info("attempting_mcp_connection", server="mcp-3gpp-ftp")
                 
-                server_params = StdioServerParameters(
-                    command="mcp-3gpp-ftp",
-                    args=[],
-                    env=None
+                # Initialize with 15s timeout (5s startup + 10s init)
+                start_time = time.time()
+                
+                await asyncio.wait_for(
+                    self._init_mcp_session(),
+                    timeout=15.0
                 )
                 
-                # Get stdio transport
-                self.mcp_context = stdio_client(server_params)
-                read_stream, write_stream = await self.mcp_context.__aenter__()
+                init_elapsed = time.time() - start_time
+                logger.info("mcp_init_completed", elapsed_seconds=round(init_elapsed, 2))
                 
-                # Create ClientSession from streams
-                self.mcp_session = ClientSession(read_stream, write_stream)
+                # Health check with 5s timeout
+                health_ok = await asyncio.wait_for(
+                    self._test_mcp_health(),
+                    timeout=5.0
+                )
                 
-                # Initialize session
-                init_result = await self.mcp_session.initialize()
+                if not health_ok:
+                    logger.warning("mcp_health_check_failed_disabling")
+                    self.use_mcp = False
+                    self.mcp_session = None
+                    self.mcp_context = None
                 
-                logger.info("mcp_session_initialized", 
-                           server="mcp-3gpp-ftp",
-                           capabilities=str(init_result.capabilities) if hasattr(init_result, 'capabilities') else "none")
+            except asyncio.TimeoutError:
+                logger.error("mcp_timeout", 
+                            msg="MCP server initialization timed out after 20 seconds",
+                            timeout_seconds=20)
+                self.use_mcp = False
+                self.mcp_context = None
+                self.mcp_session = None
                 
             except Exception as e:
-                logger.error("mcp_session_init_failed", error=str(e), error_type=type(e).__name__)
+                logger.error("mcp_session_init_failed", 
+                            error=str(e), 
+                            error_type=type(e).__name__)
                 self.use_mcp = False
                 self.mcp_context = None
                 self.mcp_session = None
@@ -250,25 +341,48 @@ class StandardsFetcher:
         # Validate MCP client
         self._validate_mcp_client()
         
-        # Call MCP tool: filter_excel_columns_from_url
-        result: CallToolResult = await self.mcp_session.call_tool(
-            name="filter_excel_columns_from_url",
-            arguments={
-                "file_url": "https://www.3gpp.org/ftp/Information/WORK_PLAN/TSG_Status_Report.xlsx",
-                "columns": ["WI/SI", "Title", "Status", "Release", "Responsible WG"],
-                "filters": {"Release": "Rel-21"}
-            }
-        )
+        start_time = time.time()
         
-        # Parse result
-        if result.content and len(result.content) > 0:
-            rel21_items = json.loads(result.content[0].text)
-            logger.info("mcp_work_plan_fetched", items=len(rel21_items))
+        try:
+            # Call MCP tool with 60s timeout (Excel download + parsing)
+            result: CallToolResult = await asyncio.wait_for(
+                self.mcp_session.call_tool(
+                    name="filter_excel_columns_from_url",
+                    arguments={
+                        "file_url": "https://www.3gpp.org/ftp/Information/WORK_PLAN/TSG_Status_Report.xlsx",
+                        "columns": ["WI/SI", "Title", "Status", "Release", "Responsible WG"],
+                        "filters": {"Release": "Rel-21"}
+                    }
+                ),
+                timeout=60.0
+            )
             
-            # Aggregate into our data structure
-            return self._aggregate_work_items(rel21_items)
-        else:
-            logger.warning("mcp_empty_result")
+            elapsed = time.time() - start_time
+            logger.info("mcp_work_plan_tool_completed", elapsed_seconds=round(elapsed, 2))
+            
+            # Parse result
+            if result.content and len(result.content) > 0:
+                rel21_items = json.loads(result.content[0].text)
+                logger.info("mcp_work_plan_fetched", items=len(rel21_items))
+                
+                # Aggregate into our data structure
+                return self._aggregate_work_items(rel21_items)
+            else:
+                logger.warning("mcp_empty_result")
+                return self._empty_work_plan()
+                
+        except asyncio.TimeoutError:
+            elapsed = time.time() - start_time
+            logger.error("mcp_work_plan_timeout", 
+                        timeout_seconds=60,
+                        elapsed_seconds=round(elapsed, 2))
+            return self._empty_work_plan()
+        except Exception as e:
+            elapsed = time.time() - start_time
+            logger.error("mcp_work_plan_fetch_failed", 
+                        error=str(e), 
+                        error_type=type(e).__name__,
+                        elapsed_seconds=round(elapsed, 2))
             return self._empty_work_plan()
     
     def _aggregate_work_items(self, items: List[Dict]) -> Dict:
@@ -373,11 +487,21 @@ class StandardsFetcher:
         
         for wg, path in {"RAN1": "/tsg_ran/WG1_RL1/", "SA2": "/tsg_sa/WG2_Arch/"}.items():
             try:
-                # List directories
-                result = await self.mcp_session.call_tool(
-                    name="list_directories",
-                    arguments={"path": path}
+                start_time = time.time()
+                
+                # List directories with 30s timeout
+                result = await asyncio.wait_for(
+                    self.mcp_session.call_tool(
+                        name="list_directories",
+                        arguments={"path": path}
+                    ),
+                    timeout=30.0
                 )
+                
+                elapsed = time.time() - start_time
+                logger.info("mcp_directory_list_completed", 
+                           wg=wg, 
+                           elapsed_seconds=round(elapsed, 2))
                 
                 if not result.content or len(result.content) == 0:
                     continue
@@ -402,8 +526,15 @@ class StandardsFetcher:
                     }
                     meetings.append(meeting_data)
                     
+            except asyncio.TimeoutError:
+                logger.error("mcp_directory_list_timeout", 
+                            wg=wg, 
+                            timeout_seconds=30)
             except Exception as e:
-                logger.error("mcp_meeting_fetch_failed", wg=wg, error=str(e))
+                logger.error("mcp_meeting_fetch_failed", 
+                            wg=wg, 
+                            error=str(e), 
+                            error_type=type(e).__name__)
         
         return meetings
     
