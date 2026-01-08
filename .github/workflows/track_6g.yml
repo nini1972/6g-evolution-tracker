@@ -72,6 +72,14 @@ jobs:
               print("Gemini test FAILED:", e)
           EOF
 
+      - name: Start MCP 3GPP Server (background)
+        run: |
+          # Start mcp-3gpp-ftp server in background
+          nohup mcp-3gpp-ftp > mcp_server.log 2>&1 &
+          MCP_PID=$!
+          echo "MCP_PID=$MCP_PID" >> $GITHUB_ENV
+          echo "MCP server started with PID $MCP_PID"
+          sleep 5  # Give server time to initialize
         
       - name: Run tracker script and save output
         env:
@@ -80,6 +88,16 @@ jobs:
           python track_6g.py > output.log 2>&1
           echo "Script exit code: $?"
         continue-on-error: false  # Fail workflow if script fails
+      
+      - name: Stop MCP Server
+        if: always()
+        run: |
+          if [ ! -z "$MCP_PID" ]; then
+            kill $MCP_PID || true
+            echo "MCP server stopped"
+          fi
+          # Show MCP server logs for debugging
+          cat mcp_server.log || true
         
       - name: Build Dashboard
         run: |
