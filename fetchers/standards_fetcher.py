@@ -216,11 +216,18 @@ class StandardsFetcher:
     async def _fetch_work_plan_via_mcp(self) -> Dict:
         """
         Fetch Work Plan using MCP tools from mcp-3gpp-ftp.
+        Note: This requires the mcp-3gpp-ftp server to be running and accessible.
         """
         logger.info("fetching_work_plan_via_mcp")
         
+        # Check if mcp_read has the call_tool method (it should be a ClientSession)
+        if not hasattr(self.mcp_read, 'call_tool'):
+            logger.warning("mcp_read_missing_call_tool", 
+                          msg="MCP client session not properly initialized")
+            raise AttributeError("MCP client session not properly initialized")
+        
         # Call MCP tool: filter_excel_columns_from_url
-        result: CallToolResult = await self.mcp_write.call_tool(
+        result: CallToolResult = await self.mcp_read.call_tool(
             name="filter_excel_columns_from_url",
             arguments={
                 "file_url": "https://www.3gpp.org/ftp/Information/WORK_PLAN/TSG_Status_Report.xlsx",
@@ -331,15 +338,22 @@ class StandardsFetcher:
     async def _fetch_meetings_via_mcp(self, limit: int = 3) -> List[Dict]:
         """
         Fetch recent meetings using MCP tools.
+        Note: This requires the mcp-3gpp-ftp server to be running and accessible.
         """
         from datetime import datetime
+        
+        # Check if mcp_read has the call_tool method
+        if not hasattr(self.mcp_read, 'call_tool'):
+            logger.warning("mcp_read_missing_call_tool", 
+                          msg="MCP client session not properly initialized")
+            raise AttributeError("MCP client session not properly initialized")
         
         meetings = []
         
         for wg, path in {"RAN1": "/tsg_ran/WG1_RL1/", "SA2": "/tsg_sa/WG2_Arch/"}.items():
             try:
                 # List directories
-                result = await self.mcp_write.call_tool(
+                result = await self.mcp_read.call_tool(
                     name="list_directories",
                     arguments={"path": path}
                 )
