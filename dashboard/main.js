@@ -14,6 +14,12 @@ async function loadData() {
         const data = await response.json();
         allArticles = data.articles;
 
+        // Load standardization data if available
+        if (data.standardization) {
+            console.log('3GPP Standardization Data Loaded:', data.standardization);
+            renderStandardizationPanel(data.standardization);
+        }
+
         // Try to load momentum data (optional for now)
         try {
             const momResponse = await fetch('./momentum_data.json');
@@ -164,6 +170,134 @@ function renderMomentumPanel(momentumData) {
 
     container.innerHTML = cards;
 }
+
+function renderStandardizationPanel(stdData) {
+    const container = document.getElementById('standardization-content');
+    if (!container) {
+        // Panel doesn't exist yet, we'll add it to the HTML
+        return;
+    }
+
+    if (!stdData || !stdData.release_21_progress) {
+        container.innerHTML = `<p>No standardization data available.</p>`;
+        return;
+    }
+
+    const progress = stdData.release_21_progress;
+    const meetings = stdData.recent_meetings || [];
+    const byGroup = stdData.work_items_by_group || {};
+
+    // Build the HTML
+    let html = `
+        <h3>3GPP Release 21 Progress</h3>
+        <div class="progress-bar-container">
+            <div class="progress-bar">
+                <div class="progress-fill" style="width: ${progress.progress_percentage}%">
+                    ${progress.progress_percentage}%
+                </div>
+            </div>
+            <p class="progress-stats">
+                ${progress.completed}/${progress.total_work_items} Work Items Completed 
+                (${progress.in_progress} in progress, ${progress.postponed} postponed)
+            </p>
+            <p class="progress-updated">Last updated: ${progress.last_updated}</p>
+        </div>
+    `;
+
+    // Working Group Breakdown
+    if (Object.keys(byGroup).length > 0) {
+        html += `
+            <div class="wg-breakdown">
+                <h4>Progress by Working Group</h4>
+                <div class="wg-cards">
+        `;
+
+        for (const [wg, stats] of Object.entries(byGroup)) {
+            html += `
+                <div class="wg-card">
+                    <div class="wg-name">${wg}</div>
+                    <div class="wg-progress">${stats.progress}%</div>
+                    <div class="wg-stats">${stats.completed}/${stats.total} completed</div>
+                </div>
+            `;
+        }
+
+        html += `
+                </div>
+            </div>
+        `;
+    }
+
+    // Recent Meetings
+    if (meetings.length > 0) {
+        html += `
+            <div class="meetings-section">
+                <h4>Recent 3GPP Meetings</h4>
+                <div class="meetings-list">
+        `;
+
+        meetings.forEach(meeting => {
+            const sentimentIcon = {
+                'positive': '✅',
+                'negative': '⚠️',
+                'mixed': '🔄',
+                'neutral': '📋'
+            }[meeting.sentiment] || '📋';
+
+            html += `
+                <div class="meeting-card">
+                    <div class="meeting-header">
+                        <span class="meeting-wg">${meeting.working_group}</span>
+                        <span class="meeting-id">${meeting.meeting_id}</span>
+                        <span class="meeting-sentiment">${sentimentIcon}</span>
+                    </div>
+                    <div class="meeting-meta">
+                        ${meeting.date ? `📅 ${meeting.date}` : ''} 
+                        ${meeting.location ? `📍 ${meeting.location}` : ''}
+                    </div>
+            `;
+
+            if (meeting.key_agreements && meeting.key_agreements.length > 0) {
+                html += `
+                    <div class="meeting-agreements">
+                        <strong>Key Agreements:</strong>
+                        <ul>
+                `;
+                meeting.key_agreements.slice(0, 3).forEach(agreement => {
+                    html += `<li>${agreement}</li>`;
+                });
+                html += `
+                        </ul>
+                    </div>
+                `;
+            }
+
+            if (meeting.tdoc_references && meeting.tdoc_references.length > 0) {
+                html += `
+                    <div class="meeting-tdocs">
+                        <strong>TDocs:</strong> 
+                `;
+                meeting.tdoc_references.slice(0, 5).forEach(tdoc => {
+                    const tdocUrl = `https://www.3gpp.org/ftp/tsg_ran/WG1_RL1/`;
+                    html += `<a href="${tdocUrl}" target="_blank" class="tdoc-link">${tdoc}</a> `;
+                });
+                html += `
+                    </div>
+                `;
+            }
+
+            html += `</div>`;
+        });
+
+        html += `
+                </div>
+            </div>
+        `;
+    }
+
+    container.innerHTML = html;
+}
+
 
 function renderConceptsPanel(articles) {
     const container = document.getElementById('concepts-content');
