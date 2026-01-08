@@ -19,6 +19,7 @@ import json
 try:
     from mcp.client.stdio import stdio_client, StdioServerParameters
     from mcp.types import CallToolResult
+    from mcp import ClientSession
     MCP_AVAILABLE = True
 except ImportError:
     MCP_AVAILABLE = False
@@ -49,8 +50,7 @@ class StandardsFetcher:
         self.client = None
         self.use_mcp = MCP_AVAILABLE  # Toggle for MCP usage
         self.mcp_context = None
-        self.mcp_read = None
-        self.mcp_write = None
+        self.mcp_session = None
     
     async def __aenter__(self):
         """Async context manager entry - start MCP client connection"""
@@ -67,23 +67,25 @@ class StandardsFetcher:
                     env=None
                 )
                 
-                # Connect via stdio - stdio_client is itself an async context manager
+                # Get stdio transport
                 self.mcp_context = stdio_client(server_params)
-                result = await self.mcp_context.__aenter__()
+                read_stream, write_stream = await self.mcp_context.__aenter__()
                 
-                # Result should be a tuple of (read, write)
-                if isinstance(result, tuple) and len(result) == 2:
-                    self.mcp_read, self.mcp_write = result
-                    logger.info("mcp_client_connected", server="mcp-3gpp-ftp")
-                else:
-                    raise ValueError(f"Unexpected MCP client result type: {type(result)}")
+                # Create ClientSession from streams
+                self.mcp_session = ClientSession(read_stream, write_stream)
+                
+                # Initialize session
+                init_result = await self.mcp_session.initialize()
+                
+                logger.info("mcp_session_initialized", 
+                           server="mcp-3gpp-ftp",
+                           capabilities=str(init_result.capabilities) if hasattr(init_result, 'capabilities') else "none")
                 
             except Exception as e:
-                logger.warning("mcp_client_connection_failed", error=str(e))
+                logger.error("mcp_session_init_failed", error=str(e), error_type=type(e).__name__)
                 self.use_mcp = False
                 self.mcp_context = None
-                self.mcp_read = None
-                self.mcp_write = None
+                self.mcp_session = None
         
         return self
     
@@ -92,12 +94,20 @@ class StandardsFetcher:
         if self.client:
             await self.client.aclose()
         
-        # Disconnect MCP client
+        # Close MCP session
+        if self.mcp_session:
+            try:
+                await self.mcp_session.close()
+                logger.info("mcp_session_closed")
+            except Exception as e:
+                logger.warning("mcp_session_close_error", error=str(e))
+        
+        # Disconnect MCP context
         if self.mcp_context:
             try:
                 await self.mcp_context.__aexit__(exc_type, exc_val, exc_tb)
             except Exception as e:
-                logger.warning("mcp_disconnect_error", error=str(e))
+                logger.warning("mcp_context_close_error", error=str(e))
     
     async def fetch_all(self) -> Dict:
         """
@@ -156,11 +166,11 @@ class StandardsFetcher:
             Dict with Release 21 progress data
         """
         # Try MCP method first
-        if self.use_mcp and self.mcp_write:
+        if self.use_mcp and self.mcp_session:
             try:
                 return await self._fetch_work_plan_via_mcp()
             except Exception as e:
-                logger.error("mcp_work_plan_fetch_failed", error=str(e))
+                logger.error("mcp_work_plan_fetch_failed", error=str(e), error_type=type(e).__name__)
                 # Fall through to HTTP method
         
         # Try HTTP method
@@ -215,15 +225,20 @@ class StandardsFetcher:
     
     def _validate_mcp_client(self):
         """
-        Validate that MCP client is properly initialized.
+        Validate that MCP client session is properly initialized.
         
         Raises:
-            AttributeError: If MCP client session is not properly initialized
+            AttributeError: If MCP session is not initialized or missing call_tool method
         """
-        if not hasattr(self.mcp_read, 'call_tool'):
-            logger.warning("mcp_client_not_initialized", 
-                          msg="MCP client session does not have call_tool method. This may indicate the server is not running or the connection failed.")
-            raise AttributeError("MCP client session not properly initialized - missing call_tool method")
+        if not self.mcp_session:
+            raise AttributeError("MCP session is None - not initialized")
+        
+        if not hasattr(self.mcp_session, 'call_tool'):
+            available_methods = [m for m in dir(self.mcp_session) if not m.startswith('_')]
+            logger.error("mcp_session_missing_call_tool", 
+                        available_methods=available_methods,
+                        session_type=type(self.mcp_session).__name__)
+            raise AttributeError(f"MCP session (type: {type(self.mcp_session).__name__}) does not have call_tool method")
     
     async def _fetch_work_plan_via_mcp(self) -> Dict:
         """
@@ -236,7 +251,7 @@ class StandardsFetcher:
         self._validate_mcp_client()
         
         # Call MCP tool: filter_excel_columns_from_url
-        result: CallToolResult = await self.mcp_read.call_tool(
+        result: CallToolResult = await self.mcp_session.call_tool(
             name="filter_excel_columns_from_url",
             arguments={
                 "file_url": "https://www.3gpp.org/ftp/Information/WORK_PLAN/TSG_Status_Report.xlsx",
@@ -319,13 +334,13 @@ class StandardsFetcher:
         meetings = []
         
         # Try MCP method first
-        if self.use_mcp and self.mcp_write:
+        if self.use_mcp and self.mcp_session:
             try:
                 meetings = await self._fetch_meetings_via_mcp(limit)
                 if meetings:
                     return meetings
             except Exception as e:
-                logger.error("mcp_meetings_fetch_failed", error=str(e))
+                logger.error("mcp_meetings_fetch_failed", error=str(e), error_type=type(e).__name__)
         
         # Try HTTP method for meetings
         for wg, base_url in self.MEETING_REPORT_URLS.items():
@@ -359,7 +374,7 @@ class StandardsFetcher:
         for wg, path in {"RAN1": "/tsg_ran/WG1_RL1/", "SA2": "/tsg_sa/WG2_Arch/"}.items():
             try:
                 # List directories
-                result = await self.mcp_read.call_tool(
+                result = await self.mcp_session.call_tool(
                     name="list_directories",
                     arguments={"path": path}
                 )
