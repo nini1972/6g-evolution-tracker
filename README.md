@@ -79,6 +79,68 @@ Key dependencies:
 - `feedparser` - RSS feed parsing
 - `structlog` - Structured logging
 
+## 🤖 AI Agent Integration (MCP Server)
+
+The 6G Evolution Tracker exposes its intelligence via a FastMCP server, allowing AI agents (Claude, ChatGPT, LangChain, etc.) to query 6G data programmatically.
+
+### Available MCP Tools
+
+1. **`get_latest_6g_news`** - Get recent 6G news with AI analysis
+   - Parameters: `min_importance` (0-10), `region` (US/China/EU/Japan/Korea/India)
+   
+2. **`get_3gpp_release21_status`** - Get 3GPP Release 21 standardization progress
+   - Returns: Progress percentage, work items, data source (live/cached/sample)
+   
+3. **`get_recent_3gpp_meetings`** - Get recent meeting summaries with agreements
+   - Parameters: `working_group` (RAN1/RAN2/SA2/etc., optional)
+   
+4. **`search_6g_topics`** - Search for specific 6G topics/technologies
+   - Parameters: `topic` (e.g., "AI-RAN", "ISAC", "terahertz"), `min_importance` (0-10)
+   
+5. **`analyze_regional_momentum`** - Analyze which regions are leading in 6G
+   - Returns: Regional scores, average impact, leader
+   
+6. **`get_emerging_6g_concepts`** - Get trending 6G concepts
+   - Parameters: `min_frequency` (minimum mentions, default 2)
+
+### Usage with Claude Desktop
+
+Add to `claude_desktop_config.json`:
+```json
+{
+  "mcpServers": {
+    "6g-intelligence": {
+      "command": "python",
+      "args": ["/path/to/6g-evolution-tracker/api/mcp_server.py"]
+    }
+  }
+}
+```
+
+Then in Claude:
+```
+"What's the current status of 3GPP Release 21?"
+"Search for articles about AI-RAN"
+"Which region is leading in 6G development?"
+```
+
+### Running the MCP Server Standalone
+
+```bash
+cd 6g-evolution-tracker
+python api/mcp_server.py
+```
+
+The server runs on stdio transport by default, compatible with MCP protocol clients.
+
+### Example Python Client
+
+See `examples/mcp_client_example.py` for a Python example:
+
+```bash
+python examples/mcp_client_example.py
+```
+
 ## Cache Management
 
 The `seen_articles.json` file maintains a history of processed articles to prevent duplicates. This is automatically handled by the GitHub Action.
