@@ -65,27 +65,28 @@ class StandardsFetcher:
         logger.info("detecting_mcp_server_command")
         
         # Check what's available
+        has_binary = await self._command_exists("mcp-3gpp-ftp")
         has_python = await self._command_exists("python")
         has_npx = await self._command_exists("npx")
-        has_binary = await self._command_exists("mcp-3gpp-ftp")
         
         logger.info("mcp_command_detection",
+                   binary_available=has_binary,
                    python_available=has_python,
-                   npx_available=has_npx,
-                   binary_available=has_binary)
+                   npx_available=has_npx)
         
-        # Try 1: Python module (most likely for pip package)
+        # Try 1: Direct binary (simplest, most reliable if installed via pip)
+        # The mcp-3gpp-ftp package installs a binary that uses stdio by default
+        if has_binary:
+            return ("mcp-3gpp-ftp", [])
+        
+        # Try 2: Python module (alternative if binary not in PATH)
         # The mcp-3gpp-ftp package has a server.py with main() function
         if has_python:
             return ("python", ["-m", "mcp_3gpp_ftp.server"])
         
-        # Try 2: npx (if it's an npm package)
+        # Try 3: npx (if it's an npm package - unlikely but worth trying)
         if has_npx:
             return ("npx", ["mcp-3gpp-ftp", "serve"])
-        
-        # Try 3: Direct binary (if installed globally somehow)
-        if has_binary:
-            return ("mcp-3gpp-ftp", ["serve"])
         
         logger.error("mcp_server_command_not_found")
         return None
@@ -131,6 +132,26 @@ class StandardsFetcher:
             logger.error("mcp_health_check_failed", error=str(e), error_type=type(e).__name__)
             return False
     
+    async def _cleanup_mcp(self):
+        """Clean up MCP resources and disable MCP"""
+        self.use_mcp = False
+        
+        # Clear session reference (no close method on ClientSession)
+        if self.mcp_session:
+            self.mcp_session = None
+            logger.info("mcp_session_cleared_during_cleanup")
+        
+        # Close context if it exists
+        if self.mcp_context:
+            try:
+                await self.mcp_context.__aexit__(None, None, None)
+                logger.info("mcp_context_closed_during_cleanup")
+            except Exception as e:
+                # Context cleanup can fail if already closed or in error state
+                logger.debug("mcp_context_close_error_during_cleanup", error=str(e))
+            finally:
+                self.mcp_context = None
+    
     async def __aenter__(self):
         """Async context manager entry - start MCP client connection"""
         self.client = httpx.AsyncClient(timeout=30.0, follow_redirects=True)
@@ -140,44 +161,39 @@ class StandardsFetcher:
             try:
                 logger.info("attempting_mcp_connection", server="mcp-3gpp-ftp")
                 
-                # Initialize with 15s timeout (5s startup + 10s init)
+                # Initialize with 8s timeout - fail fast if server not responding
+                # (Testing shows the server can hang indefinitely on init handshake)
                 start_time = time.time()
                 
                 await asyncio.wait_for(
                     self._init_mcp_session(),
-                    timeout=15.0
+                    timeout=8.0
                 )
                 
                 init_elapsed = time.time() - start_time
                 logger.info("mcp_init_completed", elapsed_seconds=round(init_elapsed, 2))
                 
-                # Health check with 5s timeout
+                # Health check with 3s timeout
                 health_ok = await asyncio.wait_for(
                     self._test_mcp_health(),
-                    timeout=5.0
+                    timeout=3.0
                 )
                 
                 if not health_ok:
                     logger.warning("mcp_health_check_failed_disabling")
-                    self.use_mcp = False
-                    self.mcp_session = None
-                    self.mcp_context = None
+                    await self._cleanup_mcp()
                 
             except asyncio.TimeoutError:
                 logger.error("mcp_timeout", 
-                            msg="MCP server initialization timed out after 20 seconds",
-                            timeout_seconds=20)
-                self.use_mcp = False
-                self.mcp_context = None
-                self.mcp_session = None
+                            msg="MCP server initialization timed out - falling back to HTTP/sample data",
+                            timeout_seconds=8)
+                await self._cleanup_mcp()
                 
             except Exception as e:
                 logger.error("mcp_session_init_failed", 
                             error=str(e), 
                             error_type=type(e).__name__)
-                self.use_mcp = False
-                self.mcp_context = None
-                self.mcp_session = None
+                await self._cleanup_mcp()
         
         return self
     
@@ -186,20 +202,19 @@ class StandardsFetcher:
         if self.client:
             await self.client.aclose()
         
-        # Close MCP session
+        # Clear MCP session reference (no close method on ClientSession)
         if self.mcp_session:
-            try:
-                await self.mcp_session.close()
-                logger.info("mcp_session_closed")
-            except Exception as e:
-                logger.warning("mcp_session_close_error", error=str(e))
+            self.mcp_session = None
+            logger.info("mcp_session_cleared")
         
         # Disconnect MCP context
         if self.mcp_context:
             try:
                 await self.mcp_context.__aexit__(exc_type, exc_val, exc_tb)
+                logger.info("mcp_context_closed")
             except Exception as e:
-                logger.warning("mcp_context_close_error", error=str(e))
+                # Context cleanup can fail if already closed or in error state
+                logger.debug("mcp_context_close_error", error=str(e))
     
     async def fetch_all(self) -> Dict:
         """
