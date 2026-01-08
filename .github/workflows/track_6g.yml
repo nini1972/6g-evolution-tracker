@@ -90,6 +90,14 @@ jobs:
           cp ../momentum_data. json . || echo "⚠️ momentum_data.json not found, skipping"
           cp ../source_target_matrix. json . || echo "⚠️ source_target_matrix. json not found, skipping"
 
+      - name: Verify dashboard files
+        run: |
+          echo "Checking dashboard files..."
+          ls -la dashboard/
+          test -f dashboard/latest_digest.json && echo "✓ latest_digest.json exists" || echo "✗ latest_digest.json missing"
+          test -f dashboard/momentum_data.json && echo "✓ momentum_data.json exists" || echo "✗ momentum_data.json missing"
+          test -f dashboard/source_target_matrix.json && echo "✓ source_target_matrix.json exists" || echo "✗ source_target_matrix.json missing"
+
       - name: Commit and push results
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
@@ -100,6 +108,9 @@ jobs:
           git add -f latest_digest.json
           git add -f momentum_data.json || echo "momentum_data.json not found, skipping"
           git add -f source_target_matrix.json || echo "source_target_matrix.json not found, skipping"
+          git add -f dashboard/latest_digest.json || echo "dashboard/latest_digest.json not found, skipping"
+          git add -f dashboard/momentum_data.json || echo "dashboard/momentum_data.json not found, skipping"
+          git add -f dashboard/source_target_matrix.json || echo "dashboard/source_target_matrix.json not found, skipping"
           git add -f output.log
           # Only commit if there are actual changes
           if ! git diff --cached --quiet; then
