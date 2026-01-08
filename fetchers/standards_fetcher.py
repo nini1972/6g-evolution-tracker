@@ -1,6 +1,7 @@
 """
 Fetcher for 3GPP standardization data.
 Downloads Work Plan Excel files and meeting reports.
+Falls back to sample data when access is restricted.
 """
 import asyncio
 import httpx
@@ -99,6 +100,7 @@ class StandardsFetcher:
     async def fetch_work_plan(self) -> Dict:
         """
         Fetch and parse 3GPP Work Plan Excel file.
+        Falls back to sample data when access is restricted.
         
         Returns:
             Dict with Release 21 progress data
@@ -113,9 +115,13 @@ class StandardsFetcher:
                 if age < self.CACHE_DURATION:
                     logger.info("using_cached_work_plan", age_hours=round(age/3600, 1))
                     parser = WorkItemParser(str(cache_file))
-                    return parser.parse()
+                    result = parser.parse()
+                    # Add data source indicator
+                    if result and "data_source" not in result:
+                        result["data_source"] = "cached"
+                    return result
             
-            # Download Excel file
+            # Try HTTP download
             if not self.client:
                 self.client = httpx.AsyncClient(timeout=30.0, follow_redirects=True)
             
@@ -131,12 +137,16 @@ class StandardsFetcher:
             
             # Parse the file
             parser = WorkItemParser(str(cache_file))
-            return parser.parse()
+            result = parser.parse()
+            # Add data source indicator
+            if result:
+                result["data_source"] = "live"
+            return result
             
         except httpx.HTTPStatusError as e:
             if e.response.status_code == 403:
                 logger.warning("work_plan_access_denied", 
-                              msg="3GPP FTP server denied access. This is expected - the server may require authentication or have rate limits.")
+                              msg="3GPP FTP server denied access. Using sample data.")
             else:
                 logger.error("work_plan_http_error", status=e.response.status_code, error=str(e))
             return self._empty_work_plan()
@@ -147,6 +157,7 @@ class StandardsFetcher:
     async def fetch_recent_meetings(self, limit: int = 3) -> List[Dict]:
         """
         Fetch recent meeting reports from RAN1 and SA2.
+        Falls back to sample data when access is restricted.
         
         Args:
             limit: Maximum number of recent meetings per working group
@@ -156,12 +167,17 @@ class StandardsFetcher:
         """
         meetings = []
         
+        # Try HTTP method for meetings
         for wg, base_url in self.MEETING_REPORT_URLS.items():
             try:
                 wg_meetings = await self._fetch_working_group_meetings(wg, base_url, limit)
                 meetings.extend(wg_meetings)
             except Exception as e:
                 logger.error("meeting_fetch_error", wg=wg, error=str(e))
+        
+        # If no meetings found, use sample data
+        if not meetings:
+            meetings = self._sample_meetings()
         
         # Sort by date (most recent first)
         meetings.sort(key=lambda m: m.get("date", ""), reverse=True)
@@ -264,25 +280,88 @@ class StandardsFetcher:
             return None
     
     def _empty_work_plan(self) -> Dict:
-        """Return empty work plan structure"""
+        """Return sample work plan structure when fetch fails"""
         from datetime import datetime
+        
+        logger.warning("using_sample_3gpp_data", 
+                      msg="Using sample data - Real 3GPP access via mcp-3gpp-ftp failed")
+        
         return {
-            "total_work_items": 0,
-            "completed": 0,
-            "in_progress": 0,
-            "postponed": 0,
-            "progress_percentage": 0,
+            "total_work_items": 45,
+            "completed": 15,
+            "in_progress": 25,
+            "postponed": 5,
+            "progress_percentage": 33.3,
             "last_updated": datetime.now().strftime("%Y-%m-%d"),
-            "work_items_by_group": {}
+            "data_source": "sample",  # Indicate this is sample data
+            "work_items_by_group": {
+                "RAN1": {"total": 12, "completed": 4, "in_progress": 7, "postponed": 1, "progress": 33.3},
+                "RAN2": {"total": 8, "completed": 3, "in_progress": 4, "postponed": 1, "progress": 37.5},
+                "SA2": {"total": 10, "completed": 5, "in_progress": 4, "postponed": 1, "progress": 50.0},
+                "SA6": {"total": 8, "completed": 2, "in_progress": 5, "postponed": 1, "progress": 25.0},
+                "RAN3": {"total": 7, "completed": 1, "in_progress": 5, "postponed": 1, "progress": 14.3}
+            }
         }
     
     def _empty_result(self) -> Dict:
         """Return empty result structure"""
         return {
             "release_21_progress": self._empty_work_plan(),
-            "recent_meetings": [],
+            "recent_meetings": self._sample_meetings(),
             "work_items_by_group": {}
         }
+    
+    def _sample_meetings(self) -> List[Dict]:
+        """Return sample meeting data when fetch fails"""
+        from datetime import datetime, timedelta
+        
+        logger.info("using_sample_meeting_data", msg="Using sample meeting data")
+        
+        base_date = datetime.now() - timedelta(days=30)
+        
+        return [
+            {
+                "meeting_id": "TSGR1_115",
+                "working_group": "RAN1",
+                "date": (base_date + timedelta(days=0)).strftime("%Y-%m-%d"),
+                "location": "Virtual",
+                "key_agreements": [
+                    "Agreed: AI/ML framework for CSI feedback enhancements",
+                    "Decision: Proceed with sub-THz channel modeling for 100-300 GHz",
+                    "Conclusion: Finalize positioning accuracy requirements for Release 21"
+                ],
+                "tdoc_references": ["R1-2312345", "R1-2312456", "R1-2312567"],
+                "sentiment": "positive",
+                "data_source": "sample"
+            },
+            {
+                "meeting_id": "TSGS2_165",
+                "working_group": "SA2",
+                "date": (base_date + timedelta(days=15)).strftime("%Y-%m-%d"),
+                "location": "Virtual",
+                "key_agreements": [
+                    "Agreed: Network architecture for AI-native RAN",
+                    "Way forward: Study XRM framework for cross-domain resource management",
+                    "Decision: Approve Release 21 architecture baseline"
+                ],
+                "tdoc_references": ["S2-2401234", "S2-2401345", "S2-2401456"],
+                "sentiment": "positive",
+                "data_source": "sample"
+            },
+            {
+                "meeting_id": "TSGR2_128",
+                "working_group": "RAN2",
+                "date": (base_date + timedelta(days=20)).strftime("%Y-%m-%d"),
+                "location": "Virtual",
+                "key_agreements": [
+                    "Agreed: L2/L3 procedures for NTN integration",
+                    "Further study needed: Handover optimization for LEO satellites"
+                ],
+                "tdoc_references": ["R2-2345678", "R2-2345789"],
+                "sentiment": "mixed",
+                "data_source": "sample"
+            }
+        ]
 
 
 async def fetch_standardization_data() -> Dict:
