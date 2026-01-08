@@ -3,15 +3,141 @@
   "articles": [],
   "standardization": {
     "release_21_progress": {
-      "total_work_items": 0,
-      "completed": 0,
-      "in_progress": 0,
-      "postponed": 0,
-      "progress_percentage": 0,
+      "total_work_items": 45,
+      "completed": 15,
+      "in_progress": 25,
+      "postponed": 5,
+      "progress_percentage": 33.3,
       "last_updated": "2026-01-08",
-      "work_items_by_group": {}
+      "data_source": "sample",
+      "work_items_by_group": {
+        "RAN1": {
+          "total": 12,
+          "completed": 4,
+          "in_progress": 7,
+          "postponed": 1,
+          "progress": 33.3
+        },
+        "RAN2": {
+          "total": 8,
+          "completed": 3,
+          "in_progress": 4,
+          "postponed": 1,
+          "progress": 37.5
+        },
+        "SA2": {
+          "total": 10,
+          "completed": 5,
+          "in_progress": 4,
+          "postponed": 1,
+          "progress": 50.0
+        },
+        "SA6": {
+          "total": 8,
+          "completed": 2,
+          "in_progress": 5,
+          "postponed": 1,
+          "progress": 25.0
+        },
+        "RAN3": {
+          "total": 7,
+          "completed": 1,
+          "in_progress": 5,
+          "postponed": 1,
+          "progress": 14.3
+        }
+      }
     },
-    "recent_meetings": [],
-    "work_items_by_group": {}
+    "recent_meetings": [
+      {
+        "meeting_id": "TSGR2_128",
+        "working_group": "RAN2",
+        "date": "2025-12-29",
+        "location": "Virtual",
+        "key_agreements": [
+          "Agreed: L2/L3 procedures for NTN integration",
+          "Further study needed: Handover optimization for LEO satellites"
+        ],
+        "tdoc_references": [
+          "R2-2345678",
+          "R2-2345789"
+        ],
+        "sentiment": "mixed",
+        "data_source": "sample"
+      },
+      {
+        "meeting_id": "TSGS2_165",
+        "working_group": "SA2",
+        "date": "2025-12-24",
+        "location": "Virtual",
+        "key_agreements": [
+          "Agreed: Network architecture for AI-native RAN",
+          "Way forward: Study XRM framework for cross-domain resource management",
+          "Decision: Approve Release 21 architecture baseline"
+        ],
+        "tdoc_references": [
+          "S2-2401234",
+          "S2-2401345",
+          "S2-2401456"
+        ],
+        "sentiment": "positive",
+        "data_source": "sample"
+      },
+      {
+        "meeting_id": "TSGR1_115",
+        "working_group": "RAN1",
+        "date": "2025-12-09",
+        "location": "Virtual",
+        "key_agreements": [
+          "Agreed: AI/ML framework for CSI feedback enhancements",
+          "Decision: Proceed with sub-THz channel modeling for 100-300 GHz",
+          "Conclusion: Finalize positioning accuracy requirements for Release 21"
+        ],
+        "tdoc_references": [
+          "R1-2312345",
+          "R1-2312456",
+          "R1-2312567"
+        ],
+        "sentiment": "positive",
+        "data_source": "sample"
+      }
+    ],
+    "work_items_by_group": {
+      "RAN1": {
+        "total": 12,
+        "completed": 4,
+        "in_progress": 7,
+        "postponed": 1,
+        "progress": 33.3
+      },
+      "RAN2": {
+        "total": 8,
+        "completed": 3,
+        "in_progress": 4,
+        "postponed": 1,
+        "progress": 37.5
+      },
+      "SA2": {
+        "total": 10,
+        "completed": 5,
+        "in_progress": 4,
+        "postponed": 1,
+        "progress": 50.0
+      },
+      "SA6": {
+        "total": 8,
+        "completed": 2,
+        "in_progress": 5,
+        "postponed": 1,
+        "progress": 25.0
+      },
+      "RAN3": {
+        "total": 7,
+        "completed": 1,
+        "in_progress": 5,
+        "postponed": 1,
+        "progress": 14.3
+      }
+    }
   }
 }
