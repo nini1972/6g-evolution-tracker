@@ -45,6 +45,10 @@ class StandardsFetcher:
     # Cache duration in seconds (24 hours)
     CACHE_DURATION = 86400
     
+    # MCP connection timeouts
+    MCP_INIT_TIMEOUT = 8.0  # seconds - fail fast if server not responding
+    MCP_HEALTH_CHECK_TIMEOUT = 3.0  # seconds
+    
     def __init__(self, cache_dir: str = "/tmp/3gpp_cache"):
         self.cache_dir = Path(cache_dir)
         self.cache_dir.mkdir(parents=True, exist_ok=True)
@@ -161,22 +165,22 @@ class StandardsFetcher:
             try:
                 logger.info("attempting_mcp_connection", server="mcp-3gpp-ftp")
                 
-                # Initialize with 8s timeout - fail fast if server not responding
+                # Initialize with timeout - fail fast if server not responding
                 # (Testing shows the server can hang indefinitely on init handshake)
                 start_time = time.time()
                 
                 await asyncio.wait_for(
                     self._init_mcp_session(),
-                    timeout=8.0
+                    timeout=self.MCP_INIT_TIMEOUT
                 )
                 
                 init_elapsed = time.time() - start_time
                 logger.info("mcp_init_completed", elapsed_seconds=round(init_elapsed, 2))
                 
-                # Health check with 3s timeout
+                # Health check
                 health_ok = await asyncio.wait_for(
                     self._test_mcp_health(),
-                    timeout=3.0
+                    timeout=self.MCP_HEALTH_CHECK_TIMEOUT
                 )
                 
                 if not health_ok:
@@ -186,7 +190,7 @@ class StandardsFetcher:
             except asyncio.TimeoutError:
                 logger.error("mcp_timeout", 
                             msg="MCP server initialization timed out - falling back to HTTP/sample data",
-                            timeout_seconds=8)
+                            timeout_seconds=self.MCP_INIT_TIMEOUT)
                 await self._cleanup_mcp()
                 
             except Exception as e:
