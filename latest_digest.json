@@ -1,107 +1,104 @@
 {
-  "date": "2026-01-05",
+  "date": "2026-01-08",
   "articles": [
     {
       "source": "ArXiv CS Networking",
-      "title": "CTMap: LLM-Enabled Connectivity-Aware Path Planning in Millimeter-Wave Digital Twin Networks",
-      "link": "https://arxiv.org/abs/2601.00110",
+      "title": "Badanie Sieci Massive MIMO o Architekturze Zorientowanej na Uzytkownika",
+      "link": "https://arxiv.org/abs/2601.04042",
       "score": 3,
       "ai_insights": {
         "is_6g_relevant": true,
-        "source_region": "US",
-        "summary": "The article introduces CTMAP, a framework combining Large Language Models (LLMs) and Digital Twins to solve connectivity issues in mmWave 6G networks. By using ray-tracing simulations to create signal-aware maps, it trains a GPT-4 based model to provide semantic, connectivity-optimized navigation, significantly outperforming traditional distance-based path planning.",
+        "source_region": "EU",
+        "summary": "This research evaluates user-centric Massive MIMO architectures for 6G networks using high-fidelity 3D Ray-Tracing simulations. It demonstrates that moving away from cell-based structures to a model where multiple base stations serve a single user simultaneously can triple throughput for users at the edge of traditional coverage areas.",
         "overall_6g_importance": 7,
         "6g_topics": [
-          "AI-native RAN",
-          "semantic communications",
           "network automation",
-          "cloud-edge integration"
+          "sustainability",
+          "Open RAN"
         ],
         "impact_dimensions": {
           "research_intensity": 4,
           "standardization_influence": 2,
-          "industrial_deployment": 2,
+          "industrial_deployment": 1,
           "spectrum_policy_signal": 1,
-          "ecosystem_maturity": 3
-        },
-        "time_horizon": "mid-term",
-        "world_power_impact": {
-          "US": 4,
-          "EU": 2,
-          "China": 3,
-          "Japan": 2,
-          "Korea": 2,
-          "India": 1
-        },
-        "emerging_concepts": [
-          "Connectivity-Aware Path Planning",
-          "LLM-Enabled Digital Twins",
-          "Semantic Route Queries",
-          "Instruction-tuned Network Reasoning",
-          "Ray-tracing integrated instruction datasets"
-        ],
-        "key_evidence": [
-          "CTMAP achieves up to a tenfold improvement in cumulative signal strength compared to shortest-distance baselines.",
-          "The framework utilizes NVIDIA Sionna's ray-tracing engine to simulate realistic received signal strength (RSS) maps.",
-          "Instruction-tuned GPT-4 is used to enable interpretable, semantic route navigation based on network connectivity.",
-          "The system addresses the critical 6G challenge of signal blockage in dense urban mmWave environments."
-        ],
-        "impact_score": 7
-      },
-      "source_region": "US",
-      "summary": "arXiv:2601.00110v1 Announce Type: new \nAbstract: In this paper, we present \\textit{CTMAP}, a large language model (LLM) empowered digital twin framework for connectivity-aware route navigation in millimeter-wave (mmWave) wireless networks. Conventional navigation tools optimize only distance, time, or cost, overlooking network connectivity degradation caused by signal blockage in dense urban environments. The proposed framework constructs a digital twin of the physical mmWave network using OpenStreetMap, Blender, and NVIDIA Sionna's ray-tracing engine to simulate realistic received signal strength (RSS) maps. A modified Dijkstra algorithm then generates optimal routes that maximize cumulative RSS, forming the training data for instruction-tuned GPT-4-based reasoning. This integration enables semantic route queries such as ``find the strongest-signal path'' and returns connectivity-optimized paths that are interpretable by users and adaptable to real-time environmental updates. Experimental results demonstrate that CTMAP achieves up to a tenfold improvement in cumulative signal strength compared to shortest-distance baselines, while maintaining high path validity. The synergy of digital twin simulation and LLM reasoning establishes a scalable foundation for intelligent, interpretable, and connectivity-driven navigation, advancing the design of AI-empowered 6G mobility systems.",
-      "date": "2026-01-05"
-    },
-    {
-      "source": "ArXiv CS Networking",
-      "title": "Multi-Satellite NOMA-Irregular Repetition Slotted ALOHA for IoT Networks",
-      "link": "https://arxiv.org/abs/2601.00341",
-      "score": 3,
-      "ai_insights": {
-        "is_6g_relevant": true,
-        "source_region": "Other",
-        "summary": "This research addresses the challenges of massive IoT connectivity in the 6G era by proposing a Multi-Satellite NOMA-Irregular Repetition Slotted ALOHA (IRSA) protocol. It leverages the receiver diversity provided by mega-constellations to mitigate collision probabilities and enhance system capacity in Non-Terrestrial Networks (NTNs).",
-        "overall_6g_importance": 7,
-        "6g_topics": [
-          "NTN",
-          "sustainability",
-          "spectrum & policy",
-          "device ecosystem"
-        ],
-        "impact_dimensions": {
-          "research_intensity": 4,
-          "standardization_influence": 3,
-          "industrial_deployment": 2,
-          "spectrum_policy_signal": 2,
           "ecosystem_maturity": 2
         },
         "time_horizon": "mid-term",
         "world_power_impact": {
-          "US": 4,
-          "EU": 3,
-          "China": 4,
+          "US": 3,
+          "EU": 4,
+          "China": 3,
           "Japan": 2,
           "Korea": 2,
           "India": 2
         },
         "emerging_concepts": [
-          "Multi-Satellite Receiver Diversity",
-          "NOMA-Irregular Repetition Slotted ALOHA (NOMA-IRSA)",
-          "Mega-constellation collision mitigation",
-          "Satellite-based massive random access",
-          "NTN Energy Efficiency Trade-offs"
+          "User-centric network architecture",
+          "Cell-free Massive MIMO",
+          "3D Ray-Tracing channel modeling",
+          "Multi-base station cooperative serving"
         ],
         "key_evidence": [
-          "Integration of Non-Terrestrial Networks (NTNs) is deemed necessary to accommodate the 6G surge in IoT devices.",
-          "Visibility of just one additional satellite as a receiver yields significant gains in overall system performance.",
-          "The study derives a lower bound of system performance to serve as a fast tool for 6G network behavior evaluation.",
-          "NOMA-IRSA protocol is utilized to manage high-density user access and collision probability in large satellite coverage areas."
+          "User-centric network architecture can increase cell-edge users throughput by a fold of 3.",
+          "System utilizes an accurate 3D Ray-Tracing radio channel model for validation.",
+          "The architecture assumes a user is served by all base stations rather than a single cell.",
+          "Confirms the viability of large antenna arrays in a distributed, user-centric 6G topology."
+        ],
+        "impact_score": 7
+      },
+      "source_region": "EU",
+      "summary": "arXiv:2601.04042v1 Announce Type: new \nAbstract: The future 6G networks are expected to utilize large antenna arrays and follow the user-centric architecture, where the user is being served by all base stations. This work evaluates such a system within an advanced system-level simulator, which utilizes an accurate 3D Ray-Tracing radio channel model. Results show that the novel user-centric network architecture can increase the cell-edge users throughput by a fold of 3.",
+      "date": "2026-01-08"
+    },
+    {
+      "source": "ArXiv CS Networking",
+      "title": "AI-Enabled Digital Twins for Next-Generation Networks: Forecasting Traffic and Resource Management in 5G/6G",
+      "link": "https://arxiv.org/abs/2510.20796",
+      "score": 3,
+      "ai_insights": {
+        "is_6g_relevant": true,
+        "source_region": "Other",
+        "summary": "This research explores the integration of AI-driven Digital Twins (DTs) into the architecture of 5G and 6G networks to address the complexities of real-time service provisioning. By utilizing Long Short-Term Memory (LSTM) neural networks within a Digital Twin Network (DTN) framework, the study demonstrates a method for proactive traffic forecasting and autonomous resource allocation, aiming to replace traditional heuristic management with high-precision virtual replicas.",
+        "overall_6g_importance": 7,
+        "6g_topics": [
+          "AI-native RAN",
+          "network automation",
+          "cloud-edge integration"
+        ],
+        "impact_dimensions": {
+          "research_intensity": 4,
+          "standardization_influence": 3,
+          "industrial_deployment": 2,
+          "spectrum_policy_signal": 1,
+          "ecosystem_maturity": 2
+        },
+        "time_horizon": "mid-term",
+        "world_power_impact": {
+          "US": 3,
+          "EU": 4,
+          "China": 4,
+          "Japan": 3,
+          "Korea": 3,
+          "India": 2
+        },
+        "emerging_concepts": [
+          "Digital Twin Networks (DTNs)",
+          "AI-Enabled DT framework",
+          "LSTM-driven proactive resource management",
+          "Virtual network replicas for risk-free optimization",
+          "Fully autonomous network management"
+        ],
+        "key_evidence": [
+          "Identifies Digital Twins as key enablers for modeling, analyzing, and optimizing 6G operations without risking live network stability.",
+          "Proposes embedding LSTM neural networks into the DT framework to forecast traffic patterns.",
+          "Concludes that AI-embedded DTs are essential for meeting 6G requirements for agility, scalability, and resilience.",
+          "Benchmarked results show the AI-Enabled DT framework outperforms traditional heuristic-based resource management techniques."
         ],
         "impact_score": 7
       },
       "source_region": "Other",
-      "summary": "arXiv:2601.00341v1 Announce Type: new \nAbstract: As the transition from 5G to 6G unfolds, a substantial increase in Internet of Things (IoT) devices is expected, enabling seamless and pervasive connectivity across various applications. Accommodating this surge and meeting the high capacity demands will necessitate the integration of NonTerrestrial Networks (NTNs). However, the extensive coverage area of satellites, relative to terrestrial receivers, will lead to a high density of users attempting to access the channel at the same time, increasing the collision probability. In turn, the deployment of mega constellations make it possible for ground users to be in visibility of more than one satellite at the same time, enabling receiver diversity. Therefore, in this paper, we evaluate the impact of multi-receivers in scenarios where IoT nodes share the channel following a non-orthogonal multiple access (NOMA)irregular repetition slotted ALOHA (IRSA) protocol. Considering the impairments of satellite channels, we derive a lower bound of system performance, serving as a fast tool for initial evaluation of network behavior. Additionally, we identify the trade-offs inherent to the network design parameters, with a focus on packet loss rate and energy efficiency. Notably, in the visibility of only one extra satellite as receiver yields significant gains in overall system performance.",
-      "date": "2026-01-05"
+      "summary": "arXiv:2510.20796v3 Announce Type: replace \nAbstract: As 5G and future 6G mobile networks become increasingly more sophisticated, the requirements for agility, scalability, resilience, and precision in real-time service provisioning cannot be met using traditional and heuristic-based resource management techniques, just like any advancing technology. With the aim of overcoming such limitations, network operators are foreseeing Digital Twins (DTs) as key enablers, which are designed as dynamic and virtual replicas of network infrastructure, allowing operators to model, analyze, and optimize various operations without any risk of affecting the live network. However, for Digital Twin Networks (DTNs) to meet the challenges faced by operators especially in line with resource management, a driving engine is needed. In this paper, an AI (Artificial Intelligence)-driven approach is presented by integrating a Long Short-Term Memory (LSTM) neural network into the DT framework, aimed at forecasting network traffic patterns and proactively managing resource allocation. Through analytical experiments, the AI-Enabled DT framework demonstrates superior performance benchmarked against baseline methods. Our study concludes that embedding AI capabilities within DTs paves the way for fully autonomous, adaptive, and high-performance network management in future mobile networks.",
+      "date": "2026-01-08"
     }
   ]
 }
