@@ -112,7 +112,12 @@ class StandardsFetcher:
             if not self.client:
                 self.client = httpx.AsyncClient(timeout=30.0, follow_redirects=True)
             
-            response = await self.client.get(self.WORK_PLAN_URL)
+            # Add user agent to avoid 403
+            headers = {
+                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
+            }
+            
+            response = await self.client.get(self.WORK_PLAN_URL, headers=headers)
             response.raise_for_status()
             
             # Save to cache
@@ -123,6 +128,13 @@ class StandardsFetcher:
             parser = WorkItemParser(str(cache_file))
             return parser.parse()
             
+        except httpx.HTTPStatusError as e:
+            if e.response.status_code == 403:
+                logger.warning("work_plan_access_denied", 
+                              msg="3GPP FTP server denied access. This is expected - the server may require authentication or have rate limits.")
+            else:
+                logger.error("work_plan_http_error", status=e.response.status_code, error=str(e))
+            return self._empty_work_plan()
         except Exception as e:
             logger.error("work_plan_fetch_error", error=str(e))
             return self._empty_work_plan()
@@ -157,8 +169,13 @@ class StandardsFetcher:
             if not self.client:
                 self.client = httpx.AsyncClient(timeout=30.0, follow_redirects=True)
             
+            # Add user agent to avoid 403
+            headers = {
+                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
+            }
+            
             # Get directory listing
-            response = await self.client.get(base_url)
+            response = await self.client.get(base_url, headers=headers)
             response.raise_for_status()
             
             # Parse directory listing (HTML)
@@ -185,6 +202,13 @@ class StandardsFetcher:
             
             return meetings
             
+        except httpx.HTTPStatusError as e:
+            if e.response.status_code == 403:
+                logger.warning("wg_meeting_access_denied", wg=wg,
+                              msg="3GPP FTP server denied access. This is expected.")
+            else:
+                logger.error("wg_meeting_http_error", wg=wg, status=e.response.status_code)
+            return []
         except Exception as e:
             logger.error("wg_meeting_fetch_error", wg=wg, error=str(e))
             return []
