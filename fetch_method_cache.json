@@ -2,5 +2,12 @@
   "export.arxiv.org": "httpx",
   "spectrum.ieee.org": "httpx",
   "www.nokia.com": "httpx",
-  "www.thalesgroup.com": "playwright"
+  "www.thalesgroup.com": "playwright",
+  "www.nextgalliance.org": "httpx",
+  "smart-networks.europa.eu": "httpx",
+  "www.6gworld.com": "httpx",
+  "www.rcrwireless.com": "httpx",
+  "www.fiercewireless.com": "httpx",
+  "www.mobileworldlive.com": "httpx",
+  "www.zdnet.com": "httpx"
 }
