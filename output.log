@@ -1,29 +1,70 @@
 🚀 6G Sentinel started its monthly sweep.
 
-🤖 Gemini AI Intelligence is ACTIVE. (Model: gemini-3-flash)
+🤖 Gemini AI Intelligence is ACTIVE. (Model: gemini-3-flash-preview)
 
 📡 Fetching 6 RSS feeds in parallel...
-⚠️ Thales returned HTML instead of RSS/XML
-✗ Thales: Failed to fetch
-⚠️ 403 Forbidden for MDPI Engineering, rotating user agent and retrying in 2s... (attempt 1/3)
-⚠️ 403 Forbidden for Ericsson, rotating user agent and retrying in 2s... (attempt 1/3)
-✓ IEEE Spectrum: 30 total entries fetched
-✓ ArXiv CS Networking: 14 total entries fetched
-✓ Nokia: 25 total entries fetched
-⚠️ 403 Forbidden for MDPI Engineering, rotating user agent and retrying in 4s... (attempt 2/3)
-⚠️ 403 Forbidden for Ericsson, rotating user agent and retrying in 4s... (attempt 2/3)
-❌ Failed to fetch MDPI Engineering: 403 Forbidden after 3 attempts with different user agents
-✗ MDPI Engineering: Failed to fetch
-❌ Failed to fetch Ericsson: 403 Forbidden after 3 attempts with different user agents
+{"source": "Ericsson", "url": "https://www.ericsson.com/en/blog/rss", "event": "fetch_started", "timestamp": "2026-01-08T11:20:18.541163Z", "level": "info"}
+{"url": "https://www.ericsson.com/en/blog/rss", "event": "trying_httpx", "timestamp": "2026-01-08T11:20:18.541270Z", "level": "info"}
+{"source": "Thales", "url": "https://www.thalesgroup.com/en/rss.xml", "event": "fetch_started", "timestamp": "2026-01-08T11:20:18.566603Z", "level": "info"}
+{"url": "https://www.thalesgroup.com/en/rss.xml", "event": "trying_httpx", "timestamp": "2026-01-08T11:20:18.566704Z", "level": "info"}
+{"source": "MDPI Engineering", "url": "https://www.mdpi.com/rss", "event": "fetch_started", "timestamp": "2026-01-08T11:20:18.567034Z", "level": "info"}
+{"url": "https://www.mdpi.com/rss", "event": "trying_httpx", "timestamp": "2026-01-08T11:20:18.567080Z", "level": "info"}
+{"source": "Nokia", "url": "https://www.nokia.com/newsroom/feed/en-us/", "event": "fetch_started", "timestamp": "2026-01-08T11:20:18.567251Z", "level": "info"}
+{"url": "https://www.nokia.com/newsroom/feed/en-us/", "event": "trying_httpx", "timestamp": "2026-01-08T11:20:18.567306Z", "level": "info"}
+{"source": "IEEE Spectrum", "url": "https://spectrum.ieee.org/feeds/feed.rss", "event": "fetch_started", "timestamp": "2026-01-08T11:20:18.567484Z", "level": "info"}
+{"url": "https://spectrum.ieee.org/feeds/feed.rss", "event": "trying_httpx", "timestamp": "2026-01-08T11:20:18.567523Z", "level": "info"}
+{"source": "ArXiv CS Networking", "url": "http://export.arxiv.org/rss/cs.NI", "event": "fetch_started", "timestamp": "2026-01-08T11:20:18.567681Z", "level": "info"}
+{"url": "http://export.arxiv.org/rss/cs.NI", "event": "trying_httpx", "timestamp": "2026-01-08T11:20:18.567719Z", "level": "info"}
+{"url": "https://www.thalesgroup.com/en/rss.xml", "event": "httpx_returned_html_trying_playwright", "timestamp": "2026-01-08T11:20:18.629640Z", "level": "warning"}
+{"url": "https://www.thalesgroup.com/en/rss.xml", "status_code": 200, "error": "HTML response", "event": "httpx_failed_trying_playwright", "timestamp": "2026-01-08T11:20:18.629712Z", "level": "warning"}
+{"url": "https://www.mdpi.com/rss", "status_code": 403, "error": "HTTP 403: Forbidden", "event": "httpx_failed_trying_playwright", "timestamp": "2026-01-08T11:20:18.740821Z", "level": "warning"}
+{"url": "https://www.ericsson.com/en/blog/rss", "status_code": 403, "error": "HTTP 403: Forbidden", "event": "httpx_failed_trying_playwright", "timestamp": "2026-01-08T11:20:18.870599Z", "level": "warning"}
+{"url": "https://www.ericsson.com/en/blog/rss", "error": "'NoneType' object has no attribute 'new_page'", "error_type": "AttributeError", "event": "playwright_error", "timestamp": "2026-01-08T11:20:18.870707Z", "level": "error"}
+{"url": "https://www.ericsson.com/en/blog/rss", "event": "playwright_fallback_failed", "timestamp": "2026-01-08T11:20:18.870750Z", "level": "error"}
+{"source": "Ericsson", "status_code": null, "error": "'NoneType' object has no attribute 'new_page'", "method": "playwright", "event": "fetch_failed", "timestamp": "2026-01-08T11:20:18.870783Z", "level": "error"}
 ✗ Ericsson: Failed to fetch
+{"url": "http://export.arxiv.org/rss/cs.NI", "event": "httpx_success", "timestamp": "2026-01-08T11:20:18.942694Z", "level": "info"}
+{"source": "ArXiv CS Networking", "method": "httpx", "entries": 10, "event": "fetch_success", "timestamp": "2026-01-08T11:20:18.968683Z", "level": "info"}
+✓ ArXiv CS Networking: 10 total entries fetched (via httpx)
+{"url": "https://spectrum.ieee.org/feeds/feed.rss", "event": "httpx_success", "timestamp": "2026-01-08T11:20:18.979241Z", "level": "info"}
+{"source": "IEEE Spectrum", "method": "httpx", "entries": 30, "event": "fetch_success", "timestamp": "2026-01-08T11:20:19.122876Z", "level": "info"}
+✓ IEEE Spectrum: 30 total entries fetched (via httpx)
+{"browser_type": "chromium", "event": "playwright_browser_started", "timestamp": "2026-01-08T11:20:19.127404Z", "level": "info"}
+{"url": "https://www.thalesgroup.com/en/rss.xml", "event": "playwright_fetch_started", "timestamp": "2026-01-08T11:20:19.166995Z", "level": "info"}
+{"browser_type": "chromium", "event": "playwright_browser_started", "timestamp": "2026-01-08T11:20:19.195497Z", "level": "info"}
+{"url": "https://www.mdpi.com/rss", "event": "playwright_fetch_started", "timestamp": "2026-01-08T11:20:19.222503Z", "level": "info"}
+{"url": "https://www.nokia.com/newsroom/feed/en-us/", "event": "httpx_success", "timestamp": "2026-01-08T11:20:19.353789Z", "level": "info"}
+{"source": "Nokia", "method": "httpx", "entries": 25, "event": "fetch_success", "timestamp": "2026-01-08T11:20:19.408230Z", "level": "info"}
+✓ Nokia: 25 total entries fetched (via httpx)
+{"url": "https://www.mdpi.com/rss", "event": "playwright_blocked_detected", "timestamp": "2026-01-08T11:20:33.813858Z", "level": "warning"}
+{"url": "https://www.mdpi.com/rss", "event": "playwright_fallback_failed", "timestamp": "2026-01-08T11:20:33.817138Z", "level": "error"}
+{"source": "MDPI Engineering", "status_code": 403, "error": "Bot detection triggered", "method": "playwright", "event": "fetch_failed", "timestamp": "2026-01-08T11:20:33.817218Z", "level": "error"}
+✗ MDPI Engineering: Failed to fetch
+{"event": "extracted_xml_from_html_wrapper", "timestamp": "2026-01-08T11:20:34.528172Z", "level": "info"}
+{"url": "https://www.thalesgroup.com/en/rss.xml", "content_length": 187512, "event": "playwright_fetch_success", "timestamp": "2026-01-08T11:20:34.528261Z", "level": "info"}
+{"url": "https://www.thalesgroup.com/en/rss.xml", "event": "playwright_fallback_success", "timestamp": "2026-01-08T11:20:34.534502Z", "level": "info"}
+{"source": "Thales", "method": "playwright", "entries": 10, "event": "fetch_success", "timestamp": "2026-01-08T11:20:34.612898Z", "level": "info"}
+✓ Thales: 10 total entries fetched (via playwright)
 
-📭 IEEE Spectrum: No new keyword-matching updates this cycle.
-
-📭 ArXiv CS Networking: No new keyword-matching updates this cycle.
+📭 Thales: No new keyword-matching updates this cycle.
 
 📭 Nokia: No new keyword-matching updates this cycle.
 
+📭 IEEE Spectrum: No new keyword-matching updates this cycle.
+
+  ✨ Generating AI insights for: Badanie Sieci Massive MIMO o Architekturze Zorient...
+  ✨ Generating AI insights for: AI-Enabled Digital Twins for Next-Generation Netwo...
+🔎 ArXiv CS Networking: 2 new relevant updates found.
+  • [3] Badanie Sieci Massive MIMO o Architekturze Zorientowanej na Uzytkownika
+    https://arxiv.org/abs/2601.04042
+  • [3] AI-Enabled Digital Twins for Next-Generation Networks: Forecasting Traffic and Resource Management in 5G/6G
+    https://arxiv.org/abs/2510.20796
+
+📊 JSON data exported to latest_digest.json
+🌐 Weighted Source→Target matrix updated.
+📈 Region-specific momentum aggregated for 1 region-quarter windows.
 ✅ 6G Sentinel completed its sweep.
-📊 Total new articles processed: 0
-💾 Cache updated with 3 unique articles.
+📊 Total new articles processed: 2
+💾 Cache updated with 7 unique articles.
 🔮 The future is still under construction.
+{"event": "playwright_browser_closed", "timestamp": "2026-01-08T11:20:58.366086Z", "level": "info"}

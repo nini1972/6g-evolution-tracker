@@ -23,5 +23,15 @@
     "url": "https://arxiv.org/abs/2601.01791",
     "title": "Rethinking Secure Semantic Communications in the Age of Generative and Agentic AI: Threats and Opportunities",
     "processed_date": "2026-01-07"
+  },
+  "e77814eb1a865e963d703e3dd0a0434e": {
+    "url": "https://arxiv.org/abs/2601.04042",
+    "title": "Badanie Sieci Massive MIMO o Architekturze Zorientowanej na Uzytkownika",
+    "processed_date": "2026-01-08"
+  },
+  "433f7b19b12a4ddc0734b2ef63b0a0f4": {
+    "url": "https://arxiv.org/abs/2510.20796",
+    "title": "AI-Enabled Digital Twins for Next-Generation Networks: Forecasting Traffic and Resource Management in 5G/6G",
+    "processed_date": "2026-01-08"
   }
 }

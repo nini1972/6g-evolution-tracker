@@ -8,12 +8,12 @@
     "India": 15
   },
   "EU": {
-    "US": 0,
-    "EU": 0,
-    "China": 0,
-    "Japan": 0,
-    "Korea": 0,
-    "India": 0
+    "US": 21,
+    "EU": 28,
+    "China": 21,
+    "Japan": 14,
+    "Korea": 14,
+    "India": 14
   },
   "China": {
     "US": 0,

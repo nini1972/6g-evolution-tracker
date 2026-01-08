@@ -1,0 +1,6 @@
+{
+  "export.arxiv.org": "httpx",
+  "spectrum.ieee.org": "httpx",
+  "www.nokia.com": "httpx",
+  "www.thalesgroup.com": "playwright"
+}
