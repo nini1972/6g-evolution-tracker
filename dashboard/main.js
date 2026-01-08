@@ -186,10 +186,29 @@ function renderStandardizationPanel(stdData) {
     const progress = stdData.release_21_progress;
     const meetings = stdData.recent_meetings || [];
     const byGroup = stdData.work_items_by_group || {};
+    const dataSource = progress.data_source || "live";
 
     // Build the HTML
     let html = `
         <h3>3GPP Release 21 Progress</h3>
+    `;
+    
+    // Add badge if using sample data
+    if (dataSource === "sample") {
+        html += `
+            <div class="sample-data-badge">
+                ⚠️ Using sample data - Live 3GPP integration pending
+            </div>
+        `;
+    } else if (dataSource === "cached") {
+        html += `
+            <div class="cached-data-badge">
+                📦 Using cached data from ${progress.last_updated}
+            </div>
+        `;
+    }
+    
+    html += `
         <div class="progress-bar-container">
             <div class="progress-bar">
                 <div class="progress-fill" style="width: ${progress.progress_percentage}%">
@@ -243,6 +262,11 @@ function renderStandardizationPanel(stdData) {
                 'mixed': '🔄',
                 'neutral': '📋'
             }[meeting.sentiment] || '📋';
+            
+            // Show sample data indicator on meeting cards
+            const meetingDataSource = meeting.data_source || dataSource;
+            const sampleBadge = meetingDataSource === "sample" ? 
+                '<span class="sample-badge" title="Sample Data">📋</span>' : '';
 
             html += `
                 <div class="meeting-card">
@@ -250,6 +274,7 @@ function renderStandardizationPanel(stdData) {
                         <span class="meeting-wg">${meeting.working_group}</span>
                         <span class="meeting-id">${meeting.meeting_id}</span>
                         <span class="meeting-sentiment">${sentimentIcon}</span>
+                        ${sampleBadge}
                     </div>
                     <div class="meeting-meta">
                         ${meeting.date ? `📅 ${meeting.date}` : ''} 

@@ -15,12 +15,22 @@ A scheduled Python script runs monthly using GitHub Actions to monitor news, pub
 - **📱 Responsive Design**: Optimized for both desktop and mobile viewing.
 
 ### 📊 3GPP Standardization Tracking (NEW)
+
+The tracker uses the **`mcp-3gpp-ftp`** package to access official 3GPP technical documents:
+
 - **Release 21 Progress**: Tracks completion percentage of 6G Work Items
 - **Working Group Breakdown**: Monitor progress by RAN1, RAN2, SA2, etc.
 - **Recent Meeting Reports**: Automated extraction of key agreements from 3GPP meetings
 - **TDoc Reference Tracking**: Links to technical documents and proposals
 - **Sentiment Analysis**: Positive, mixed, or negative signals from standardization activities
 - **Quantitative Metrics**: Move beyond qualitative news to track actual standardization milestones
+
+#### Data Sources
+- **Live Data**: 3GPP FTP Server accessed via `mcp-3gpp-ftp` package (https://www.3gpp.org/ftp/)
+- **Fallback**: Sample data is used when FTP access is unavailable or restricted
+- **Cache**: Downloaded data is cached for 24 hours to reduce server load
+
+The dashboard displays a badge indicating whether data is from live sources, cached, or sample data.
 
 ### Performance & Reliability
 - **⚡ Parallel Fetching**: Concurrently fetches multiple RSS feeds simultaneously.
@@ -53,6 +63,18 @@ To enable the AI summarization, add a `GOOGLE_API_KEY` to your GitHub Repository
     ```
 
 The dashboard can be viewed by opening `dashboard/index.html` (Note: for local view, ensure `latest_digest.json` is generated).
+
+### 📦 Dependencies
+
+Key dependencies:
+- `google-genai` - AI-powered article analysis
+- `mcp-3gpp-ftp>=0.1.8` - Specialized 3GPP FTP client for standardization data
+- `httpx` - HTTP client with HTTP/2 support
+- `playwright` - Browser automation for dynamic content
+- `openpyxl` - Excel file parsing (fallback for Work Plan parsing)
+- `beautifulsoup4` - HTML parsing
+- `feedparser` - RSS feed parsing
+- `structlog` - Structured logging
 
 ## Cache Management
 
