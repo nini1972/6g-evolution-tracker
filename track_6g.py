@@ -544,11 +544,7 @@ async def main_async():
                     print(f"  🚫 AI rejected as irrelevant: {entry.get('title')[:50]}")
                     continue
                 
-        except Exception as e:
-            print(f"❌ Unexpected error for {source}: {type(e).__name__}: {e}")
-            return None
-
-
+       
 async def fetch_all_feeds() -> dict:
     """Fetch all feeds in parallel using hybrid strategy"""
     print(f"📡 Fetching {len(FEEDS)} RSS feeds in parallel...")
