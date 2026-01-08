@@ -47,6 +47,11 @@ jobs:
         with:
           python-version: '3.13'
 
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with: 
+          node-version: '22'
+
       - name: Install dependencies
         run: |
           pip install -r requirements.txt
@@ -74,18 +79,14 @@ jobs:
 
       - name: Start MCP 3GPP Server (background)
         run: |
-          # mcp-3gpp-ftp is installed via pip from requirements.txt
-          # Start it in background for real 3GPP data access
-          if command -v mcp-3gpp-ftp &> /dev/null; then
-            nohup mcp-3gpp-ftp > mcp_server.log 2>&1 &
-            MCP_PID=$!
-            echo "MCP_PID=$MCP_PID" >> $GITHUB_ENV
-            echo "✓ MCP server started with PID $MCP_PID"
-            sleep 5  # Give server time to initialize
-          else
-            echo "⚠️ mcp-3gpp-ftp not found. Will use graceful fallback to HTTP/sample data."
-          fi
-        
+          # Start 3gpp-mcp-charging via npx in background
+          echo "Starting 3gpp-mcp-charging MCP server..."
+          npx 3gpp-mcp-charging@latest serve > mcp_server.log 2>&1 &
+          MCP_PID=$!
+          echo "MCP_PID=$MCP_PID" >> $GITHUB_ENV
+          echo "✓ MCP server started with PID $MCP_PID"
+          sleep 10  # Give server time to initialize and download if needed
+                 
       - name: Run tracker script and save output
         env:
           GOOGLE_API_KEY: ${{ secrets.GOOGLE_API_KEY }}
