@@ -57,79 +57,76 @@ class StandardsFetcher:
         """Check if a command exists in PATH"""
         return shutil.which(cmd) is not None
     
-    async def _detect_mcp_server_command(self) -> Optional[Tuple[str, List[str]]]:
-        """
-        Detect how to start mcp-3gpp-ftp server.
-        Returns (command, args) tuple or None if not found.
-        """
-        logger.info("detecting_mcp_server_command")
-        
-        # Check what's available
-        has_python = await self._command_exists("python")
-        has_npx = await self._command_exists("npx")
-        has_binary = await self._command_exists("mcp-3gpp-ftp")
-        
-        logger.info("mcp_command_detection",
-                   python_available=has_python,
-                   npx_available=has_npx,
-                   binary_available=has_binary)
-        
-        # Try 1: Python module (most likely for pip package)
-        # The mcp-3gpp-ftp package has a server.py with main() function
-        if has_python:
-            return ("python", ["-m", "mcp_3gpp_ftp.server"])
-        
-        # Try 2: npx (if it's an npm package)
-        if has_npx:
-            return ("npx", ["mcp-3gpp-ftp", "serve"])
-        
-        # Try 3: Direct binary (if installed globally somehow)
-        if has_binary:
-            return ("mcp-3gpp-ftp", ["serve"])
-        
-        logger.error("mcp_server_command_not_found")
-        return None
+  async def _detect_mcp_server_command(self) -> Optional[Tuple[str, List[str]]]:
+    """
+    Detect how to start the 3GPP MCP server.
+    Returns (command, args) or None if no valid method is available.
+    """
+
+    logger.info("detecting_mcp_server_command")
+
+    # Check for npx (the only officially supported distribution method)
+    has_npx = await self._command_exists("npx")
+
+    logger.info("mcp_command_detection", npx_available=has_npx)
+
+    if has_npx:
+        # Official and correct invocation
+        return ("npx", ["3gpp-mcp-charging@latest", "serve"])
+
+    # No valid MCP server launcher found
+    logger.error("mcp_server_command_not_found")
+    return None
     
     async def _init_mcp_session(self):
-        """Initialize MCP session (to be wrapped in timeout)"""
-        # Detect command
-        server_cmd = await self._detect_mcp_server_command()
-        if not server_cmd:
-            raise RuntimeError("MCP server command not found")
-        
-        command, args = server_cmd
-        
-        server_params = StdioServerParameters(
-            command=command,
-            args=args,
-            env=None
+    """Initialize MCP session with timeout and proper error handling."""
+
+    server_cmd = await self._detect_mcp_server_command()
+    if not server_cmd:
+        raise RuntimeError("MCP server command not found")
+
+    command, args = server_cmd
+
+    server_params = StdioServerParameters(
+    command="npx",
+    args=["3gpp-mcp-charging@latest", "serve"],
+    env=None
+    )
+      
+    logger.info("starting_mcp_server", command=command, args=args)
+
+    # Create stdio transport
+    self.mcp_context = stdio_client(server_params)
+
+    try:
+        # Prevent infinite hang
+        read_stream, write_stream = await asyncio.wait_for(
+            self.mcp_context.__aenter__(),
+            timeout=5
         )
-        
-        logger.info("starting_mcp_server", command=command, args=args)
-        
-        # Connect via stdio
-        self.mcp_context = stdio_client(server_params)
-        read_stream, write_stream = await self.mcp_context.__aenter__()
-        
-        logger.info("mcp_streams_connected")
-        
-        # Create ClientSession from streams
-        self.mcp_session = ClientSession(read_stream, write_stream)
-        
-        # Initialize session
-        await self.mcp_session.initialize()
-        
-        logger.info("mcp_session_initialized")
+    except asyncio.TimeoutError:
+        logger.error("mcp_start_timeout")
+        raise RuntimeError("MCP server did not start in time")
+
+    logger.info("mcp_streams_connected")
+
+    # Create session
+    self.mcp_session = ClientSession(read_stream, write_stream)
+
+    # Initialize MCP protocol
+    await self.mcp_session.initialize()
+
+    logger.info("mcp_session_initialized")
     
     async def _test_mcp_health(self) -> bool:
-        """Test if MCP server responds to commands"""
-        try:
-            tools = await self.mcp_session.list_tools()
-            logger.info("mcp_health_check_passed", tool_count=len(tools.tools))
-            return True
-        except Exception as e:
-            logger.error("mcp_health_check_failed", error=str(e), error_type=type(e).__name__)
-            return False
+    """Check if MCP server responds to basic commands."""
+    try:
+        tools = await self.mcp_session.list_tools()
+        logger.info("mcp_health_check_passed", tool_count=len(tools.tools))
+        return True
+    except Exception as e:
+        logger.error("mcp_health_check_failed", error=str(e), error_type=type(e).__name__)
+        return False
     
     async def __aenter__(self):
         """Async context manager entry - start MCP client connection"""
