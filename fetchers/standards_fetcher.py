@@ -56,7 +56,7 @@ class StandardsFetcher:
         """Async context manager entry - start MCP client connection"""
         self.client = httpx.AsyncClient(timeout=30.0, follow_redirects=True)
         
-        # Try to connect to mcp-3gpp-ftp server
+        # Try to connect to mcp-3gpp-ftp server (optional, graceful degradation if unavailable)
         if self.use_mcp:
             try:
                 logger.info("attempting_mcp_connection", server="mcp-3gpp-ftp")
@@ -67,22 +67,23 @@ class StandardsFetcher:
                     env=None
                 )
                 
-                # Connect via stdio
+                # Connect via stdio - stdio_client is itself an async context manager
                 self.mcp_context = stdio_client(server_params)
-                stdio_transport = await self.mcp_context.__aenter__()
-                self.mcp_read, self.mcp_write = stdio_transport
+                result = await self.mcp_context.__aenter__()
                 
-                # Initialize session
-                init_result = await self.mcp_read.initialize()
-                
-                logger.info("mcp_client_connected", 
-                           server="mcp-3gpp-ftp",
-                           server_version=init_result.serverInfo.version if hasattr(init_result, 'serverInfo') else "unknown")
+                # Result should be a tuple of (read, write)
+                if isinstance(result, tuple) and len(result) == 2:
+                    self.mcp_read, self.mcp_write = result
+                    logger.info("mcp_client_connected", server="mcp-3gpp-ftp")
+                else:
+                    raise ValueError(f"Unexpected MCP client result type: {type(result)}")
                 
             except Exception as e:
                 logger.warning("mcp_client_connection_failed", error=str(e))
                 self.use_mcp = False
                 self.mcp_context = None
+                self.mcp_read = None
+                self.mcp_write = None
         
         return self
     
