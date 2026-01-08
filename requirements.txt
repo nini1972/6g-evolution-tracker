@@ -6,3 +6,5 @@ tenacity==8.2.3
 structlog==24.1.0
 playwright==1.49.1
 requests
+openpyxl==3.1.5
+PyPDF2==3.0.1

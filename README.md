@@ -14,10 +14,19 @@ A scheduled Python script runs monthly using GitHub Actions to monitor news, pub
 - **🔍 Dynamic Filtering**: Instantly search by keyword or filter by source (Ericsson, Nokia, etc.).
 - **📱 Responsive Design**: Optimized for both desktop and mobile viewing.
 
+### 📊 3GPP Standardization Tracking (NEW)
+- **Release 21 Progress**: Tracks completion percentage of 6G Work Items
+- **Working Group Breakdown**: Monitor progress by RAN1, RAN2, SA2, etc.
+- **Recent Meeting Reports**: Automated extraction of key agreements from 3GPP meetings
+- **TDoc Reference Tracking**: Links to technical documents and proposals
+- **Sentiment Analysis**: Positive, mixed, or negative signals from standardization activities
+- **Quantitative Metrics**: Move beyond qualitative news to track actual standardization milestones
+
 ### Performance & Reliability
 - **⚡ Parallel Fetching**: Concurrently fetches multiple RSS feeds simultaneously.
 - **🚫 Duplicate Prevention**: Prevents reprocessing of articles and avoids double-logging in reports.
 - **🔄 GitHub Actions**: Fully automated monthly runs with state persistence via cache.
+- **🔐 Graceful Fallbacks**: Handles 3GPP FTP access restrictions gracefully
 
 ## Workflow
 

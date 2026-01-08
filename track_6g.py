@@ -13,6 +13,7 @@ import google.genai as genai
 import os
 from typing import Optional
 from fetchers.hybrid_fetcher import HybridFetcher
+from fetchers.standards_fetcher import fetch_standardization_data
 import structlog
 from config.user_agents import USER_AGENTS
 
@@ -137,6 +138,13 @@ def get_ai_summary(title, summary, site_name):
     **Key Evidence:**
     Extract 1–5 short bullet points quoting or paraphrasing the most important factual signals.
     
+    **3GPP Standardization Context (if applicable):**
+    If the article mentions 3GPP-specific terminology, extract it:
+    - TDoc numbers (format: R1-2312345, S2-2401234, etc.)
+    - Work Items or Study Items (acronyms like FS_NR_AI_ML_air)
+    - Release numbers (Rel-20, Rel-21, Release 21)
+    - Working Groups (RAN1, RAN2, RAN3, RAN4, SA2, SA6, etc.)
+    
     Return ONLY valid JSON in this exact format:
     
     {{
@@ -162,7 +170,13 @@ def get_ai_summary(title, summary, site_name):
         "India": 0
       }},
       "emerging_concepts": [],
-      "key_evidence": []
+      "key_evidence": [],
+      "standardization_context": {{
+        "tdoc_refs": [],
+        "work_items": [],
+        "target_release": "",
+        "working_groups": []
+      }}
     }}
     
     Return ONLY JSON.  No commentary.  No markdown. 
@@ -430,12 +444,17 @@ def log_to_markdown(source, entries):
         f.write("\n")
 
 
-def export_to_json(all_entries):
+def export_to_json(all_entries, standardization_data=None):
     """Export all processed entries to a JSON file for the dashboard."""
     output_data = {
         "date": DATE,
         "articles": all_entries
     }
+    
+    # Add standardization data if available
+    if standardization_data:
+        output_data["standardization"] = standardization_data
+    
     try:
         with open("latest_digest.json", "w", encoding="utf-8") as f:
             json.dump(output_data, f, indent=2)
@@ -593,8 +612,33 @@ async def main_async():
         cache = load_cache()
         new_articles_count = 0
         
-        # Fetch feeds in parallel using hybrid strategy
-        feeds_data = await fetch_all_feeds()
+        # Fetch feeds and standardization data in parallel
+        print("📡 Fetching RSS feeds and 3GPP standardization data in parallel...")
+        
+        feeds_task = fetch_all_feeds()
+        standards_task = fetch_standardization_data()
+        
+        feeds_data, standardization_data = await asyncio.gather(
+            feeds_task,
+            standards_task,
+            return_exceptions=True
+        )
+        
+        # Handle exceptions
+        if isinstance(feeds_data, Exception):
+            logger.error("feeds_fetch_failed", error=str(feeds_data))
+            feeds_data = {}
+        
+        if isinstance(standardization_data, Exception):
+            logger.warning("standards_fetch_failed", error=str(standardization_data))
+            standardization_data = None
+        else:
+            print(f"✓ 3GPP standardization data fetched successfully")
+            if standardization_data:
+                progress = standardization_data.get("release_21_progress", {})
+                meetings = standardization_data.get("recent_meetings", [])
+                print(f"  • Release 21 Progress: {progress.get('progress_percentage', 0)}%")
+                print(f"  • Recent Meetings: {len(meetings)}")
         
         print()
         
@@ -676,10 +720,13 @@ async def main_async():
         
         # Export for dashboard
         if all_processed_entries:
-            export_to_json(all_processed_entries)
+            export_to_json(all_processed_entries, standardization_data)
             # Deep Analysis Aggregation
             generate_source_target_matrix(all_processed_entries)
             aggregate_momentum(all_processed_entries)
+        elif standardization_data:
+            # Even if no new articles, export standardization data
+            export_to_json([], standardization_data)
         
         # Save cache
         save_cache(cache)
