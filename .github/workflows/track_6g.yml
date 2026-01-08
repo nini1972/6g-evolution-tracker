@@ -77,7 +77,7 @@ jobs:
         env:
           GOOGLE_API_KEY: ${{ secrets.GOOGLE_API_KEY }}
         run: |
-          python track_6g. py > output.log 2>&1
+          python track_6g.py > output.log 2>&1
           echo "Script exit code: $?"
         continue-on-error: false  # Fail workflow if script fails
         
