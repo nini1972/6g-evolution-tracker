@@ -1,6 +1,6 @@
 """
 Fetcher for 3GPP standardization data.
-Uses MCP client to connect to mcp-3gpp-ftp server for real data.
+Uses MCP client to connect to 3gpp-mcp-charging server for real data.
 Falls back to HTTP download, then sample data when MCP is unavailable.
 """
 import asyncio
@@ -132,10 +132,10 @@ class StandardsFetcher:
         """Async context manager entry - start MCP client connection"""
         self.client = httpx.AsyncClient(timeout=30.0, follow_redirects=True)
         
-        # Try to connect to mcp-3gpp-ftp server (optional, graceful degradation if unavailable)
+        # Try to connect to 3gpp-mcp-charging server (optional, graceful degradation if unavailable)
         if self.use_mcp:
             try:
-                logger.info("attempting_mcp_connection", server="mcp-3gpp-ftp")
+                logger.info("attempting_mcp_connection", server="3gpp-mcp-charging")
                 
                 # Initialize with 15s timeout (5s startup + 10s init)
                 start_time = time.time()
@@ -331,7 +331,7 @@ class StandardsFetcher:
     
     async def _fetch_work_plan_via_mcp(self) -> Dict:
         """
-        Fetch Work Plan using MCP tools from mcp-3gpp-ftp.
+        Fetch Work Plan using MCP tools from 3gpp-mcp-charging.
         Note: This requires the mcp-3gpp-ftp server to be running and accessible.
         """
         logger.info("fetching_work_plan_via_mcp")
@@ -474,7 +474,7 @@ class StandardsFetcher:
     async def _fetch_meetings_via_mcp(self, limit: int = 3) -> List[Dict]:
         """
         Fetch recent meetings using MCP tools.
-        Note: This requires the mcp-3gpp-ftp server to be running and accessible.
+        Note: This requires the 3gpp-mcp-charging server to be running and accessible.
         """
         from datetime import datetime
         
@@ -636,7 +636,7 @@ class StandardsFetcher:
         from datetime import datetime
         
         logger.warning("using_sample_3gpp_data", 
-                      msg="Using sample data - Real 3GPP access via mcp-3gpp-ftp failed")
+                      msg="Using sample data - Real 3GPP access via 3gpp-mcp-charging failed")
         
         return {
             "total_work_items": 45,
