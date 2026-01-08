@@ -68,10 +68,12 @@ class StandardsFetcher:
         """
         logger.info("detecting_mcp_server_command")
         
-        # Check what's available
-        has_binary = await self._command_exists("mcp-3gpp-ftp")
-        has_python = await self._command_exists("python")
-        has_npx = await self._command_exists("npx")
+        # Check what's available (run checks in parallel for performance)
+        has_binary, has_python, has_npx = await asyncio.gather(
+            self._command_exists("mcp-3gpp-ftp"),
+            self._command_exists("python"),
+            self._command_exists("npx")
+        )
         
         logger.info("mcp_command_detection",
                    binary_available=has_binary,
@@ -208,19 +210,12 @@ class StandardsFetcher:
         if self.client:
             await self.client.aclose()
         
-        # Clear MCP session reference (no close method on ClientSession)
-        if self.mcp_session:
-            self.mcp_session = None
-            logger.info("mcp_session_cleared")
-        
-        # Disconnect MCP context
-        if self.mcp_context:
-            try:
-                await self.mcp_context.__aexit__(exc_type, exc_val, exc_tb)
-                logger.info("mcp_context_closed")
-            except Exception as e:
-                # Context cleanup can fail if already closed or in error state
-                logger.debug("mcp_context_close_error", error=str(e))
+        # Clean up MCP resources if they exist
+        if self.mcp_session or self.mcp_context:
+            # Don't change use_mcp flag on normal exit
+            use_mcp_backup = self.use_mcp
+            await self._cleanup_mcp()
+            self.use_mcp = use_mcp_backup
     
     async def fetch_all(self) -> Dict:
         """
