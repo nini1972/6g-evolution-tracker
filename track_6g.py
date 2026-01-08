@@ -38,7 +38,7 @@ FEEDS = {
     # === Research & Academia ===
     "MDPI Engineering": "https://www.mdpi.com/rss",
     "IEEE Spectrum": "https://spectrum.ieee.org/feeds/feed.rss",
-    "ArXiv CS Networking": "http://export.arxiv.org/rss/cs.NI",
+    "ArXiv CS Networking": "https://export.arxiv.org/rss/cs.NI",
     
     # === Regional Initiatives & Alliances ===
     "Next G Alliance": "https://www.nextgalliance.org/feed/",  # North America 6G initiative
