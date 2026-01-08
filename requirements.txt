@@ -4,5 +4,5 @@ google-genai
 httpx[http2]==0.27.0
 tenacity==8.2.3
 structlog==24.1.0
-playwright==1.42.0
+playwright==1.49.1
 requests
