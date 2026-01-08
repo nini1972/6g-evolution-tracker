@@ -22,18 +22,18 @@ async def main():
         print(f"Available tools: {[t.name for t in tools.tools]}")
         
         # Example 1: Get 3GPP Release 21 status
-        result = await write.call_tool("get_3gpp_release21_status", {})
+        result = await read.call_tool("get_3gpp_release21_status", {})
         status = json.loads(result.content[0].text)
         print(f"\n3GPP Release 21: {status['progress_percentage']}% complete")
         print(f"Data source: {status['data_source']}")
         
         # Example 2: Search for AI-RAN topics
-        result = await write.call_tool("search_6g_topics", {"topic": "AI-RAN", "min_importance": 7})
+        result = await read.call_tool("search_6g_topics", {"topic": "AI-RAN", "min_importance": 7})
         articles = json.loads(result.content[0].text)
         print(f"\nFound {len(articles)} high-impact articles about AI-RAN")
         
         # Example 3: Regional momentum
-        result = await write.call_tool("analyze_regional_momentum", {})
+        result = await read.call_tool("analyze_regional_momentum", {})
         momentum = json.loads(result.content[0].text)
         print(f"\n6G Leader: {momentum['leader']} (score: {momentum['total_scores'][momentum['leader']]})")
 

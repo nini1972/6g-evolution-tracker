@@ -10,6 +10,21 @@ from collections import Counter
 
 mcp = FastMCP("6g-intelligence-mcp", json_response=True)
 
+# Constants
+DIGEST_FILE = "latest_digest.json"
+
+# === Helper Functions ===
+
+def load_digest() -> dict:
+    """Load the latest digest file with error handling"""
+    try:
+        with open(DIGEST_FILE) as f:
+            return json.load(f)
+    except FileNotFoundError:
+        return {"date": "", "articles": [], "standardization": {}}
+    except json.JSONDecodeError:
+        return {"date": "", "articles": [], "standardization": {}}
+
 # === Core Tools ===
 
 @mcp.tool()
@@ -25,8 +40,7 @@ def get_latest_6g_news(min_importance: int = 5, region: Optional[str] = None) ->
         List of articles with AI-powered analysis including impact scores,
         regional influence, emerging concepts, and key evidence.
     """
-    with open("latest_digest.json") as f:
-        data = json.load(f)
+    data = load_digest()
     
     articles = [
         a for a in data.get("articles", [])
@@ -48,8 +62,7 @@ def get_3gpp_release21_status() -> dict:
         Progress percentage, completed work items, working group breakdown,
         and data source indicator (live/cached/sample).
     """
-    with open("latest_digest.json") as f:
-        data = json.load(f)
+    data = load_digest()
     
     progress = data.get("standardization", {}).get("release_21_progress", {})
     
@@ -76,8 +89,7 @@ def get_recent_3gpp_meetings(working_group: Optional[str] = None) -> List[dict]:
     Returns:
         List of meeting summaries with agreements, TDoc references, and sentiment.
     """
-    with open("latest_digest.json") as f:
-        data = json.load(f)
+    data = load_digest()
     
     meetings = data.get("standardization", {}).get("recent_meetings", [])
     
@@ -101,8 +113,7 @@ def search_6g_topics(topic: str, min_importance: int = 0) -> List[dict]:
     """
     topic_lower = topic.lower()
     
-    with open("latest_digest.json") as f:
-        data = json.load(f)
+    data = load_digest()
     
     matching = []
     for article in data.get("articles", []):
@@ -137,8 +148,7 @@ def analyze_regional_momentum() -> dict:
         Aggregated scores showing which regions (US, China, EU, Japan, Korea, India)
         are leading in 6G development, with total impact scores.
     """
-    with open("latest_digest.json") as f:
-        data = json.load(f)
+    data = load_digest()
     
     regional_scores = {
         "US": 0, "China": 0, "EU": 0, 
@@ -183,8 +193,7 @@ def get_emerging_6g_concepts(min_frequency: int = 2) -> List[dict]:
     Returns:
         List of concepts with frequency counts, sorted by popularity.
     """
-    with open("latest_digest.json") as f:
-        data = json.load(f)
+    data = load_digest()
     
     all_concepts = []
     for article in data.get("articles", []):
@@ -210,8 +219,13 @@ def get_latest_digest_resource():
     Full latest 6G intelligence digest as a resource.
     Contains all articles, standardization data, and metadata.
     """
-    with open("latest_digest.json") as f:
-        return f.read()
+    try:
+        with open(DIGEST_FILE) as f:
+            return f.read()
+    except FileNotFoundError:
+        return json.dumps({"date": "", "articles": [], "standardization": {}})
+    except Exception:
+        return json.dumps({"date": "", "articles": [], "standardization": {}})
 
 
 # === Run Server ===

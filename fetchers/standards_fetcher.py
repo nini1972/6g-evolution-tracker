@@ -213,6 +213,18 @@ class StandardsFetcher:
             logger.error("work_plan_fetch_error", error=str(e))
             return self._empty_work_plan()
     
+    def _validate_mcp_client(self):
+        """
+        Validate that MCP client is properly initialized.
+        
+        Raises:
+            AttributeError: If MCP client session is not properly initialized
+        """
+        if not hasattr(self.mcp_read, 'call_tool'):
+            logger.warning("mcp_client_not_initialized", 
+                          msg="MCP client session does not have call_tool method. This may indicate the server is not running or the connection failed.")
+            raise AttributeError("MCP client session not properly initialized - missing call_tool method")
+    
     async def _fetch_work_plan_via_mcp(self) -> Dict:
         """
         Fetch Work Plan using MCP tools from mcp-3gpp-ftp.
@@ -220,11 +232,8 @@ class StandardsFetcher:
         """
         logger.info("fetching_work_plan_via_mcp")
         
-        # Check if mcp_read has the call_tool method (it should be a ClientSession)
-        if not hasattr(self.mcp_read, 'call_tool'):
-            logger.warning("mcp_read_missing_call_tool", 
-                          msg="MCP client session not properly initialized")
-            raise AttributeError("MCP client session not properly initialized")
+        # Validate MCP client
+        self._validate_mcp_client()
         
         # Call MCP tool: filter_excel_columns_from_url
         result: CallToolResult = await self.mcp_read.call_tool(
@@ -342,11 +351,8 @@ class StandardsFetcher:
         """
         from datetime import datetime
         
-        # Check if mcp_read has the call_tool method
-        if not hasattr(self.mcp_read, 'call_tool'):
-            logger.warning("mcp_read_missing_call_tool", 
-                          msg="MCP client session not properly initialized")
-            raise AttributeError("MCP client session not properly initialized")
+        # Validate MCP client
+        self._validate_mcp_client()
         
         meetings = []
         
