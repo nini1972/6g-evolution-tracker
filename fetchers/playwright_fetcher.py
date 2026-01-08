@@ -26,58 +26,60 @@ class PlaywrightFetcher(BaseFetcher):
         self.playwright = None
         self.browser: Optional[Browser] = None
         self.context: Optional[BrowserContext] = None
+        self._init_lock = asyncio.Lock()
     
     async def _ensure_browser(self):
         """Initialize Playwright browser if not already running"""
-        if self.playwright is None:
-            self.playwright = await async_playwright().start()
-            
-            browser_launcher = getattr(self.playwright, self.browser_type)
-            self.browser = await browser_launcher.launch(
-                headless=self.headless,
-                args=[
-                    '--disable-blink-features=AutomationControlled',
-                    '--disable-dev-shm-usage',
-                    '--no-sandbox',  # Required for GitHub Actions
-                ]
-            )
-            
-            # Create persistent context with anti-detection
-            self.context = await self.browser.new_context(
-                user_agent=random.choice(USER_AGENTS),
-                viewport={"width": 1920, "height": 1080},
-                locale="en-US",
-                timezone_id="America/New_York",
-                permissions=["geolocation", "notifications"],
-                has_touch=False,
-                is_mobile=False,
-                device_scale_factor=1,
-            )
-            
-            # Add anti-detection scripts
-            await self.context.add_init_script("""
-                // Remove webdriver property
-                Object.defineProperty(navigator, 'webdriver', {
-                    get: () => undefined
-                });
+        async with self._init_lock:
+            if self.playwright is None:
+                self.playwright = await async_playwright().start()
                 
-                // Mock plugins
-                Object.defineProperty(navigator, 'plugins', {
-                    get: () => [1, 2, 3, 4, 5]
-                });
+                browser_launcher = getattr(self.playwright, self.browser_type)
+                self.browser = await browser_launcher.launch(
+                    headless=self.headless,
+                    args=[
+                        '--disable-blink-features=AutomationControlled',
+                        '--disable-dev-shm-usage',
+                        '--no-sandbox',  # Required for GitHub Actions
+                    ]
+                )
                 
-                // Mock languages
-                Object.defineProperty(navigator, 'languages', {
-                    get: () => ['en-US', 'en']
-                });
+                # Create persistent context with anti-detection
+                self.context = await self.browser.new_context(
+                    user_agent=random.choice(USER_AGENTS),
+                    viewport={"width": 1920, "height": 1080},
+                    locale="en-US",
+                    timezone_id="America/New_York",
+                    permissions=["geolocation", "notifications"],
+                    has_touch=False,
+                    is_mobile=False,
+                    device_scale_factor=1,
+                )
                 
-                // Chrome runtime
-                window.chrome = {
-                    runtime: {}
-                };
-            """)
-            
-            logger.info("playwright_browser_started", browser_type=self.browser_type)
+                # Add anti-detection scripts
+                await self.context.add_init_script("""
+                    // Remove webdriver property
+                    Object.defineProperty(navigator, 'webdriver', {
+                        get: () => undefined
+                    });
+                    
+                    // Mock plugins
+                    Object.defineProperty(navigator, 'plugins', {
+                        get: () => [1, 2, 3, 4, 5]
+                    });
+                    
+                    // Mock languages
+                    Object.defineProperty(navigator, 'languages', {
+                        get: () => ['en-US', 'en']
+                    });
+                    
+                    // Chrome runtime
+                    window.chrome = {
+                        runtime: {}
+                    };
+                """)
+                
+                logger.info("playwright_browser_started", browser_type=self.browser_type)
     
     async def fetch(self, url: str, **kwargs) -> FetchResult:
         """Fetch using Playwright browser automation"""
