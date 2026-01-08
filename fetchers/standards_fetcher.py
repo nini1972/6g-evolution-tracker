@@ -4,6 +4,7 @@ Downloads Work Plan Excel files and meeting reports.
 """
 import asyncio
 import httpx
+import time
 from pathlib import Path
 from typing import Dict, List, Optional
 import structlog
@@ -25,6 +26,12 @@ class StandardsFetcher:
         "RAN1": "https://www.3gpp.org/ftp/tsg_ran/WG1_RL1/",
         "SA2": "https://www.3gpp.org/ftp/tsg_sa/WG2_Arch/",
     }
+    
+    # User agent for FTP access
+    USER_AGENT = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
+    
+    # Cache duration in seconds (24 hours)
+    CACHE_DURATION = 86400
     
     def __init__(self, cache_dir: str = "/tmp/3gpp_cache"):
         self.cache_dir = Path(cache_dir)
@@ -102,9 +109,9 @@ class StandardsFetcher:
             # Check cache first (24 hour cache)
             cache_file = self.cache_dir / "work_plan.xlsx"
             if cache_file.exists():
-                age = (Path(__file__).stat().st_mtime - cache_file.stat().st_mtime)
-                if age < 86400:  # 24 hours
-                    logger.info("using_cached_work_plan")
+                age = time.time() - cache_file.stat().st_mtime
+                if age < self.CACHE_DURATION:
+                    logger.info("using_cached_work_plan", age_hours=round(age/3600, 1))
                     parser = WorkItemParser(str(cache_file))
                     return parser.parse()
             
@@ -113,9 +120,7 @@ class StandardsFetcher:
                 self.client = httpx.AsyncClient(timeout=30.0, follow_redirects=True)
             
             # Add user agent to avoid 403
-            headers = {
-                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
-            }
+            headers = {'User-Agent': self.USER_AGENT}
             
             response = await self.client.get(self.WORK_PLAN_URL, headers=headers)
             response.raise_for_status()
@@ -170,9 +175,7 @@ class StandardsFetcher:
                 self.client = httpx.AsyncClient(timeout=30.0, follow_redirects=True)
             
             # Add user agent to avoid 403
-            headers = {
-                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
-            }
+            headers = {'User-Agent': self.USER_AGENT}
             
             # Get directory listing
             response = await self.client.get(base_url, headers=headers)

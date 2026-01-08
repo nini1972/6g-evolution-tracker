@@ -13,6 +13,7 @@ import google.genai as genai
 import os
 from typing import Optional
 from fetchers.hybrid_fetcher import HybridFetcher
+from fetchers.standards_fetcher import fetch_standardization_data
 import structlog
 from config.user_agents import USER_AGENTS
 
@@ -613,7 +614,6 @@ async def main_async():
         
         # Fetch feeds and standardization data in parallel
         print("📡 Fetching RSS feeds and 3GPP standardization data in parallel...")
-        from fetchers.standards_fetcher import fetch_standardization_data
         
         feeds_task = fetch_all_feeds()
         standards_task = fetch_standardization_data()
