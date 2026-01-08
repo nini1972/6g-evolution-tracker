@@ -79,7 +79,8 @@ class StandardsFetcher:
                    npx_available=has_npx)
         
         # Try 1: Direct binary (simplest, most reliable if installed via pip)
-        # The mcp-3gpp-ftp package installs a binary that uses stdio by default
+        # The mcp-3gpp-ftp package installs a binary that calls server.main()
+        # which automatically runs in stdio mode - no arguments needed
         if has_binary:
             return ("mcp-3gpp-ftp", [])
         
@@ -166,7 +167,8 @@ class StandardsFetcher:
                 logger.info("attempting_mcp_connection", server="mcp-3gpp-ftp")
                 
                 # Initialize with timeout - fail fast if server not responding
-                # (Testing shows the server can hang indefinitely on init handshake)
+                # (mcp-3gpp-ftp v0.1.8 with mcp v1.12.4 hangs during session.initialize() 
+                # even though streams connect successfully - likely protocol version mismatch)
                 start_time = time.time()
                 
                 await asyncio.wait_for(
