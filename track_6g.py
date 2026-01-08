@@ -14,6 +14,7 @@ import os
 from typing import Optional
 from fetchers.hybrid_fetcher import HybridFetcher
 import structlog
+from config.user_agents import USER_AGENTS
 
 # Configure structured logging
 structlog.configure(
