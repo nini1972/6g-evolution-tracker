@@ -75,8 +75,9 @@ class StandardsFetcher:
                    binary_available=has_binary)
         
         # Try 1: Python module (most likely for pip package)
+        # The mcp-3gpp-ftp package has a server.py with main() function
         if has_python:
-            return ("python", ["-m", "mcp_3gpp_ftp", "serve"])
+            return ("python", ["-m", "mcp_3gpp_ftp.server"])
         
         # Try 2: npx (if it's an npm package)
         if has_npx:
