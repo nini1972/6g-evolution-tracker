@@ -28,17 +28,28 @@ logger = structlog.get_logger()
 
 # 🌐 RSS sources to monitor
 # Note: Some feeds may be temporarily unavailable or have parsing issues
+# Feeds are organized by category for better coverage of the 6G ecosystem
 FEEDS = {
-    "Ericsson": "https://www.ericsson.com/en/blog/rss",  # Fixed: add back '/rss' suffix
+    # === Telecom Equipment Vendors ===
+    "Ericsson": "https://www.ericsson.com/en/blog/rss",
+    "Nokia": "https://www.nokia.com/newsroom/feed/en-us/",
     "Thales": "https://www.thalesgroup.com/en/rss.xml",
-    "MDPI Engineering": "https://www.mdpi.com/rss",  # Already working
-    "Nokia": "https://www.nokia.com/newsroom/feed/en-us/",  # Fixed: use newsroom feed path
+    
+    # === Research & Academia ===
+    "MDPI Engineering": "https://www.mdpi.com/rss",
     "IEEE Spectrum": "https://spectrum.ieee.org/feeds/feed.rss",
     "ArXiv CS Networking": "http://export.arxiv.org/rss/cs.NI",
-    # Additional sources can be added as they become available:
-    # "3GPP News": "https://www.3gpp.org/news-events/3gpp-news/rss",
-    # "Samsung Research": "https://research.samsung.com/blog/rss",
-    # "ITU News": "https://www.itu.int/en/mediacentre/Pages/feeds.aspx",
+    
+    # === Regional Initiatives & Alliances ===
+    "Next G Alliance": "https://www.nextgalliance.org/feed/",  # North America 6G initiative
+    "SNS JU": "https://smart-networks.europa.eu/feed/",  # EU Smart Networks Joint Undertaking
+    
+    # === Telecom Industry News ===
+    "6GWorld": "https://www.6gworld.com/feed/",
+    "RCR Wireless": "https://www.rcrwireless.com/feed",
+    "Fierce Wireless": "https://www.fiercewireless.com/rss/xml",
+    "Mobile World Live": "https://www.mobileworldlive.com/feed/",
+    "ZDNet 5G": "https://www.zdnet.com/topic/5g/rss.xml",
 }
 
 # 🔍 Keywords with weighted priorities
