@@ -50,7 +50,15 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with: 
-          node-version: '22'
+          node-version: '20'
+
+      - run: |
+          echo "Node version:"
+          node -v
+          echo "npm version:"
+          npm -v
+          echo "npx version:"
+          npx --version
 
       - name: Install dependencies
         run: |
