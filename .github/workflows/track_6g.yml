@@ -97,7 +97,7 @@ jobs:
             echo "✓ MCP server is running (PID $MCP_PID)"
           else
             echo "❌ MCP server crashed!  Showing logs:"
-            cat mcp_server. log
+            cat mcp_server.log
             echo "⚠️ Will continue with HTTP/sample fallback"
           fi
                  
