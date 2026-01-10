@@ -63,18 +63,13 @@ class StandardsFetcher:
         Returns (command, args) or None if no valid method is available.
         """
 
-        logger.info("detecting_mcp_server_command")
+        import sys
+        logger.info("detecting_mcp_server_command", target="mcp-3gpp-ftp")
 
-        # Check for npx (the only officially supported distribution method)
-        has_npx = await self._command_exists("npx")
-
-        logger.info("mcp_command_detection", npx_available=has_npx)
-
-        if has_npx:
-            return ("npx", ["3gpp-mcp-charging@latest", "serve"])
-        # No valid MCP server launcher found
-        logger.error("mcp_server_command_not_found")
-        return None
+        # Use the current python interpreter to run the module
+        # This is more robust than assuming 'python' or 'python3' is in PATH
+        # and works better with virtualenvs.
+        return (sys.executable, ["-m", "mcp_3gpp_ftp"])
     
     async def _init_mcp_session(self):
         """Initialize MCP session with timeout and proper error handling."""
@@ -101,7 +96,7 @@ class StandardsFetcher:
             # Prevent infinite hang
             read_stream, write_stream = await asyncio.wait_for(
                 self.mcp_context.__aenter__(),
-                timeout=5
+                timeout=15  # Python server starts faster than Node
             )
         except asyncio.TimeoutError:
             logger.error("mcp_start_timeout")
@@ -131,17 +126,17 @@ class StandardsFetcher:
         """Async context manager entry - start MCP client connection"""
         self.client = httpx.AsyncClient(timeout=30.0, follow_redirects=True)
         
-        # Try to connect to 3gpp-mcp-charging server (optional, graceful degradation if unavailable)
+        # Try to connect to mcp-3gpp-ftp server (optional, graceful degradation if unavailable)
         if self.use_mcp:
             try:
-                logger.info("attempting_mcp_connection", server="3gpp-mcp-charging")
+                logger.info("attempting_mcp_connection", server="mcp-3gpp-ftp")
                 
-                # Initialize with 45s timeout (accounts for npm package download on first run)
+                # Initialize with 20s timeout (faster initialization for Python server)
                 start_time = time.time()
                 
                 await asyncio.wait_for(
                     self._init_mcp_session(),
-                    timeout=45.0
+                    timeout=20.0
                 )
                 
                 init_elapsed = time.time() - start_time

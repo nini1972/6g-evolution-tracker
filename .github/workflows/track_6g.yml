@@ -47,19 +47,6 @@ jobs:
         with:
           python-version: '3.13'
 
-      #- name: Set up Node.js
-        #uses: actions/setup-node@v4
-        #with: 
-          #node-version: '20'
-
-      #- run: |
-          #echo "Node version:"
-          #node -v
-          #echo "npm version:"
-          #npm -v
-          #echo "npx version:"
-          #npx --version
-
       - name: Install dependencies
         run: |
           pip install -r requirements.txt
@@ -85,30 +72,10 @@ jobs:
               print("Gemini test FAILED:", e)
           EOF
 
-      - name: Start MCP 3GPP Server (background)
-        env: 
-          HUGGINGFACE_TOKEN: ${{ secrets.HUGGINGFACE_TOKEN }}
-        run: |
-          echo "Starting mcp-3gpp-ftp MCP server (Python)..."
-          echo "=== Starting MCP server at $(date) ===" > mcp_server.log
-          # Run in background with detailed logging
-          python -m mcp_3gpp_ftp >> mcp_server.log 2>&1 &
-          MCP_PID=$!
-          echo "MCP_PID=$MCP_PID" >> $GITHUB_ENV
-          echo "✓ MCP server started with PID $MCP_PID"
-          echo "Waiting 50 seconds for server initialization..."
-          sleep 50
-          if kill -0 $MCP_PID 2>/dev/null; then
-            echo "✓ MCP server is running (PID $MCP_PID)"
-          else
-            echo "❌ MCP server crashed!  Showing logs:"
-            cat mcp_server.log
-            echo "⚠️ Will continue with HTTP/sample fallback"
-          fi
-                 
       - name: Run tracker script and save output
         env:
           GOOGLE_API_KEY: ${{ secrets.GOOGLE_API_KEY }}
+          HUGGINGFACE_TOKEN: ${{ secrets.HUGGINGFACE_TOKEN }}
         run: |
           set -o pipefail
           python track_6g.py > output.log 2>&1 || EXIT_CODE=$?
@@ -124,22 +91,6 @@ jobs:
             echo "Script exit code: 0"
           fi
         continue-on-error: false  # Fail workflow if script fails
-      
-      - name: Stop MCP Server
-        if: always()
-        run: |
-          echo "=== MCP SERVER LOGS ==="
-          cat mcp_server.log || echo "No MCP log file found"
-          echo "======================"
-          
-          if [ !  -z "$MCP_PID" ]; then
-            if kill -0 $MCP_PID 2>/dev/null; then
-              kill $MCP_PID || true
-              echo "MCP server stopped (PID $MCP_PID)"
-            else
-              echo "MCP server was already stopped"
-            fi
-          fi
         
       - name: Build Dashboard
         run: |
