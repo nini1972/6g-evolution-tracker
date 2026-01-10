@@ -66,10 +66,9 @@ class StandardsFetcher:
         import sys
         logger.info("detecting_mcp_server_command", target="mcp-3gpp-ftp")
 
-        # Use the current python interpreter to run the module
-        # This is more robust than assuming 'python' or 'python3' is in PATH
-        # and works better with virtualenvs.
-        return (sys.executable, ["-m", "mcp_3gpp_ftp"])
+        # Use the registered console script directy.
+        # This is the standard entry point for the mcp-3gpp-ftp package.
+        return ("mcp-3gpp-ftp", [])
     
     async def _init_mcp_session(self):
         """Initialize MCP session with timeout and proper error handling."""
@@ -156,8 +155,8 @@ class StandardsFetcher:
                 
             except asyncio.TimeoutError:
                 logger.error("mcp_timeout", 
-                            msg="MCP server initialization timed out after 55 seconds",
-                            timeout_seconds=55)
+                            msg="MCP server initialization timed out after 20 seconds",
+                            timeout_seconds=20)
                 self.use_mcp = False
                 # Attempt to cleanup the context to avoid async errors
                 if self.mcp_context:
