@@ -72,14 +72,11 @@ jobs:
               print("Gemini test FAILED:", e)
           EOF
 
-      - name: MCP Diagnostic
+      - name: CI Handshake Test
         run: |
-          echo "Dumping raw MCP server output for 5 seconds..."
-          python -c "from mcp_3gpp_ftp.server import main; main()" & 
-          SERVER_PID=$!
-          sleep 5
-          kill $SERVER_PID || true
-          echo "Diagnostic complete."
+          echo "Running local handshake test in CI..."
+          python test_mcp_local.py
+          echo "Handshake test complete."
 
       - name: Run tracker script and save output
         env:
