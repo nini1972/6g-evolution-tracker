@@ -99,8 +99,8 @@ jobs:
           echo "✓ MCP server started with PID $MCP_PID"
           
           # Wait longer for first-time download + initialization
-          echo "Waiting 25 seconds for server initialization..."
-          sleep 25
+          echo "Waiting 50 seconds for server initialization..."
+          sleep 50
           
           # Check if process is still alive
           if kill -0 $MCP_PID 2>/dev/null; then
