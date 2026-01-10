@@ -376,11 +376,17 @@ class StandardsFetcher:
             
             # Parse result
             if result.content and len(result.content) > 0:
-                rel21_items = json.loads(result.content[0].text)
-                logger.info("mcp_work_plan_fetched", items=len(rel21_items))
-                
-                # Aggregate into our data structure
-                return self._aggregate_work_items(rel21_items)
+                raw_text = result.content[0].text
+                try:
+                    rel21_items = json.loads(raw_text)
+                    logger.info("mcp_work_plan_fetched", items=len(rel21_items))
+                    # Aggregate into our data structure
+                    return self._aggregate_work_items(rel21_items)
+                except json.JSONDecodeError as je:
+                    logger.error("mcp_work_plan_json_error", 
+                                error=str(je), 
+                                raw_text=raw_text[:500] if raw_text else "EMPTY")
+                    return self._empty_work_plan()
             else:
                 logger.warning("mcp_empty_result")
                 return self._empty_work_plan()
@@ -525,10 +531,17 @@ class StandardsFetcher:
                 if not result.content or len(result.content) == 0:
                     continue
                 
-                dirs = json.loads(result.content[0].text)
-                
-                # Get most recent meetings (assume sorted by name/date)
-                recent_dirs = sorted(dirs, reverse=True)[:fetch_limit]
+                raw_text = result.content[0].text
+                try:
+                    dirs = json.loads(raw_text)
+                    # Get most recent meetings (assume sorted by name/date)
+                    recent_dirs = sorted(dirs, reverse=True)[:fetch_limit]
+                except json.JSONDecodeError as je:
+                    logger.error("mcp_meeting_json_error", 
+                                wg=wg, 
+                                error=str(je), 
+                                raw_text=raw_text[:500] if raw_text else "EMPTY")
+                    continue
                 
                 for meeting_dir in recent_dirs:
                     # Create meeting data structure
