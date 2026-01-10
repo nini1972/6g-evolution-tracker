@@ -50,56 +50,64 @@
     },
     "recent_meetings": [
       {
-        "meeting_id": "TSGR2_128",
-        "working_group": "RAN2",
-        "date": "2025-12-31",
-        "location": "Virtual",
-        "key_agreements": [
-          "Agreed: L2/L3 procedures for NTN integration",
-          "Further study needed: Handover optimization for LEO satellites"
-        ],
-        "tdoc_references": [
-          "R2-2345678",
-          "R2-2345789"
-        ],
-        "sentiment": "mixed",
-        "data_source": "sample"
-      },
-      {
-        "meeting_id": "TSGS2_165",
-        "working_group": "SA2",
-        "date": "2025-12-26",
-        "location": "Virtual",
-        "key_agreements": [
-          "Agreed: Network architecture for AI-native RAN",
-          "Way forward: Study XRM framework for cross-domain resource management",
-          "Decision: Approve Release 21 architecture baseline"
-        ],
-        "tdoc_references": [
-          "S2-2401234",
-          "S2-2401345",
-          "S2-2401456"
-        ],
-        "sentiment": "positive",
-        "data_source": "sample"
-      },
-      {
-        "meeting_id": "TSGR1_115",
+        "meeting_id": "Templates",
         "working_group": "RAN1",
-        "date": "2025-12-11",
-        "location": "Virtual",
-        "key_agreements": [
-          "Agreed: AI/ML framework for CSI feedback enhancements",
-          "Decision: Proceed with sub-THz channel modeling for 100-300 GHz",
-          "Conclusion: Finalize positioning accuracy requirements for Release 21"
-        ],
-        "tdoc_references": [
-          "R1-2312345",
-          "R1-2312456",
-          "R1-2312567"
-        ],
-        "sentiment": "positive",
-        "data_source": "sample"
+        "date": "2026-01-10",
+        "location": "TBD",
+        "key_agreements": [],
+        "tdoc_references": [],
+        "sentiment": "neutral",
+        "data_source": "live"
+      },
+      {
+        "meeting_id": "Tdoc_index",
+        "working_group": "RAN1",
+        "date": "2026-01-10",
+        "location": "TBD",
+        "key_agreements": [],
+        "tdoc_references": [],
+        "sentiment": "neutral",
+        "data_source": "live"
+      },
+      {
+        "meeting_id": "TSGR1_AH",
+        "working_group": "RAN1",
+        "date": "2026-01-10",
+        "location": "TBD",
+        "key_agreements": [],
+        "tdoc_references": [],
+        "sentiment": "neutral",
+        "data_source": "live"
+      },
+      {
+        "meeting_id": "drafting_meetings",
+        "working_group": "SA2",
+        "date": "2026-01-10",
+        "location": "TBD",
+        "key_agreements": [],
+        "tdoc_references": [],
+        "sentiment": "neutral",
+        "data_source": "live"
+      },
+      {
+        "meeting_id": "_Doc_List_Archive",
+        "working_group": "SA2",
+        "date": "2026-01-10",
+        "location": "TBD",
+        "key_agreements": [],
+        "tdoc_references": [],
+        "sentiment": "neutral",
+        "data_source": "live"
+      },
+      {
+        "meeting_id": "TSGS2_99_Xiamen",
+        "working_group": "SA2",
+        "date": "2026-01-10",
+        "location": "TBD",
+        "key_agreements": [],
+        "tdoc_references": [],
+        "sentiment": "neutral",
+        "data_source": "live"
       }
     ],
     "work_items_by_group": {
