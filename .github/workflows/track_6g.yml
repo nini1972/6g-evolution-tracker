@@ -86,6 +86,8 @@ jobs:
           EOF
 
       - name: Start MCP 3GPP Server (background)
+        env: 
+           HUGGINGFACE_TOKEN: ${{ secrets.HUGGINGFACE_TOKEN }}
         run: |
           echo "Starting 3gpp-mcp-charging MCP server..."
           echo "=== Starting MCP server at $(date) ===" > mcp_server.log
