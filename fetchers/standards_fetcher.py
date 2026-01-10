@@ -302,8 +302,8 @@ class StandardsFetcher:
             
         except httpx.HTTPStatusError as e:
             if e.response.status_code == 403:
-                logger.warning("
-                    work_plan_access_denied", 
+                logger.warning(
+                    "work_plan_access_denied", 
                     msg="3GPP FTP server denied access. Using sample data."
                 )
             else:
