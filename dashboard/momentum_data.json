@@ -1,32 +1,22 @@
 [
   {
     "region": "US",
-    "time_window": "2025-Q4",
-    "momentum_score": 3.4,
-    "research_intensity": 2.0,
-    "standardization_influence": 4.0,
-    "industrial_deployment": 4.0,
-    "spectrum_policy_signal": 2.0,
-    "ecosystem_maturity": 5.0
-  },
-  {
-    "region": "US",
     "time_window": "2026-Q1",
-    "momentum_score": 1.6,
-    "research_intensity": 1.0,
-    "standardization_influence": 3.0,
-    "industrial_deployment": 1.0,
-    "spectrum_policy_signal": 2.0,
-    "ecosystem_maturity": 1.0
+    "momentum_score": 2.8,
+    "research_intensity": 4.0,
+    "standardization_influence": 2.0,
+    "industrial_deployment": 4.0,
+    "spectrum_policy_signal": 1.0,
+    "ecosystem_maturity": 3.0
   },
   {
     "region": "EU",
-    "time_window": "2025-Q4",
-    "momentum_score": 3.8,
-    "research_intensity": 5.0,
+    "time_window": "2026-Q1",
+    "momentum_score": 3.2,
+    "research_intensity": 2.0,
     "standardization_influence": 4.0,
     "industrial_deployment": 3.0,
-    "spectrum_policy_signal": 3.0,
-    "ecosystem_maturity": 4.0
+    "spectrum_policy_signal": 5.0,
+    "ecosystem_maturity": 2.0
   }
 ]
