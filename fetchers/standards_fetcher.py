@@ -586,7 +586,7 @@ class StandardsFetcher:
         except Exception as e:
             logger.error("wg_meeting_fetch_error", wg=wg, error=str(e))
             return []
-    
+
     async def _fetch_meeting_report(self, wg: str, meeting_id: str, report_url: str) -> Optional[Dict]:
         """Fetch and parse a single meeting report"""
         try:
