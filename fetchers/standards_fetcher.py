@@ -1,6 +1,6 @@
 """
 Fetcher for 3GPP standardization data.
-Uses MCP client to connect to 3gpp-mcp-charging server for real data.
+Uses MCP client to connect to mcp-3gpp-ftp server for real data.
 Falls back to HTTP download, then sample data when MCP is unavailable.
 """
 import asyncio
@@ -82,7 +82,7 @@ class StandardsFetcher:
         server_params = StdioServerParameters(
             command=command,
             args=args,
-            env=None
+            env={"PYTHONUNBUFFERED": "1"}
         )
 
       
@@ -107,7 +107,9 @@ class StandardsFetcher:
         self.mcp_session = ClientSession(read_stream, write_stream)
 
         # Initialize MCP protocol
+        logger.info("mcp_starting_handshake")
         await self.mcp_session.initialize()
+        logger.info("mcp_handshake_completed")
 
         logger.info("mcp_session_initialized")
     
@@ -332,7 +334,7 @@ class StandardsFetcher:
     
     async def _fetch_work_plan_via_mcp(self) -> Dict:
         """
-        Fetch Work Plan using MCP tools from 3gpp-mcp-charging.
+        Fetch Work Plan using MCP tools from mcp-3gpp-ftp server.
         Note: This requires the mcp-3gpp-ftp server to be running and accessible.
         """
         logger.info("fetching_work_plan_via_mcp")
@@ -475,9 +477,9 @@ class StandardsFetcher:
     async def _fetch_meetings_via_mcp(self, limit: int = 3) -> List[Dict]:
         """
         Fetch recent meetings using MCP tools.
-        Note: This requires the 3gpp-mcp-charging server to be running and accessible.
+        Note: This requires the mcp-3gpp-ftp server to be running and accessible.
         """
-        from datetime import datetime
+        from datetime import datetime   
         
         # Validate MCP client
         self._validate_mcp_client()
