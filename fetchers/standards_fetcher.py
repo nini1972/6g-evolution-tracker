@@ -72,7 +72,7 @@ class StandardsFetcher:
 
             if has_npx:
             # Official and correct invocation
-            return ("npx", ["3gpp-mcp-charging@latest", "serve"])
+                return ("npx", ["3gpp-mcp-charging@latest", "serve"])
 
         # No valid MCP server launcher found
         logger.error("mcp_server_command_not_found")
