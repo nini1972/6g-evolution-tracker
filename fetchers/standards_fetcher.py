@@ -45,6 +45,11 @@ class StandardsFetcher:
     
     # Cache duration in seconds (24 hours)
     CACHE_DURATION = 86400
+
+    # Framing parameters - Ensure we don't get overwhelmed by the huge history
+    TARGET_RELEASE = "Rel-21"  # Focus on the 6G evolution phase
+    MAX_MEETINGS_PER_WG = 3    # Only track the last 3 meetings for each group
+    MEETING_FRESHNESS_DAYS = 180  # approx 6 months
     
     def __init__(self, cache_dir: str = "/tmp/3gpp_cache"):
         self.cache_dir = Path(cache_dir)
@@ -264,7 +269,7 @@ class StandardsFetcher:
             Dict with Release 21 progress data
         """
         # Try MCP method first
-        if self.use_mcp and self.mcp_session:
+        if self.mcp_session:
             try:
                 return await self._fetch_work_plan_via_mcp()
             except Exception as e:
@@ -360,7 +365,7 @@ class StandardsFetcher:
                     arguments={
                         "file_url": "https://www.3gpp.org/ftp/Information/WORK_PLAN/TSG_Status_Report.xlsx",
                         "columns": ["WI/SI", "Title", "Status", "Release", "Responsible WG"],
-                        "filters": {"Release": "Rel-21"}
+                        "filters": {"Release": self.TARGET_RELEASE}
                     }
                 ),
                 timeout=60.0
@@ -443,7 +448,7 @@ class StandardsFetcher:
             "work_items_by_group": dict(by_group)
         }
     
-    async def fetch_recent_meetings(self, limit: int = 3) -> List[Dict]:
+    async def fetch_recent_meetings(self, limit: Optional[int] = None) -> List[Dict]:
         """
         Fetch recent meeting reports using MCP or HTTP fallback.
         Falls back to sample data when all methods fail.
@@ -457,7 +462,7 @@ class StandardsFetcher:
         meetings = []
         
         # Try MCP method first
-        if self.use_mcp and self.mcp_session:
+        if self.mcp_session:
             try:
                 meetings = await self._fetch_meetings_via_mcp(limit)
                 if meetings:
@@ -482,12 +487,15 @@ class StandardsFetcher:
         
         return meetings
     
-    async def _fetch_meetings_via_mcp(self, limit: int = 3) -> List[Dict]:
+    async def _fetch_meetings_via_mcp(self, limit: Optional[int] = None) -> List[Dict]:
         """
         Fetch recent meetings using MCP tools.
         Note: This requires the mcp-3gpp-ftp server to be running and accessible.
         """
         from datetime import datetime   
+        
+        # Use class constant if limit not provided
+        fetch_limit = limit or self.MAX_MEETINGS_PER_WG
         
         # Validate MCP client
         self._validate_mcp_client()
@@ -520,7 +528,7 @@ class StandardsFetcher:
                 dirs = json.loads(result.content[0].text)
                 
                 # Get most recent meetings (assume sorted by name/date)
-                recent_dirs = sorted(dirs, reverse=True)[:limit]
+                recent_dirs = sorted(dirs, reverse=True)[:fetch_limit]
                 
                 for meeting_dir in recent_dirs:
                     # Create meeting data structure
@@ -649,7 +657,7 @@ class StandardsFetcher:
         from datetime import datetime
         
         logger.warning("using_sample_3gpp_data", 
-                      msg="Using sample data - Real 3GPP access via 3gpp-mcp-charging failed")
+                      msg="Using sample data - Real 3GPP access via mcp-3gpp-ftp failed")
         
         return {
             "total_work_items": 45,
