@@ -47,18 +47,18 @@ jobs:
         with:
           python-version: '3.13'
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with: 
-          node-version: '20'
+      #- name: Set up Node.js
+        #uses: actions/setup-node@v4
+        #with: 
+          #node-version: '20'
 
-      - run: |
-          echo "Node version:"
-          node -v
-          echo "npm version:"
-          npm -v
-          echo "npx version:"
-          npx --version
+      #- run: |
+          #echo "Node version:"
+          #node -v
+          #echo "npm version:"
+          #npm -v
+          #echo "npx version:"
+          #npx --version
 
       - name: Install dependencies
         run: |
@@ -87,22 +87,17 @@ jobs:
 
       - name: Start MCP 3GPP Server (background)
         env: 
-           HUGGINGFACE_TOKEN: ${{ secrets.HUGGINGFACE_TOKEN }}
+          HUGGINGFACE_TOKEN: ${{ secrets.HUGGINGFACE_TOKEN }}
         run: |
-          echo "Starting 3gpp-mcp-charging MCP server..."
+          echo "Starting mcp-3gpp-ftp MCP server (Python)..."
           echo "=== Starting MCP server at $(date) ===" > mcp_server.log
-          
           # Run in background with detailed logging
-          npx 3gpp-mcp-charging@latest serve >> mcp_server.log 2>&1 &
+          python -m mcp_3gpp_ftp >> mcp_server.log 2>&1 &
           MCP_PID=$!
           echo "MCP_PID=$MCP_PID" >> $GITHUB_ENV
           echo "✓ MCP server started with PID $MCP_PID"
-          
-          # Wait longer for first-time download + initialization
           echo "Waiting 50 seconds for server initialization..."
           sleep 50
-          
-          # Check if process is still alive
           if kill -0 $MCP_PID 2>/dev/null; then
             echo "✓ MCP server is running (PID $MCP_PID)"
           else
