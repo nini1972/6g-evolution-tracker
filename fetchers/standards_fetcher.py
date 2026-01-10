@@ -3,12 +3,11 @@ Fetcher for 3GPP standardization data.
 Uses MCP client to connect to mcp-3gpp-ftp server for real data.
 Falls back to HTTP download, then sample data when MCP is unavailable.
 """
-import asyncio
-import httpx
-import time
 import shutil
 from pathlib import Path
 from typing import Dict, List, Optional, Tuple
+from contextlib import AsyncExitStack
+import asyncio
 import structlog
 from parsers.work_item_parser import WorkItemParser
 from parsers.meeting_report_parser import MeetingReportParser
@@ -48,10 +47,9 @@ class StandardsFetcher:
     def __init__(self, cache_dir: str = "/tmp/3gpp_cache"):
         self.cache_dir = Path(cache_dir)
         self.cache_dir.mkdir(parents=True, exist_ok=True)
-        self.client = None
-        self.use_mcp = MCP_AVAILABLE  # Toggle for MCP usage
-        self.mcp_context = None
-        self.mcp_session = None
+        self.client: Optional[httpx.AsyncClient] = None
+        self.mcp_session: Optional[ClientSession] = None
+        self.exit_stack: Optional[AsyncExitStack] = None
     
     async def _command_exists(self, cmd: str) -> bool:
         """Check if a command exists in PATH"""
@@ -92,30 +90,36 @@ class StandardsFetcher:
       
         logger.info("starting_mcp_server", command=command, args=args)
 
-        # Create stdio transport
-        self.mcp_context = stdio_client(server_params)
-
-        try:
-            # Prevent infinite hang. 30s allows for slow container startup.
-            read_stream, write_stream = await asyncio.wait_for(
-                self.mcp_context.__aenter__(),
-                timeout=30
-            )
-        except asyncio.TimeoutError:
-            logger.error("mcp_start_timeout")
-            raise RuntimeError("MCP server did not start in time")
-
+    # Use AsyncExitStack to manage multiple async contexts
+    self.exit_stack = AsyncExitStack()
+    
+    try:
+        # 1. Connect stdio transport
+        read_stream, write_stream = await self.exit_stack.enter_async_context(
+            stdio_client(server_params)
+        )
         logger.info("mcp_streams_connected")
 
-        # Create session
-        self.mcp_session = ClientSession(read_stream, write_stream)
+        # 2. Start MCP session (this starts the message listener task)
+        self.mcp_session = await self.exit_stack.enter_async_context(
+            ClientSession(read_stream, write_stream)
+        )
+        logger.info("mcp_session_entered")
 
-        # Initialize MCP protocol
+        # 3. Perform initialization handshake
         logger.info("mcp_starting_handshake")
         await self.mcp_session.initialize()
         logger.info("mcp_handshake_completed")
 
         logger.info("mcp_session_initialized")
+
+    except Exception as e:
+        logger.error("mcp_init_error", error=str(e))
+        if self.exit_stack:
+            await self.exit_stack.aclose()
+            self.exit_stack = None
+        self.mcp_session = None
+        raise
     
     async def _test_mcp_health(self) -> bool:
         """Check if MCP server responds to basic commands."""
@@ -132,7 +136,7 @@ class StandardsFetcher:
         self.client = httpx.AsyncClient(timeout=30.0, follow_redirects=True)
         
         # Try to connect to mcp-3gpp-ftp server (optional, graceful degradation if unavailable)
-        if self.use_mcp:
+        if MCP_AVAILABLE:
             try:
                 logger.info("attempting_mcp_connection", server="mcp-3gpp-ftp")
                 
@@ -155,30 +159,33 @@ class StandardsFetcher:
                 
                 if not health_ok:
                     logger.warning("mcp_health_check_failed_disabling")
-                    self.use_mcp = False
+                    if self.exit_stack:
+                        await self.exit_stack.aclose()
+                        self.exit_stack = None
                     self.mcp_session = None
-                    self.mcp_context = None
                 
             except asyncio.TimeoutError:
                 logger.error("mcp_timeout", 
                             msg="MCP server initialization timed out after 60 seconds",
                             timeout_seconds=60)
-                self.use_mcp = False
-                # Attempt to cleanup the context to avoid async errors
-                if self.mcp_context:
+                if self.exit_stack:
                     try:
-                        await self.mcp_context.__aexit__(None, None, None)
+                        await self.exit_stack.aclose()
                     except Exception:
-                        pass  # Ignore cleanup errors during timeout
-                    self.mcp_context = None
+                        pass
+                    self.exit_stack = None
                 self.mcp_session = None
                 
             except Exception as e:
                 logger.error("mcp_session_init_failed", 
                             error=str(e), 
                             error_type=type(e).__name__)
-                self.use_mcp = False
-                self.mcp_context = None
+                if self.exit_stack:
+                    try:
+                        await self.exit_stack.aclose()
+                    except Exception:
+                        pass
+                    self.exit_stack = None
                 self.mcp_session = None
         
         return self
@@ -189,15 +196,14 @@ class StandardsFetcher:
             await self.client.aclose()
         
         # Close MCP session
-        if self.mcp_session:
+        if self.exit_stack:
             try:
-                await self.mcp_session.close()
-                logger.info("mcp_session_closed")
+                await self.exit_stack.aclose()
+                self.exit_stack = None
+                self.mcp_session = None
+                logger.info("mcp_resources_cleaned_up")
             except Exception as e:
                 logger.warning("mcp_session_close_error", error=str(e))
-        
-        # Disconnect MCP context
-        if self.mcp_context:
             try:
                 await self.mcp_context.__aexit__(exc_type, exc_val, exc_tb)
             except Exception as e:
