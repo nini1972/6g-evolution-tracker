@@ -628,8 +628,8 @@ async def main_async():
         if isinstance(feeds_data, Exception):
             logger.error("feeds_fetch_failed", error=str(feeds_data))
             feeds_data = {}
-        
-        if isinstance(standardization_data, Exception):
+
+        if not isinstance(standardization_data, dict):
             logger.warning("standards_fetch_failed", error=str(standardization_data))
             standardization_data = None
         else:
