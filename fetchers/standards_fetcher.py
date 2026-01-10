@@ -302,8 +302,10 @@ class StandardsFetcher:
             
         except httpx.HTTPStatusError as e:
             if e.response.status_code == 403:
-                logger.warning("work_plan_access_denied", 
-                              msg="3GPP FTP server denied access. Using sample data.")
+                logger.warning("
+                    work_plan_access_denied", 
+                    msg="3GPP FTP server denied access. Using sample data."
+                )
             else:
                 logger.error("work_plan_http_error", status=e.response.status_code, error=str(e))
             return self._empty_work_plan()
@@ -496,9 +498,11 @@ class StandardsFetcher:
                 )
                 
                 elapsed = time.time() - start_time
-                logger.info("mcp_directory_list_completed", 
-                           wg=wg, 
-                           elapsed_seconds=round(elapsed, 2))
+                logger.info(
+                    "mcp_directory_list_completed", 
+                     wg=wg, 
+                     elapsed_seconds=round(elapsed, 2)
+                )
                 
                 if not result.content or len(result.content) == 0:
                     continue
