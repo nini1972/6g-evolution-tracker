@@ -1,120 +1,143 @@
 {
   "date": "2026-01-10",
-  "articles": [
-    {
-      "source": "IEEE Spectrum",
-      "title": "Video Friday: Robots Are Everywhere at CES 2026",
-      "link": "https://spectrum.ieee.org/robots-ces-2026",
-      "score": 3,
-      "ai_insights": {
-        "is_6g_relevant": true,
-        "source_region": "US",
-        "summary": "The article highlights the commercialization of enterprise-grade humanoid robots and advanced autonomous systems showcased at CES 2026. Key advancements include 'embodied intelligence,' vision-language-action systems, and spatial memory for navigation\u2014all of which serve as primary use cases for 6G's high-reliability, low-latency, and massive machine-type communication capabilities.",
-        "overall_6g_importance": 7,
-        "6g_topics": [
-          "device ecosystem",
-          "cloud-edge integration",
-          "network automation",
-          "ISAC",
-          "AI-native RAN"
-        ],
-        "impact_dimensions": {
-          "research_intensity": 4,
-          "standardization_influence": 2,
-          "industrial_deployment": 4,
-          "spectrum_policy_signal": 1,
-          "ecosystem_maturity": 3
+  "articles": [],
+  "standardization": {
+    "release_21_progress": {
+      "total_work_items": 45,
+      "completed": 15,
+      "in_progress": 25,
+      "postponed": 5,
+      "progress_percentage": 33.3,
+      "last_updated": "2026-01-10",
+      "data_source": "sample",
+      "work_items_by_group": {
+        "RAN1": {
+          "total": 12,
+          "completed": 4,
+          "in_progress": 7,
+          "postponed": 1,
+          "progress": 33.3
         },
-        "time_horizon": "mid-term",
-        "world_power_impact": {
-          "US": 5,
-          "EU": 4,
-          "China": 4,
-          "Japan": 3,
-          "Korea": 3,
-          "India": 1
+        "RAN2": {
+          "total": 8,
+          "completed": 3,
+          "in_progress": 4,
+          "postponed": 1,
+          "progress": 37.5
         },
-        "emerging_concepts": [
-          "Embodied Intelligence",
-          "Vision-Language-Action (VLA) systems",
-          "Implicit spatial memories for navigation",
-          "Robotic Process Automation (RPA) at scale",
-          "Humanoid-as-a-Platform"
-        ],
-        "key_evidence": [
-          "Boston Dynamics announced the product version of Atlas, an enterprise-grade humanoid designed for industrial revolution.",
-          "HKU MMLab demonstrated long-horizon clothing manipulation using vision-language-action systems and real-world autonomy.",
-          "ETHZ RSL developed Spatially Enhanced Recurrent Units (SRUs) yielding 105% improvement in navigation using single-camera spatial memory.",
-          "MenteeBot demonstrates autonomous learning via mentoring to replace batteries without teleoperation.",
-          "Humanoid robots are now emerging as standardized hardware platforms, decoupling hardware from application-specific software."
-        ],
-        "standardization_context": {
-          "tdoc_refs": [],
-          "work_items": [],
-          "target_release": "",
-          "working_groups": []
+        "SA2": {
+          "total": 10,
+          "completed": 5,
+          "in_progress": 4,
+          "postponed": 1,
+          "progress": 50.0
         },
-        "impact_score": 7
-      },
-      "source_region": "US",
-      "summary": "<img src=\"https://spectrum.ieee.org/media-library/a-humanoid-robot-stands-in-a-workshop-surrounded-by-yellow-safety-barriers.png?id=62698082&amp;width=1200&amp;height=800&amp;coordinates=150%2C0%2C150%2C0\" /><br /><br /><p><span>Video Friday is your weekly selection of awesome robotics videos, collected by your friends at </span><em>IEEE Spectrum</em><span> robotics. We also post a weekly calendar of upcoming robotics events for the next few months. Please </span><a href=\"mailto:automaton@ieee.org?subject=Robotics%20event%20suggestion%20for%20Video%20Friday\">send us your events</a><span> for inclusion.</span></p><h5><a href=\"https://2026.ieee-icra.org/\">ICRA 2026</a>: 1\u20135 June 2026, VIENNA</h5><p>Enjoy today\u2019s videos!</p><div class=\"horizontal-rule\"></div><div><span style=\"display: none;\"> </span></div><blockquote class=\"rm-anchors\" id=\"sd8ivhpji6g\"><em>We\u2019re excited to announce the product version of our Atlas\u00ae robot. This enterprise-grade humanoid robot offers impressive strength and range of motion, precise manipulation, and intelligent adaptability\u2014designed to power the new industrial revolution.</em></blockquote><p class=\"shortcode-media shortcode-media-youtube\"><span class=\"rm-shortcode\" style=\"display: block; padding-top: 56.25%;\"></span></p><p class=\"shortcode-media shortcode-media-youtube\"> <span class=\"rm-shortcode\" style=\"display: block; padding-top: 56.25%;\"></span></p><p>[ <a href=\"https://bostondynamics.com/products/atlas/\">Boston Dynamics</a> ]</p><div class=\"horizontal-rule\"></div><p class=\"rm-anchors\" id=\"suybti4yc-y\">I appreciate the creativity and technical innovation here, but realistically, if you\u2019ve got more than one floor in your house? Just get a second robot. That single-step sunken living room though....</p><p class=\"shortcode-media shortcode-media-youtube\"><span class=\"rm-shortcode\" style=\"display: block; padding-top: 56.25%;\"></span></p><p>[ <a href=\"https://us.roborock.com/pages/ces-2026\">Roborock</a> ]</p><div class=\"horizontal-rule\"></div><blockquote class=\"rm-anchors\" id=\"btjxyrtr9m8\"><em>Wow, SwitchBot\u2019s CES 2026 video shows almost as many robots in their fantasy home as I have in my real home.</em></blockquote><p class=\"shortcode-media shortcode-media-youtube\"><span class=\"rm-shortcode\" style=\"display: block; padding-top: 56.25%;\"></span></p><p>[ <a href=\"https://www.switch-bot.com/pages/events-ces-2026\">SwitchBot</a> ]</p><div class=\"horizontal-rule\"></div><p class=\"rm-anchors\" id=\"bkuuepmjdc8\">What is happening in robotics right now that I can derive more satisfaction from watching <a href=\"https://spectrum.ieee.org/building-better-solar-cells-at-robot-speed\" target=\"_blank\">robotic process automation</a> than I can from watching yet another <a href=\"https://spectrum.ieee.org/humanoid-robot-olympics\" target=\"_blank\">humanoid</a> video?</p><p class=\"shortcode-media shortcode-media-youtube\"><span class=\"rm-shortcode\" style=\"display: block; padding-top: 56.25%;\"></span></p><p>[ <a href=\"https://new.abb.com/news/detail/132408/cstmr-xiang-piao-piao-increases-production-efficiency-by-40-percent-thanks-to-abb-automated-system\">ABB</a> ]</p><div class=\"horizontal-rule\"></div><p class=\"rm-anchors\" id=\"jzllfrhrc4g\">Yes, this is definitely a robot I want in close proximity to my life.</p><p class=\"shortcode-media shortcode-media-youtube\"><span class=\"rm-shortcode\" style=\"display: block; padding-top: 56.25%;\"></span></p><p>[ <a href=\"https://www.unitree.com/H2\">Unitree</a> ]</p><div class=\"horizontal-rule\"></div><blockquote class=\"rm-anchors\" id=\"xxvtjtorxl0\"><em>The video below demonstrates a MenteeBot learning, through mentoring, how to replace a battery in another MenteeBot. No teleoperation is used.</em></blockquote><p class=\"shortcode-media shortcode-media-youtube\"><span class=\"rm-shortcode\" style=\"display: block; padding-top: 56.25%;\"></span></p><p>[ <a href=\"https://www.menteebot.com/\">Mentee Robotics</a> ]</p><div class=\"horizontal-rule\"></div><p class=\"rm-anchors\" id=\"ywwwcecwiza\">Personally, I think we should encourage humanoid robots to fall much more often, just so we can see whether they can get up again.</p><p class=\"shortcode-media shortcode-media-youtube\"><span class=\"rm-shortcode\" style=\"display: block; padding-top: 56.25%;\"></span></p><p>[ <a href=\"https://www.agilityrobotics.com/\">Agility Robotics</a> ]</p><div class=\"horizontal-rule\"></div><blockquote class=\"rm-anchors\" id=\"mx0dzgtptbg\"><em>Achieving long-horizon, reliable clothing manipulation in the real world remains one of the most challenging problems in robotics. This live test demonstrates a strong step forward in embodied intelligence, vision-language-action systems, and real-world robotic autonomy.</em></blockquote><p class=\"shortcode-media shortcode-media-youtube\"><span class=\"rm-shortcode\" style=\"display: block; padding-top: 56.25%;\"></span></p><p>[ <a href=\"https://mmlab.hk/research/kai0\">HKU MMLab</a> ]</p><div class=\"horizontal-rule\"></div><blockquote class=\"rm-anchors\" id=\"626qsq1czoc\"><em>Millions of people around the world need assistance with feeding. Robotic feeding systems offer the potential to enhance autonomy and quality of life for individuals with impairments and reduce caregiver workload. However, their widespread adoption has been limited by technical challenges such as estimating bite timing, the appropriate moment for the robot to transfer food to a user\u2019s mouth. In this work, we introduce WAFFLE: Wearable Approach For Feeding with LEarned Bite Timing, a system that accurately predicts bite timing by leveraging wearable sensor data to be highly reactive to natural user cues such as head movements, chewing, and talking.</em></blockquote><p class=\"shortcode-media shortcode-media-youtube\"><span class=\"rm-shortcode\" style=\"display: block; padding-top: 56.25%;\"></span></p><p>[ <a href=\"https://sites.google.com/view/bitetiming/\">CMU RCHI</a> ]</p><div class=\"horizontal-rule\"></div><p class=\"rm-anchors\" id=\"jypic0aarpg\">Humanoid robots are now available as platforms, which is a great way of sidestepping the whole practicality question.</p><p class=\"shortcode-media shortcode-media-youtube\"><span class=\"rm-shortcode\" style=\"display: block; padding-top: 56.25%;\"></span></p><p>[ <a href=\"https://pndbotics.com/humanoid\">PNDbotics</a> ]</p><div class=\"horizontal-rule\"></div><blockquote class=\"rm-anchors\" id=\"ig41e0yqijg\"><em>We\u2019re introducing Spatially Enhanced Recurrent Units (SRUs)\u2014a simple yet powerful modification that enables robots to build implicit spatial memories for navigation. Published in the International Journal of Robotics Research (IJRR), this work demonstrates up to +105 percent improvement over baseline approaches, with robots successfully navigating 70+ meters in the real world using only a single forward-facing camera.</em></blockquote><p class=\"shortcode-media shortcode-media-youtube\"><span class=\"rm-shortcode\" style=\"display: block; padding-top: 56.25%;\"></span></p><p>[ <a href=\"https://michaelfyang.github.io/sru-project-website/\">ETHZ RSL</a> ]</p><div class=\"horizontal-rule\"></div><p class=\"rm-anchors\" id=\"gxnpy0-zwcu\">Looking forward to the <a href=\"https://spectrum.ieee.org/darpa-triage-challenge-robots\" target=\"_blank\">DARPA Triage Challenge</a> this fall!</p><p class=\"shortcode-media shortcode-media-youtube\"><span class=\"rm-shortcode\" style=\"display: block; padding-top: 56.25%;\"></span></p><p>[ <a href=\"https://www.darpa.mil/research/challenges/darpa-triage-challenge\">DARPA</a> ]</p><div class=\"horizontal-rule\"></div><p class=\"rm-anchors\" id=\"u7wnlqt5fs8\">Here are a couple of good interviews from the Humanoids Summit 2025.</p><p class=\"shortcode-media shortcode-media-youtube\"><span class=\"rm-shortcode\" style=\"display: block; padding-top: 56.25%;\"></span></p><p class=\"shortcode-media shortcode-media-youtube\"> <span class=\"rm-shortcode\" style=\"display: block; padding-top: 56.25%;\"></span></p><p>[ <a href=\"https://humanoidssummit.com/\">Humanoids Summit</a> ]</p><div class=\"horizontal-rule\"></div>",
-      "date": "2026-01-09"
+        "SA6": {
+          "total": 8,
+          "completed": 2,
+          "in_progress": 5,
+          "postponed": 1,
+          "progress": 25.0
+        },
+        "RAN3": {
+          "total": 7,
+          "completed": 1,
+          "in_progress": 5,
+          "postponed": 1,
+          "progress": 14.3
+        }
+      }
     },
-    {
-      "source": "Mobile World Live",
-      "title": "UK regulator outlines upper 6GHz proposal",
-      "link": "https://www.mobileworldlive.com/europe/uk-regulator-outlines-upper-6ghz-proposal/",
-      "score": 3,
-      "ai_insights": {
-        "is_6g_relevant": true,
-        "source_region": "EU",
-        "summary": "The UK regulator Ofcom has proposed a hybrid sharing model for the upper 6GHz spectrum band (6425\u20137125 MHz), allowing both licensed mobile (IMT) and license-exempt (Wi-Fi) services to coexist. This move is a strategic step in securing mid-band capacity for future 6G networks while balancing the needs of the Wi-Fi ecosystem.",
-        "overall_6g_importance": 8,
-        "6g_topics": [
-          "spectrum & policy",
-          "standardization",
-          "sustainability"
+    "recent_meetings": [
+      {
+        "meeting_id": "TSGR2_128",
+        "working_group": "RAN2",
+        "date": "2025-12-31",
+        "location": "Virtual",
+        "key_agreements": [
+          "Agreed: L2/L3 procedures for NTN integration",
+          "Further study needed: Handover optimization for LEO satellites"
         ],
-        "impact_dimensions": {
-          "research_intensity": 2,
-          "standardization_influence": 4,
-          "industrial_deployment": 3,
-          "spectrum_policy_signal": 5,
-          "ecosystem_maturity": 2
-        },
-        "time_horizon": "mid-term",
-        "world_power_impact": {
-          "US": 3,
-          "EU": 5,
-          "China": 4,
-          "Japan": 3,
-          "Korea": 3,
-          "India": 4
-        },
-        "emerging_concepts": [
-          "Hybrid spectrum sharing",
-          "Coexistence of IMT and Wi-Fi",
-          "Dynamic spectrum access",
-          "Upper 6GHz band utilization"
+        "tdoc_references": [
+          "R2-2345678",
+          "R2-2345789"
         ],
-        "key_evidence": [
-          "Ofcom proposal to share upper 6GHz spectrum between mobile and Wi-Fi services.",
-          "Consultation period open until 20 March.",
-          "Strategic shift toward a 'hybrid' approach rather than exclusive licensing."
-        ],
-        "standardization_context": {
-          "tdoc_refs": [],
-          "work_items": [],
-          "target_release": "Rel-19",
-          "working_groups": [
-            "RAN4"
-          ]
-        },
-        "impact_score": 8
+        "sentiment": "mixed",
+        "data_source": "sample"
       },
-      "source_region": "EU",
-      "summary": "<p>Ofcom issued a proposal to share the upper 6GHz spectrum band between mobile and Wi-Fi services, with a consultation on the plan open until 20 March.</p>\n<p>The post <a href=\"https://www.mobileworldlive.com/europe/uk-regulator-outlines-upper-6ghz-proposal/\">UK regulator outlines upper 6GHz proposal</a> appeared first on <a href=\"https://www.mobileworldlive.com\">Mobile World Live</a>.</p>",
-      "date": "2026-01-09"
+      {
+        "meeting_id": "TSGS2_165",
+        "working_group": "SA2",
+        "date": "2025-12-26",
+        "location": "Virtual",
+        "key_agreements": [
+          "Agreed: Network architecture for AI-native RAN",
+          "Way forward: Study XRM framework for cross-domain resource management",
+          "Decision: Approve Release 21 architecture baseline"
+        ],
+        "tdoc_references": [
+          "S2-2401234",
+          "S2-2401345",
+          "S2-2401456"
+        ],
+        "sentiment": "positive",
+        "data_source": "sample"
+      },
+      {
+        "meeting_id": "TSGR1_115",
+        "working_group": "RAN1",
+        "date": "2025-12-11",
+        "location": "Virtual",
+        "key_agreements": [
+          "Agreed: AI/ML framework for CSI feedback enhancements",
+          "Decision: Proceed with sub-THz channel modeling for 100-300 GHz",
+          "Conclusion: Finalize positioning accuracy requirements for Release 21"
+        ],
+        "tdoc_references": [
+          "R1-2312345",
+          "R1-2312456",
+          "R1-2312567"
+        ],
+        "sentiment": "positive",
+        "data_source": "sample"
+      }
+    ],
+    "work_items_by_group": {
+      "RAN1": {
+        "total": 12,
+        "completed": 4,
+        "in_progress": 7,
+        "postponed": 1,
+        "progress": 33.3
+      },
+      "RAN2": {
+        "total": 8,
+        "completed": 3,
+        "in_progress": 4,
+        "postponed": 1,
+        "progress": 37.5
+      },
+      "SA2": {
+        "total": 10,
+        "completed": 5,
+        "in_progress": 4,
+        "postponed": 1,
+        "progress": 50.0
+      },
+      "SA6": {
+        "total": 8,
+        "completed": 2,
+        "in_progress": 5,
+        "postponed": 1,
+        "progress": 25.0
+      },
+      "RAN3": {
+        "total": 7,
+        "completed": 1,
+        "in_progress": 5,
+        "postponed": 1,
+        "progress": 14.3
+      }
     }
-  ]
+  }
 }
