@@ -728,3 +728,4 @@ async def fetch_standardization_data() -> Dict:
     """
     async with StandardsFetcher() as fetcher:
         return await fetcher.fetch_all()
+
