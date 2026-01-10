@@ -70,10 +70,8 @@ class StandardsFetcher:
 
         logger.info("mcp_command_detection", npx_available=has_npx)
 
-            if has_npx:
-            # Official and correct invocation
-                return ("npx", ["3gpp-mcp-charging@latest", "serve"])
-
+        if has_npx:
+            return ("npx", ["3gpp-mcp-charging@latest", "serve"])
         # No valid MCP server launcher found
         logger.error("mcp_server_command_not_found")
         return None
