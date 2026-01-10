@@ -376,34 +376,50 @@ class StandardsFetcher:
             
             # Parse result
             if result.content and len(result.content) > 0:
-                raw_text = result.content[0].text
+                # Check for tool-level errors reported in raw text
+                first_text = result.content[0].text
+                if first_text.startswith("Error executing tool"):
+                    raise RuntimeError(f"MCP Tool Error: {first_text}")
+                
+                # Collect all text items
+                texts = [c.text for c in result.content if hasattr(c, 'text')]
+                
                 try:
-                    rel21_items = json.loads(raw_text)
+                    # Case 1: Single item is a JSON-encoded list
+                    if len(texts) == 1:
+                        rel21_items = json.loads(texts[0])
+                        if not isinstance(rel21_items, list):
+                            rel21_items = [rel21_items]
+                    else:
+                        # Case 2: Multi-item response, check if each item is a dict
+                        # (FastMCP usually serializes objects to JSON strings)
+                        rel21_items = []
+                        for t in texts:
+                             try:
+                                 item = json.loads(t)
+                                 rel21_items.append(item)
+                             except json.JSONDecodeError:
+                                 # Skip non-json items in multi-item result
+                                 continue
+                    
                     logger.info("mcp_work_plan_fetched", items=len(rel21_items))
                     # Aggregate into our data structure
                     return self._aggregate_work_items(rel21_items)
-                except json.JSONDecodeError as je:
-                    logger.error("mcp_work_plan_json_error", 
-                                error=str(je), 
-                                raw_text=raw_text[:500] if raw_text else "EMPTY")
-                    return self._empty_work_plan()
+                    
+                except (json.JSONDecodeError, TypeError) as e:
+                    logger.error("mcp_work_plan_parse_error", 
+                                error=str(e), 
+                                first_text=first_text[:200])
+                    raise RuntimeError(f"Failed to parse MCP result: {str(e)}")
             else:
                 logger.warning("mcp_empty_result")
-                return self._empty_work_plan()
+                raise RuntimeError("MCP server returned empty result")
                 
         except asyncio.TimeoutError:
-            elapsed = time.time() - start_time
-            logger.error("mcp_work_plan_timeout", 
-                        timeout_seconds=60,
-                        elapsed_seconds=round(elapsed, 2))
-            return self._empty_work_plan()
+            raise RuntimeError("MCP work plan tool timed out")
         except Exception as e:
-            elapsed = time.time() - start_time
-            logger.error("mcp_work_plan_fetch_failed", 
-                        error=str(e), 
-                        error_type=type(e).__name__,
-                        elapsed_seconds=round(elapsed, 2))
-            return self._empty_work_plan()
+            # Let it propagate to trigger HTTP fallback in fetch_work_plan
+            raise
     
     def _aggregate_work_items(self, items: List[Dict]) -> Dict:
         """Convert MCP result to our data structure"""
@@ -531,16 +547,43 @@ class StandardsFetcher:
                 if not result.content or len(result.content) == 0:
                     continue
                 
-                raw_text = result.content[0].text
+                # Check for tool-level errors
+                first_text = result.content[0].text
+                if first_text.startswith("Error executing tool"):
+                    logger.warning("mcp_meeting_tool_error", wg=wg, error=first_text)
+                    continue
+                    
+                # Collect all text items
+                texts = [c.text for c in result.content if hasattr(c, 'text')]
+                
                 try:
-                    dirs = json.loads(raw_text)
+                    # Try to parse as single JSON list first
+                    if len(texts) == 1:
+                        try:
+                            dirs = json.loads(texts[0])
+                            if not isinstance(dirs, list):
+                                dirs = [dirs]
+                        except json.JSONDecodeError:
+                            # Not JSON, treat as plain text item
+                            dirs = texts
+                    else:
+                        # Multi-item list, check if items are JSON-encoded
+                        dirs = []
+                        for t in texts:
+                            try:
+                                item = json.loads(t)
+                                dirs.append(item)
+                            except json.JSONDecodeError:
+                                # Not JSON, treat as plain text (e.g. dir name)
+                                dirs.append(t)
+                                
                     # Get most recent meetings (assume sorted by name/date)
                     recent_dirs = sorted(dirs, reverse=True)[:fetch_limit]
-                except json.JSONDecodeError as je:
-                    logger.error("mcp_meeting_json_error", 
+                except Exception as e:
+                    logger.error("mcp_meeting_parse_error", 
                                 wg=wg, 
-                                error=str(je), 
-                                raw_text=raw_text[:500] if raw_text else "EMPTY")
+                                error=str(e), 
+                                first_text=first_text[:200])
                     continue
                 
                 for meeting_dir in recent_dirs:
