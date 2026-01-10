@@ -86,10 +86,11 @@ class StandardsFetcher:
         command, args = server_cmd
 
         server_params = StdioServerParameters(
-        command=command,  # Use detected value
-        args=args,        # Use detected value
-        env=None
+            command=command,
+            args=args,
+            env=None
         )
+
       
         logger.info("starting_mcp_server", command=command, args=args)
 
