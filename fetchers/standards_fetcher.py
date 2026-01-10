@@ -136,21 +136,21 @@ class StandardsFetcher:
             try:
                 logger.info("attempting_mcp_connection", server="3gpp-mcp-charging")
                 
-                # Initialize with 15s timeout (5s startup + 10s init)
+                # Initialize with 45s timeout (accounts for npm package download on first run)
                 start_time = time.time()
                 
                 await asyncio.wait_for(
                     self._init_mcp_session(),
-                    timeout=15.0
+                    timeout=45.0
                 )
                 
                 init_elapsed = time.time() - start_time
                 logger.info("mcp_init_completed", elapsed_seconds=round(init_elapsed, 2))
                 
-                # Health check with 5s timeout
+                # Health check with 10s timeout
                 health_ok = await asyncio.wait_for(
                     self._test_mcp_health(),
-                    timeout=5.0
+                    timeout=10.0
                 )
                 
                 if not health_ok:
@@ -161,10 +161,16 @@ class StandardsFetcher:
                 
             except asyncio.TimeoutError:
                 logger.error("mcp_timeout", 
-                            msg="MCP server initialization timed out after 20 seconds",
-                            timeout_seconds=20)
+                            msg="MCP server initialization timed out after 55 seconds",
+                            timeout_seconds=55)
                 self.use_mcp = False
-                self.mcp_context = None
+                # Attempt to cleanup the context to avoid async errors
+                if self.mcp_context:
+                    try:
+                        await self.mcp_context.__aexit__(None, None, None)
+                    except Exception:
+                        pass  # Ignore cleanup errors during timeout
+                    self.mcp_context = None
                 self.mcp_session = None
                 
             except Exception as e:
