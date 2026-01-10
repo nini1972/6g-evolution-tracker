@@ -82,7 +82,11 @@ class StandardsFetcher:
         server_params = StdioServerParameters(
             command=command,
             args=args,
-            env={"PYTHONUNBUFFERED": "1"}
+            env={
+                "PYTHONUNBUFFERED": "1",
+                "TERM": "dumb",
+                "PYTHONIOENCODING": "utf-8"
+            }
         )
 
       

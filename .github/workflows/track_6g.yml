@@ -72,6 +72,15 @@ jobs:
               print("Gemini test FAILED:", e)
           EOF
 
+      - name: MCP Diagnostic
+        run: |
+          echo "Dumping raw MCP server output for 5 seconds..."
+          python -c "from mcp_3gpp_ftp.server import main; main()" & 
+          SERVER_PID=$!
+          sleep 5
+          kill $SERVER_PID || true
+          echo "Diagnostic complete."
+
       - name: Run tracker script and save output
         env:
           GOOGLE_API_KEY: ${{ secrets.GOOGLE_API_KEY }}
