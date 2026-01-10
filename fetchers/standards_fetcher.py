@@ -4,6 +4,8 @@ Uses MCP client to connect to mcp-3gpp-ftp server for real data.
 Falls back to HTTP download, then sample data when MCP is unavailable.
 """
 import shutil
+import httpx
+import time
 from pathlib import Path
 from typing import Dict, List, Optional, Tuple
 from contextlib import AsyncExitStack
