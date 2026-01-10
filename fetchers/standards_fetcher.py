@@ -66,9 +66,9 @@ class StandardsFetcher:
         import sys
         logger.info("detecting_mcp_server_command", target="mcp-3gpp-ftp")
 
-        # Use the registered console script directy.
-        # This is the standard entry point for the mcp-3gpp-ftp package.
-        return ("mcp-3gpp-ftp", [])
+        # Use a direct import and run to ensure we use the correct environment
+        # and avoid PATH/shebang issues in CI.
+        return (sys.executable, ["-c", "from mcp_3gpp_ftp.server import main; main()"])
     
     async def _init_mcp_session(self):
         """Initialize MCP session with timeout and proper error handling."""
@@ -92,10 +92,10 @@ class StandardsFetcher:
         self.mcp_context = stdio_client(server_params)
 
         try:
-            # Prevent infinite hang
+            # Prevent infinite hang. 30s allows for slow container startup.
             read_stream, write_stream = await asyncio.wait_for(
                 self.mcp_context.__aenter__(),
-                timeout=15  # Python server starts faster than Node
+                timeout=30
             )
         except asyncio.TimeoutError:
             logger.error("mcp_start_timeout")
@@ -130,12 +130,12 @@ class StandardsFetcher:
             try:
                 logger.info("attempting_mcp_connection", server="mcp-3gpp-ftp")
                 
-                # Initialize with 20s timeout (faster initialization for Python server)
+                # Initialize with 60s timeout (buffer for heavy-loaded CI environments)
                 start_time = time.time()
                 
                 await asyncio.wait_for(
                     self._init_mcp_session(),
-                    timeout=20.0
+                    timeout=60.0
                 )
                 
                 init_elapsed = time.time() - start_time
@@ -155,8 +155,8 @@ class StandardsFetcher:
                 
             except asyncio.TimeoutError:
                 logger.error("mcp_timeout", 
-                            msg="MCP server initialization timed out after 20 seconds",
-                            timeout_seconds=20)
+                            msg="MCP server initialization timed out after 60 seconds",
+                            timeout_seconds=60)
                 self.use_mcp = False
                 # Attempt to cleanup the context to avoid async errors
                 if self.mcp_context:
