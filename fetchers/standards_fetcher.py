@@ -90,36 +90,36 @@ class StandardsFetcher:
       
         logger.info("starting_mcp_server", command=command, args=args)
 
-    # Use AsyncExitStack to manage multiple async contexts
-    self.exit_stack = AsyncExitStack()
-    
-    try:
-        # 1. Connect stdio transport
-        read_stream, write_stream = await self.exit_stack.enter_async_context(
-            stdio_client(server_params)
-        )
-        logger.info("mcp_streams_connected")
+        # Use AsyncExitStack to manage multiple async contexts
+        self.exit_stack = AsyncExitStack()
+        
+        try:
+            # 1. Connect stdio transport
+            read_stream, write_stream = await self.exit_stack.enter_async_context(
+                stdio_client(server_params)
+            )
+            logger.info("mcp_streams_connected")
 
-        # 2. Start MCP session (this starts the message listener task)
-        self.mcp_session = await self.exit_stack.enter_async_context(
-            ClientSession(read_stream, write_stream)
-        )
-        logger.info("mcp_session_entered")
+            # 2. Start MCP session (this starts the message listener task)
+            self.mcp_session = await self.exit_stack.enter_async_context(
+                ClientSession(read_stream, write_stream)
+            )
+            logger.info("mcp_session_entered")
 
-        # 3. Perform initialization handshake
-        logger.info("mcp_starting_handshake")
-        await self.mcp_session.initialize()
-        logger.info("mcp_handshake_completed")
+            # 3. Perform initialization handshake
+            logger.info("mcp_starting_handshake")
+            await self.mcp_session.initialize()
+            logger.info("mcp_handshake_completed")
 
-        logger.info("mcp_session_initialized")
+            logger.info("mcp_session_initialized")
 
-    except Exception as e:
-        logger.error("mcp_init_error", error=str(e))
-        if self.exit_stack:
-            await self.exit_stack.aclose()
-            self.exit_stack = None
-        self.mcp_session = None
-        raise
+        except Exception as e:
+            logger.error("mcp_init_error", error=str(e))
+            if self.exit_stack:
+                await self.exit_stack.aclose()
+                self.exit_stack = None
+            self.mcp_session = None
+            raise
     
     async def _test_mcp_health(self) -> bool:
         """Check if MCP server responds to basic commands."""
@@ -204,10 +204,6 @@ class StandardsFetcher:
                 logger.info("mcp_resources_cleaned_up")
             except Exception as e:
                 logger.warning("mcp_session_close_error", error=str(e))
-            try:
-                await self.mcp_context.__aexit__(exc_type, exc_val, exc_tb)
-            except Exception as e:
-                logger.warning("mcp_context_close_error", error=str(e))
     
     async def fetch_all(self) -> Dict:
         """
