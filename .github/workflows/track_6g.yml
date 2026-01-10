@@ -115,8 +115,19 @@ jobs:
         env:
           GOOGLE_API_KEY: ${{ secrets.GOOGLE_API_KEY }}
         run: |
-          python track_6g.py > output.log 2>&1
-          echo "Script exit code: $?"
+          set -o pipefail
+          python track_6g.py > output.log 2>&1 || EXIT_CODE=$?
+          
+          echo "=== track_6g.py OUTPUT (output.log) ==="
+          cat output.log || echo "No output.log file found"
+          echo "======================================="
+          
+          if [ -n "$EXIT_CODE" ]; then
+            echo "Script exit code: $EXIT_CODE"
+            exit $EXIT_CODE
+          else
+            echo "Script exit code: 0"
+          fi
         continue-on-error: false  # Fail workflow if script fails
       
       - name: Stop MCP Server
