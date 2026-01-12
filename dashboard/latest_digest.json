@@ -3,48 +3,27 @@
   "articles": [],
   "standardization": {
     "release_21_progress": {
-      "total_work_items": 45,
-      "completed": 15,
-      "in_progress": 25,
-      "postponed": 5,
-      "progress_percentage": 33.3,
+      "total_work_items": 2,
+      "completed": 0,
+      "in_progress": 2,
+      "postponed": 0,
+      "progress_percentage": 0.0,
       "last_updated": "2026-01-12",
-      "data_source": "sample",
+      "data_source": "live",
       "work_items_by_group": {
-        "RAN1": {
-          "total": 12,
-          "completed": 4,
-          "in_progress": 7,
-          "postponed": 1,
-          "progress": 33.3
+        "nan": {
+          "total": 1,
+          "completed": 0,
+          "in_progress": 1,
+          "postponed": 0,
+          "progress": 0.0
         },
-        "RAN2": {
-          "total": 8,
-          "completed": 3,
-          "in_progress": 4,
-          "postponed": 1,
-          "progress": 37.5
-        },
-        "SA2": {
-          "total": 10,
-          "completed": 5,
-          "in_progress": 4,
-          "postponed": 1,
-          "progress": 50.0
-        },
-        "SA6": {
-          "total": 8,
-          "completed": 2,
-          "in_progress": 5,
-          "postponed": 1,
-          "progress": 25.0
-        },
-        "RAN3": {
-          "total": 7,
-          "completed": 1,
-          "in_progress": 5,
-          "postponed": 1,
-          "progress": 14.3
+        "S1": {
+          "total": 1,
+          "completed": 0,
+          "in_progress": 1,
+          "postponed": 0,
+          "progress": 0.0
         }
       }
     },
@@ -111,40 +90,19 @@
       }
     ],
     "work_items_by_group": {
-      "RAN1": {
-        "total": 12,
-        "completed": 4,
-        "in_progress": 7,
-        "postponed": 1,
-        "progress": 33.3
+      "nan": {
+        "total": 1,
+        "completed": 0,
+        "in_progress": 1,
+        "postponed": 0,
+        "progress": 0.0
       },
-      "RAN2": {
-        "total": 8,
-        "completed": 3,
-        "in_progress": 4,
-        "postponed": 1,
-        "progress": 37.5
-      },
-      "SA2": {
-        "total": 10,
-        "completed": 5,
-        "in_progress": 4,
-        "postponed": 1,
-        "progress": 50.0
-      },
-      "SA6": {
-        "total": 8,
-        "completed": 2,
-        "in_progress": 5,
-        "postponed": 1,
-        "progress": 25.0
-      },
-      "RAN3": {
-        "total": 7,
-        "completed": 1,
-        "in_progress": 5,
-        "postponed": 1,
-        "progress": 14.3
+      "S1": {
+        "total": 1,
+        "completed": 0,
+        "in_progress": 1,
+        "postponed": 0,
+        "progress": 0.0
       }
     }
   }
