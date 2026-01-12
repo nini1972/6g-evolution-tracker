@@ -372,10 +372,6 @@ async def fetch_feed_with_hybrid(source: str, url: str) -> Optional[dict]:
         )
         print(f"✗ {source}: Failed to fetch")
 
-async def fetch_feed_with_hybrid(source: str, url: str):
-    """Fetch a single feed using hybrid strategy"""
-    f = await get_fetcher()
-    return await f.fetch_feed(source, url)
 
 async def fetch_all_feeds() -> dict:
     """Fetch all feeds in parallel using hybrid strategy"""

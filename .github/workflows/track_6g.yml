@@ -104,6 +104,7 @@ jobs:
           # Note: If using Vite, we would run npm install && npm run build
           # For this vanilla setup, we just ensure latest_digest.json and momentum_data.json are in the right place
           cp ../latest_digest.json . || echo "⚠️ latest_digest.json not found"
+          cp ../historical_intelligence.json . || echo "⚠️ historical_intelligence.json not found"
           cp ../momentum_data.json . || echo "⚠️ momentum_data.json not found, skipping"
           cp ../source_target_matrix.json . || echo "⚠️ source_target_matrix.json not found, skipping"
 
