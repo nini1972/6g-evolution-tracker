@@ -105,5 +105,6 @@
         "progress": 0.0
       }
     }
-  }
+  },
+  "executive_briefing": "\n        <div class=\"briefing-card\">\n            <h3>Strategic Overview</h3>\n            <p>The 6G landscape is increasingly dominated by <strong></strong>. Our signal processing detects a strong correlation between patent filings and 3GPP Work Plan acceleration.</p>\n            \n            <h3>Standardization Velocity</h3>\n            <p>Release 21 progress currently stands at <strong>0.0%</strong>. While numerically low, the intensity of \"S1\" Working Group activity suggests a technical pivot in early 2026.</p>\n            \n            <h3>Geopolitical Signals</h3>\n            <p>Cross-regional influence maps indicate that EU research signals are significantly impacting US spectrum policy trajectories, while China remains the primary driver of sub-6GHz technical evidence.</p>\n        </div>\n        "
 }
