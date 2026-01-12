@@ -101,10 +101,10 @@ class WorkItemParser:
             return []
         
         # Find column indices
-        wi_col = self._find_column_index(headers, ["work item", "wi", "acronym", "name"])
-        status_col = self._find_column_index(headers, ["status", "state"])
+        wi_col = self._find_column_index(headers, ["work item", "wi", "acronym", "name", "unique_id"])
+        status_col = self._find_column_index(headers, ["status", "state", "completion"])
         release_col = self._find_column_index(headers, ["release", "rel", "target release"])
-        wg_col = self._find_column_index(headers, ["wg", "working group", "group", "tsg"])
+        wg_col = self._find_column_index(headers, ["wg", "working group", "group", "tsg", "resource_names"])
         
         # Parse data rows
         for row in sheet.iter_rows(min_row=header_row + 1, values_only=True):

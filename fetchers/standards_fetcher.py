@@ -281,7 +281,10 @@ class StandardsFetcher:
         
         # Try HTTP method
         try:
-            logger.info("fetching_work_plan", url=self.WORK_PLAN_URL)
+            # Try to discover the latest file first
+            dynamic_url = await self._discover_latest_work_plan()
+            url = dynamic_url or f"{self.WORK_PLAN_BASE_URL}{self.DEFAULT_WORK_PLAN_FILE}"
+            logger.info("fetching_work_plan", url=url)
             
             # Check cache first (24 hour cache)
             cache_file = self.cache_dir / "work_plan.xlsx"
@@ -296,10 +299,7 @@ class StandardsFetcher:
                         result["data_source"] = "cached"
                     return result
             
-            # Try to discover the latest file first
-            dynamic_url = await self._discover_latest_work_plan()
-            url = dynamic_url or f"{self.WORK_PLAN_BASE_URL}{self.DEFAULT_WORK_PLAN_FILE}"
-            
+            # 3. HTTP Download
             # Try HTTP download
             if not self.client:
                 self.client = httpx.AsyncClient(timeout=30.0, follow_redirects=True)
@@ -374,12 +374,20 @@ class StandardsFetcher:
                 logger.warning("mcp_work_plan_using_default", url=work_plan_url)
 
             # 2. Call MCP tool with 60s timeout (Excel download + parsing)
+            # Map of internal name to actual Excel column name
+            col_map = {
+                "Unique_ID": "WI/SI",
+                "Name": "Title",
+                "Release": "Release",
+                "Resource_Names": "Responsible WG"
+            }
+            
             result: CallToolResult = await asyncio.wait_for(
                 self.mcp_session.call_tool(
                     name="filter_excel_columns_from_url",
                     arguments={
                         "file_url": work_plan_url,
-                        "columns": ["WI/SI", "Title", "Status", "Release", "Responsible WG"],
+                        "columns": ["Unique_ID", "Name", "Release", "Resource_Names", "Completion"],
                         "filters": {"Release": self.TARGET_RELEASE}
                     }
                 ),
@@ -468,10 +476,14 @@ class StandardsFetcher:
             
             # Filter for .xlsx work plan files
             # Pattern: Work_plan_3gpp_YYMMDD.xlsx
-            wp_files = [f for f in files if f.startswith("Work_plan_3gpp_") and f.endswith(".xlsx")]
+            wp_files = []
+            for f in files:
+                fname = f.split('/')[-1] if '/' in f else f
+                if fname.lower().startswith("work_plan_3gpp_") and fname.lower().endswith(".xlsx"):
+                    wp_files.append(fname)
             
             if not wp_files:
-                logger.warning("no_work_plan_files_found_in_dir")
+                logger.warning("no_work_plan_files_found_in_dir", files_checked=len(files))
                 return None
                 
             # Sort by name (which includes date YYMMDD) to get latest
@@ -489,20 +501,44 @@ class StandardsFetcher:
         from datetime import datetime
         from collections import defaultdict
         
+        # Mapping from MCP column names (new Excel) back to our internal keys
+        mapping = {
+            "Unique_ID": "name",        # We use name as the primary ID/label in the dashboard
+            "Name": "title",
+            "Release": "release",
+            "Resource_Names": "working_group"
+        }
+        
+        work_items = []
+        for item in items:
+            mapped_item = {}
+            for mcp_key, internal_key in mapping.items():
+                mapped_item[internal_key] = str(item.get(mcp_key, "")).strip()
+            
+            # Since the new Excel might not have a clear "Status" column yet,
+            # we'll look at "Completion" or default to "In Progress"
+            completion = item.get("Completion", "0%")
+            if "100" in str(completion):
+                mapped_item["status"] = "Completed"
+            else:
+                mapped_item["status"] = "In Progress"
+                
+            work_items.append(mapped_item)
+        
         by_group = defaultdict(lambda: {"total": 0, "completed": 0, "in_progress": 0, "postponed": 0})
         
-        total = len(items)
+        total = len(work_items)
         completed = 0
         in_progress = 0
         postponed = 0
         
-        for item in items:
-            status = item.get("Status", "").lower()
-            wg = item.get("Responsible WG", "Other")
+        for item in work_items:
+            status = item.get("status", "").lower()
+            wg = item.get("working_group", "Other")
             
             by_group[wg]["total"] += 1
             
-            if any(kw in status for kw in ["complete", "approved", "finished"]):
+            if status == "completed":
                 completed += 1
                 by_group[wg]["completed"] += 1
             elif any(kw in status for kw in ["postpone", "delay", "suspend"]):
