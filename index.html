@@ -37,15 +37,22 @@
                 </div>
             </section>
 
+            <section id="briefing-panel" class="briefing-panel" style="display:none;">
+                <h2>📊 Executive Briefing</h2>
+                <p class="briefing-subtitle">Autonomous synthesis of cross-regional 6G intelligence.</p>
+                <div id="briefing-content" class="briefing-content">
+                    <!-- Synthesis Agent will inject briefing here -->
+                </div>
+            </section>
+
             <section id="momentum-panel" class="momentum-panel">
                 <h2>📈 6G Regional Momentum</h2>
                 <p class="momentum-subtitle">Quarterly AI‑derived momentum across world regions.</p>
+                <div class="momentum-container">
+                    <canvas id="momentum-chart"></canvas>
+                </div>
                 <div id="momentum-content" class="momentum-content">
                     <!-- JS will inject momentum cards here -->
-                    <div class="loading-state">
-                        <div class="loader"></div>
-                        <p>Analyzing regional momentum...</p>
-                    </div>
                 </div>
             </section>
 
@@ -85,11 +92,11 @@
             <section id="topics-panel" class="topics-panel">
                 <h2>📊 Topic Frequency</h2>
                 <p class="topics-subtitle">Most frequently mentioned 6G topics across recent articles.</p>
-                <div id="topics-chart" class="topics-chart">
-                    <div class="loading-state">
-                        <div class="loader"></div>
-                        <p>Analyzing topic frequencies...</p>
-                    </div>
+                <div class="topics-container">
+                    <canvas id="topics-chart-canvas"></canvas>
+                </div>
+                <div id="topics-chart" class="topics-chart" style="display:none;">
+                    <!-- Fallback for no chart -->
                 </div>
             </section>
 
@@ -113,7 +120,7 @@
         </main>
 
         <footer>
-            <p>&copy; 2025 6G Evolution Tracker | Built with Gemini Intelligence</p>
+            <p>&copy; 2025 6G Evolution Tracker | <a href="../historical_intelligence.json" target="_blank" style="color: var(--primary-accent);">View Historical Memory</a></p>
         </footer>
     </div>
 
@@ -125,6 +132,8 @@
         </div>
     </div>
 
+    <!-- Chart.js for premium visualizations -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script type="module" src="main.js"></script>
 </body>
 
