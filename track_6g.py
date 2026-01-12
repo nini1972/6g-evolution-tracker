@@ -16,6 +16,8 @@ from fetchers.hybrid_fetcher import HybridFetcher
 from fetchers.standards_fetcher import fetch_standardization_data
 import structlog
 from config.user_agents import USER_AGENTS
+from agents.source_scout import SourceScout
+from agents.synthesis_agent import SynthesisAgent
 
 # Configure structured logging
 structlog.configure(
@@ -68,8 +70,9 @@ MAX_RETRIES = 3
 RETRY_DELAY = 2  # seconds
 
 # 🤖 Gemini AI Config
-client = genai.Client(api_key=os.getenv("GOOGLE_API_KEY"))
-model="gemini-3-flash-preview"
+api_key = os.getenv("GOOGLE_API_KEY")
+client = genai.Client(api_key=api_key) if api_key else None
+model = "gemini-3-flash-preview"
 
 # Global fetcher instance
 fetcher: Optional[HybridFetcher] = None
@@ -368,28 +371,23 @@ async def fetch_feed_with_hybrid(source: str, url: str) -> Optional[dict]:
             method=result.method_used
         )
         print(f"✗ {source}: Failed to fetch")
-        return None
 
-     
+async def fetch_feed_with_hybrid(source: str, url: str):
+    """Fetch a single feed using hybrid strategy"""
+    f = await get_fetcher()
+    return await f.fetch_feed(source, url)
+
 async def fetch_all_feeds() -> dict:
     """Fetch all feeds in parallel using hybrid strategy"""
     print(f"📡 Fetching {len(FEEDS)} RSS feeds in parallel...")
-    
-    tasks = [
-        fetch_feed_with_hybrid(source, url)
-        for source, url in FEEDS.items()
-    ]
-    
+    tasks = [fetch_feed_with_hybrid(source, url) for source, url in FEEDS.items()]
     results = await asyncio.gather(*tasks, return_exceptions=True)
-    
-    # Combine results
     feeds = {}
     for (source, url), result in zip(FEEDS.items(), results):
         if isinstance(result, Exception):
             logger.error("feed_exception", source=source, error=str(result))
         elif result is not None:
             feeds[source] = result
-    
     return feeds
 
 def log_to_markdown(source, entries):
@@ -444,23 +442,61 @@ def log_to_markdown(source, entries):
         f.write("\n")
 
 
-def export_to_json(all_entries, standardization_data=None):
-    """Export all processed entries to a JSON file for the dashboard."""
+def export_to_json(all_entries, standardization_data=None, briefing=None):
+    """Export processed entries and update historical archive."""
     output_data = {
         "date": DATE,
         "articles": all_entries
     }
     
-    # Add standardization data if available
     if standardization_data:
         output_data["standardization"] = standardization_data
     
+    if briefing:
+        output_data["executive_briefing"] = briefing
+    
+    # 1. Export latest digest
     try:
         with open("latest_digest.json", "w", encoding="utf-8") as f:
             json.dump(output_data, f, indent=2)
         print(f"📊 JSON data exported to latest_digest.json")
     except Exception as e:
         print(f"❌ JSON export failed: {e}")
+
+    # 2. Update historical archive
+    archive_path = Path("historical_intelligence.json")
+    historical_data = {"articles": [], "standardization_snapshots": []}
+    
+    if archive_path.exists():
+        try:
+            with open(archive_path, "r", encoding="utf-8") as f:
+                historical_data = json.load(f)
+        except Exception as e:
+            print(f"⚠️ Historical archive read failed: {e}")
+
+    # Deduplicate and append articles
+    existing_urls = {a.get("link") for a in historical_data.get("articles", [])}
+    new_articles = [a for a in all_entries if a.get("link") not in existing_urls]
+    
+    if new_articles:
+        historical_data["articles"].extend(new_articles)
+        print(f"📦 Archived {len(new_articles)} new articles to history.")
+
+    # Append standardization snapshot
+    if standardization_data:
+        snapshot = {
+            "date": DATE,
+            "data": standardization_data
+        }
+        # Avoid duplicate snapshots for the same day
+        if not any(s.get("date") == DATE for s in historical_data.get("standardization_snapshots", [])):
+            historical_data.setdefault("standardization_snapshots", []).append(snapshot)
+
+    try:
+        with open(archive_path, "w", encoding="utf-8") as f:
+            json.dump(historical_data, f, indent=2)
+    except Exception as e:
+        print(f"❌ Historical archive write failed: {e}")
 
 def aggregate_momentum(articles):
     """Compute region-specific 6G momentum per quarterly time window."""
@@ -605,10 +641,15 @@ async def main_async():
         print("   AI insights and Rigorous Filtering are DISABLED.")
     else:
         print(f"🤖 Gemini AI Intelligence is ACTIVE. (Model: {model})")
-    print()
+    logger.info("process_started", date=DATE)
     
     try:
-        # Load cache
+        # 1. Start Source Scout (Phase 3: Autonomous Discovery)
+        async def mock_search(q): return {"results": []}
+        scout = SourceScout(search_tool=mock_search) 
+        await scout.scout()
+        
+        # 2. Main processing loop
         cache = load_cache()
         new_articles_count = 0
         
@@ -718,15 +759,19 @@ async def main_async():
             else:
                 print(f"📭 {source}: No new keyword-matching updates this cycle.\n")
         
-        # Export for dashboard
+        # 3. Generate Synthesis Briefing (Phase 3: Executive Narrative)
+        analyst = SynthesisAgent(gemini_client=client)
+        briefing = analyst.synthesize(all_processed_entries, standardization_data)
+        
+        # 4. Export for dashboard
         if all_processed_entries:
-            export_to_json(all_processed_entries, standardization_data)
+            export_to_json(all_processed_entries, standardization_data, briefing)
             # Deep Analysis Aggregation
             generate_source_target_matrix(all_processed_entries)
             aggregate_momentum(all_processed_entries)
         elif standardization_data:
             # Even if no new articles, export standardization data
-            export_to_json([], standardization_data)
+            export_to_json([], standardization_data, briefing)
         
         # Save cache
         save_cache(cache)

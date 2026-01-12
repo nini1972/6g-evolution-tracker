@@ -612,6 +612,63 @@ footer {
     text-align: right;
 }
 
+/* ============================
+   Briefing Panel
+   ============================ */
+
+.briefing-panel {
+    margin: 40px 0;
+    padding: 2.5rem;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 20px;
+    border: 1px solid var(--glass-border);
+    backdrop-filter: blur(10px);
+}
+
+.briefing-panel h2 {
+    margin-bottom: 1rem;
+    font-size: 2rem;
+    letter-spacing: -0.5px;
+}
+
+.briefing-subtitle {
+    opacity: 0.7;
+    margin-bottom: 2rem;
+    font-size: 1rem;
+}
+
+.briefing-content {
+    line-height: 1.8;
+    color: var(--text-main);
+}
+
+.briefing-content h3 {
+    margin: 1.5rem 0 1rem;
+    color: var(--primary);
+}
+
+.briefing-content ul {
+    margin-left: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.briefing-content li {
+    margin-bottom: 0.5rem;
+}
+
+/* ============================
+   Chart Containers
+   ============================ */
+
+.momentum-container, .topics-container {
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    min-height: 300px;
+    border: 1px solid var(--glass-border);
+}
+
 
 
 

@@ -1,0 +1,113 @@
+{
+  "articles": [],
+  "standardization_snapshots": [
+    {
+      "date": "2026-01-12",
+      "data": {
+        "release_21_progress": {
+          "total_work_items": 2,
+          "completed": 0,
+          "in_progress": 2,
+          "postponed": 0,
+          "progress_percentage": 0.0,
+          "last_updated": "2026-01-12",
+          "data_source": "live",
+          "work_items_by_group": {
+            "nan": {
+              "total": 1,
+              "completed": 0,
+              "in_progress": 1,
+              "postponed": 0,
+              "progress": 0.0
+            },
+            "S1": {
+              "total": 1,
+              "completed": 0,
+              "in_progress": 1,
+              "postponed": 0,
+              "progress": 0.0
+            }
+          }
+        },
+        "recent_meetings": [
+          {
+            "meeting_id": "Templates",
+            "working_group": "RAN1",
+            "date": "2026-01-12",
+            "location": "TBD",
+            "key_agreements": [],
+            "tdoc_references": [],
+            "sentiment": "neutral",
+            "data_source": "live"
+          },
+          {
+            "meeting_id": "Tdoc_index",
+            "working_group": "RAN1",
+            "date": "2026-01-12",
+            "location": "TBD",
+            "key_agreements": [],
+            "tdoc_references": [],
+            "sentiment": "neutral",
+            "data_source": "live"
+          },
+          {
+            "meeting_id": "TSGR1_AH",
+            "working_group": "RAN1",
+            "date": "2026-01-12",
+            "location": "TBD",
+            "key_agreements": [],
+            "tdoc_references": [],
+            "sentiment": "neutral",
+            "data_source": "live"
+          },
+          {
+            "meeting_id": "drafting_meetings",
+            "working_group": "SA2",
+            "date": "2026-01-12",
+            "location": "TBD",
+            "key_agreements": [],
+            "tdoc_references": [],
+            "sentiment": "neutral",
+            "data_source": "live"
+          },
+          {
+            "meeting_id": "_Doc_List_Archive",
+            "working_group": "SA2",
+            "date": "2026-01-12",
+            "location": "TBD",
+            "key_agreements": [],
+            "tdoc_references": [],
+            "sentiment": "neutral",
+            "data_source": "live"
+          },
+          {
+            "meeting_id": "TSGS2_99_Xiamen",
+            "working_group": "SA2",
+            "date": "2026-01-12",
+            "location": "TBD",
+            "key_agreements": [],
+            "tdoc_references": [],
+            "sentiment": "neutral",
+            "data_source": "live"
+          }
+        ],
+        "work_items_by_group": {
+          "nan": {
+            "total": 1,
+            "completed": 0,
+            "in_progress": 1,
+            "postponed": 0,
+            "progress": 0.0
+          },
+          "S1": {
+            "total": 1,
+            "completed": 0,
+            "in_progress": 1,
+            "postponed": 0,
+            "progress": 0.0
+          }
+        }
+      }
+    }
+  ]
+}
