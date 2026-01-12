@@ -1,5 +1,5 @@
 {
-  "date": "2026-01-10",
+  "date": "2026-01-12",
   "articles": [],
   "standardization": {
     "release_21_progress": {
@@ -8,7 +8,7 @@
       "in_progress": 25,
       "postponed": 5,
       "progress_percentage": 33.3,
-      "last_updated": "2026-01-10",
+      "last_updated": "2026-01-12",
       "data_source": "sample",
       "work_items_by_group": {
         "RAN1": {
@@ -52,7 +52,7 @@
       {
         "meeting_id": "Templates",
         "working_group": "RAN1",
-        "date": "2026-01-10",
+        "date": "2026-01-12",
         "location": "TBD",
         "key_agreements": [],
         "tdoc_references": [],
@@ -62,7 +62,7 @@
       {
         "meeting_id": "Tdoc_index",
         "working_group": "RAN1",
-        "date": "2026-01-10",
+        "date": "2026-01-12",
         "location": "TBD",
         "key_agreements": [],
         "tdoc_references": [],
@@ -72,7 +72,7 @@
       {
         "meeting_id": "TSGR1_AH",
         "working_group": "RAN1",
-        "date": "2026-01-10",
+        "date": "2026-01-12",
         "location": "TBD",
         "key_agreements": [],
         "tdoc_references": [],
@@ -82,7 +82,7 @@
       {
         "meeting_id": "drafting_meetings",
         "working_group": "SA2",
-        "date": "2026-01-10",
+        "date": "2026-01-12",
         "location": "TBD",
         "key_agreements": [],
         "tdoc_references": [],
@@ -92,7 +92,7 @@
       {
         "meeting_id": "_Doc_List_Archive",
         "working_group": "SA2",
-        "date": "2026-01-10",
+        "date": "2026-01-12",
         "location": "TBD",
         "key_agreements": [],
         "tdoc_references": [],
@@ -102,7 +102,7 @@
       {
         "meeting_id": "TSGS2_99_Xiamen",
         "working_group": "SA2",
-        "date": "2026-01-10",
+        "date": "2026-01-12",
         "location": "TBD",
         "key_agreements": [],
         "tdoc_references": [],
