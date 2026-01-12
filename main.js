@@ -6,51 +6,57 @@ if (window.Chart) {
 }
 
 // Fetch data from the generated JSON
+// Fetch data from the generated JSON
 async function loadData() {
     try {
+        console.log('🚀 Loading 6G Intelligence Data...');
         const response = await fetch('./latest_digest.json');
-        if (!response.ok) throw new Error('Could not load data');
+        if (!response.ok) throw new Error('latest_digest.json not found');
 
         const data = await response.json();
-        allArticles = data.articles;
-
-        // Load standardization data if available
-        if (data.standardization) {
-            console.log('3GPP Standardization Data Loaded:', data.standardization);
-            renderStandardizationPanel(data.standardization);
-        }
+        allArticles = data.articles || [];
 
         // Load historical memory (new Phase 3 feature)
         let historicalMemory = null;
         try {
-            const histResponse = await fetch('../historical_intelligence.json');
+            // Try local folder first, then parent folder
+            let histResponse = await fetch('./historical_intelligence.json');
+            if (!histResponse.ok) {
+                histResponse = await fetch('../historical_intelligence.json');
+            }
+
             if (histResponse.ok) {
                 historicalMemory = await histResponse.json();
-                console.log('Historical Memory Loaded:', historicalMemory);
+                console.log('✅ Historical Memory Loaded');
             }
         } catch (hErr) {
-            console.log('Historical memory not yet initialized.');
+            console.warn('⚠️ Historical memory could not be loaded:', hErr);
         }
 
-        // Render Panels
-        renderExecutiveBriefing(data.executive_briefing); // Handled by Synthesis Agent later
-        renderMomentumPanel(data.momentum_data || [], historicalMemory);
-        renderFlowMatrix(data.flow_matrix || {});
+        // Render Panels with individual safety catches
+        try { renderExecutiveBriefing(data.executive_briefing); } catch (e) { console.error('Briefing error:', e); }
+        try { renderMomentumPanel(data.momentum_data || [], historicalMemory); } catch (e) { console.error('Momentum error:', e); }
+        try { renderFlowMatrix(data.flow_matrix || {}); } catch (e) { console.error('Flow Matrix error:', e); }
+        try { renderStandardizationPanel(data.standardization); } catch (e) { console.error('Standardization error:', e); }
 
-        lastUpdateBadge.textContent = `Last Update: ${data.date}`;
+        if (data.date) {
+            lastUpdateBadge.textContent = `Last Update: ${data.date}`;
+        }
 
-        populateSourceFilter(allArticles);
-        renderArticles(allArticles);
-        checkQuietMonth(allArticles);
-        renderConceptsPanel(allArticles);
-        renderEvidencePanel(allArticles);
-        renderTopicFrequencyChart(allArticles);
+        // Article-dependent components
+        try { populateSourceFilter(allArticles); } catch (e) { console.error('Filter error:', e); }
+        try { renderArticles(allArticles); } catch (e) { console.error('Articles render error:', e); }
+        try { checkQuietMonth(allArticles); } catch (e) { console.error('Quiet month check error:', e); }
+        try { renderConceptsPanel(allArticles); } catch (e) { console.error('Concepts error:', e); }
+        try { renderEvidencePanel(allArticles); } catch (e) { console.error('Evidence error:', e); }
+        try { renderTopicFrequencyChart(allArticles); } catch (e) { console.error('Topic chart error:', e); }
 
     } catch (err) {
-        console.error('Error loading 6G data:', err);
+        console.error('❌ Critical Error loading 6G data:', err);
         articlesGrid.innerHTML = `
             <div class="loading-state">
-                <p style="color: #ff4b4b;">Error loading intelligence signals. Ensure latest_digest.json is generated.</p>
+                <p style="color: #ff4b4b; font-weight: bold;">Error loading intelligence signals.</p>
+                <p style="font-size: 0.8rem; opacity: 0.7;">Check if latest_digest.json is generated and accessible.</p>
             </div>
         `;
     }
