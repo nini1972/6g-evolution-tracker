@@ -517,11 +517,22 @@ class StandardsFetcher:
             
             # Since the new Excel might not have a clear "Status" column yet,
             # we'll look at "Completion" or default to "In Progress"
-            completion = item.get("Completion", "0%")
-            if "100" in str(completion):
-                mapped_item["status"] = "Completed"
-            else:
-                mapped_item["status"] = "In Progress"
+            # Handle numerical or string completion
+            status_val = str(item.get("Completion", "0")).strip().lower()
+            try:
+                # Remove % if present
+                clean_val = status_val.replace('%', '')
+                num_val = float(clean_val)
+                # If it's a number like 100 or 1.0 (without %), assume it's completion
+                if num_val >= 100.0 or (num_val >= 1.0 and '%' not in status_val):
+                    mapped_item["status"] = "Completed"
+                else:
+                    mapped_item["status"] = "In Progress"
+            except ValueError:
+                if any(kw in status_val for kw in ["complete", "approved", "finished", "100%"]):
+                    mapped_item["status"] = "Completed"
+                else:
+                    mapped_item["status"] = "In Progress"
                 
             work_items.append(mapped_item)
         

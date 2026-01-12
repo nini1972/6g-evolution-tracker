@@ -148,19 +148,34 @@ class WorkItemParser:
         by_group = {}
         
         for wi in work_items:
-            status = wi.get("status", "").lower()
+            status_val = str(wi.get("status", "0")).lower().strip()
             wg = wi.get("working_group", "Other").upper()
             
             # Classify status
-            if any(keyword in status for keyword in ["complete", "approved", "finished"]):
-                completed += 1
-                status_type = "completed"
-            elif any(keyword in status for keyword in ["postpone", "delay", "suspend"]):
-                postponed += 1
-                status_type = "postponed"
-            else:
-                in_progress += 1
-                status_type = "in_progress"
+            status_type = "in_progress"
+            try:
+                # Remove % if present
+                clean_val = status_val.replace('%', '')
+                num_val = float(clean_val)
+                if num_val >= 100.0 or (num_val >= 1.0 and '%' not in status_val):
+                    completed += 1
+                    status_type = "completed"
+                elif num_val < 0 or "postpone" in status_val or "delay" in status_val:
+                    postponed += 1
+                    status_type = "postponed"
+                else:
+                    in_progress += 1
+                    status_type = "in_progress"
+            except ValueError:
+                if any(keyword in status_val for keyword in ["complete", "approved", "finished", "100%"]):
+                    completed += 1
+                    status_type = "completed"
+                elif any(keyword in status_val for keyword in ["postpone", "delay", "suspend"]):
+                    postponed += 1
+                    status_type = "postponed"
+                else:
+                    in_progress += 1
+                    status_type = "in_progress"
             
             # Aggregate by group
             if wg not in by_group:
