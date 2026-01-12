@@ -33,7 +33,10 @@ class StandardsFetcher:
     """Fetch and parse 3GPP standardization data"""
     
     # 3GPP FTP URLs
-    WORK_PLAN_URL = "https://www.3gpp.org/ftp/Information/WORK_PLAN/TSG_Status_Report.xlsx"
+    WORK_PLAN_DIR = "Information/WORK_PLAN/"
+    WORK_PLAN_BASE_URL = f"https://www.3gpp.org/ftp/{WORK_PLAN_DIR}"
+    # Default fallback if discovery fails (the one we know works now)
+    DEFAULT_WORK_PLAN_FILE = "Work_plan_3gpp_260106.xlsx"
     
     MEETING_REPORT_URLS = {
         "RAN1": "https://www.3gpp.org/ftp/tsg_ran/WG1_RL1/",
@@ -293,6 +296,10 @@ class StandardsFetcher:
                         result["data_source"] = "cached"
                     return result
             
+            # Try to discover the latest file first
+            dynamic_url = await self._discover_latest_work_plan()
+            url = dynamic_url or f"{self.WORK_PLAN_BASE_URL}{self.DEFAULT_WORK_PLAN_FILE}"
+            
             # Try HTTP download
             if not self.client:
                 self.client = httpx.AsyncClient(timeout=30.0, follow_redirects=True)
@@ -300,7 +307,8 @@ class StandardsFetcher:
             # Add user agent to avoid 403
             headers = {'User-Agent': self.USER_AGENT}
             
-            response = await self.client.get(self.WORK_PLAN_URL, headers=headers)
+            logger.info("fetching_work_plan", url=url)
+            response = await self.client.get(url, headers=headers)
             response.raise_for_status()
             
             # Save to cache
@@ -358,12 +366,19 @@ class StandardsFetcher:
         start_time = time.time()
         
         try:
-            # Call MCP tool with 60s timeout (Excel download + parsing)
+            # 1. Discover latest file URL
+            work_plan_url = await self._discover_latest_work_plan()
+            if not work_plan_url:
+                # Fallback to known default if discovery fails but MCP is up
+                work_plan_url = f"{self.WORK_PLAN_BASE_URL}{self.DEFAULT_WORK_PLAN_FILE}"
+                logger.warning("mcp_work_plan_using_default", url=work_plan_url)
+
+            # 2. Call MCP tool with 60s timeout (Excel download + parsing)
             result: CallToolResult = await asyncio.wait_for(
                 self.mcp_session.call_tool(
                     name="filter_excel_columns_from_url",
                     arguments={
-                        "file_url": "https://www.3gpp.org/ftp/Information/WORK_PLAN/TSG_Status_Report.xlsx",
+                        "file_url": work_plan_url,
                         "columns": ["WI/SI", "Title", "Status", "Release", "Responsible WG"],
                         "filters": {"Release": self.TARGET_RELEASE}
                     }
@@ -421,6 +436,54 @@ class StandardsFetcher:
             # Let it propagate to trigger HTTP fallback in fetch_work_plan
             raise
     
+    async def _discover_latest_work_plan(self) -> Optional[str]:
+        """
+        Dynamically find the latest Work Plan Excel file in Information/WORK_PLAN/
+        """
+        if not self.mcp_session:
+            return None
+            
+        try:
+            logger.info("discovering_latest_work_plan")
+            result = await self.mcp_session.call_tool(
+                "list_files", {"path": self.WORK_PLAN_DIR}
+            )
+            
+            if not result.content:
+                return None
+                
+            # Collect all file names
+            files = []
+            for item in result.content:
+                if hasattr(item, 'text'):
+                    # MCP might return multi-item list or single JSON list
+                    try:
+                        parsed = json.loads(item.text)
+                        if isinstance(parsed, list):
+                            files.extend(parsed)
+                        else:
+                            files.append(item.text)
+                    except json.JSONDecodeError:
+                        files.append(item.text)
+            
+            # Filter for .xlsx work plan files
+            # Pattern: Work_plan_3gpp_YYMMDD.xlsx
+            wp_files = [f for f in files if f.startswith("Work_plan_3gpp_") and f.endswith(".xlsx")]
+            
+            if not wp_files:
+                logger.warning("no_work_plan_files_found_in_dir")
+                return None
+                
+            # Sort by name (which includes date YYMMDD) to get latest
+            latest_file = sorted(wp_files, reverse=True)[0]
+            discovered_url = f"{self.WORK_PLAN_BASE_URL}{latest_file}"
+            logger.info("discovered_latest_work_plan", file=latest_file, url=discovered_url)
+            return discovered_url
+            
+        except Exception as e:
+            logger.error("work_plan_discovery_failed", error=str(e))
+            return None
+
     def _aggregate_work_items(self, items: List[Dict]) -> Dict:
         """Convert MCP result to our data structure"""
         from datetime import datetime
