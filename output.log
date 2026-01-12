@@ -1,51 +1,97 @@
 🚀 6G Sentinel started its monthly sweep.
 
 🤖 Gemini AI Intelligence is ACTIVE. (Model: gemini-3-flash-preview)
-{"date": "2026-01-12", "event": "process_started", "timestamp": "2026-01-12T18:30:48.531990Z", "level": "info"}
-{"event": "source_scout_starting_discovery", "timestamp": "2026-01-12T18:30:48.532113Z", "level": "info"}
-{"query": "6G technology portal research", "event": "scouting_query", "timestamp": "2026-01-12T18:30:48.532155Z", "level": "info"}
-{"query": "3GPP Release 21 discussion forum", "event": "scouting_query", "timestamp": "2026-01-12T18:30:48.532184Z", "level": "info"}
-{"query": "6G mobile technology news RSS feed", "event": "scouting_query", "timestamp": "2026-01-12T18:30:48.532237Z", "level": "info"}
-{"query": "IMT-2030 standardization updates", "event": "scouting_query", "timestamp": "2026-01-12T18:30:48.532263Z", "level": "info"}
-{"query": "6G world consortium members", "event": "scouting_query", "timestamp": "2026-01-12T18:30:48.532284Z", "level": "info"}
+{"date": "2026-01-12", "event": "process_started", "timestamp": "2026-01-12T18:55:58.971827Z", "level": "info"}
+{"event": "source_scout_starting_discovery", "timestamp": "2026-01-12T18:55:58.971966Z", "level": "info"}
+{"query": "6G technology portal research", "event": "scouting_query", "timestamp": "2026-01-12T18:55:58.972010Z", "level": "info"}
+{"query": "3GPP Release 21 discussion forum", "event": "scouting_query", "timestamp": "2026-01-12T18:55:58.972039Z", "level": "info"}
+{"query": "6G mobile technology news RSS feed", "event": "scouting_query", "timestamp": "2026-01-12T18:55:58.972064Z", "level": "info"}
+{"query": "IMT-2030 standardization updates", "event": "scouting_query", "timestamp": "2026-01-12T18:55:58.972085Z", "level": "info"}
+{"query": "6G world consortium members", "event": "scouting_query", "timestamp": "2026-01-12T18:55:58.972104Z", "level": "info"}
 📡 Fetching RSS feeds and 3GPP standardization data in parallel...
 📡 Fetching 13 RSS feeds in parallel...
-{"server": "mcp-3gpp-ftp", "event": "attempting_mcp_connection", "timestamp": "2026-01-12T18:30:48.553269Z", "level": "info"}
-{"target": "mcp-3gpp-ftp", "event": "detecting_mcp_server_command", "timestamp": "2026-01-12T18:30:48.553397Z", "level": "info"}
-{"command": "/opt/hostedtoolcache/Python/3.12.12/x64/bin/python", "args": ["-c", "from mcp_3gpp_ftp.server import main; main()"], "event": "starting_mcp_server", "timestamp": "2026-01-12T18:30:48.553461Z", "level": "info"}
-{"source": "Ericsson", "error": "'HybridFetcher' object has no attribute 'fetch_feed'", "event": "feed_exception", "timestamp": "2026-01-12T18:30:48.558110Z", "level": "error"}
-{"source": "Nokia", "error": "'HybridFetcher' object has no attribute 'fetch_feed'", "event": "feed_exception", "timestamp": "2026-01-12T18:30:48.558161Z", "level": "error"}
-{"source": "Thales", "error": "'HybridFetcher' object has no attribute 'fetch_feed'", "event": "feed_exception", "timestamp": "2026-01-12T18:30:48.558215Z", "level": "error"}
-{"source": "MDPI Engineering", "error": "'HybridFetcher' object has no attribute 'fetch_feed'", "event": "feed_exception", "timestamp": "2026-01-12T18:30:48.558248Z", "level": "error"}
-{"source": "IEEE Spectrum", "error": "'HybridFetcher' object has no attribute 'fetch_feed'", "event": "feed_exception", "timestamp": "2026-01-12T18:30:48.558273Z", "level": "error"}
-{"source": "ArXiv CS Networking", "error": "'HybridFetcher' object has no attribute 'fetch_feed'", "event": "feed_exception", "timestamp": "2026-01-12T18:30:48.558299Z", "level": "error"}
-{"source": "Next G Alliance", "error": "'HybridFetcher' object has no attribute 'fetch_feed'", "event": "feed_exception", "timestamp": "2026-01-12T18:30:48.558319Z", "level": "error"}
-{"source": "SNS JU", "error": "'HybridFetcher' object has no attribute 'fetch_feed'", "event": "feed_exception", "timestamp": "2026-01-12T18:30:48.558338Z", "level": "error"}
-{"source": "6GWorld", "error": "'HybridFetcher' object has no attribute 'fetch_feed'", "event": "feed_exception", "timestamp": "2026-01-12T18:30:48.558355Z", "level": "error"}
-{"source": "RCR Wireless", "error": "'HybridFetcher' object has no attribute 'fetch_feed'", "event": "feed_exception", "timestamp": "2026-01-12T18:30:48.558373Z", "level": "error"}
-{"source": "Fierce Wireless", "error": "'HybridFetcher' object has no attribute 'fetch_feed'", "event": "feed_exception", "timestamp": "2026-01-12T18:30:48.558390Z", "level": "error"}
-{"source": "Mobile World Live", "error": "'HybridFetcher' object has no attribute 'fetch_feed'", "event": "feed_exception", "timestamp": "2026-01-12T18:30:48.558411Z", "level": "error"}
-{"source": "ZDNet 5G", "error": "'HybridFetcher' object has no attribute 'fetch_feed'", "event": "feed_exception", "timestamp": "2026-01-12T18:30:48.558429Z", "level": "error"}
-{"event": "mcp_streams_connected", "timestamp": "2026-01-12T18:30:48.558671Z", "level": "info"}
-{"event": "mcp_session_entered", "timestamp": "2026-01-12T18:30:48.558756Z", "level": "info"}
-{"event": "mcp_starting_handshake", "timestamp": "2026-01-12T18:30:48.558794Z", "level": "info"}
-{"event": "mcp_handshake_completed", "timestamp": "2026-01-12T18:30:49.561172Z", "level": "info"}
-{"event": "mcp_session_initialized", "timestamp": "2026-01-12T18:30:49.561275Z", "level": "info"}
-{"elapsed_seconds": 1.01, "event": "mcp_init_completed", "timestamp": "2026-01-12T18:30:49.561330Z", "level": "info"}
-[01/12/26 18:30:49] INFO     Processing request of type            server.py:624
+{"server": "mcp-3gpp-ftp", "event": "attempting_mcp_connection", "timestamp": "2026-01-12T18:55:58.992948Z", "level": "info"}
+{"target": "mcp-3gpp-ftp", "event": "detecting_mcp_server_command", "timestamp": "2026-01-12T18:55:58.993031Z", "level": "info"}
+{"command": "/opt/hostedtoolcache/Python/3.12.12/x64/bin/python", "args": ["-c", "from mcp_3gpp_ftp.server import main; main()"], "event": "starting_mcp_server", "timestamp": "2026-01-12T18:55:58.993085Z", "level": "info"}
+{"source": "Ericsson", "url": "https://www.ericsson.com/en/blog/rss", "event": "fetch_started", "timestamp": "2026-01-12T18:55:58.996642Z", "level": "info"}
+{"url": "https://www.ericsson.com/en/blog/rss", "event": "trying_httpx", "timestamp": "2026-01-12T18:55:58.996718Z", "level": "info"}
+{"source": "Nokia", "url": "https://www.nokia.com/newsroom/feed/en-us/", "event": "fetch_started", "timestamp": "2026-01-12T18:55:59.016807Z", "level": "info"}
+{"url": "https://www.nokia.com/newsroom/feed/en-us/", "event": "trying_httpx", "timestamp": "2026-01-12T18:55:59.016905Z", "level": "info"}
+{"source": "Thales", "url": "https://www.thalesgroup.com/en/rss.xml", "event": "fetch_started", "timestamp": "2026-01-12T18:55:59.017228Z", "level": "info"}
+{"url": "https://www.thalesgroup.com/en/rss.xml", "reason": "cached", "event": "using_playwright", "timestamp": "2026-01-12T18:55:59.017285Z", "level": "info"}
+{"source": "MDPI Engineering", "url": "https://www.mdpi.com/rss", "event": "fetch_started", "timestamp": "2026-01-12T18:55:59.017486Z", "level": "info"}
+{"url": "https://www.mdpi.com/rss", "event": "trying_httpx", "timestamp": "2026-01-12T18:55:59.017536Z", "level": "info"}
+{"source": "IEEE Spectrum", "url": "https://spectrum.ieee.org/feeds/feed.rss", "event": "fetch_started", "timestamp": "2026-01-12T18:55:59.017758Z", "level": "info"}
+{"url": "https://spectrum.ieee.org/feeds/feed.rss", "event": "trying_httpx", "timestamp": "2026-01-12T18:55:59.017809Z", "level": "info"}
+{"source": "ArXiv CS Networking", "url": "https://export.arxiv.org/rss/cs.NI", "event": "fetch_started", "timestamp": "2026-01-12T18:55:59.018031Z", "level": "info"}
+{"url": "https://export.arxiv.org/rss/cs.NI", "event": "trying_httpx", "timestamp": "2026-01-12T18:55:59.018085Z", "level": "info"}
+{"source": "Next G Alliance", "url": "https://www.nextgalliance.org/feed/", "event": "fetch_started", "timestamp": "2026-01-12T18:55:59.018292Z", "level": "info"}
+{"url": "https://www.nextgalliance.org/feed/", "event": "trying_httpx", "timestamp": "2026-01-12T18:55:59.018341Z", "level": "info"}
+{"source": "SNS JU", "url": "https://smart-networks.europa.eu/feed/", "event": "fetch_started", "timestamp": "2026-01-12T18:55:59.018529Z", "level": "info"}
+{"url": "https://smart-networks.europa.eu/feed/", "event": "trying_httpx", "timestamp": "2026-01-12T18:55:59.018580Z", "level": "info"}
+{"source": "6GWorld", "url": "https://www.6gworld.com/feed/", "event": "fetch_started", "timestamp": "2026-01-12T18:55:59.018770Z", "level": "info"}
+{"url": "https://www.6gworld.com/feed/", "event": "trying_httpx", "timestamp": "2026-01-12T18:55:59.018829Z", "level": "info"}
+{"source": "RCR Wireless", "url": "https://www.rcrwireless.com/feed", "event": "fetch_started", "timestamp": "2026-01-12T18:55:59.019028Z", "level": "info"}
+{"url": "https://www.rcrwireless.com/feed", "event": "trying_httpx", "timestamp": "2026-01-12T18:55:59.019079Z", "level": "info"}
+{"source": "Fierce Wireless", "url": "https://www.fiercewireless.com/rss/xml", "event": "fetch_started", "timestamp": "2026-01-12T18:55:59.019262Z", "level": "info"}
+{"url": "https://www.fiercewireless.com/rss/xml", "event": "trying_httpx", "timestamp": "2026-01-12T18:55:59.019312Z", "level": "info"}
+{"source": "Mobile World Live", "url": "https://www.mobileworldlive.com/feed/", "event": "fetch_started", "timestamp": "2026-01-12T18:55:59.019498Z", "level": "info"}
+{"url": "https://www.mobileworldlive.com/feed/", "event": "trying_httpx", "timestamp": "2026-01-12T18:55:59.019548Z", "level": "info"}
+{"source": "ZDNet 5G", "url": "https://www.zdnet.com/topic/5g/rss.xml", "event": "fetch_started", "timestamp": "2026-01-12T18:55:59.019730Z", "level": "info"}
+{"url": "https://www.zdnet.com/topic/5g/rss.xml", "event": "trying_httpx", "timestamp": "2026-01-12T18:55:59.019780Z", "level": "info"}
+{"event": "mcp_streams_connected", "timestamp": "2026-01-12T18:55:59.029305Z", "level": "info"}
+{"event": "mcp_session_entered", "timestamp": "2026-01-12T18:55:59.029423Z", "level": "info"}
+{"event": "mcp_starting_handshake", "timestamp": "2026-01-12T18:55:59.029465Z", "level": "info"}
+{"url": "https://www.mdpi.com/rss", "status_code": 403, "error": "HTTP 403: Forbidden", "event": "httpx_failed_trying_playwright", "timestamp": "2026-01-12T18:55:59.198829Z", "level": "warning"}
+{"url": "https://www.ericsson.com/en/blog/rss", "status_code": 403, "error": "HTTP 403: Forbidden", "event": "httpx_failed_trying_playwright", "timestamp": "2026-01-12T18:55:59.200424Z", "level": "warning"}
+{"url": "https://www.fiercewireless.com/rss/xml", "event": "httpx_success", "timestamp": "2026-01-12T18:55:59.265662Z", "level": "info"}
+{"source": "Fierce Wireless", "method": "httpx", "entries": 25, "event": "fetch_success", "timestamp": "2026-01-12T18:55:59.346910Z", "level": "info"}
+✓ Fierce Wireless: 25 total entries fetched (via httpx)
+{"url": "https://www.zdnet.com/topic/5g/rss.xml", "event": "httpx_success", "timestamp": "2026-01-12T18:55:59.355629Z", "level": "info"}
+{"source": "ZDNet 5G", "method": "httpx", "entries": 20, "event": "fetch_success", "timestamp": "2026-01-12T18:55:59.368336Z", "level": "info"}
+✓ ZDNet 5G: 20 total entries fetched (via httpx)
+{"url": "https://www.6gworld.com/feed/", "event": "httpx_success", "timestamp": "2026-01-12T18:55:59.375384Z", "level": "info"}
+{"source": "6GWorld", "method": "httpx", "entries": 10, "event": "fetch_success", "timestamp": "2026-01-12T18:55:59.431721Z", "level": "info"}
+✓ 6GWorld: 10 total entries fetched (via httpx)
+{"url": "https://www.nokia.com/newsroom/feed/en-us/", "event": "httpx_success", "timestamp": "2026-01-12T18:55:59.440327Z", "level": "info"}
+{"source": "Nokia", "method": "httpx", "entries": 25, "event": "fetch_success", "timestamp": "2026-01-12T18:55:59.503549Z", "level": "info"}
+✓ Nokia: 25 total entries fetched (via httpx)
+{"url": "https://export.arxiv.org/rss/cs.NI", "event": "httpx_success", "timestamp": "2026-01-12T18:55:59.517428Z", "level": "info"}
+{"source": "ArXiv CS Networking", "method": "httpx", "entries": 8, "event": "fetch_success", "timestamp": "2026-01-12T18:55:59.524527Z", "level": "info"}
+✓ ArXiv CS Networking: 8 total entries fetched (via httpx)
+{"url": "https://www.rcrwireless.com/feed", "event": "httpx_success", "timestamp": "2026-01-12T18:55:59.595552Z", "level": "info"}
+{"source": "RCR Wireless", "method": "httpx", "entries": 10, "event": "fetch_success", "timestamp": "2026-01-12T18:55:59.608774Z", "level": "info"}
+✓ RCR Wireless: 10 total entries fetched (via httpx)
+{"browser_type": "chromium", "event": "playwright_browser_started", "timestamp": "2026-01-12T18:55:59.623575Z", "level": "info"}
+{"url": "https://www.thalesgroup.com/en/rss.xml", "event": "playwright_fetch_started", "timestamp": "2026-01-12T18:55:59.681839Z", "level": "info"}
+{"url": "https://www.mdpi.com/rss", "event": "playwright_fetch_started", "timestamp": "2026-01-12T18:55:59.688578Z", "level": "info"}
+{"url": "https://www.ericsson.com/en/blog/rss", "event": "playwright_fetch_started", "timestamp": "2026-01-12T18:55:59.694278Z", "level": "info"}
+{"url": "https://spectrum.ieee.org/feeds/feed.rss", "event": "httpx_success", "timestamp": "2026-01-12T18:55:59.785776Z", "level": "info"}
+{"source": "IEEE Spectrum", "method": "httpx", "entries": 30, "event": "fetch_success", "timestamp": "2026-01-12T18:55:59.980950Z", "level": "info"}
+✓ IEEE Spectrum: 30 total entries fetched (via httpx)
+{"url": "https://www.mobileworldlive.com/feed/", "event": "httpx_success", "timestamp": "2026-01-12T18:55:59.986914Z", "level": "info"}
+{"source": "Mobile World Live", "method": "httpx", "entries": 30, "event": "fetch_success", "timestamp": "2026-01-12T18:56:00.060645Z", "level": "info"}
+✓ Mobile World Live: 30 total entries fetched (via httpx)
+{"url": "https://www.nextgalliance.org/feed/", "event": "httpx_success", "timestamp": "2026-01-12T18:56:00.115418Z", "level": "info"}
+{"source": "Next G Alliance", "method": "httpx", "entries": 10, "event": "fetch_success", "timestamp": "2026-01-12T18:56:00.171823Z", "level": "info"}
+✓ Next G Alliance: 10 total entries fetched (via httpx)
+{"event": "mcp_handshake_completed", "timestamp": "2026-01-12T18:56:00.282155Z", "level": "info"}
+{"event": "mcp_session_initialized", "timestamp": "2026-01-12T18:56:00.282252Z", "level": "info"}
+{"elapsed_seconds": 1.29, "event": "mcp_init_completed", "timestamp": "2026-01-12T18:56:00.282328Z", "level": "info"}
+[01/12/26 18:56:00] INFO     Processing request of type            server.py:624
                              ListToolsRequest                                   
-{"tool_count": 7, "event": "mcp_health_check_passed", "timestamp": "2026-01-12T18:30:49.567253Z", "level": "info"}
-{"event": "standards_fetch_started", "timestamp": "2026-01-12T18:30:49.567320Z", "level": "info"}
-{"event": "fetching_work_plan_via_mcp", "timestamp": "2026-01-12T18:30:49.567426Z", "level": "info"}
-{"event": "discovering_latest_work_plan", "timestamp": "2026-01-12T18:30:49.567461Z", "level": "info"}
+{"tool_count": 7, "event": "mcp_health_check_passed", "timestamp": "2026-01-12T18:56:00.290241Z", "level": "info"}
+{"event": "standards_fetch_started", "timestamp": "2026-01-12T18:56:00.290318Z", "level": "info"}
+{"event": "fetching_work_plan_via_mcp", "timestamp": "2026-01-12T18:56:00.290439Z", "level": "info"}
+{"event": "discovering_latest_work_plan", "timestamp": "2026-01-12T18:56:00.290480Z", "level": "info"}
                     INFO     Processing request of type            server.py:624
                              CallToolRequest                                    
                     WARNING  Tool 'list_files' not listed, no      server.py:421
                              validation will be performed                       
                     INFO     Processing request of type            server.py:624
                              CallToolRequest                                    
-{"files_checked": 1, "event": "no_work_plan_files_found_in_dir", "timestamp": "2026-01-12T18:30:49.842080Z", "level": "warning"}
-{"url": "https://www.3gpp.org/ftp/Information/WORK_PLAN/Work_plan_3gpp_260106.xlsx", "event": "mcp_work_plan_using_default", "timestamp": "2026-01-12T18:30:49.842234Z", "level": "warning"}
+{"files_checked": 1, "event": "no_work_plan_files_found_in_dir", "timestamp": "2026-01-12T18:56:00.817965Z", "level": "warning"}
+{"url": "https://www.3gpp.org/ftp/Information/WORK_PLAN/Work_plan_3gpp_260106.xlsx", "event": "mcp_work_plan_using_default", "timestamp": "2026-01-12T18:56:00.818064Z", "level": "warning"}
                     INFO     Warning: InsecureRequestWarning:      server.py:614
                              Unverified HTTPS request is being                  
                              made to host 'www.3gpp.org'. Adding                
@@ -55,37 +101,74 @@
                              est/advanced-usage.html#tls-warnings               
                     INFO     Processing request of type            server.py:624
                              CallToolRequest                                    
-{"wg": "RAN1", "elapsed_seconds": 0.28, "event": "mcp_directory_list_completed", "timestamp": "2026-01-12T18:30:49.851444Z", "level": "info"}
-[01/12/26 18:30:52] INFO     Processing request of type            server.py:624
+{"wg": "RAN1", "elapsed_seconds": 0.53, "event": "mcp_directory_list_completed", "timestamp": "2026-01-12T18:56:00.824901Z", "level": "info"}
+{"url": "https://smart-networks.europa.eu/feed/", "event": "httpx_success", "timestamp": "2026-01-12T18:56:01.361306Z", "level": "info"}
+{"source": "SNS JU", "method": "httpx", "entries": 10, "event": "fetch_success", "timestamp": "2026-01-12T18:56:01.413561Z", "level": "info"}
+[01/12/26 18:56:03] INFO     Warning: InsecureRequestWarning:      server.py:614
+                             Unverified HTTPS request is being                  
+                             made to host 'www.3gpp.org'. Adding                
+                             certificate verification is strongly               
+                             advised. See:                                      
+                             https://urllib3.readthedocs.io/en/lat              
+                             est/advanced-usage.html#tls-warnings               
+                    INFO     Processing request of type            server.py:624
                              CallToolRequest                                    
-                    INFO     Warning: InsecureRequestWarning:      server.py:614
+[01/12/26 18:56:05] INFO     Warning: InsecureRequestWarning:      server.py:614
                              Unverified HTTPS request is being                  
                              made to host 'www.3gpp.org'. Adding                
                              certificate verification is strongly               
                              advised. See:                                      
                              https://urllib3.readthedocs.io/en/lat              
                              est/advanced-usage.html#tls-warnings               
-                    INFO     Warning: InsecureRequestWarning:      server.py:614
-                             Unverified HTTPS request is being                  
-                             made to host 'www.3gpp.org'. Adding                
-                             certificate verification is strongly               
-                             advised. See:                                      
-                             https://urllib3.readthedocs.io/en/lat              
-                             est/advanced-usage.html#tls-warnings               
-{"elapsed_seconds": 2.92, "event": "mcp_work_plan_tool_completed", "timestamp": "2026-01-12T18:30:52.484543Z", "level": "info"}
-{"items": 2, "event": "mcp_work_plan_fetched", "timestamp": "2026-01-12T18:30:52.484649Z", "level": "info"}
-{"wg": "SA2", "elapsed_seconds": 2.64, "event": "mcp_directory_list_completed", "timestamp": "2026-01-12T18:30:52.489062Z", "level": "info"}
-{"meetings": 6, "event": "standards_fetch_completed", "timestamp": "2026-01-12T18:30:52.489989Z", "level": "info"}
-{"event": "mcp_resources_cleaned_up", "timestamp": "2026-01-12T18:30:52.699698Z", "level": "info"}
+✓ SNS JU: 10 total entries fetched (via httpx)
+{"elapsed_seconds": 5.07, "event": "mcp_work_plan_tool_completed", "timestamp": "2026-01-12T18:56:05.358972Z", "level": "info"}
+{"items": 2, "event": "mcp_work_plan_fetched", "timestamp": "2026-01-12T18:56:05.359065Z", "level": "info"}
+{"wg": "SA2", "elapsed_seconds": 4.54, "event": "mcp_directory_list_completed", "timestamp": "2026-01-12T18:56:05.363492Z", "level": "info"}
+{"meetings": 6, "event": "standards_fetch_completed", "timestamp": "2026-01-12T18:56:05.364435Z", "level": "info"}
+{"event": "mcp_resources_cleaned_up", "timestamp": "2026-01-12T18:56:05.551140Z", "level": "info"}
+{"url": "https://www.mdpi.com/rss", "event": "playwright_blocked_detected", "timestamp": "2026-01-12T18:56:14.299728Z", "level": "warning"}
+{"url": "https://www.mdpi.com/rss", "event": "playwright_fallback_failed", "timestamp": "2026-01-12T18:56:14.303036Z", "level": "error"}
+{"source": "MDPI Engineering", "status_code": 403, "error": "Bot detection triggered", "method": "playwright", "event": "fetch_failed", "timestamp": "2026-01-12T18:56:14.303100Z", "level": "error"}
+✗ MDPI Engineering: Failed to fetch
+{"event": "extracted_xml_from_html_wrapper", "timestamp": "2026-01-12T18:56:15.222656Z", "level": "info"}
+{"url": "https://www.thalesgroup.com/en/rss.xml", "content_length": 187512, "event": "playwright_fetch_success", "timestamp": "2026-01-12T18:56:15.222741Z", "level": "info"}
+{"source": "Thales", "method": "playwright", "entries": 10, "event": "fetch_success", "timestamp": "2026-01-12T18:56:15.316682Z", "level": "info"}
+✓ Thales: 10 total entries fetched (via playwright)
+{"url": "https://www.ericsson.com/en/blog/rss", "event": "playwright_blocked_detected", "timestamp": "2026-01-12T18:56:16.004163Z", "level": "warning"}
+{"url": "https://www.ericsson.com/en/blog/rss", "event": "playwright_fallback_failed", "timestamp": "2026-01-12T18:56:16.010319Z", "level": "error"}
+{"source": "Ericsson", "status_code": 403, "error": "Bot detection triggered", "method": "playwright", "event": "fetch_failed", "timestamp": "2026-01-12T18:56:16.010392Z", "level": "error"}
+✗ Ericsson: Failed to fetch
 ✓ 3GPP standardization data fetched successfully
   • Release 21 Progress: 0.0%
   • Recent Meetings: 6
 
-{"event": "synthesis_agent_starting_analysis", "timestamp": "2026-01-12T18:30:52.700536Z", "level": "info"}
-{"event": "synthesis_agent_complete", "timestamp": "2026-01-12T18:30:52.700582Z", "level": "info"}
+📭 Nokia: No new keyword-matching updates this cycle.
+
+📭 Thales: No new keyword-matching updates this cycle.
+
+📭 IEEE Spectrum: No new keyword-matching updates this cycle.
+
+📭 ArXiv CS Networking: No new keyword-matching updates this cycle.
+
+📭 Next G Alliance: No new keyword-matching updates this cycle.
+
+📭 SNS JU: No new keyword-matching updates this cycle.
+
+📭 6GWorld: No new keyword-matching updates this cycle.
+
+📭 RCR Wireless: No new keyword-matching updates this cycle.
+
+📭 Fierce Wireless: No new keyword-matching updates this cycle.
+
+📭 Mobile World Live: No new keyword-matching updates this cycle.
+
+📭 ZDNet 5G: No new keyword-matching updates this cycle.
+
+{"event": "synthesis_agent_starting_analysis", "timestamp": "2026-01-12T18:56:16.020572Z", "level": "info"}
+{"event": "synthesis_agent_complete", "timestamp": "2026-01-12T18:56:16.020649Z", "level": "info"}
 📊 JSON data exported to latest_digest.json
 ✅ 6G Sentinel completed its sweep.
 📊 Total new articles processed: 0
 💾 Cache updated with 12 unique articles.
 🔮 The future is still under construction.
-{"event": "playwright_browser_closed", "timestamp": "2026-01-12T18:30:52.701639Z", "level": "info"}
+{"event": "playwright_browser_closed", "timestamp": "2026-01-12T18:56:16.064295Z", "level": "info"}
