@@ -498,6 +498,19 @@ def aggregate_momentum(articles):
     """Compute region-specific 6G momentum per quarterly time window."""
     
     regions = ["US", "EU", "China", "Japan", "Korea", "India"]
+    
+    # Load existing momentum data to preserve history across "quiet" runs
+    final_data = []
+    if Path("momentum_data.json").exists():
+        try:
+            with open("momentum_data.json", "r", encoding="utf-8") as f:
+                final_data = json.load(f)
+        except Exception as e:
+            print(f"⚠️ Error loading existing momentum data: {e}")
+
+    if not articles:
+        return # Nothing new to aggregate, keep existing data
+
     aggregation = {}   # region -> quarter -> metrics
     
     for article in articles:
@@ -576,7 +589,15 @@ def aggregate_momentum(articles):
                 else:
                     entry[dim] = 0
             
-            final_data.append(entry)
+            # Merge or update final_data
+            found = False
+            for existing in final_data:
+                if existing["region"] == region and existing["time_window"] == quarter:
+                    existing.update(entry)
+                    found = True
+                    break
+            if not found:
+                final_data.append(entry)
     
     # Save output
     with open("momentum_data.json", "w", encoding="utf-8") as f:
@@ -592,8 +613,12 @@ def generate_source_target_matrix(articles):
     try:
         with open("source_target_matrix.json", "r", encoding="utf-8") as f:
             matrix = json.load(f)
-    except:
+    except Exception as e:
+        print(f"⚠️ Initializing new influence matrix: {e}")
         matrix = {src: {tgt: 0 for tgt in regions} for src in regions}
+
+    if not articles:
+        return # Nothing new to add
 
     for article in articles:
         ai = article.get("ai_insights")
@@ -760,14 +785,10 @@ async def main_async():
         briefing = analyst.synthesize(all_processed_entries, standardization_data)
         
         # 4. Export for dashboard
-        if all_processed_entries:
-            export_to_json(all_processed_entries, standardization_data, briefing)
-            # Deep Analysis Aggregation
-            generate_source_target_matrix(all_processed_entries)
-            aggregate_momentum(all_processed_entries)
-        elif standardization_data:
-            # Even if no new articles, export standardization data
-            export_to_json([], standardization_data, briefing)
+        # Always run these to ensure data structures exist, but they are now "persistence-aware"
+        export_to_json(all_processed_entries, standardization_data, briefing)
+        generate_source_target_matrix(all_processed_entries)
+        aggregate_momentum(all_processed_entries)
         
         # Save cache
         save_cache(cache)

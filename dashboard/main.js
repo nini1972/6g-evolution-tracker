@@ -5,8 +5,11 @@ if (window.Chart) {
     Chart.defaults.font.family = 'Inter';
 }
 
-// Fetch data from the generated JSON
-// Fetch data from the generated JSON
+// DOM Elements
+const articlesGrid = document.getElementById('articles-grid');
+const lastUpdateBadge = document.getElementById('last-update');
+const sourceFilter = document.getElementById('source-filter');
+
 // Fetch data from the generated JSON
 let allArticles = [];
 
@@ -62,7 +65,7 @@ async function loadData() {
                 <p style="font-size: 0.8rem; opacity: 0.7;">Check if latest_digest.json is generated and accessible.</p>
             </div>
         `;
-        articlesGrid.innerHTML = errorHtml;
+        if (articlesGrid) articlesGrid.innerHTML = errorHtml;
 
         // Also update other loading sectors to avoid infinite spinners
         const sectors = ['standardization-content', 'concepts-content', 'evidence-content', 'momentum-content'];
@@ -298,7 +301,6 @@ function getRegionFlag(region) {
 
 function populateSourceFilter(articles) {
     const sources = [...new Set(articles.map(a => a.source))];
-    const sourceFilter = document.getElementById('source-filter');
     if (!sourceFilter) return;
     sources.forEach(s => {
         const opt = document.createElement('option');
@@ -308,7 +310,7 @@ function populateSourceFilter(articles) {
 }
 
 function renderArticles(articles) {
-    const grid = document.getElementById('articles-grid');
+    const grid = articlesGrid;
     if (!grid) return;
     grid.innerHTML = articles.map(a => `
         <div class="article-card" onclick="window.open('${a.link}', '_blank')">
