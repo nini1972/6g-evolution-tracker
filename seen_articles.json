@@ -58,5 +58,70 @@
     "url": "https://www.mobileworldlive.com/europe/uk-regulator-outlines-upper-6ghz-proposal/",
     "title": "UK regulator outlines upper 6GHz proposal",
     "processed_date": "2026-01-10"
+  },
+  "02e5c62a34f8c73a92aa1feb2424394f": {
+    "url": "https://spectrum.ieee.org/lunar-radio-telescope",
+    "title": "The Quest to Build a Radio Telescope That Can Hear the Cosmic Dark Ages",
+    "processed_date": "2026-01-21"
+  },
+  "0f47ed6c2b4b7c06d697a0c785669684": {
+    "url": "https://spectrum.ieee.org/video-friday-bipedal-robot",
+    "title": "Video Friday: Bipedal Robot Stops Itself From Falling",
+    "processed_date": "2026-01-21"
+  },
+  "9c6993e5a6a1fb8dd15db4e2dd844c18": {
+    "url": "https://arxiv.org/abs/2601.11859",
+    "title": "Cascaded Transformer for Robust and Scalable SLA Decomposition via Amortized Optimization",
+    "processed_date": "2026-01-21"
+  },
+  "c3d5045fc84a8a0765d1aefe99ae3c22": {
+    "url": "https://arxiv.org/abs/2601.12311",
+    "title": "Cross-reality Location Privacy Protection in 6G-enabled Vehicular Metaverses: An LLM-enhanced Hybrid Generative Diffusion Model-based Approach",
+    "processed_date": "2026-01-21"
+  },
+  "f59f92532552fd5848121587e0041dda": {
+    "url": "https://arxiv.org/abs/2601.12375",
+    "title": "LiQSS: Post-Transformer Linear Quantum-Inspired State-Space Tensor Networks for Real-Time 6G",
+    "processed_date": "2026-01-21"
+  },
+  "7c68fdc071bfeae2387bdf67dadc67dd": {
+    "url": "https://arxiv.org/abs/2601.13213",
+    "title": "Conflict Detection in AI-RAN: Efficient Interaction Learning and Autonomous Graph Reconstruction",
+    "processed_date": "2026-01-21"
+  },
+  "d2ad53054627d4b7ca3a0fff4983d357": {
+    "url": "https://arxiv.org/abs/2601.13484",
+    "title": "Spectrum & RAN Sharing: A Measurement-based Case Study of Commercial 5G Networks in Spain",
+    "processed_date": "2026-01-21"
+  },
+  "7e9ed3f7f7b1741183062d6f30dce21d": {
+    "url": "https://arxiv.org/abs/2601.13993",
+    "title": "Capacity and Energy Trade-Offs in FR3 6G Networks Using Real Deployment Data",
+    "processed_date": "2026-01-21"
+  },
+  "25b02351840c8c544cec0a769e669f44": {
+    "url": "https://arxiv.org/abs/2601.14106",
+    "title": "Communication Technologies for Intelligent Transportation Systems: From Railways to UAVs and Beyond",
+    "processed_date": "2026-01-21"
+  },
+  "7fb8e297c33f49c62c834dff6be31c6a": {
+    "url": "https://arxiv.org/abs/2404.08113",
+    "title": "Predictive Handover Strategy in 6G and Beyond: A Deep and Transfer Learning Approach",
+    "processed_date": "2026-01-21"
+  },
+  "3b4628b6b2fd93fbff44c73f6de76581": {
+    "url": "https://arxiv.org/abs/2507.11935",
+    "title": "AI-Native Open RAN for Non-Terrestrial Networks: An Overview",
+    "processed_date": "2026-01-21"
+  },
+  "798cdf900a3eedde11bf70d4660b1c6c": {
+    "url": "https://smart-networks.europa.eu/complementary-microelectronics-hardware-concepts-webinar/",
+    "title": "Complementary Microelectronics Hardware Concepts Webinar",
+    "processed_date": "2026-01-21"
+  },
+  "6c8a53754432bdc677cc739ae0967e01": {
+    "url": "https://smart-networks.europa.eu/witar-lunch-salon-3-building-inclusive-6g-through-technical-leadership/",
+    "title": "WiTaR Lunch Salon #3 \u2013 Building Inclusive 6G Through Technical Leadership",
+    "processed_date": "2026-01-21"
   }
 }
