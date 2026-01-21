@@ -7,6 +7,9 @@ if (window.Chart) {
 
 // Fetch data from the generated JSON
 // Fetch data from the generated JSON
+// Fetch data from the generated JSON
+let allArticles = [];
+
 async function loadData() {
     try {
         console.log('🚀 Loading 6G Intelligence Data...');
@@ -53,12 +56,20 @@ async function loadData() {
 
     } catch (err) {
         console.error('❌ Critical Error loading 6G data:', err);
-        articlesGrid.innerHTML = `
+        const errorHtml = `
             <div class="loading-state">
                 <p style="color: #ff4b4b; font-weight: bold;">Error loading intelligence signals.</p>
                 <p style="font-size: 0.8rem; opacity: 0.7;">Check if latest_digest.json is generated and accessible.</p>
             </div>
         `;
+        articlesGrid.innerHTML = errorHtml;
+
+        // Also update other loading sectors to avoid infinite spinners
+        const sectors = ['standardization-content', 'concepts-content', 'evidence-content', 'momentum-content'];
+        sectors.forEach(id => {
+            const el = document.getElementById(id);
+            if (el) el.innerHTML = errorHtml;
+        });
     }
 }
 
@@ -150,42 +161,42 @@ function renderTopicFrequencyChart(articles) {
 
     let topicCounts = {};
     articles.forEach(article => {
-        if (article.ai_insights && article.ai_insights.6g_topics) {
-        article.ai_insights.6g_topics.forEach(topic => {
-            topicCounts[topic] = (topicCounts[topic] || 0) + 1;
-        });
-    }
-});
-
-const topics = Object.entries(topicCounts)
-    .sort((a, b) => b[1] - a[1])
-    .slice(0, 8);
-
-const ctx = canvas.getContext('2d');
-new Chart(ctx, {
-    type: 'bar',
-    data: {
-        labels: topics.map(t => t[0]),
-        datasets: [{
-            label: 'Signal Frequency',
-            data: topics.map(t => t[1]),
-            backgroundColor: 'rgba(112, 0, 255, 0.6)',
-            borderColor: '#7000ff',
-            borderWidth: 1,
-            borderRadius: 5
-        }]
-    },
-    options: {
-        indexAxis: 'y',
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: { legend: { display: false } },
-        scales: {
-            x: { grid: { display: false } },
-            y: { grid: { display: false } }
+        if (article.ai_insights && article.ai_insights['6g_topics']) {
+            article.ai_insights['6g_topics'].forEach(topic => {
+                topicCounts[topic] = (topicCounts[topic] || 0) + 1;
+            });
         }
-    }
-});
+    });
+
+    const topics = Object.entries(topicCounts)
+        .sort((a, b) => b[1] - a[1])
+        .slice(0, 8);
+
+    const ctx = canvas.getContext('2d');
+    new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: topics.map(t => t[0]),
+            datasets: [{
+                label: 'Signal Frequency',
+                data: topics.map(t => t[1]),
+                backgroundColor: 'rgba(112, 0, 255, 0.6)',
+                borderColor: '#7000ff',
+                borderWidth: 1,
+                borderRadius: 5
+            }]
+        },
+        options: {
+            indexAxis: 'y',
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { display: false } },
+            scales: {
+                x: { grid: { display: false } },
+                y: { grid: { display: false } }
+            }
+        }
+    });
 }
 
 // ... existing helper functions (renderArticles, populateSourceFilter, etc.) ...
