@@ -1,1 +1,22 @@
-[]
+[
+  {
+    "region": "EU",
+    "time_window": "2026-Q1",
+    "momentum_score": 3.01,
+    "research_intensity": 4.0,
+    "standardization_influence": 3.6,
+    "industrial_deployment": 3.2,
+    "spectrum_policy_signal": 0.77,
+    "ecosystem_maturity": 3.5
+  },
+  {
+    "region": "US",
+    "time_window": "2026-Q1",
+    "momentum_score": 2.6,
+    "research_intensity": 5.0,
+    "standardization_influence": 3.0,
+    "industrial_deployment": 2.0,
+    "spectrum_policy_signal": 1.0,
+    "ecosystem_maturity": 2.0
+  }
+]
