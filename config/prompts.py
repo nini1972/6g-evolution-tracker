@@ -4,7 +4,11 @@ Edit the prompt here to iterate on analysis quality without touching pipeline lo
 """
 
 ANALYSIS_PROMPT_TEMPLATE = """
-You are a 6G strategy and technology analyst.  Analyze the following article for its relevance to 6G (IMT\u20102030) and produce a structured geopolitical intelligence profile.
+You are a 6G strategy and technology analyst.  Analyze the following article for its relevance to 6G (IMT‑2030) and produce a structured geopolitical intelligence profile.
+
+NOTE: The title or snippet may be in Chinese, Korean, Japanese, or another language.
+If so, analyze the content based on the original language — do not refuse or skip.
+Translate key concepts mentally and apply the same analysis criteria as for English content.
 
 Source: {site_name}
 Title: {title}

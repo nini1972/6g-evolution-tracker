@@ -7,7 +7,7 @@ import json
 from datetime import datetime, timedelta
 from typing import Optional
 
-from config.feeds import HIGH_PRIORITY, MEDIUM_PRIORITY
+from config.feeds import HIGH_PRIORITY, HIGH_PRIORITY_INTL, MEDIUM_PRIORITY, MEDIUM_PRIORITY_INTL
 
 
 def hash_url(url: str) -> str:
@@ -28,14 +28,28 @@ def is_recent(entry, days_lookback: int = 30) -> bool:
 
 
 def relevance_score(entry) -> int:
-    """Calculate keyword-based relevance score for *entry*."""
+    """Calculate keyword-based relevance score for *entry*.
+
+    Checks both English and multilingual (Chinese, Korean, Japanese) keywords
+    so that non-English articles can pass the relevance threshold and reach the
+    AI screening stage.
+    """
     score = 0
-    text = (entry.get("title", "") + " " + entry.get("summary", "")).lower()
+    text = (entry.get("title", "") + " " + entry.get("summary", ""))
+    text_lower = text.lower()
+    # English high/medium keywords (case-insensitive)
     for keyword in HIGH_PRIORITY:
-        if keyword.lower() in text:
+        if keyword.lower() in text_lower:
             score += 3
     for keyword in MEDIUM_PRIORITY:
-        if keyword.lower() in text:
+        if keyword.lower() in text_lower:
+            score += 2
+    # Multilingual keywords (Unicode-aware, exact substring match)
+    for keyword in HIGH_PRIORITY_INTL:
+        if keyword in text:
+            score += 3
+    for keyword in MEDIUM_PRIORITY_INTL:
+        if keyword in text:
             score += 2
     return score
 

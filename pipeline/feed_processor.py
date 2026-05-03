@@ -16,6 +16,7 @@ import google.genai as genai
 from config.prompts import ANALYSIS_PROMPT_TEMPLATE
 from fetchers.hybrid_fetcher import HybridFetcher
 from pipeline.utils import hash_url, is_recent, parse_ai_response, relevance_score
+from config.feeds import SOURCE_LANGUAGE
 
 # Re-export for backwards compatibility so callers importing from feed_processor still work
 __all__ = [
@@ -223,6 +224,12 @@ async def process_feeds(
 
     for source, feed in feeds_data.items():
         candidate_entries = []
+        # Sources registered in SOURCE_LANGUAGE bypass the English keyword threshold;
+        # the AI's is_6g_relevant gate acts as their sole relevance filter.
+        # The newly added feeds (Samsung, SK Telecom, NEC, ETRI Journal) are
+        # English-language, so they are correctly NOT in SOURCE_LANGUAGE and use the
+        # normal keyword scoring path.
+        should_bypass_keyword_filter = source in SOURCE_LANGUAGE
 
         for entry in feed.entries:
             article_url = entry.get("link", "")
@@ -233,7 +240,7 @@ async def process_feeds(
             if not is_recent(entry):
                 continue
             score = relevance_score(entry)
-            if score >= RELEVANCE_THRESHOLD:
+            if should_bypass_keyword_filter or score >= RELEVANCE_THRESHOLD:
                 entry["_relevance_score"] = score
                 candidate_entries.append(entry)
 
