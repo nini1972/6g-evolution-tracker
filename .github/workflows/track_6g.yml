@@ -6,9 +6,11 @@ on:
   workflow_dispatch:
   push:
     branches:
+      - main
       - 'feature/phase3-**'
   pull_request:
     branches:
+      - main
       - 'feature/phase3-**'
 
 jobs:
@@ -21,6 +23,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
+          ref: ${{ github.head_ref || github.ref }}
 
       - name: Cache pip dependencies
         uses: actions/cache@v4
@@ -79,6 +82,9 @@ jobs:
               print("Gemini test FAILED:", e)
           EOF
 
+      - name: Add repo to PYTHONPATH
+        run: echo "PYTHONPATH=$(pwd)" >> $GITHUB_ENV
+
       - name: Lint with ruff
         run: |
           ruff check .
@@ -119,6 +125,7 @@ jobs:
           # Note: If using Vite, we would run npm install && npm run build
           # For this vanilla setup, we just ensure latest_digest.json and momentum_data.json are in the right place
           cp ../latest_digest.json . || echo "⚠️ latest_digest.json not found"
+          cp ../historical_intelligence.json . || echo "⚠️ historical_intelligence.json not found"
           cp ../momentum_data.json . || echo "⚠️ momentum_data.json not found, skipping"
           cp ../source_target_matrix.json . || echo "⚠️ source_target_matrix.json not found, skipping"
 
@@ -131,6 +138,7 @@ jobs:
           test -f dashboard/source_target_matrix.json && echo "✓ source_target_matrix.json exists" || echo "✗ source_target_matrix.json missing"
 
       - name: Commit and push results
+        if: github.event_name != 'pull_request'
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
@@ -154,7 +162,7 @@ jobs:
 
 
       - name: Deploy to GitHub Pages
-        if:  success()  # Only deploy if previous steps succeeded
+        if: success() && github.event_name != 'pull_request'
         uses: JamesIves/github-pages-deploy-action@v4
         with:
           folder: dashboard
