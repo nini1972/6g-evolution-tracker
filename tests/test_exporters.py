@@ -8,6 +8,7 @@ from pipeline.exporters import (
     evict_stale_cache,
     export_to_json,
     generate_source_target_matrix,
+    update_historical_intelligence,
 )
 
 
@@ -136,3 +137,119 @@ def test_generate_source_target_matrix_creates_file(tmp_path):
     data = json.loads(Path(out).read_text())
     assert data["US"]["EU"] > 0
     assert data["US"]["China"] > 0
+
+
+def test_generate_source_target_matrix_normalizes_region(tmp_path):
+    """'South Korea' should be normalized to 'Korea' before accumulating."""
+    out = str(tmp_path / "matrix.json")
+    articles = [
+        {
+            "source": "Test",
+            "ai_insights": {
+                "is_6g_relevant": True,
+                "source_region": "South Korea",
+                "overall_6g_importance": 5,
+                "world_power_impact": {"US": 3},
+            },
+        }
+    ]
+    generate_source_target_matrix(articles, matrix_file=out)
+    data = json.loads(Path(out).read_text())
+    assert data["Korea"]["US"] > 0
+
+
+def test_generate_source_target_matrix_returns_dict(tmp_path):
+    """generate_source_target_matrix should return the matrix dict."""
+    out = str(tmp_path / "matrix.json")
+    result = generate_source_target_matrix([], matrix_file=out)
+    assert isinstance(result, dict)
+    assert "US" in result
+
+
+# ---------------------------------------------------------------------------
+# aggregate_momentum — cumulative behaviour
+# ---------------------------------------------------------------------------
+
+def test_aggregate_momentum_is_cumulative(tmp_path):
+    """Entries from previous runs must be preserved after a new run."""
+    out = str(tmp_path / "momentum.json")
+    articles_q1 = [_make_article("US", "2026-01-15")]
+    aggregate_momentum(articles_q1, output_file=out)
+    articles_q2 = [_make_article("EU", "2026-04-15")]
+    aggregate_momentum(articles_q2, output_file=out)
+    data = json.loads(Path(out).read_text())
+    keys = {(d["region"], d["time_window"]) for d in data}
+    assert ("US", "2026-Q1") in keys
+    assert ("EU", "2026-Q2") in keys
+
+
+def test_aggregate_momentum_overwrites_same_quarter(tmp_path):
+    """When new articles arrive for an existing quarter, that entry is updated."""
+    out = str(tmp_path / "momentum.json")
+    # First run: US Q1 with low research_intensity
+    dims_low = {"research_intensity": 1, "standardization_influence": 1,
+                "industrial_deployment": 1, "spectrum_policy_signal": 1, "ecosystem_maturity": 1}
+    articles_run1 = [_make_article("US", "2026-01-15", dims=dims_low)]
+    aggregate_momentum(articles_run1, output_file=out)
+    data_run1 = json.loads(Path(out).read_text())
+    score_run1 = next(d["momentum_score"] for d in data_run1 if d["region"] == "US")
+
+    # Second run: US Q1 with high research_intensity — should overwrite
+    dims_high = {"research_intensity": 5, "standardization_influence": 5,
+                 "industrial_deployment": 5, "spectrum_policy_signal": 5, "ecosystem_maturity": 5}
+    articles_run2 = [_make_article("US", "2026-01-20", dims=dims_high)]
+    aggregate_momentum(articles_run2, output_file=out)
+    data_run2 = json.loads(Path(out).read_text())
+    us_q1_entries = [d for d in data_run2 if d["region"] == "US" and d["time_window"] == "2026-Q1"]
+    assert len(us_q1_entries) == 1
+    # Score should differ after the overwrite (high-intensity article now dominates)
+    assert us_q1_entries[0]["momentum_score"] != score_run1
+
+
+# ---------------------------------------------------------------------------
+# update_historical_intelligence
+# ---------------------------------------------------------------------------
+
+def test_update_historical_intelligence_creates_file(tmp_path):
+    out = str(tmp_path / "historical.json")
+    std_data = {"release_21_progress": {"progress_percentage": 50}}
+    matrix = {"US": {"EU": 100}}
+    update_historical_intelligence(std_data, matrix, "2026-05-03", output_file=out)
+    data = json.loads(Path(out).read_text())
+    assert len(data["standardization_snapshots"]) == 1
+    assert len(data["matrix_snapshots"]) == 1
+    assert data["standardization_snapshots"][0]["date"] == "2026-05-03"
+    assert data["matrix_snapshots"][0]["date"] == "2026-05-03"
+
+
+def test_update_historical_intelligence_is_idempotent(tmp_path):
+    """Calling twice for the same date must not add duplicate snapshots."""
+    out = str(tmp_path / "historical.json")
+    std_data = {"release_21_progress": {}}
+    matrix = {"US": {"EU": 10}}
+    update_historical_intelligence(std_data, matrix, "2026-05-03", output_file=out)
+    update_historical_intelligence(std_data, matrix, "2026-05-03", output_file=out)
+    data = json.loads(Path(out).read_text())
+    assert len(data["standardization_snapshots"]) == 1
+    assert len(data["matrix_snapshots"]) == 1
+
+
+def test_update_historical_intelligence_appends_multiple_dates(tmp_path):
+    """Different dates should each produce their own snapshot entry."""
+    out = str(tmp_path / "historical.json")
+    matrix = {"US": {"EU": 5}}
+    update_historical_intelligence(None, matrix, "2026-04-01", output_file=out)
+    update_historical_intelligence(None, matrix, "2026-05-01", output_file=out)
+    data = json.loads(Path(out).read_text())
+    assert len(data["matrix_snapshots"]) == 2
+
+
+def test_update_historical_intelligence_preserves_existing_articles(tmp_path):
+    """Existing articles in the file should not be touched."""
+    out = str(tmp_path / "historical.json")
+    initial = {"articles": [{"title": "existing"}], "standardization_snapshots": [], "matrix_snapshots": []}
+    Path(out).write_text(json.dumps(initial))
+    update_historical_intelligence(None, {}, "2026-05-03", output_file=out)
+    data = json.loads(Path(out).read_text())
+    assert len(data["articles"]) == 1
+    assert data["articles"][0]["title"] == "existing"

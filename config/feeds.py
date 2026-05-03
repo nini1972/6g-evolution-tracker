@@ -19,6 +19,11 @@ FEEDS = {
     "Next G Alliance": "https://www.nextgalliance.org/feed/",   # North America 6G initiative
     "SNS JU": "https://smart-networks.europa.eu/feed/",         # EU Smart Networks Joint Undertaking
 
+    # NOTE: Japan, Korea, and India currently have no dedicated region-specific feeds
+    # configured.  Their rows in the source→target influence matrix therefore show all
+    # zeros — a legitimate data gap, not a bug.  To improve Asia-Pacific coverage add
+    # RSS feeds for publishers such as NTT, KDDI, Samsung, LG, Jio, or TRAI here.
+
     # === Telecom Industry News ===
     "6GWorld": "https://www.6gworld.com/feed/",
     "RCR Wireless": "https://www.rcrwireless.com/feed",
