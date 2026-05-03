@@ -98,10 +98,15 @@ async function loadData() {
             const matrixResponse = await fetch('./source_target_matrix.json');
             if (matrixResponse.ok) {
                 const matrixFromFile = await matrixResponse.json();
-                if (matrixFromFile && typeof matrixFromFile === 'object') {
+                // Reject arrays and non-plain-objects; only accept a non-null plain object
+                if (matrixFromFile && typeof matrixFromFile === 'object' && !Array.isArray(matrixFromFile)) {
                     flowMatrix = matrixFromFile;
                     console.log('✅ Source-Target Matrix Loaded');
+                } else {
+                    console.warn('⚠️ source_target_matrix.json has unexpected format; ignoring.');
                 }
+            } else {
+                console.warn(`⚠️ source_target_matrix.json not available (HTTP ${matrixResponse.status}); influence map will be empty.`);
             }
         } catch (mxErr) {
             console.warn('⚠️ Source-target matrix could not be loaded:', mxErr);
@@ -422,6 +427,14 @@ function renderFlowMatrix(matrix) {
     const container = document.getElementById('flow-matrix');
     if (!container) return;
     const regions = ["US", "EU", "China", "Japan", "Korea", "India"];
+
+    // Show empty-state when the matrix has none of the expected region keys
+    const hasData = regions.some(r => r in matrix);
+    if (!hasData) {
+        container.innerHTML = '<p class="empty-state">No influence data available for this cycle.</p>';
+        return;
+    }
+
     let html = `<table class="flow-table"><thead><tr><th>Source → Target</th>${regions.map(r => `<th>${r}</th>`).join('')}</tr></thead><tbody>`;
     regions.forEach(source => {
         html += `<tr><td>${source}</td>`;
