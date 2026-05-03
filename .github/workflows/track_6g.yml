@@ -23,6 +23,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
+          ref: ${{ github.head_ref || github.ref }}
 
       - name: Cache pip dependencies
         uses: actions/cache@v4
@@ -137,6 +138,7 @@ jobs:
           test -f dashboard/source_target_matrix.json && echo "✓ source_target_matrix.json exists" || echo "✗ source_target_matrix.json missing"
 
       - name: Commit and push results
+        if: github.event_name != 'pull_request'
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
@@ -160,7 +162,7 @@ jobs:
 
 
       - name: Deploy to GitHub Pages
-        if:  success()  # Only deploy if previous steps succeeded
+        if: success() && github.event_name != 'pull_request'
         uses: JamesIves/github-pages-deploy-action@v4
         with:
           folder: dashboard
