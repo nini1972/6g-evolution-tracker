@@ -499,8 +499,6 @@ class StandardsFetcher:
             response.raise_for_status()
 
             # Parse href links from the directory listing
-            from bs4 import BeautifulSoup
-            import re
             soup = BeautifulSoup(response.text, 'html.parser')
             wp_files = []
             for a in soup.find_all('a', href=True):
