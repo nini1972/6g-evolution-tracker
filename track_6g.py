@@ -14,6 +14,7 @@ from pipeline.exporters import (
     evict_stale_cache,
     export_to_json,
     generate_source_target_matrix,
+    update_historical_intelligence,
     update_recent_articles,
 )
 from pipeline.feed_processor import cleanup_fetcher, fetch_all_feeds, process_feeds
@@ -142,8 +143,9 @@ async def main_async() -> None:
 
         if all_processed:
             export_to_json(all_processed, DATE, standardization_data)
-            generate_source_target_matrix(all_processed)
+            current_matrix = generate_source_target_matrix(all_processed)
             aggregate_momentum(all_processed)
+            update_historical_intelligence(standardization_data, current_matrix, DATE)
         else:
             # Quiet cycle: no new articles this run.  Use the historical window
             # so that concepts, evidence, and topic-frequency panels remain

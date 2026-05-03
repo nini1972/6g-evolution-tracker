@@ -22,6 +22,9 @@ Your tasks:
 **Source Region (Emitter Region):**
 Identify the region the article originates from based on the publisher or organization.
 Use one of:  US, EU, China, Japan, Korea, India, Other.
+Use exactly these canonical names. Aliases to map: "South Korea" → "Korea",
+"Republic of Korea" → "Korea", "European Union" → "EU", "United States" → "US",
+"USA" → "US", "People's Republic of China" → "China", "PRC" → "China".
 
 **6G Topics (choose all that apply):**
 sub-THz, AI-native RAN, semantic communications, ISAC, NTN, zero-energy devices,

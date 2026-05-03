@@ -13,6 +13,41 @@ CACHE_TTL_DAYS = 180
 RECENT_ARTICLES_TTL_DAYS = 90
 MAX_RECENT_ARTICLES = 50
 
+# Canonical region names used throughout the pipeline
+CANONICAL_REGIONS = ["US", "EU", "China", "Japan", "Korea", "India"]
+
+# Maps common AI-generated region name variants to their canonical forms
+REGION_ALIASES: dict = {
+    "south korea": "Korea",
+    "republic of korea": "Korea",
+    "s. korea": "Korea",
+    "european union": "EU",
+    "europe": "EU",
+    "eu27": "EU",
+    "united states": "US",
+    "united states of america": "US",
+    "usa": "US",
+    "u.s.": "US",
+    "u.s.a.": "US",
+    "america": "US",
+    "peoples republic of china": "China",
+    "people's republic of china": "China",
+    "prc": "China",
+    "mainland china": "China",
+}
+
+
+def _normalize_region(raw: Optional[str], regions: list) -> Optional[str]:
+    """Normalize an AI-generated region name to its canonical form.
+
+    Returns the input unchanged if it is already canonical or cannot be mapped.
+    """
+    if not raw:
+        return raw
+    if raw in regions:
+        return raw
+    return REGION_ALIASES.get(raw.lower().strip(), raw)
+
 
 def export_to_json(
     all_entries: list,
@@ -38,8 +73,12 @@ def aggregate_momentum(
     articles: list,
     output_file: str = "momentum_data.json",
 ) -> None:
-    """Compute region-specific 6G momentum per quarterly time window."""
-    regions = ["US", "EU", "China", "Japan", "Korea", "India"]
+    """Compute region-specific 6G momentum per quarterly time window.
+
+    Results are accumulated across pipeline runs: entries for past quarters are
+    preserved while the current quarter's data is updated as new articles arrive.
+    """
+    regions = CANONICAL_REGIONS
     aggregation: dict = {}  # region -> quarter -> metrics
 
     for article in articles:
@@ -47,7 +86,7 @@ def aggregate_momentum(
         if not ai or not ai.get("is_6g_relevant"):
             continue
 
-        src_region = ai.get("source_region")
+        src_region = _normalize_region(ai.get("source_region"), regions)
         if src_region not in regions:
             continue
 
@@ -84,8 +123,8 @@ def aggregate_momentum(
             val = dimensions.get(dim, 0)
             bucket[dim].append((val, importance))
 
-    # Compute weighted averages
-    final_data = []
+    # Compute weighted averages for the current run's articles
+    new_data: dict = {}  # (region, quarter) -> entry
     for region, quarters in aggregation.items():
         for quarter, metrics in quarters.items():
             entry: dict = {"region": region, "time_window": quarter}
@@ -107,7 +146,22 @@ def aggregate_momentum(
                 else:
                     entry[dim] = 0
 
-            final_data.append(entry)
+            new_data[(region, quarter)] = entry
+
+    # Load existing persisted momentum entries so that past quarters are not lost
+    existing_data: dict = {}  # (region, quarter) -> entry
+    try:
+        with open(output_file, "r", encoding="utf-8") as f:
+            existing_list = json.load(f)
+            if isinstance(existing_list, list):
+                for e in existing_list:
+                    existing_data[(e["region"], e["time_window"])] = e
+    except Exception:
+        pass
+
+    # Merge: existing entries preserved; new entries overwrite for updated quarters
+    merged = {**existing_data, **new_data}
+    final_data = list(merged.values())
 
     with open(output_file, "w", encoding="utf-8") as f:
         json.dump(final_data, f, indent=2)
@@ -121,9 +175,13 @@ def aggregate_momentum(
 def generate_source_target_matrix(
     articles: list,
     matrix_file: str = "source_target_matrix.json",
-) -> None:
-    """Build / update the weighted Source→Target region influence matrix."""
-    regions = ["US", "EU", "China", "Japan", "Korea", "India"]
+) -> dict:
+    """Build / update the weighted Source→Target region influence matrix.
+
+    Returns the updated matrix dict so callers can pass it to other exporters
+    (e.g. ``update_historical_intelligence``) without re-reading the file.
+    """
+    regions = CANONICAL_REGIONS
 
     # Load previous matrix for cumulative influence
     try:
@@ -132,26 +190,86 @@ def generate_source_target_matrix(
     except Exception:
         matrix = {src: {tgt: 0 for tgt in regions} for src in regions}
 
+    # Ensure all canonical regions are present (handles first-run or legacy files)
+    for src in regions:
+        matrix.setdefault(src, {tgt: 0 for tgt in regions})
+        for tgt in regions:
+            matrix[src].setdefault(tgt, 0)
+
+    region_article_counts: dict = {r: 0 for r in regions}
+
     for article in articles:
         ai = article.get("ai_insights")
         if not ai or not ai.get("is_6g_relevant"):
             continue
 
-        source_region = ai.get("source_region")
+        source_region = _normalize_region(ai.get("source_region"), regions)
         if source_region not in regions:
             continue
 
+        region_article_counts[source_region] += 1
         wp_impact = ai.get("world_power_impact", {})
         importance = ai.get("overall_6g_importance", 1)
 
         for target_region, score in wp_impact.items():
-            if target_region in regions and score > 0:
-                matrix[source_region][target_region] += score * importance
+            norm_target = _normalize_region(target_region, regions)
+            if norm_target in regions and score > 0:
+                matrix[source_region][norm_target] += score * importance
 
     with open(matrix_file, "w", encoding="utf-8") as f:
         json.dump(matrix, f, indent=2)
 
     print("🌐 Weighted Source→Target matrix updated.")
+    print("   Articles attributed per region this run:")
+    for region, count in region_article_counts.items():
+        print(f"     {region}: {count}")
+
+    return matrix
+
+
+def update_historical_intelligence(
+    standardization_data: Optional[dict],
+    matrix: dict,
+    date: str,
+    output_file: str = "historical_intelligence.json",
+) -> None:
+    """Append today's standardization snapshot and matrix snapshot to the
+    historical intelligence file.
+
+    The operation is idempotent: if a snapshot for *date* already exists it
+    will not be duplicated.  The ``articles`` key already in the file is left
+    untouched.
+    """
+    try:
+        with open(output_file, "r", encoding="utf-8") as f:
+            hist: dict = json.load(f)
+    except FileNotFoundError:
+        hist = {"articles": [], "standardization_snapshots": [], "matrix_snapshots": []}
+    except json.JSONDecodeError as e:
+        print(f"⚠️  historical_intelligence.json is corrupt and will be reset: {e}")
+        hist = {"articles": [], "standardization_snapshots": [], "matrix_snapshots": []}
+
+    hist.setdefault("standardization_snapshots", [])
+    hist.setdefault("matrix_snapshots", [])
+
+    # Append standardization snapshot (idempotent by date)
+    existing_std_dates = {s["date"] for s in hist["standardization_snapshots"]}
+    if standardization_data and date not in existing_std_dates:
+        hist["standardization_snapshots"].append(
+            {"date": date, "data": standardization_data}
+        )
+
+    # Append matrix snapshot (idempotent by date)
+    existing_matrix_dates = {s["date"] for s in hist["matrix_snapshots"]}
+    if date not in existing_matrix_dates:
+        hist["matrix_snapshots"].append({"date": date, "matrix": matrix})
+
+    try:
+        with open(output_file, "w", encoding="utf-8") as f:
+            json.dump(hist, f, indent=2)
+        print(f"📚 Historical intelligence updated (date: {date}).")
+    except Exception as e:
+        print(f"❌ Failed to write historical intelligence: {e}")
 
 
 def update_recent_articles(
