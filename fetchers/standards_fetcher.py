@@ -35,8 +35,8 @@ class StandardsFetcher:
     # 3GPP FTP URLs
     WORK_PLAN_DIR = "Information/WORK_PLAN/"
     WORK_PLAN_BASE_URL = f"https://www.3gpp.org/ftp/{WORK_PLAN_DIR}"
-    # Default fallback if discovery fails (the one we know works now)
-    DEFAULT_WORK_PLAN_FILE = "Work_plan_3gpp_260106.xlsx"
+    # Default fallback if discovery fails
+    DEFAULT_WORK_PLAN_FILE = "Work_plan_3gpp_260401.xlsx"
     
     MEETING_REPORT_URLS = {
         "RAN1": "https://www.3gpp.org/ftp/tsg_ran/WG1_RL1/",
@@ -440,54 +440,84 @@ class StandardsFetcher:
     
     async def _discover_latest_work_plan(self) -> Optional[str]:
         """
-        Dynamically find the latest Work Plan Excel file in Information/WORK_PLAN/
+        Dynamically find the latest Work Plan Excel file in Information/WORK_PLAN/.
+        Tries MCP first (if session is available), then falls back to HTTP directory scraping.
         """
-        if not self.mcp_session:
-            return None
-            
-        try:
-            logger.info("discovering_latest_work_plan")
-            result = await self.mcp_session.call_tool(
-                "list_files", {"path": self.WORK_PLAN_DIR}
-            )
-            
-            if not result.content:
-                return None
-                
-            # Collect all file names
-            files = []
-            for item in result.content:
-                if hasattr(item, 'text'):
-                    # MCP might return multi-item list or single JSON list
-                    try:
-                        parsed = json.loads(item.text)
-                        if isinstance(parsed, list):
-                            files.extend(parsed)
-                        else:
+        # --- MCP path ---
+        if self.mcp_session:
+            try:
+                logger.info("discovering_latest_work_plan", method="mcp")
+                result = await self.mcp_session.call_tool(
+                    "list_files", {"path": self.WORK_PLAN_DIR}
+                )
+
+                if not result.content:
+                    return None
+
+                # Collect all file names
+                files = []
+                for item in result.content:
+                    if hasattr(item, 'text'):
+                        # MCP might return multi-item list or single JSON list
+                        try:
+                            parsed = json.loads(item.text)
+                            if isinstance(parsed, list):
+                                files.extend(parsed)
+                            else:
+                                files.append(item.text)
+                        except json.JSONDecodeError:
                             files.append(item.text)
-                    except json.JSONDecodeError:
-                        files.append(item.text)
-            
-            # Filter for .xlsx work plan files
-            # Pattern: Work_plan_3gpp_YYMMDD.xlsx
-            wp_files = []
-            for f in files:
-                fname = f.split('/')[-1] if '/' in f else f
-                if fname.lower().startswith("work_plan_3gpp_") and fname.lower().endswith(".xlsx"):
-                    wp_files.append(fname)
-            
-            if not wp_files:
+
+                wp_files = [
+                    f.split('/')[-1] if '/' in f else f
+                    for f in files
+                    if (f.split('/')[-1] if '/' in f else f).lower().startswith("work_plan_3gpp_")
+                    and (f.split('/')[-1] if '/' in f else f).lower().endswith(".xlsx")
+                ]
+
+                if wp_files:
+                    latest_file = sorted(wp_files, reverse=True)[0]
+                    discovered_url = f"{self.WORK_PLAN_BASE_URL}{latest_file}"
+                    logger.info("discovered_latest_work_plan", file=latest_file, url=discovered_url, method="mcp")
+                    return discovered_url
+
                 logger.warning("no_work_plan_files_found_in_dir", files_checked=len(files))
+                # Fall through to HTTP discovery
+
+            except Exception as e:
+                logger.error("work_plan_discovery_failed_mcp", error=str(e))
+                # Fall through to HTTP discovery
+
+        # --- HTTP directory scraping fallback ---
+        try:
+            logger.info("discovering_latest_work_plan", method="http")
+            if not self.client:
+                self.client = httpx.AsyncClient(timeout=30.0, follow_redirects=True)
+
+            headers = {'User-Agent': self.USER_AGENT}
+            response = await self.client.get(self.WORK_PLAN_BASE_URL, headers=headers)
+            response.raise_for_status()
+
+            # Parse href links from the directory listing
+            soup = BeautifulSoup(response.text, 'html.parser')
+            wp_files = []
+            for a in soup.find_all('a', href=True):
+                href = a['href']
+                fname = href.split('/')[-1]
+                if re.match(r'Work_plan_3gpp_\d+\.xlsx$', fname, re.IGNORECASE):
+                    wp_files.append(fname)
+
+            if not wp_files:
+                logger.warning("no_work_plan_files_found_via_http")
                 return None
-                
-            # Sort by name (which includes date YYMMDD) to get latest
+
             latest_file = sorted(wp_files, reverse=True)[0]
             discovered_url = f"{self.WORK_PLAN_BASE_URL}{latest_file}"
-            logger.info("discovered_latest_work_plan", file=latest_file, url=discovered_url)
+            logger.info("discovered_latest_work_plan", file=latest_file, url=discovered_url, method="http")
             return discovered_url
-            
+
         except Exception as e:
-            logger.error("work_plan_discovery_failed", error=str(e))
+            logger.error("work_plan_discovery_failed_http", error=str(e))
             return None
 
     def _aggregate_work_items(self, items: List[Dict]) -> Dict:
