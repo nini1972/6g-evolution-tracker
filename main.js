@@ -152,7 +152,7 @@ async function loadData() {
         try { renderExecutiveBriefing(data.executive_briefing); } catch (e) { console.error('Briefing error:', e); }
         try { renderMomentumPanel(momentumData, historicalMemory); } catch (e) { console.error('Momentum error:', e); }
         try { renderMomentumCharts(momentumData); } catch (e) { console.error('Momentum charts error:', e); }
-        try { renderFlowMatrix(flowMatrix); } catch (e) { console.error('Flow Matrix error:', e); }
+        try { renderFlowMatrix(flowMatrix, historicalMemory?.matrix_snapshots || []); } catch (e) { console.error('Flow Matrix error:', e); }
         try { renderStandardizationPanel(data.standardization); } catch (e) { console.error('Standardization error:', e); }
 
         if (data.date) {
@@ -459,29 +459,116 @@ function renderEvidencePanel(articles) {
     container.innerHTML = evidence.map(e => `<div class="evidence-card">• ${e}</div>`).join('');
 }
 
-function renderFlowMatrix(matrix) {
+function renderFlowMatrix(matrix, matrixSnapshots) {
     const container = document.getElementById('flow-matrix');
     if (!container) return;
     const regions = ["US", "EU", "China", "Japan", "Korea", "India"];
+    const snapshots = Array.isArray(matrixSnapshots) ? matrixSnapshots : [];
 
     // Show empty-state when the matrix has none of the expected region keys
     const hasData = regions.some(r => r in matrix);
-    if (!hasData) {
+    if (!hasData && snapshots.length === 0) {
         container.innerHTML = '<p class="empty-state">No influence data available for this cycle.</p>';
         return;
     }
 
-    let html = `<table class="flow-table"><thead><tr><th>Source → Target</th>${regions.map(r => `<th>${r}</th>`).join('')}</tr></thead><tbody>`;
-    regions.forEach(source => {
-        html += `<tr><td>${source}</td>`;
-        regions.forEach(target => {
-            const val = matrix[source]?.[target] ?? 0;
-            html += `<td>${val}</td>`;
+    function buildTableHtml(m) {
+        if (!regions.some(r => r in m)) {
+            return '<p class="empty-state">No influence data for this snapshot.</p>';
+        }
+        let html = `<table class="flow-table"><thead><tr><th>Source → Target</th>${regions.map(r => `<th>${escapeHtml(r)}</th>`).join('')}</tr></thead><tbody>`;
+        regions.forEach(source => {
+            html += `<tr><td>${escapeHtml(source)}</td>`;
+            regions.forEach(target => {
+                const val = m[source]?.[target] ?? 0;
+                html += `<td>${typeof val === 'number' ? Math.round(val) : escapeHtml(String(val))}</td>`;
+            });
+            html += `</tr>`;
         });
-        html += `</tr>`;
+        html += `</tbody></table>`;
+        return html;
+    }
+
+    let selectorHtml = '';
+    if (snapshots.length > 0) {
+        const options = snapshots
+            .map(s => `<option value="${escapeHtml(s.date)}">${escapeHtml(s.date)}</option>`)
+            .join('');
+        selectorHtml = `
+            <div class="matrix-controls" style="margin-bottom:0.75rem;">
+                <label for="matrix-date-select" style="margin-right:0.5rem;">Historical snapshot:</label>
+                <select id="matrix-date-select">
+                    <option value="__current__">Current (cumulative)</option>
+                    ${options}
+                </select>
+            </div>
+        `;
+    }
+
+    const trendCanvasHtml = snapshots.length > 1
+        ? `<div class="chart-container" style="margin-top:1.5rem;"><h3>📊 Regional Outbound Influence Over Time</h3><canvas id="matrix-trend-chart"></canvas></div>`
+        : '';
+
+    container.innerHTML = selectorHtml
+        + `<div id="flow-table-content">${buildTableHtml(matrix)}</div>`
+        + trendCanvasHtml;
+
+    if (snapshots.length > 0) {
+        const select = document.getElementById('matrix-date-select');
+        if (select) {
+            select.addEventListener('change', () => {
+                const tableContent = document.getElementById('flow-table-content');
+                if (!tableContent) return;
+                if (select.value === '__current__') {
+                    tableContent.innerHTML = buildTableHtml(matrix);
+                } else {
+                    const snap = snapshots.find(s => s.date === select.value);
+                    tableContent.innerHTML = snap ? buildTableHtml(snap.matrix) : buildTableHtml(matrix);
+                }
+            });
+        }
+
+        const trendCanvas = document.getElementById('matrix-trend-chart');
+        if (trendCanvas) {
+            renderMatrixTrendChart(trendCanvas, snapshots);
+        }
+    }
+}
+
+function renderMatrixTrendChart(canvas, snapshots) {
+    if (!window.Chart || !snapshots || snapshots.length < 2) return;
+    const regions = ["US", "EU", "China", "Japan", "Korea", "India"];
+    const labels = snapshots.map(s => s.date);
+
+    const datasets = regions.map(region => ({
+        label: `${getRegionFlag(region)} ${region}`,
+        data: snapshots.map(s => {
+            const row = s.matrix?.[region];
+            if (!row) return 0;
+            return Object.values(row).reduce((sum, v) => sum + (typeof v === 'number' ? v : 0), 0);
+        }),
+        borderColor: REGION_COLORS[region],
+        backgroundColor: REGION_COLORS[region].replace('0.8)', '0.15)'),
+        tension: 0.4,
+        fill: false,
+        spanGaps: true,
+    }));
+
+    new Chart(canvas.getContext('2d'), {
+        type: 'line',
+        data: { labels, datasets },
+        options: {
+            responsive: true,
+            plugins: {
+                title: { display: true, text: 'Total Outbound Influence by Region Over Time' },
+                legend: { position: 'bottom' },
+            },
+            scales: {
+                y: { title: { display: true, text: 'Total Influence Score' }, min: 0 },
+                x: { title: { display: true, text: 'Date' } },
+            },
+        },
     });
-    html += `</tbody></table>`;
-    container.innerHTML = html;
 }
 
 function getRegionFlag(region) {
