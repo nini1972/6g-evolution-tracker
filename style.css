@@ -243,6 +243,13 @@ select:focus {
     padding: 5rem;
 }
 
+/* Empty / no-data state for panels */
+.empty-state {
+    text-align: center;
+    padding: 2rem 0;
+    opacity: 0.6;
+}
+
 .loader {
     width: 48px;
     height: 48px;

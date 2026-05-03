@@ -92,11 +92,31 @@ async function loadData() {
             console.warn('⚠️ Historical memory could not be loaded:', hErr);
         }
 
+        // Load source-target matrix from its own file
+        let flowMatrix = {};
+        try {
+            const matrixResponse = await fetch('./source_target_matrix.json');
+            if (matrixResponse.ok) {
+                const matrixFromFile = await matrixResponse.json();
+                // Reject arrays and non-plain-objects; only accept a non-null plain object
+                if (matrixFromFile && typeof matrixFromFile === 'object' && !Array.isArray(matrixFromFile)) {
+                    flowMatrix = matrixFromFile;
+                    console.log('✅ Source-Target Matrix Loaded');
+                } else {
+                    console.warn('⚠️ source_target_matrix.json has unexpected format; ignoring.');
+                }
+            } else {
+                console.warn(`⚠️ source_target_matrix.json not available (HTTP ${matrixResponse.status}); influence map will be empty.`);
+            }
+        } catch (mxErr) {
+            console.warn('⚠️ Source-target matrix could not be loaded:', mxErr);
+        }
+
         // Render Panels with individual safety catches
         try { renderExecutiveBriefing(data.executive_briefing); } catch (e) { console.error('Briefing error:', e); }
         try { renderMomentumPanel(momentumData, historicalMemory); } catch (e) { console.error('Momentum error:', e); }
         try { renderMomentumCharts(momentumData); } catch (e) { console.error('Momentum charts error:', e); }
-        try { renderFlowMatrix(data.flow_matrix || {}); } catch (e) { console.error('Flow Matrix error:', e); }
+        try { renderFlowMatrix(flowMatrix); } catch (e) { console.error('Flow Matrix error:', e); }
         try { renderStandardizationPanel(data.standardization); } catch (e) { console.error('Standardization error:', e); }
 
         if (data.date) {
@@ -127,6 +147,12 @@ async function loadData() {
             const el = document.getElementById(id);
             if (el) el.innerHTML = errorHtml;
         });
+        // Clear topics-chart spinner separately (it has a different structure)
+        const topicsChart = document.getElementById('topics-chart');
+        if (topicsChart) {
+            const topicsLoader = topicsChart.querySelector('.loading-state');
+            if (topicsLoader) topicsLoader.remove();
+        }
     }
 }
 
@@ -182,6 +208,9 @@ function renderMomentumPanel(momentumData, historicalMemory) {
         container.innerHTML = `<p>No current momentum data available.</p>`;
         return;
     }
+
+    // Clear any loading state before rendering cards
+    container.innerHTML = '';
 
     // 1. Render Cards (Existing logic)
     renderMomentumCards(momentumData, container);
@@ -249,7 +278,20 @@ function renderMomentumTrendChart(canvas, snapshots) {
 
 function renderTopicFrequencyChart(articles) {
     const canvas = document.getElementById('topics-chart-canvas');
-    if (!canvas || !window.Chart) return;
+    const topicsChart = document.getElementById('topics-chart');
+
+    // Always remove the loading spinner regardless of outcome
+    if (topicsChart) {
+        const loader = topicsChart.querySelector('.loading-state');
+        if (loader) loader.remove();
+    }
+
+    if (!canvas || !window.Chart) {
+        if (topicsChart) {
+            topicsChart.innerHTML = '<p class="empty-state">Chart unavailable.</p>';
+        }
+        return;
+    }
 
     let topicCounts = {};
     articles.forEach(article => {
@@ -263,6 +305,13 @@ function renderTopicFrequencyChart(articles) {
     const topics = Object.entries(topicCounts)
         .sort((a, b) => b[1] - a[1])
         .slice(0, 8);
+
+    if (topics.length === 0) {
+        if (topicsChart) {
+            topicsChart.innerHTML = '<p class="empty-state">No topic data available for this cycle.</p>';
+        }
+        return;
+    }
 
     const ctx = canvas.getContext('2d');
     new Chart(ctx, {
@@ -351,6 +400,10 @@ function renderConceptsPanel(articles) {
         }
     });
     concepts = [...new Set(concepts)];
+    if (concepts.length === 0) {
+        container.innerHTML = '<p class="empty-state">No emerging concepts extracted this cycle.</p>';
+        return;
+    }
     container.innerHTML = concepts.map(c => `<span class="concept-tag">${c}</span>`).join('');
 }
 
@@ -363,6 +416,10 @@ function renderEvidencePanel(articles) {
             evidence.push(...article.ai_insights.key_evidence);
         }
     });
+    if (evidence.length === 0) {
+        container.innerHTML = '<p class="empty-state">No key evidence extracted this cycle.</p>';
+        return;
+    }
     container.innerHTML = evidence.map(e => `<div class="evidence-card">• ${e}</div>`).join('');
 }
 
@@ -370,6 +427,14 @@ function renderFlowMatrix(matrix) {
     const container = document.getElementById('flow-matrix');
     if (!container) return;
     const regions = ["US", "EU", "China", "Japan", "Korea", "India"];
+
+    // Show empty-state when the matrix has none of the expected region keys
+    const hasData = regions.some(r => r in matrix);
+    if (!hasData) {
+        container.innerHTML = '<p class="empty-state">No influence data available for this cycle.</p>';
+        return;
+    }
+
     let html = `<table class="flow-table"><thead><tr><th>Source → Target</th>${regions.map(r => `<th>${r}</th>`).join('')}</tr></thead><tbody>`;
     regions.forEach(source => {
         html += `<tr><td>${source}</td>`;
