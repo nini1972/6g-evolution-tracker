@@ -71,12 +71,13 @@ HIGH_PRIORITY_INTL = [
 
 MEDIUM_PRIORITY_INTL = [
     # Chinese
-    "移动通信",     # mobile communications (Chinese)
-    "无线通信",     # wireless communications (Chinese)
+    "6G移动通信",      # 6G mobile communications (Chinese)
+    "第六代移动通信",  # 6th-generation mobile communications (Chinese)
+    "IMT-2030",       # IMT-2030 (Chinese usage)
     # Korean
-    "이동통신",     # mobile communications (Korean)
-    "무선통신",     # wireless communications (Korean)
+    "6G 이동통신",    # 6G mobile communications (Korean)
+    "6세대 이동통신",  # 6th-generation mobile communications (Korean)
     # Japanese
-    "移動通信",     # mobile communications (Japanese)
-    "無線通信",     # wireless communications (Japanese)
+    "6G移動通信",      # 6G mobile communications (Japanese)
+    "第6世代移動通信",  # 6th-generation mobile communications (Japanese)
 ]
