@@ -33,7 +33,8 @@ logger = structlog.get_logger()
 # ⚙️ Configuration
 CACHE_FILE = "seen_articles.json"
 DATE = datetime.now().strftime("%Y-%m-%d")
-LOG_FILE = f"6g_digest_{DATE}.md"
+DIGESTS_DIR = Path("digests")
+LOG_FILE = str(DIGESTS_DIR / f"6g_digest_{DATE}.md")
 
 # 🤖 Gemini AI Config
 client = genai.Client(api_key=os.getenv("GOOGLE_API_KEY"))
@@ -127,6 +128,7 @@ async def main_async() -> None:
         )
 
         # Write Markdown digest
+        DIGESTS_DIR.mkdir(exist_ok=True)
         # Group processed entries back by source for the logger
         from collections import defaultdict
         entries_by_source: dict = defaultdict(list)

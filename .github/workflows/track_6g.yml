@@ -100,7 +100,7 @@ jobs:
       - name: CI Handshake Test
         run: |
           echo "Running local handshake test in CI..."
-          python test_mcp_local.py
+          python tests/test_mcp_local.py
           echo "Handshake test complete."
 
       - name: Run tracker script and save output
@@ -146,9 +146,8 @@ jobs:
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
-          git add -f 6g_digest_*.md
+          git add -f digests/6g_digest_*.md
           git add -f seen_articles.json
-          git add -f fetch_method_cache.json || echo "fetch_method_cache.json not found, skipping"
           git add -f recent_articles.json || echo "recent_articles.json not found, skipping"
           git add -f latest_digest.json
           git add -f momentum_data.json || echo "momentum_data.json not found, skipping"
@@ -158,7 +157,6 @@ jobs:
           git add -f dashboard/momentum_data.json || echo "dashboard/momentum_data.json not found, skipping"
           git add -f dashboard/source_target_matrix.json || echo "dashboard/source_target_matrix.json not found, skipping"
           git add -f dashboard/historical_intelligence.json || echo "dashboard/historical_intelligence.json not found, skipping"
-          git add -f output.log
           # Only commit if there are actual changes
           if ! git diff --cached --quiet; then
             git commit -m "📊 Monthly 6G digest & Dashboard update - $(date +'%Y-%m-%d')"
