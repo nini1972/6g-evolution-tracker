@@ -9,6 +9,42 @@ if (window.Chart) {
 const articlesGrid = document.getElementById('articles-grid');
 const lastUpdateBadge = document.getElementById('last-update');
 const sourceFilter = document.getElementById('source-filter');
+const searchInput = document.getElementById('search');
+
+// ---------------------------------------------------------------------------
+// Search / filter
+// ---------------------------------------------------------------------------
+
+function filterAndRender() {
+    const term = searchInput ? searchInput.value.toLowerCase() : '';
+    const source = sourceFilter ? sourceFilter.value : 'all';
+
+    const filtered = allArticles.filter(article => {
+        // Source filter
+        if (source !== 'all' && article.source !== source) return false;
+
+        // Search term filter (title, summary, topics)
+        if (term) {
+            const title = (article.title || '').toLowerCase();
+            const summary = (
+                (article.ai_insights && article.ai_insights.summary)
+                    ? article.ai_insights.summary
+                    : (article.summary || '')
+            ).toLowerCase();
+            const topics = (article.ai_insights && article.ai_insights['6g_topics'])
+                ? article.ai_insights['6g_topics'].join(' ').toLowerCase()
+                : '';
+
+            if (!title.includes(term) && !summary.includes(term) && !topics.includes(term)) {
+                return false;
+            }
+        }
+
+        return true;
+    });
+
+    renderArticles(filtered);
+}
 
 // ---------------------------------------------------------------------------
 // Security helpers
@@ -648,3 +684,7 @@ function _renderLineChart(momentumData) {
 
 // Initial load
 loadData();
+
+// Wire search and source-filter controls (registered once at module level)
+if (searchInput) searchInput.addEventListener('input', filterAndRender);
+if (sourceFilter) sourceFilter.addEventListener('change', filterAndRender);
