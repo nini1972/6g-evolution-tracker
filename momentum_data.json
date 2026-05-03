@@ -18,5 +18,15 @@
     "industrial_deployment": 3.27,
     "spectrum_policy_signal": 1.09,
     "ecosystem_maturity": 3.36
+  },
+  {
+    "region": "Korea",
+    "time_window": "2026-Q2",
+    "momentum_score": 2.6,
+    "research_intensity": 4.0,
+    "standardization_influence": 3.0,
+    "industrial_deployment": 2.0,
+    "spectrum_policy_signal": 2.0,
+    "ecosystem_maturity": 2.0
   }
 ]
