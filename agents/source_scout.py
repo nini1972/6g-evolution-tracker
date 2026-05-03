@@ -1,5 +1,4 @@
 import json
-import os
 import structlog
 from pathlib import Path
 from datetime import datetime
@@ -22,7 +21,7 @@ class SourceScout:
             try:
                 with open(self.discovered_file, "r") as f:
                     return json.load(f)
-            except:
+            except Exception:
                 return {}
         return {}
 

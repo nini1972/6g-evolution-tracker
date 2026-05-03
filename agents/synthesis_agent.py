@@ -1,6 +1,4 @@
-import json
 import structlog
-from pathlib import Path
 
 logger = structlog.get_logger(__name__)
 
