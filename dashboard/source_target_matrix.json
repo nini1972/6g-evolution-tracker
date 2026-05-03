@@ -32,12 +32,12 @@
     "India": 0
   },
   "Korea": {
-    "US": 0,
-    "EU": 0,
-    "China": 0,
-    "Japan": 0,
-    "Korea": 0,
-    "India": 0
+    "US": 24,
+    "EU": 24,
+    "China": 32,
+    "Japan": 24,
+    "Korea": 40,
+    "India": 16
   },
   "India": {
     "US": 0,

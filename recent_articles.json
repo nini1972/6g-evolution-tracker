@@ -535,6 +535,63 @@
     "article_id": "09698dad6fcbb075bfb7002fe4f244dd"
   },
   {
+    "article_id": "e584e048483518941b4e47a8348ed966",
+    "source": "GSMA Newsroom",
+    "title": "GSMA\u00a0Report Urges\u00a0Japan\u00a0to\u00a0Take Bold Action to Convert Technical Excellence into Global Digital Leadership",
+    "link": "https://www.gsma.com/newsroom/press-release/gsma-report-urges-japan-to-take-bold-action-to-convert-technical-excellence-into-global-digital-leadership/",
+    "score": 3,
+    "ai_insights": {
+      "is_6g_relevant": true,
+      "source_region": "Other",
+      "summary": "The GSMA launched a report at the Digital Nation Summit in Tokyo urging Japan to translate its technical prowess into global 6G leadership. A central highlight is the 'Tokyo Accord,' which signals a unified industry ambition for 6G development and digital transformation priorities for the country.",
+      "overall_6g_importance": 8,
+      "6g_topics": [
+        "standardization",
+        "spectrum & policy",
+        "Open RAN",
+        "network automation",
+        "sustainability"
+      ],
+      "impact_dimensions": {
+        "research_intensity": 3,
+        "standardization_influence": 5,
+        "industrial_deployment": 4,
+        "spectrum_policy_signal": 4,
+        "ecosystem_maturity": 4
+      },
+      "time_horizon": "mid-term",
+      "world_power_impact": {
+        "US": 2,
+        "EU": 2,
+        "China": 3,
+        "Japan": 5,
+        "Korea": 3,
+        "India": 2
+      },
+      "emerging_concepts": [
+        "Tokyo Accord",
+        "Digital Nation Summit Tokyo",
+        "Technical Excellence Conversion"
+      ],
+      "key_evidence": [
+        "Industry signaling shared 6G ambition through the Tokyo Accord.",
+        "GSMA report launched at the Digital Nation Summit Tokyo on April 15, 2026.",
+        "Japan remains a leader in next-generation technological strengths.",
+        "Urgent priorities identified for Japan's digital transformation to secure global leadership."
+      ],
+      "standardization_context": {
+        "tdoc_refs": [],
+        "work_items": [],
+        "target_release": "Rel-21",
+        "working_groups": []
+      },
+      "impact_score": 8
+    },
+    "source_region": "Other",
+    "summary": "<p>New study highlights urgent priorities for Japan\u2019s digital transformation, with industry signaling shared 6G ambition through the Tokyo Accord&#160; 15&#160;April&#160;2026, Tokyo:&#160;Japan must take bold, coordinated action to translate its world-class technological strengths into global digital leadership, according to a new&#160;GSMA&#160;report launched at the&#160;Digital Nation Summit Tokyo.&#160; The study finds that while Japan&#160;remains&#160;a leader in next-generation [&#8230;]</p>\n<p>The post <a href=\"https://www.gsma.com/newsroom/press-release/gsma-report-urges-japan-to-take-bold-action-to-convert-technical-excellence-into-global-digital-leadership/\">GSMA\u00a0Report Urges\u00a0Japan\u00a0to\u00a0Take Bold Action to Convert Technical Excellence into Global Digital Leadership</a> appeared first on <a href=\"https://www.gsma.com/newsroom\">Newsroom</a>.</p>",
+    "date": "2026-04-15"
+  },
+  {
     "source": "Next G Alliance",
     "title": "From 6G Study to Market Focus: Insights from the Next G Alliance Use Case Prioritization",
     "link": "https://nextgalliance.org/from-6g-study-to-market-focus-insights-from-the-next-g-alliance-use-case-prioritization-2/",
@@ -597,5 +654,67 @@
     "summary": "<p>The recently completed 3GPP SA1 6G Study, captured in [TR\u00a022.870], is a major milestone in identifying use cases and defining potential service requirements of the 6G system. With the study phase now complete, the Next G Alliance, 3GPP, and other key stakeholders in the telecom ecosystem are shifting their attention from comprehensive exploration to selective focus and market relevance.</p>\n<p>The post <a href=\"https://nextgalliance.org/from-6g-study-to-market-focus-insights-from-the-next-g-alliance-use-case-prioritization-2/\">From 6G Study to Market Focus: Insights from the Next G Alliance Use Case Prioritization</a> appeared first on <a href=\"https://nextgalliance.org\">Next G Alliance</a>.</p>",
     "date": "2026-04-13",
     "article_id": "4fad176643d71a02df012ef9ed70fb98"
+  },
+  {
+    "article_id": "238eb6b9aa5bfbf888e6e45227dac3bb",
+    "source": "ETRI Journal",
+    "title": "Group reflection\u2010based reconfigurable intelligent surfaces assisted 6G wireless networks",
+    "link": "https://onlinelibrary.wiley.com/doi/10.4218/etrij.2025-0033?af=R",
+    "score": 3,
+    "ai_insights": {
+      "is_6g_relevant": true,
+      "source_region": "Korea",
+      "summary": "This article explores a group reflection-based approach for Reconfigurable Intelligent Surfaces (RIS) in 6G networks, aiming to optimize the trade-off between signaling overhead and beamforming performance by grouping reflecting elements.",
+      "overall_6g_importance": 8,
+      "6g_topics": [
+        "sustainability",
+        "spectrum & policy",
+        "standardization",
+        "cloud-edge integration"
+      ],
+      "impact_dimensions": {
+        "research_intensity": 4,
+        "standardization_influence": 3,
+        "industrial_deployment": 2,
+        "spectrum_policy_signal": 2,
+        "ecosystem_maturity": 2
+      },
+      "time_horizon": "mid-term (2028\u20132032)",
+      "world_power_impact": {
+        "US": 3,
+        "EU": 3,
+        "China": 4,
+        "Japan": 3,
+        "Korea": 5,
+        "India": 2
+      },
+      "emerging_concepts": [
+        "Group reflection-based RIS",
+        "Low-overhead channel estimation",
+        "Passive beamforming optimization",
+        "Environment-aware 6G propagation control"
+      ],
+      "key_evidence": [
+        "Focuses on Reconfigurable Intelligent Surfaces (RIS) as a pivotal 6G enabler.",
+        "Proposes a grouping mechanism to manage large-scale RIS arrays without prohibitive control overhead.",
+        "Originated from ETRI, a primary driver of South Korea's 6G national strategy.",
+        "Addresses the practical implementation challenges of smart radio environments."
+      ],
+      "standardization_context": {
+        "tdoc_refs": [],
+        "work_items": [
+          "FS_NR_RIS"
+        ],
+        "target_release": "Rel-20",
+        "working_groups": [
+          "RAN1",
+          "RAN4"
+        ]
+      },
+      "impact_score": 8
+    },
+    "source_region": "Korea",
+    "summary": "ETRI Journal, Volume 48, Issue 2, Page 233-246, April 2026.",
+    "date": "2026-04-10"
   }
 ]
