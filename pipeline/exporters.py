@@ -187,7 +187,7 @@ def update_recent_articles(
         datetime.now() - timedelta(days=RECENT_ARTICLES_TTL_DAYS)
     ).strftime("%Y-%m-%d")
     merged = [
-        a for a in by_id.values() if a.get("date", "9999-99-99") >= cutoff
+        a for a in by_id.values() if a.get("date", "0000-00-00") >= cutoff
     ]
 
     # Keep only the most recent MAX_RECENT_ARTICLES
