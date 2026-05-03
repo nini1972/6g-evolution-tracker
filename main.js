@@ -10,6 +10,44 @@ const articlesGrid = document.getElementById('articles-grid');
 const lastUpdateBadge = document.getElementById('last-update');
 const sourceFilter = document.getElementById('source-filter');
 
+// ---------------------------------------------------------------------------
+// Security helpers
+// ---------------------------------------------------------------------------
+
+/**
+ * Escape HTML special characters to prevent XSS when injecting user-supplied
+ * content into innerHTML.
+ * @param {string} str
+ * @returns {string}
+ */
+function escapeHtml(str) {
+    if (!str) return '';
+    return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+}
+
+/**
+ * Validate a URL is safe (http or https only) before using it as a link target.
+ * Returns the URL if safe, '#' otherwise.
+ * @param {string} url
+ * @returns {string}
+ */
+function safeUrl(url) {
+    try {
+        const parsed = new URL(url);
+        if (parsed.protocol === 'http:' || parsed.protocol === 'https:') {
+            return url;
+        }
+    } catch (_) {
+        // fall through
+    }
+    return '#';
+}
+
 // Fetch data from the generated JSON
 let allArticles = [];
 
@@ -85,6 +123,41 @@ function renderExecutiveBriefing(briefing) {
     content.innerHTML = briefing; // Assuming markdown-to-html or plain HTML
 }
 
+function renderArticles(articles) {
+    if (articles.length === 0) {
+        articlesGrid.innerHTML = '<div class="loading-state"><p>No articles found matching your criteria.</p></div>';
+        return;
+    }
+
+    articlesGrid.innerHTML = articles.map(article => {
+        let impact = '?';
+        let impactLabel = 'Impact';
+        const regionFlag = article.ai_insights ? getRegionFlag(article.ai_insights.source_region) : "🌍";
+
+        if (article.ai_insights && article.ai_insights.impact_score) {
+            impact = article.ai_insights.impact_score;
+        } else if (article.score) {
+            // Fallback to keyword relevance score if AI failed
+            impact = article.score;
+            impactLabel = 'Relevance';
+        }
+
+        const summary = article.ai_insights ? article.ai_insights.summary : article.summary;
+        const safeLink = safeUrl(article.link);
+
+        return `
+            <div class="article-card" onclick="window.open('${escapeHtml(safeLink)}', '_blank')">
+                <div class="source-tag">${escapeHtml(article.source)}</div>
+                <h3>${escapeHtml(article.title)}</h3>
+                <p class="article-summary">${escapeHtml(summary)}</p>
+                <div class="article-footer">
+                    <div class="impact-badge">${impactLabel}: ${escapeHtml(String(impact))}/10</div>
+                    <div class="date-text">${escapeHtml(article.date)}</div>
+                </div>
+            </div>
+        `;
+    }).join('');
+}
 function renderMomentumPanel(momentumData, historicalMemory) {
     const container = document.getElementById('momentum-content');
     const chartCanvas = document.getElementById('momentum-chart');
@@ -309,21 +382,187 @@ function populateSourceFilter(articles) {
     });
 }
 
-function renderArticles(articles) {
-    const grid = articlesGrid;
-    if (!grid) return;
-    grid.innerHTML = articles.map(a => `
-        <div class="article-card" onclick="window.open('${a.link}', '_blank')">
-            <div class="source-tag">${a.source}</div>
-            <h3>${a.title}</h3>
-            <p>${a.ai_insights ? a.ai_insights.summary : a.summary}</p>
-        </div>
-    `).join('');
-}
-
 function checkQuietMonth(articles) {
     const banner = document.getElementById('quiet-banner');
     if (banner && articles.length === 0) banner.style.display = 'block';
+}
+
+// ---------------------------------------------------------------------------
+// Chart.js Visualizations (require Chart.js loaded in index.html)
+// ---------------------------------------------------------------------------
+
+const REGIONS = ["US", "EU", "China", "Japan", "Korea", "India"];
+
+const REGION_COLORS = {
+    "US":     "rgba( 59, 130, 246, 0.8)",
+    "EU":     "rgba( 16, 185, 129, 0.8)",
+    "China":  "rgba(239,  68,  68, 0.8)",
+    "Japan":  "rgba(245, 158,  11, 0.8)",
+    "Korea":  "rgba(139,  92, 246, 0.8)",
+    "India":  "rgba(236,  72, 153, 0.8)",
+};
+
+/**
+ * Render all three Chart.js visualisations from momentumData.
+ * @param {Array} momentumData
+ */
+function renderMomentumCharts(momentumData) {
+    if (!momentumData || momentumData.length === 0) return;
+    if (typeof Chart === 'undefined') return; // Chart.js not loaded
+
+    _renderHeatmap(momentumData);
+    _renderRadarCharts(momentumData);
+    _renderLineChart(momentumData);
+}
+
+// --- Heatmap: regions × quarters, cell colour = momentum score ---
+
+function _renderHeatmap(momentumData) {
+    const canvas = document.getElementById('chart-heatmap');
+    if (!canvas) return;
+
+    // Collect all unique time windows (quarters), sorted
+    const quarters = [...new Set(momentumData.map(d => d.time_window))].sort();
+
+    // Build matrix: region → quarter → momentum_score
+    const matrix = {};
+    REGIONS.forEach(r => { matrix[r] = {}; });
+    momentumData.forEach(d => {
+        if (matrix[d.region]) {
+            matrix[d.region][d.time_window] = d.momentum_score;
+        }
+    });
+
+    const datasets = REGIONS.map(region => ({
+        label: region,
+        data: quarters.map(q => matrix[region][q] ?? null),
+        borderColor: REGION_COLORS[region],
+        backgroundColor: REGION_COLORS[region],
+        fill: false,
+        tension: 0.3,
+        pointRadius: 6,
+    }));
+
+    new Chart(canvas.getContext('2d'), {
+        type: 'line',
+        data: { labels: quarters, datasets },
+        options: {
+            responsive: true,
+            plugins: {
+                title: { display: true, text: '6G Momentum Heatmap (Regions × Quarters)' },
+                legend: { position: 'bottom' },
+                tooltip: {
+                    callbacks: {
+                        label: ctx => `${ctx.dataset.label}: ${ctx.parsed.y != null ? ctx.parsed.y.toFixed(2) : 'N/A'}`,
+                    },
+                },
+            },
+            scales: {
+                y: { title: { display: true, text: 'Momentum Score' }, min: 0, max: 5 },
+                x: { title: { display: true, text: 'Quarter' } },
+            },
+        },
+    });
+}
+
+// --- Radar: latest year per region, impact dimensions as axes ---
+
+const RADAR_DIMS = [
+    'research_intensity',
+    'standardization_influence',
+    'industrial_deployment',
+    'spectrum_policy_signal',
+    'ecosystem_maturity',
+];
+const RADAR_LABELS = ['Research', 'Standardization', 'Deployment', 'Spectrum', 'Ecosystem'];
+
+function _renderRadarCharts(momentumData) {
+    const container = document.getElementById('chart-radar-container');
+    if (!container) return;
+
+    // Get the latest quarter per region
+    const latestByRegion = {};
+    momentumData.forEach(d => {
+        if (!latestByRegion[d.region] || d.time_window > latestByRegion[d.region].time_window) {
+            latestByRegion[d.region] = d;
+        }
+    });
+
+    container.innerHTML = ''; // clear
+
+    REGIONS.forEach(region => {
+        const entry = latestByRegion[region];
+        if (!entry) return;
+
+        const wrapper = document.createElement('div');
+        wrapper.className = 'radar-wrapper';
+        const canvas = document.createElement('canvas');
+        canvas.id = `radar-${region}`;
+        wrapper.appendChild(canvas);
+        container.appendChild(wrapper);
+
+        new Chart(canvas.getContext('2d'), {
+            type: 'radar',
+            data: {
+                labels: RADAR_LABELS,
+                datasets: [{
+                    label: `${getRegionFlag(region)} ${region} (${entry.time_window})`,
+                    data: RADAR_DIMS.map(d => entry[d] ?? 0),
+                    backgroundColor: REGION_COLORS[region].replace('0.8)', '0.25)'),
+                    borderColor: REGION_COLORS[region],
+                    pointBackgroundColor: REGION_COLORS[region],
+                }],
+            },
+            options: {
+                responsive: true,
+                plugins: { legend: { position: 'top' } },
+                scales: { r: { min: 0, max: 5, ticks: { stepSize: 1 } } },
+            },
+        });
+    });
+}
+
+// --- Stacked line chart: momentum evolution over time per region ---
+
+function _renderLineChart(momentumData) {
+    const canvas = document.getElementById('chart-momentum-line');
+    if (!canvas) return;
+
+    const quarters = [...new Set(momentumData.map(d => d.time_window))].sort();
+
+    const matrix = {};
+    REGIONS.forEach(r => { matrix[r] = {}; });
+    momentumData.forEach(d => {
+        if (matrix[d.region]) {
+            matrix[d.region][d.time_window] = d.momentum_score;
+        }
+    });
+
+    const datasets = REGIONS.map(region => ({
+        label: `${getRegionFlag(region)} ${region}`,
+        data: quarters.map(q => matrix[region][q] ?? null),
+        borderColor: REGION_COLORS[region],
+        backgroundColor: REGION_COLORS[region].replace('0.8)', '0.15)'),
+        fill: true,
+        tension: 0.4,
+        spanGaps: true,
+    }));
+
+    new Chart(canvas.getContext('2d'), {
+        type: 'line',
+        data: { labels: quarters, datasets },
+        options: {
+            responsive: true,
+            plugins: {
+                title: { display: true, text: '6G Momentum Evolution by Region' },
+                legend: { position: 'bottom' },
+            },
+            scales: {
+                y: { title: { display: true, text: 'Momentum Score' }, min: 0 },
+                x: { title: { display: true, text: 'Quarter' } },
+            },
+        },
+    });
 }
 
 // Initial load
