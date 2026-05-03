@@ -3,11 +3,15 @@ Data exporters for the 6G Evolution Tracker.
 Handles JSON export, momentum aggregation, and source→target matrix generation.
 """
 import json
-from datetime import datetime
+from datetime import datetime, timedelta
 from typing import Optional
 
 # Cache eviction TTL: entries older than this many days are pruned
 CACHE_TTL_DAYS = 180
+
+# Recent articles rolling window parameters
+RECENT_ARTICLES_TTL_DAYS = 90
+MAX_RECENT_ARTICLES = 50
 
 
 def export_to_json(
@@ -148,6 +152,56 @@ def generate_source_target_matrix(
         json.dump(matrix, f, indent=2)
 
     print("🌐 Weighted Source→Target matrix updated.")
+
+
+def update_recent_articles(
+    new_articles: list,
+    output_file: str = "recent_articles.json",
+) -> list:
+    """
+    Maintain a rolling window of recent articles (last RECENT_ARTICLES_TTL_DAYS days,
+    capped at MAX_RECENT_ARTICLES entries).
+
+    Merges *new_articles* into the persisted history, deduplicates by
+    ``article_id``, prunes entries older than the TTL, and writes the result
+    back to *output_file*.  Returns the updated list so callers can use it
+    immediately (e.g. as a fallback for quiet cycles).
+    """
+    existing: list = []
+    try:
+        with open(output_file, "r", encoding="utf-8") as f:
+            data = json.load(f)
+            if isinstance(data, list):
+                existing = data
+    except Exception:
+        pass
+
+    # Merge: newer articles (by article_id) take precedence
+    by_id: dict = {a["article_id"]: a for a in existing if "article_id" in a}
+    for article in new_articles:
+        if "article_id" in article:
+            by_id[article["article_id"]] = article
+
+    # Prune entries older than the TTL
+    cutoff = (
+        datetime.now() - timedelta(days=RECENT_ARTICLES_TTL_DAYS)
+    ).strftime("%Y-%m-%d")
+    merged = [
+        a for a in by_id.values() if a.get("date", "0000-00-00") >= cutoff
+    ]
+
+    # Keep only the most recent MAX_RECENT_ARTICLES
+    merged.sort(key=lambda a: a.get("date", ""), reverse=True)
+    merged = merged[:MAX_RECENT_ARTICLES]
+
+    try:
+        with open(output_file, "w", encoding="utf-8") as f:
+            json.dump(merged, f, indent=2)
+        print(f"📰 Recent articles history updated ({len(merged)} entries).")
+    except Exception as e:
+        print(f"❌ Failed to write recent articles history: {e}")
+
+    return merged
 
 
 def evict_stale_cache(cache: dict, ttl_days: int = CACHE_TTL_DAYS) -> dict:
