@@ -14,6 +14,7 @@ from pipeline.exporters import (
     evict_stale_cache,
     export_to_json,
     generate_source_target_matrix,
+    update_recent_articles,
 )
 from pipeline.feed_processor import cleanup_fetcher, fetch_all_feeds, process_feeds
 from pipeline.markdown_logger import log_to_markdown
@@ -135,12 +136,20 @@ async def main_async() -> None:
             log_to_markdown(source, entries, LOG_FILE, DATE)
 
         # Export for dashboard
+        # Always update the rolling recent-articles history first so we have a
+        # fallback for quiet cycles (all articles already cached).
+        recent_articles = update_recent_articles(all_processed)
+
         if all_processed:
             export_to_json(all_processed, DATE, standardization_data)
             generate_source_target_matrix(all_processed)
             aggregate_momentum(all_processed)
-        elif standardization_data:
-            export_to_json([], DATE, standardization_data)
+        else:
+            # Quiet cycle: no new articles this run.  Use the historical window
+            # so that concepts, evidence, and topic-frequency panels remain
+            # populated on the dashboard instead of showing empty states.
+            articles_for_dashboard = recent_articles
+            export_to_json(articles_for_dashboard, DATE, standardization_data)
 
         # Persist cache
         save_cache(cache)
