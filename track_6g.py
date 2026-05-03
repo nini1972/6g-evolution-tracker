@@ -34,7 +34,7 @@ logger = structlog.get_logger()
 CACHE_FILE = "seen_articles.json"
 DATE = datetime.now().strftime("%Y-%m-%d")
 DIGESTS_DIR = Path("digests")
-LOG_FILE = str(DIGESTS_DIR / f"6g_digest_{DATE}.md")
+LOG_FILE = DIGESTS_DIR / f"6g_digest_{DATE}.md"
 
 # 🤖 Gemini AI Config
 client = genai.Client(api_key=os.getenv("GOOGLE_API_KEY"))
