@@ -10,8 +10,9 @@ from collections import Counter
 
 mcp = FastMCP("6g-intelligence-mcp", json_response=True)
 
-# Constants
-DIGEST_FILE = "latest_digest.json"
+# Resolve the digest file relative to this module so the server works
+# regardless of the working directory it is started from.
+DIGEST_FILE = str(Path(__file__).parent.parent / "latest_digest.json")
 
 # === Helper Functions ===
 
@@ -27,6 +28,9 @@ def load_digest() -> dict:
 
 # === Core Tools ===
 
+_VALID_REGIONS = {"US", "China", "EU", "Japan", "Korea", "India"}
+
+
 @mcp.tool()
 def get_latest_6g_news(min_importance: int = 5, region: Optional[str] = None) -> List[dict]:
     """
@@ -40,6 +44,13 @@ def get_latest_6g_news(min_importance: int = 5, region: Optional[str] = None) ->
         List of articles with AI-powered analysis including impact scores,
         regional influence, emerging concepts, and key evidence.
     """
+    # Clamp min_importance to valid range
+    min_importance = max(0, min(10, int(min_importance)))
+
+    # Validate region against allowed values
+    if region is not None and region not in _VALID_REGIONS:
+        raise ValueError(f"Invalid region '{region}'. Must be one of: {sorted(_VALID_REGIONS)}")
+
     data = load_digest()
     
     articles = [
@@ -99,6 +110,9 @@ def get_recent_3gpp_meetings(working_group: Optional[str] = None) -> List[dict]:
     return meetings
 
 
+_MAX_TOPIC_LENGTH = 100
+
+
 @mcp.tool()
 def search_6g_topics(topic: str, min_importance: int = 0) -> List[dict]:
     """
@@ -111,6 +125,10 @@ def search_6g_topics(topic: str, min_importance: int = 0) -> List[dict]:
     Returns:
         Matching articles with relevance to the topic, ranked by importance.
     """
+    # Sanitise inputs
+    topic = str(topic).strip()[:_MAX_TOPIC_LENGTH]
+    min_importance = max(0, min(10, int(min_importance)))
+
     topic_lower = topic.lower()
     
     data = load_digest()
