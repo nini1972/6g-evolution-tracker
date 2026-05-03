@@ -24,7 +24,14 @@ Your tasks:
 2. If relevant, perform a deep analysis using the following definitions:
 
 **Source Region (Emitter Region):**
-Identify the region the article originates from based on the publisher or organization.
+Identify the primary geographic region this article represents using these rules:
+- For region-specific publishers (e.g., Samsung → Korea, Ericsson → EU, Qualcomm → US,
+  NEC → Japan, Huawei → China): use the publisher's home region.
+- For global organizations (e.g., GSMA, ITU, 3GPP, IEEE, OECD, UN bodies): use the
+  primary geographic subject of the article — the country or region the article is mainly
+  analyzing, urging action on, or reporting about. If the article covers multiple regions
+  equally with no dominant focus, use "Other".
+- If no clear region can be determined, use "Other".
 Use one of:  US, EU, China, Japan, Korea, India, Other.
 Use exactly these canonical names. Aliases to map: "South Korea" → "Korea",
 "Republic of Korea" → "Korea", "European Union" → "EU", "United States" → "US",
