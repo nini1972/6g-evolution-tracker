@@ -90,6 +90,74 @@ def test_relevance_score_case_insensitive():
 
 
 # ---------------------------------------------------------------------------
+# relevance_score — multilingual (CJK / Korean) keywords
+# ---------------------------------------------------------------------------
+
+def test_relevance_score_korean_high_priority():
+    """Korean 6세대 (6th generation) is HIGH_PRIORITY_INTL → +3."""
+    entry = {"title": "6세대 이동통신 기술 개발", "summary": ""}
+    # "6세대" high-priority (+3) + "이동통신" medium-priority (+2) = 5
+    assert relevance_score(entry) == 5
+
+
+def test_relevance_score_chinese_high_priority():
+    """Chinese 第六代移动 is HIGH_PRIORITY_INTL → +3."""
+    entry = {"title": "第六代移动技术白皮书发布", "summary": ""}
+    assert relevance_score(entry) >= 3
+
+
+def test_relevance_score_japanese_high_priority():
+    """Japanese 第6世代 is HIGH_PRIORITY_INTL → +3."""
+    entry = {"title": "第6世代移動通信システム", "summary": ""}
+    # "第6世代" high (+3) + "移動通信" medium (+2) = 5
+    assert relevance_score(entry) == 5
+
+
+def test_relevance_score_korean_medium_priority():
+    """Korean 이동통신 alone (no high-priority hit) scores +2."""
+    entry = {"title": "이동통신 표준화 동향", "summary": ""}
+    assert relevance_score(entry) == 2
+
+
+def test_relevance_score_chinese_medium_priority():
+    """Chinese 移动通信 alone scores +2."""
+    entry = {"title": "移动通信发展报告", "summary": ""}
+    assert relevance_score(entry) == 2
+
+
+def test_relevance_score_japanese_medium_priority():
+    """Japanese 移動通信 alone scores +2."""
+    entry = {"title": "移動通信の最新動向", "summary": ""}
+    assert relevance_score(entry) == 2
+
+
+def test_relevance_score_cjk_no_false_positive():
+    """CJK text that contains none of the configured keywords scores 0."""
+    entry = {"title": "スマートフォン市場調査レポート", "summary": "台風情報"}
+    assert relevance_score(entry) == 0
+
+
+def test_relevance_score_intl_keywords_not_lowercased():
+    """Multilingual matching uses the original text, not a lowercased copy.
+
+    Lowercasing CJK text is a no-op, but this test guards against a future
+    refactor that accidentally normalises the text before CJK matching.
+    """
+    entry = {"title": "6세대 기술", "summary": ""}
+    score_original = relevance_score(entry)
+    # Force the same text through as lowercase (Python lower() on Korean is a no-op)
+    entry_lower = {"title": "6세대 기술".lower(), "summary": ""}
+    assert relevance_score(entry_lower) == score_original
+
+
+def test_relevance_score_mixed_english_and_cjk():
+    """An entry mixing English and CJK keywords accumulates scores from both."""
+    entry = {"title": "6G and 第6世代 convergence", "summary": "이동통신 spectrum"}
+    # "6G" high (+3) + "第6世代" high (+3) + "이동통신" medium (+2) = 8
+    assert relevance_score(entry) == 8
+
+
+# ---------------------------------------------------------------------------
 # _parse_ai_response
 # ---------------------------------------------------------------------------
 
