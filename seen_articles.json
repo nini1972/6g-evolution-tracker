@@ -58,5 +58,260 @@
     "url": "https://www.mobileworldlive.com/europe/uk-regulator-outlines-upper-6ghz-proposal/",
     "title": "UK regulator outlines upper 6GHz proposal",
     "processed_date": "2026-01-10"
+  },
+  "02e5c62a34f8c73a92aa1feb2424394f": {
+    "url": "https://spectrum.ieee.org/lunar-radio-telescope",
+    "title": "The Quest to Build a Radio Telescope That Can Hear the Cosmic Dark Ages",
+    "processed_date": "2026-01-21"
+  },
+  "0f47ed6c2b4b7c06d697a0c785669684": {
+    "url": "https://spectrum.ieee.org/video-friday-bipedal-robot",
+    "title": "Video Friday: Bipedal Robot Stops Itself From Falling",
+    "processed_date": "2026-01-21"
+  },
+  "9c6993e5a6a1fb8dd15db4e2dd844c18": {
+    "url": "https://arxiv.org/abs/2601.11859",
+    "title": "Cascaded Transformer for Robust and Scalable SLA Decomposition via Amortized Optimization",
+    "processed_date": "2026-01-21"
+  },
+  "c3d5045fc84a8a0765d1aefe99ae3c22": {
+    "url": "https://arxiv.org/abs/2601.12311",
+    "title": "Cross-reality Location Privacy Protection in 6G-enabled Vehicular Metaverses: An LLM-enhanced Hybrid Generative Diffusion Model-based Approach",
+    "processed_date": "2026-01-21"
+  },
+  "f59f92532552fd5848121587e0041dda": {
+    "url": "https://arxiv.org/abs/2601.12375",
+    "title": "LiQSS: Post-Transformer Linear Quantum-Inspired State-Space Tensor Networks for Real-Time 6G",
+    "processed_date": "2026-01-21"
+  },
+  "7c68fdc071bfeae2387bdf67dadc67dd": {
+    "url": "https://arxiv.org/abs/2601.13213",
+    "title": "Conflict Detection in AI-RAN: Efficient Interaction Learning and Autonomous Graph Reconstruction",
+    "processed_date": "2026-01-21"
+  },
+  "d2ad53054627d4b7ca3a0fff4983d357": {
+    "url": "https://arxiv.org/abs/2601.13484",
+    "title": "Spectrum & RAN Sharing: A Measurement-based Case Study of Commercial 5G Networks in Spain",
+    "processed_date": "2026-01-21"
+  },
+  "7e9ed3f7f7b1741183062d6f30dce21d": {
+    "url": "https://arxiv.org/abs/2601.13993",
+    "title": "Capacity and Energy Trade-Offs in FR3 6G Networks Using Real Deployment Data",
+    "processed_date": "2026-01-21"
+  },
+  "25b02351840c8c544cec0a769e669f44": {
+    "url": "https://arxiv.org/abs/2601.14106",
+    "title": "Communication Technologies for Intelligent Transportation Systems: From Railways to UAVs and Beyond",
+    "processed_date": "2026-01-21"
+  },
+  "7fb8e297c33f49c62c834dff6be31c6a": {
+    "url": "https://arxiv.org/abs/2404.08113",
+    "title": "Predictive Handover Strategy in 6G and Beyond: A Deep and Transfer Learning Approach",
+    "processed_date": "2026-01-21"
+  },
+  "3b4628b6b2fd93fbff44c73f6de76581": {
+    "url": "https://arxiv.org/abs/2507.11935",
+    "title": "AI-Native Open RAN for Non-Terrestrial Networks: An Overview",
+    "processed_date": "2026-01-21"
+  },
+  "798cdf900a3eedde11bf70d4660b1c6c": {
+    "url": "https://smart-networks.europa.eu/complementary-microelectronics-hardware-concepts-webinar/",
+    "title": "Complementary Microelectronics Hardware Concepts Webinar",
+    "processed_date": "2026-01-21"
+  },
+  "6c8a53754432bdc677cc739ae0967e01": {
+    "url": "https://smart-networks.europa.eu/witar-lunch-salon-3-building-inclusive-6g-through-technical-leadership/",
+    "title": "WiTaR Lunch Salon #3 \u2013 Building Inclusive 6G Through Technical Leadership",
+    "processed_date": "2026-01-21"
+  },
+  "9a63558dc4ea91bea691b85d260ac30d": {
+    "url": "https://www.nokia.com/newsroom/nokia-provides-recast-comparative-segment-results-for-2025-and-2024-reflecting-new-operating-and-financial-reporting-structure/",
+    "title": "Nokia provides recast comparative segment results for 2025 and 2024 reflecting new operating and financial reporting structure",
+    "processed_date": "2026-02-03"
+  },
+  "9af14ea57d0595a0e90a138d460f949e": {
+    "url": "https://www.nokia.com/newsroom/nokia-corporation-financial-report-for-q4-2025-and-full-year-2025/",
+    "title": "Nokia Corporation Financial Report for Q4 2025 and full year 2025",
+    "processed_date": "2026-02-03"
+  },
+  "3a71de1bde9f5615c01cdc86639b92e9": {
+    "url": "https://www.nokia.com/newsroom/nokia-and-hypertec-group-to-power-breakthrough-research-across-health-climate-and-ai-with-sharcnets-nibi-supercomputer-at-the-university-of-waterloo/",
+    "title": "Nokia and Hypertec Group to Power Breakthrough Research Across Health, Climate and AI with SHARCNET\u2019s Nibi Supercomputer at the University of Waterloo",
+    "processed_date": "2026-02-03"
+  },
+  "68a5d3e147f3504a16d576ff8d1f0ae1": {
+    "url": "https://arxiv.org/abs/2602.01102",
+    "title": "Resilience Optimization in 6G and Beyond Integrated Satellite-Terrestrial Networks: A Deep Reinforcement Learning Approach",
+    "processed_date": "2026-02-03"
+  },
+  "907dc4c6f68b1e3bb5be0b072c6e1a64": {
+    "url": "https://arxiv.org/abs/2602.01180",
+    "title": "Energy-efficient Software-defined 5G/6G Multimedia IoV: PID controller-based approach",
+    "processed_date": "2026-02-03"
+  },
+  "1b3fdd4e8b7087cb9c9388a47f1e47c0": {
+    "url": "https://arxiv.org/abs/2508.17778",
+    "title": "AgentRAN: An Agentic AI Architecture for Autonomous Control of Open 6G Networks",
+    "processed_date": "2026-02-03"
+  },
+  "bcced3ac3dde75e416a5c89bfc21940f": {
+    "url": "https://www.rcrwireless.com/20260202/test-measurement/agentic-ai-meets-intent-based-networking-a-new-era-of-network-automation",
+    "title": "Agentic AI meets intent-based networking: A new era of network automation",
+    "processed_date": "2026-02-03"
+  },
+  "d8a2483902699c034b31515d1c9f0e2d": {
+    "url": "https://www.nokia.com/newsroom/nokia-and-telia-to-collaborate-on-ai-ran-use-cases-mwc26/",
+    "title": "Nokia and Telia to collaborate on AI-RAN use cases #MWC26",
+    "processed_date": "2026-03-09"
+  },
+  "07e5c31bf4f64fc465ed90256e177ed9": {
+    "url": "https://www.nokia.com/newsroom/nokia-expands-partnership-with-tim-brasil-to-deliver-next-generation-ai-ready-5g-network-with-nvidia/",
+    "title": "Nokia expands partnership with TIM Brasil to deliver next-generation AI-Ready 5G network with NVIDIA",
+    "processed_date": "2026-03-09"
+  },
+  "39fd76f1ceec3f88279bcd4da5fce682": {
+    "url": "https://www.nokia.com/newsroom/nokia-and-deutsche-telekom-expand-strategic-collaboration-to-advance-ai-native-and-open-ran-innovation-mwc26/",
+    "title": "Nokia and Deutsche Telekom expand strategic collaboration to advance AI-native and Open RAN innovation #MWC26",
+    "processed_date": "2026-03-09"
+  },
+  "05ddc5ab871ef90f40d33527e1d4a231": {
+    "url": "https://www.nokia.com/newsroom/nokia-accelerates-ai-ran-momentum-with-new-partnerships-driving-path-to-ai-native-6g-mwc26/",
+    "title": "Nokia accelerates AI-RAN momentum with new partnerships driving path to AI-Native 6G #MWC26",
+    "processed_date": "2026-03-09"
+  },
+  "7ea12908f5e0cb1b05ed5280634bc2b3": {
+    "url": "https://www.thalesgroup.com/en/news-centre/press-releases/ai-new-insider-threat-facing-organizations",
+    "title": "AI : the New Insider Threat facing organizations",
+    "processed_date": "2026-03-09"
+  },
+  "0cd33de4255465588d1e8d8b3ba1bcbc": {
+    "url": "https://spectrum.ieee.org/video-friday-robot-hand-artificial-muscles",
+    "title": "Video Friday: A Robot Hand With Artificial Muscles and Tendons",
+    "processed_date": "2026-03-09"
+  },
+  "f214d7767d62bc6c9fbd0f4904274278": {
+    "url": "https://nextgalliance.org/sustainable-ai-in-telecom-from-foundational-framework-to-operational-priority/",
+    "title": "Sustainable AI in Telecom: From Foundational Framework to Operational Priority",
+    "processed_date": "2026-03-09"
+  },
+  "e078389e87f485f97ef18ceabfc1b8a3": {
+    "url": "https://nextgalliance.org/technology-roadmap-working-group-hosts-extreme-mimo-panel/",
+    "title": "Technology Roadmap Working Group Hosts Extreme MIMO Panel",
+    "processed_date": "2026-03-09"
+  },
+  "566c9d5e0e7b7565af654f53229e5922": {
+    "url": "https://nextgalliance.org/the-next-g-alliance-6g-kpi-databases-from-intent-to-measurable-outcomes-supporting-consistent-evaluation-of-6g-performance/",
+    "title": "The Next G Alliance 6G KPI Databases: From Intent to Measurable Outcomes: Supporting Consistent Evaluation of 6G Performance",
+    "processed_date": "2026-03-09"
+  },
+  "ba9f43c74e7334719d6100790f585f89": {
+    "url": "https://smart-networks.europa.eu/6gtandem-spring-school-on-thz-and-wireless-sensing/",
+    "title": "6GTandem Spring School on THz and Wireless Sensing",
+    "processed_date": "2026-03-09"
+  },
+  "fda8cde1e10b6931ffc3d8e47ee401ef": {
+    "url": "https://smart-networks.europa.eu/europes-6g-ambition-takes-centre-stage-at-mwc-2026/",
+    "title": "Europe\u2019s 6G Ambition Takes Centre Stage at MWC 2026",
+    "processed_date": "2026-03-09"
+  },
+  "7a4dc4c7142118680dd8068b90f30ded": {
+    "url": "https://smart-networks.europa.eu/sns-ju-invests-e116-million-in-20-new-6g-projects-to-strengthen-europes-digital-leadership/",
+    "title": "The SNS JU invests \u20ac116 million to further cement European 6G Research and Innovation",
+    "processed_date": "2026-03-09"
+  },
+  "91fdf8d537f2d5e74671e112ce7e3c28": {
+    "url": "https://smart-networks.europa.eu/call-for-papers-for-the-first-international-workshop-on-software-defined-space-infrastructures-sdsi2026-part-of-ieee-netsoft-2026-berlin/",
+    "title": "Call for Papers for the First International Workshop on Software Defined Space Infrastructures SDSI2026, part of IEEE NetSoft 2026 Berlin",
+    "processed_date": "2026-03-09"
+  },
+  "a945411b1abbad33a48d64ffc316bd44": {
+    "url": "https://smart-networks.europa.eu/towards-6g-enabled-ehealth-white-paper-is-out/",
+    "title": "Towards 6G-enabled eHealth White Paper is out!",
+    "processed_date": "2026-03-09"
+  },
+  "a6a4e06f8b1800371855f95436209224": {
+    "url": "https://smart-networks.europa.eu/ether-final-showcase-march-24-1400-demonstrating-sustainable-3d-terrestrial-non-terrestrial-networks-for-future-6g-services/",
+    "title": "ETHER Final Showcase March 24 @ 14:00 \u2013 Demonstrating Sustainable 3D Terrestrial\u2013Non-Terrestrial Networks for Future 6G Services",
+    "processed_date": "2026-03-09"
+  },
+  "6748c386bbb3dd87fdc84ab73cad9d30": {
+    "url": "https://www.rcrwireless.com/20260309/test-measurement/keysight-mwc-roundup-ai-ran-testing-ai-driven-uplink-performance-and-pre-6g-interoperability-validation",
+    "title": "Keysight MWC roundup: AI-RAN testing, AI-driven uplink performance, and pre-6G interoperability validation",
+    "processed_date": "2026-03-09"
+  },
+  "066cf5c21d6c8f64eb43179781bbff54": {
+    "url": "https://www.rcrwireless.com/20260306/6g/qualcomm-ceo-6g",
+    "title": "Connectivity, computing, sensing \u2013 Qualcomm CEO outlines 6G pillars",
+    "processed_date": "2026-03-09"
+  },
+  "75514394488e3ec1d1a36a0e34e9d1ca": {
+    "url": "https://www.rcrwireless.com/20260306/network-infrastructure/cisco-mwc-fiber-mobile-ai-agents",
+    "title": "Cisco rights the MWC narrative \u2013 fiber first, mobile later, as AI agents make minds race",
+    "processed_date": "2026-03-09"
+  },
+  "4aae0fd58b5c59b39591eed2b706f2ba": {
+    "url": "https://www.fierce-network.com/wireless/mwc-2026-ericsson-frames-ai-both-network-tool-and-network-driver",
+    "title": "<a href=\"https://www.fierce-network.com/wireless/mwc-2026-ericsson-frames-ai-both-network-tool-and-network-driver\" hreflang=\"en\">MWC 2026: Ericsson says AI is a network tool and network driver</a>",
+    "processed_date": "2026-03-09"
+  },
+  "9dfb68764444fec32b08ad52ef342116": {
+    "url": "https://www.fierce-network.com/wireless/mwc-2026-heres-what-we-saw-and-heard-day-3",
+    "title": "<a href=\"https://www.fierce-network.com/wireless/mwc-2026-heres-what-we-saw-and-heard-day-3\" hreflang=\"en\">MWC 2026: Here's what we saw and heard on Day 3</a>",
+    "processed_date": "2026-03-09"
+  },
+  "5066d1b6b8e513d3952424c1065fac77": {
+    "url": "https://www.fierce-network.com/wireless/mwc-2026-both-5g-and-6g-core-key",
+    "title": "<a href=\"https://www.fierce-network.com/wireless/mwc-2026-both-5g-and-6g-core-key\" hreflang=\"en\">MWC 2026: For 5G and 6G, the standalone network core is the key</a>",
+    "processed_date": "2026-03-09"
+  },
+  "0e71031f7f44197d8e407b7784d3e7a8": {
+    "url": "https://www.nokia.com/newsroom/inseego-to-acquire-nokias-fixed-wireless-access-business-to-create-a-global-wireless-broadband-leader/",
+    "title": "Inseego to acquire Nokia's Fixed Wireless Access business to create a global wireless broadband leader",
+    "processed_date": "2026-05-03"
+  },
+  "09698dad6fcbb075bfb7002fe4f244dd": {
+    "url": "https://www.nokia.com/newsroom/nokia-and-orange-advance-airan-innovation-with-nvidia/",
+    "title": "Nokia and Orange advance AI\u2011RAN innovation with NVIDIA",
+    "processed_date": "2026-05-03"
+  },
+  "2a5b999f8e2ed2d6ed0c5f4eacfae9ee": {
+    "url": "https://www.thalesgroup.com/en/news-centre/press-releases/denmark-has-selected-european-samp/t-ng-most-advanced-mobile-ground-air",
+    "title": "Denmark has selected the European SAMP/T NG, the most advanced mobile ground-to-air defence system to ensure the airspace protection",
+    "processed_date": "2026-05-03"
+  },
+  "9f933739294b1680d3fa3c8cb8d3207c": {
+    "url": "https://nextgalliance.org/technology-roadmap-working-group-digital-twin-panel/",
+    "title": "Technology Roadmap Working Group: Digital Twin Panel",
+    "processed_date": "2026-05-03"
+  },
+  "4fad176643d71a02df012ef9ed70fb98": {
+    "url": "https://nextgalliance.org/from-6g-study-to-market-focus-insights-from-the-next-g-alliance-use-case-prioritization-2/",
+    "title": "From 6G Study to Market Focus: Insights from the Next G Alliance Use Case Prioritization",
+    "processed_date": "2026-05-03"
+  },
+  "cf1032b9a3891c2a3640d9437d5b21b6": {
+    "url": "https://smart-networks.europa.eu/sns-ju-launches-2026-call-for-microelectronics-to-secure-europes-6g-future/",
+    "title": "SNS JU Launches 2026 Call for Microelectronics to Secure Europe\u2019s 6G Future",
+    "processed_date": "2026-05-03"
+  },
+  "83acc7235318c5db667380daa1b07a30": {
+    "url": "https://smart-networks.europa.eu/tracking-impact-in-europes-6g-ecosystem-inside-the-sns-ju-tracker-suite/",
+    "title": "Tracking Impact in Europe\u2019s 6G Ecosystem: Inside the SNS JU Trackers Suite",
+    "processed_date": "2026-05-03"
+  },
+  "807132cc7355e0f1a9b84315df4f6a17": {
+    "url": "https://smart-networks.europa.eu/sns-ju-6g-path-6g-sandbox-and-fidal-projects-webinar-series-topic-2-education-media-entertainment/",
+    "title": "SNS JU 6G-PATH, 6G-SANDBOX, and FIDAL projects Webinar Series \u2013 Topic 2: Education, Media & Entertainment",
+    "processed_date": "2026-05-03"
+  },
+  "3ec02077ae6472b2fe7ba2a19ca8096a": {
+    "url": "https://6gworld.com/evaluating-6g-phy-evolution-what-the-industry-is-really-trying-to-solve/",
+    "title": "Evaluating 6G PHY Evolution: What the Industry Is Really Trying to Solve",
+    "processed_date": "2026-05-03"
+  },
+  "36c725bab72565048f2f1f3c0ac3d1a4": {
+    "url": "https://www.mobileworldlive.com/ai-cloud/openai-circles-target-ai-telco-shake-up/",
+    "title": "OpenAI, Circles target AI telco shake-up",
+    "processed_date": "2026-05-03"
   }
 }
