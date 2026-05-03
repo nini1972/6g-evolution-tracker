@@ -61,12 +61,12 @@ async function loadData() {
         allArticles = data.articles || [];
 
         // Load momentum data from its own file (momentum_data.json is a separate file)
-        let momentumData = data.momentum_data || [];
+        let momentumData = Array.isArray(data.momentum_data) ? data.momentum_data : [];
         try {
             const momResponse = await fetch('./momentum_data.json');
             if (momResponse.ok) {
                 const momFromFile = await momResponse.json();
-                if (Array.isArray(momFromFile) && momFromFile.length > 0) {
+                if (Array.isArray(momFromFile)) {
                     momentumData = momFromFile;
                     console.log('✅ Momentum Data Loaded');
                 }
