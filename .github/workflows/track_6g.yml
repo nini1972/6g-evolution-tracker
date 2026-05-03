@@ -4,6 +4,12 @@ on:
   schedule:
     - cron: '0 0 1 * *'  # Runs monthly, at midnight on the 1st
   workflow_dispatch:
+  push:
+    branches:
+      - 'feature/phase3-**'
+  pull_request:
+    branches:
+      - 'feature/phase3-**'
 
 jobs:
   run-script:
@@ -17,7 +23,7 @@ jobs:
           fetch-depth: 0
 
       - name: Cache pip dependencies
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: ~/.cache/pip
           key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
@@ -49,6 +55,7 @@ jobs:
 
       - name: Install dependencies
         run: |
+          pip install --upgrade pip
           pip install -r requirements.txt
           playwright install --with-deps chromium
 
@@ -71,6 +78,14 @@ jobs:
           except Exception as e:
               print("Gemini test FAILED:", e)
           EOF
+
+      - name: Lint with ruff
+        run: |
+          ruff check .
+
+      - name: Run unit tests
+        run: |
+          pytest tests/ -v
 
       - name: CI Handshake Test
         run: |

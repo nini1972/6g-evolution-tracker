@@ -47,6 +47,22 @@
                         <p>Analyzing regional momentum...</p>
                     </div>
                 </div>
+
+                <!-- Chart.js visualisations -->
+                <div class="charts-section">
+                    <div class="chart-container">
+                        <h3>🗺️ Heatmap: Momentum Over Time</h3>
+                        <canvas id="chart-heatmap"></canvas>
+                    </div>
+                    <div class="chart-container">
+                        <h3>📡 Radar: Impact Dimensions (Latest Quarter)</h3>
+                        <div id="chart-radar-container" class="radar-container"></div>
+                    </div>
+                    <div class="chart-container">
+                        <h3>📈 Momentum Evolution by Region</h3>
+                        <canvas id="chart-momentum-line"></canvas>
+                    </div>
+                </div>
             </section>
 
             <section id="standardization-panel" class="standardization-panel">
@@ -125,6 +141,7 @@
         </div>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
     <script type="module" src="main.js"></script>
 </body>
 

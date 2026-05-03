@@ -373,14 +373,8 @@ class StandardsFetcher:
                 work_plan_url = f"{self.WORK_PLAN_BASE_URL}{self.DEFAULT_WORK_PLAN_FILE}"
                 logger.warning("mcp_work_plan_using_default", url=work_plan_url)
 
-            # 2. Call MCP tool with 60s timeout (Excel download + parsing)
-            # Map of internal name to actual Excel column name
-            col_map = {
-                "Unique_ID": "WI/SI",
-                "Name": "Title",
-                "Release": "Release",
-                "Resource_Names": "Responsible WG"
-            }
+            # Map of internal name to actual Excel column name (kept for documentation)
+            # col_map = {"Unique_ID": "WI/SI", "Name": "Title", ...}
             
             result: CallToolResult = await asyncio.wait_for(
                 self.mcp_session.call_tool(
@@ -440,7 +434,7 @@ class StandardsFetcher:
                 
         except asyncio.TimeoutError:
             raise RuntimeError("MCP work plan tool timed out")
-        except Exception as e:
+        except Exception:
             # Let it propagate to trigger HTTP fallback in fetch_work_plan
             raise
     
