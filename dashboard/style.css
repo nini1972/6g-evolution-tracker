@@ -876,3 +876,50 @@ footer {
     border: 1px solid rgba(251, 191, 36, 0.3);
     margin-left: 0.5rem;
 }
+
+/* ---------------------------------------------------------------------------
+   Chart.js Visualisations
+   --------------------------------------------------------------------------- */
+
+.charts-section {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.chart-container {
+    background: var(--card-bg, rgba(255,255,255,0.04));
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 12px;
+    padding: 1.5rem;
+}
+
+.chart-container h3 {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: var(--text-primary, #e2e8f0);
+}
+
+.radar-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: center;
+}
+
+.radar-wrapper {
+    width: 280px;
+    height: 280px;
+}
+
+@media (min-width: 900px) {
+    .charts-section {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+    }
+    .chart-container:first-child {
+        grid-column: 1 / -1;
+    }
+}

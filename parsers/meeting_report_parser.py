@@ -3,7 +3,7 @@ Parser for 3GPP meeting reports.
 Extracts key agreements, TDoc references, and sentiment from meeting summaries.
 """
 import re
-from typing import Dict, List, Optional
+from typing import Dict, List
 from bs4 import BeautifulSoup
 import structlog
 
