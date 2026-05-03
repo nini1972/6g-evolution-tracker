@@ -60,6 +60,21 @@ async function loadData() {
         const data = await response.json();
         allArticles = data.articles || [];
 
+        // Load momentum data from its own file (momentum_data.json is a separate file)
+        let momentumData = Array.isArray(data.momentum_data) ? data.momentum_data : [];
+        try {
+            const momResponse = await fetch('./momentum_data.json');
+            if (momResponse.ok) {
+                const momFromFile = await momResponse.json();
+                if (Array.isArray(momFromFile)) {
+                    momentumData = momFromFile;
+                    console.log('✅ Momentum Data Loaded');
+                }
+            }
+        } catch (mErr) {
+            console.warn('⚠️ Momentum data could not be loaded:', mErr);
+        }
+
         // Load historical memory (new Phase 3 feature)
         let historicalMemory = null;
         try {
@@ -79,7 +94,8 @@ async function loadData() {
 
         // Render Panels with individual safety catches
         try { renderExecutiveBriefing(data.executive_briefing); } catch (e) { console.error('Briefing error:', e); }
-        try { renderMomentumPanel(data.momentum_data || [], historicalMemory); } catch (e) { console.error('Momentum error:', e); }
+        try { renderMomentumPanel(momentumData, historicalMemory); } catch (e) { console.error('Momentum error:', e); }
+        try { renderMomentumCharts(momentumData); } catch (e) { console.error('Momentum charts error:', e); }
         try { renderFlowMatrix(data.flow_matrix || {}); } catch (e) { console.error('Flow Matrix error:', e); }
         try { renderStandardizationPanel(data.standardization); } catch (e) { console.error('Standardization error:', e); }
 
@@ -160,8 +176,7 @@ function renderArticles(articles) {
 }
 function renderMomentumPanel(momentumData, historicalMemory) {
     const container = document.getElementById('momentum-content');
-    const chartCanvas = document.getElementById('momentum-chart');
-    if (!container || !chartCanvas) return;
+    if (!container) return;
 
     if (!momentumData || momentumData.length === 0) {
         container.innerHTML = `<p>No current momentum data available.</p>`;
@@ -171,8 +186,9 @@ function renderMomentumPanel(momentumData, historicalMemory) {
     // 1. Render Cards (Existing logic)
     renderMomentumCards(momentumData, container);
 
-    // 2. Render Trend Chart (New Phase 3 feature)
-    if (historicalMemory && historicalMemory.standardization_snapshots) {
+    // 2. Render Trend Chart (New Phase 3 feature) — canvas is optional
+    const chartCanvas = document.getElementById('momentum-chart');
+    if (chartCanvas && historicalMemory && historicalMemory.standardization_snapshots) {
         renderMomentumTrendChart(chartCanvas, historicalMemory.standardization_snapshots);
     }
 }
