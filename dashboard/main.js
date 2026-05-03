@@ -281,7 +281,12 @@ function renderTopicFrequencyChart(articles) {
         if (loader) loader.remove();
     }
 
-    if (!canvas || !window.Chart) return;
+    if (!canvas || !window.Chart) {
+        if (topicsChart) {
+            topicsChart.innerHTML = '<p class="empty-state">Chart unavailable.</p>';
+        }
+        return;
+    }
 
     let topicCounts = {};
     articles.forEach(article => {
