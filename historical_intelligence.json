@@ -335,6 +335,114 @@
           }
         }
       }
+    },
+    {
+      "date": "2026-06-01",
+      "data": {
+        "release_21_progress": {
+          "total_work_items": 3,
+          "completed": 0,
+          "in_progress": 3,
+          "postponed": 0,
+          "progress_percentage": 0.0,
+          "last_updated": "2026-06-01",
+          "data_source": "live",
+          "work_items_by_group": {
+            "nan": {
+              "total": 1,
+              "completed": 0,
+              "in_progress": 1,
+              "postponed": 0,
+              "progress": 0.0
+            },
+            "S1": {
+              "total": 2,
+              "completed": 0,
+              "in_progress": 2,
+              "postponed": 0,
+              "progress": 0.0
+            }
+          }
+        },
+        "recent_meetings": [
+          {
+            "meeting_id": "Templates",
+            "working_group": "RAN1",
+            "date": "2026-06-01",
+            "location": "TBD",
+            "key_agreements": [],
+            "tdoc_references": [],
+            "sentiment": "neutral",
+            "data_source": "live"
+          },
+          {
+            "meeting_id": "Tdoc_index",
+            "working_group": "RAN1",
+            "date": "2026-06-01",
+            "location": "TBD",
+            "key_agreements": [],
+            "tdoc_references": [],
+            "sentiment": "neutral",
+            "data_source": "live"
+          },
+          {
+            "meeting_id": "TSGR1_AH",
+            "working_group": "RAN1",
+            "date": "2026-06-01",
+            "location": "TBD",
+            "key_agreements": [],
+            "tdoc_references": [],
+            "sentiment": "neutral",
+            "data_source": "live"
+          },
+          {
+            "meeting_id": "drafting_meetings",
+            "working_group": "SA2",
+            "date": "2026-06-01",
+            "location": "TBD",
+            "key_agreements": [],
+            "tdoc_references": [],
+            "sentiment": "neutral",
+            "data_source": "live"
+          },
+          {
+            "meeting_id": "_Doc_List_Archive",
+            "working_group": "SA2",
+            "date": "2026-06-01",
+            "location": "TBD",
+            "key_agreements": [],
+            "tdoc_references": [],
+            "sentiment": "neutral",
+            "data_source": "live"
+          },
+          {
+            "meeting_id": "TSGS2_99_Xiamen",
+            "working_group": "SA2",
+            "date": "2026-06-01",
+            "location": "TBD",
+            "key_agreements": [],
+            "tdoc_references": [],
+            "sentiment": "neutral",
+            "data_source": "live"
+          }
+        ],
+        "work_items_by_group": {
+          "nan": {
+            "total": 1,
+            "completed": 0,
+            "in_progress": 1,
+            "postponed": 0,
+            "progress": 0.0
+          },
+          "S1": {
+            "total": 2,
+            "completed": 0,
+            "in_progress": 2,
+            "postponed": 0,
+            "progress": 0.0
+          }
+        }
+      }
     }
   ],
   "matrix_snapshots": [
@@ -388,6 +496,59 @@
           "Japan": 0,
           "Korea": 0,
           "India": 0
+        }
+      }
+    },
+    {
+      "date": "2026-06-01",
+      "matrix": {
+        "US": {
+          "US": 830,
+          "EU": 578,
+          "China": 556,
+          "Japan": 468,
+          "Korea": 457,
+          "India": 320
+        },
+        "EU": {
+          "US": 730,
+          "EU": 1321,
+          "China": 608,
+          "Japan": 582,
+          "Korea": 564,
+          "India": 462
+        },
+        "China": {
+          "US": 77,
+          "EU": 62,
+          "China": 115,
+          "Japan": 62,
+          "Korea": 69,
+          "India": 39
+        },
+        "Japan": {
+          "US": 30,
+          "EU": 30,
+          "China": 45,
+          "Japan": 75,
+          "Korea": 45,
+          "India": 23
+        },
+        "Korea": {
+          "US": 40,
+          "EU": 40,
+          "China": 56,
+          "Japan": 40,
+          "Korea": 80,
+          "India": 24
+        },
+        "India": {
+          "US": 12,
+          "EU": 6,
+          "China": 6,
+          "Japan": 6,
+          "Korea": 6,
+          "India": 30
         }
       }
     }
