@@ -398,5 +398,95 @@
     "url": "https://www.lightreading.com/ai-machine-learning/at-t-t-mobile-show-ai-in-ran-with-ericsson-sans-gpus",
     "title": "AT&amp;T, T-Mobile show AI in RAN with Ericsson sans GPUs",
     "processed_date": "2026-06-01"
+  },
+  "c8790f24f1dff6bea1cb606c933db337": {
+    "url": "https://www.nokia.com/newsroom/nokia-amazon-web-services-expand-collaboration-to-deliver-autonomous-networks-built-for-the-ai-era/",
+    "title": "Nokia, Amazon Web Services expand collaboration to deliver autonomous networks built for the AI era",
+    "processed_date": "2026-07-01"
+  },
+  "b59546ff8999f1fc0bb83dbceda14d0b": {
+    "url": "https://www.nokia.com/newsroom/nokia-and-indosat-ooredoo-hutchison-collaborate-to-enhance-indonesias-5g-network-and-unlock-ai-enabled-services/",
+    "title": "Nokia and Indosat Ooredoo Hutchison collaborate to enhance Indonesia\u2019s 5G network and unlock AI-enabled services",
+    "processed_date": "2026-07-01"
+  },
+  "0b7a6be8a11efeeb373be3dd44399a78": {
+    "url": "https://arxiv.org/abs/2606.28339",
+    "title": "Multi-Agent DRL for QoS and Energy Optimization in RIS-Enabled Open-RAN Industrial 6G TN/NTN Networks",
+    "processed_date": "2026-07-01"
+  },
+  "e7a7874a5be68aec311baae4cd5e153e": {
+    "url": "https://arxiv.org/abs/2606.28348",
+    "title": "Intent-Driven 6G Service Orchestration: Grounded Translation, Validation, and Decomposition",
+    "processed_date": "2026-07-01"
+  },
+  "29803f059310a670e3040ce029d18350": {
+    "url": "https://arxiv.org/abs/2606.30554",
+    "title": "SubEdge: A Subscriber-Centric Edge Computing Subsystem in 6G Networks for AI",
+    "processed_date": "2026-07-01"
+  },
+  "061aad76facb38d18beab302c097b692": {
+    "url": "https://arxiv.org/abs/2502.10687",
+    "title": "Multi-objective Low-altitude IRS-assisted ISAC Optimization via Generative AI-enhanced Deep Reinforcement Learning",
+    "processed_date": "2026-07-01"
+  },
+  "aacb4c21cbf4142d2907651204e310ae": {
+    "url": "https://arxiv.org/abs/2606.18016",
+    "title": "User-Mobility-Aware Optimization of Fiber Placement in Hybrid Fiber-IAB Networks",
+    "processed_date": "2026-07-01"
+  },
+  "3fec58f3cef4796c3a39038c2c629498": {
+    "url": "https://arxiv.org/abs/2512.15044",
+    "title": "Agentic AI for ISAC: Analysis, Framework, and Case Study",
+    "processed_date": "2026-07-01"
+  },
+  "9a7c639ba0770cd6c8a7b9686bdd7590": {
+    "url": "https://smart-networks.europa.eu/what-the-sns-ju-trials-pilots-brochure-n2-reveals-about-europes-6g-journey/",
+    "title": "What the SNS JU Trials & Pilots Brochure n\u00b02 Reveals About Europe\u2019s 6G Journey",
+    "processed_date": "2026-07-01"
+  },
+  "9421496410c6a2f7376e55a1e7215f95": {
+    "url": "https://smart-networks.europa.eu/6g-goals-call-for-papers-semantic-communication-and-networking-workshop-at-the-17th-international-nof-2026/",
+    "title": "6G-GOALS Call for papers Semantic Communication and Networking Workshop at the 17th International NoF 2026",
+    "processed_date": "2026-07-01"
+  },
+  "dd39e0f159a18905711ed5336b72e057": {
+    "url": "https://smart-networks.europa.eu/6g-versus-webinar-sustainability-in-6g/",
+    "title": "6G-VERSUS webinar: Sustainability in 6G: aligning frameworks, impact and technical implementation",
+    "processed_date": "2026-07-01"
+  },
+  "adb23203f6af65473cc7612398d15f3d": {
+    "url": "https://smart-networks.europa.eu/sns-ju-at-eucnc-6g-summit-turning-6g-research-into-impact/",
+    "title": "SNS JU at EuCNC & 6G Summit: Turning 6G Research into Impact",
+    "processed_date": "2026-07-01"
+  },
+  "f78e5535fbc5c970cbe1091476fcceef": {
+    "url": "https://smart-networks.europa.eu/webinar-6g-cloud-uncovered-architecture-ai-and-cross-framework-orchestration/",
+    "title": "Webinar: 6G-Cloud Uncovered: Architecture, AI and Cross-Framework Orchestration",
+    "processed_date": "2026-07-01"
+  },
+  "799870a60f799f6f1637b03d04fde0ef": {
+    "url": "https://6gworld.com/the-hidden-6g-bottleneck-rf-hardware-design-is-becoming-a-strategic-race/",
+    "title": "The Hidden 6G Bottleneck: RF Hardware Design Is Becoming a Strategic Race",
+    "processed_date": "2026-07-01"
+  },
+  "c54a49b7c0da6ebf9b9d1cf5331a7871": {
+    "url": "https://6gworld.com/6g-in-dalian-what-the-latest-3gpp-meetings-reveal-about-the-future-radio-and-network/",
+    "title": "6G in Dalian: What the Latest 3GPP Meetings Reveal About the Future Radio and Network",
+    "processed_date": "2026-07-01"
+  },
+  "7a9f4e7a3fe1c0dd16a4c96b9cc562e7": {
+    "url": "https://www.lightreading.com/6g/interdigital-ceo-wooed-china-now-he-s-eyeing-6g-gains",
+    "title": "InterDigital CEO wooed China \u2013 now he's eyeing 6G gains",
+    "processed_date": "2026-07-01"
+  },
+  "49e7cd7095daa1a815b64fa9ea1fb3d3": {
+    "url": "https://www.lightreading.com/6g/ctia-urges-fcc-to-fast-track-rules-for-upper-c-band-auction",
+    "title": "CTIA urges FCC to fast-track rules for upper C-band auction",
+    "processed_date": "2026-07-01"
+  },
+  "f595752f8833b82b661e41fd6064891f": {
+    "url": "https://www.lightreading.com/iot/the-internet-of-things-was-5g-s-big-fail-6g-risks-a-repeat",
+    "title": "The Internet of Things was 5G's big fail \u2013 6G risks a repeat",
+    "processed_date": "2026-07-01"
   }
 }
