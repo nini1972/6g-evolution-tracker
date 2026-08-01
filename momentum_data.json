@@ -58,5 +58,25 @@
     "industrial_deployment": 1.0,
     "spectrum_policy_signal": 1.0,
     "ecosystem_maturity": 2.0
+  },
+  {
+    "region": "EU",
+    "time_window": "2026-Q3",
+    "momentum_score": 3.29,
+    "research_intensity": 3.25,
+    "standardization_influence": 3.06,
+    "industrial_deployment": 4.17,
+    "spectrum_policy_signal": 1.94,
+    "ecosystem_maturity": 4.02
+  },
+  {
+    "region": "US",
+    "time_window": "2026-Q3",
+    "momentum_score": 2.81,
+    "research_intensity": 2.83,
+    "standardization_influence": 3.6,
+    "industrial_deployment": 1.68,
+    "spectrum_policy_signal": 3.0,
+    "ecosystem_maturity": 2.98
   }
 ]

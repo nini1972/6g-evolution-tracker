@@ -1,129 +1,4 @@
 {
-  "5c8e50c707b2d64aaac049347a8b5bdc": {
-    "url": "https://spectrum.ieee.org/rf-over-fiber",
-    "title": "AI Data Centers Demand More Than Copper Can Deliver",
-    "processed_date": "2026-01-07"
-  },
-  "8a46c821e51e01b888c4b3cbf997d1da": {
-    "url": "https://arxiv.org/abs/2601.02382",
-    "title": "How to Discover Knowledge for FutureG: Contextual RAG and LLM Prompting for O-RAN",
-    "processed_date": "2026-01-07"
-  },
-  "aac75695c508cb0a009e1766779a5320": {
-    "url": "https://arxiv.org/abs/2601.02385",
-    "title": "Base Station Deployment under EMF constrain by Deep Reinforcement learning",
-    "processed_date": "2026-01-07"
-  },
-  "dcc2cea5b5020d040073255357a1ec4b": {
-    "url": "https://arxiv.org/abs/2601.02398",
-    "title": "AI-Native Integrated Sensing and Communications for Self-Organizing Wireless Networks: Architectures, Learning Paradigms, and System-Level Design",
-    "processed_date": "2026-01-07"
-  },
-  "f75529ea8beb065e756298548ffd8893": {
-    "url": "https://arxiv.org/abs/2601.01791",
-    "title": "Rethinking Secure Semantic Communications in the Age of Generative and Agentic AI: Threats and Opportunities",
-    "processed_date": "2026-01-07"
-  },
-  "e77814eb1a865e963d703e3dd0a0434e": {
-    "url": "https://arxiv.org/abs/2601.04042",
-    "title": "Badanie Sieci Massive MIMO o Architekturze Zorientowanej na Uzytkownika",
-    "processed_date": "2026-01-08"
-  },
-  "433f7b19b12a4ddc0734b2ef63b0a0f4": {
-    "url": "https://arxiv.org/abs/2510.20796",
-    "title": "AI-Enabled Digital Twins for Next-Generation Networks: Forecasting Traffic and Resource Management in 5G/6G",
-    "processed_date": "2026-01-08"
-  },
-  "3ae7b7439dc702cf29757598c6d1a96f": {
-    "url": "https://nextgalliance.org/the-market-and-applications-working-group-bringing-the-next-g-alliance-6g-vision-to-vertical-markets/",
-    "title": "The Market and Applications Working Group \u2014 Bringing the Next G Alliance 6G Vision to Vertical Markets",
-    "processed_date": "2026-01-08"
-  },
-  "e0a169921c4c5e6771467309b3c8a3d2": {
-    "url": "https://smart-networks.europa.eu/sns-ju-ri-work-programme-2026-released/",
-    "title": "SNS JU R&I Work Programme 2026 Released",
-    "processed_date": "2026-01-08"
-  },
-  "59fde2e9f9cf91d6c6a94e80b6bb0e71": {
-    "url": "https://www.fierce-network.com/wireless/6g-2026-position-papers-vaporware-and-slop",
-    "title": "<a href=\"https://www.fierce-network.com/wireless/6g-2026-position-papers-vaporware-and-slop\" hreflang=\"en\">2026 is the year of 6G slop</a>",
-    "processed_date": "2026-01-08"
-  },
-  "1ba4693c262ce84683fe530173986c24": {
-    "url": "https://spectrum.ieee.org/robots-ces-2026",
-    "title": "Video Friday: Robots Are Everywhere at CES 2026",
-    "processed_date": "2026-01-10"
-  },
-  "a5b904cccde4d22a170959ad66a4f03d": {
-    "url": "https://www.mobileworldlive.com/europe/uk-regulator-outlines-upper-6ghz-proposal/",
-    "title": "UK regulator outlines upper 6GHz proposal",
-    "processed_date": "2026-01-10"
-  },
-  "02e5c62a34f8c73a92aa1feb2424394f": {
-    "url": "https://spectrum.ieee.org/lunar-radio-telescope",
-    "title": "The Quest to Build a Radio Telescope That Can Hear the Cosmic Dark Ages",
-    "processed_date": "2026-01-21"
-  },
-  "0f47ed6c2b4b7c06d697a0c785669684": {
-    "url": "https://spectrum.ieee.org/video-friday-bipedal-robot",
-    "title": "Video Friday: Bipedal Robot Stops Itself From Falling",
-    "processed_date": "2026-01-21"
-  },
-  "9c6993e5a6a1fb8dd15db4e2dd844c18": {
-    "url": "https://arxiv.org/abs/2601.11859",
-    "title": "Cascaded Transformer for Robust and Scalable SLA Decomposition via Amortized Optimization",
-    "processed_date": "2026-01-21"
-  },
-  "c3d5045fc84a8a0765d1aefe99ae3c22": {
-    "url": "https://arxiv.org/abs/2601.12311",
-    "title": "Cross-reality Location Privacy Protection in 6G-enabled Vehicular Metaverses: An LLM-enhanced Hybrid Generative Diffusion Model-based Approach",
-    "processed_date": "2026-01-21"
-  },
-  "f59f92532552fd5848121587e0041dda": {
-    "url": "https://arxiv.org/abs/2601.12375",
-    "title": "LiQSS: Post-Transformer Linear Quantum-Inspired State-Space Tensor Networks for Real-Time 6G",
-    "processed_date": "2026-01-21"
-  },
-  "7c68fdc071bfeae2387bdf67dadc67dd": {
-    "url": "https://arxiv.org/abs/2601.13213",
-    "title": "Conflict Detection in AI-RAN: Efficient Interaction Learning and Autonomous Graph Reconstruction",
-    "processed_date": "2026-01-21"
-  },
-  "d2ad53054627d4b7ca3a0fff4983d357": {
-    "url": "https://arxiv.org/abs/2601.13484",
-    "title": "Spectrum & RAN Sharing: A Measurement-based Case Study of Commercial 5G Networks in Spain",
-    "processed_date": "2026-01-21"
-  },
-  "7e9ed3f7f7b1741183062d6f30dce21d": {
-    "url": "https://arxiv.org/abs/2601.13993",
-    "title": "Capacity and Energy Trade-Offs in FR3 6G Networks Using Real Deployment Data",
-    "processed_date": "2026-01-21"
-  },
-  "25b02351840c8c544cec0a769e669f44": {
-    "url": "https://arxiv.org/abs/2601.14106",
-    "title": "Communication Technologies for Intelligent Transportation Systems: From Railways to UAVs and Beyond",
-    "processed_date": "2026-01-21"
-  },
-  "7fb8e297c33f49c62c834dff6be31c6a": {
-    "url": "https://arxiv.org/abs/2404.08113",
-    "title": "Predictive Handover Strategy in 6G and Beyond: A Deep and Transfer Learning Approach",
-    "processed_date": "2026-01-21"
-  },
-  "3b4628b6b2fd93fbff44c73f6de76581": {
-    "url": "https://arxiv.org/abs/2507.11935",
-    "title": "AI-Native Open RAN for Non-Terrestrial Networks: An Overview",
-    "processed_date": "2026-01-21"
-  },
-  "798cdf900a3eedde11bf70d4660b1c6c": {
-    "url": "https://smart-networks.europa.eu/complementary-microelectronics-hardware-concepts-webinar/",
-    "title": "Complementary Microelectronics Hardware Concepts Webinar",
-    "processed_date": "2026-01-21"
-  },
-  "6c8a53754432bdc677cc739ae0967e01": {
-    "url": "https://smart-networks.europa.eu/witar-lunch-salon-3-building-inclusive-6g-through-technical-leadership/",
-    "title": "WiTaR Lunch Salon #3 \u2013 Building Inclusive 6G Through Technical Leadership",
-    "processed_date": "2026-01-21"
-  },
   "9a63558dc4ea91bea691b85d260ac30d": {
     "url": "https://www.nokia.com/newsroom/nokia-provides-recast-comparative-segment-results-for-2025-and-2024-reflecting-new-operating-and-financial-reporting-structure/",
     "title": "Nokia provides recast comparative segment results for 2025 and 2024 reflecting new operating and financial reporting structure",
@@ -488,5 +363,65 @@
     "url": "https://www.lightreading.com/iot/the-internet-of-things-was-5g-s-big-fail-6g-risks-a-repeat",
     "title": "The Internet of Things was 5G's big fail \u2013 6G risks a repeat",
     "processed_date": "2026-07-01"
+  },
+  "e506de6fb5c730eb8307b7819eba5f68": {
+    "url": "https://www.nokia.com/newsroom/nokia-corporation-report-for-q2-and-half-year-2026/",
+    "title": "Nokia Corporation Report for Q2 and Half Year 2026",
+    "processed_date": "2026-08-01"
+  },
+  "e189c93c50f55072f044d47f751d761b": {
+    "url": "https://www.nokia.com/newsroom/nokia-defines-the-next-era-of-radio-with-the-industrys-first-ai-native-ran-platform/",
+    "title": "Nokia defines the next era of radio with the industry\u2019s first AI-native RAN platform",
+    "processed_date": "2026-08-01"
+  },
+  "f11d0b8c15c5b045735eceb8d02b302b": {
+    "url": "https://www.nokia.com/newsroom/nokia-and-taiwan-mobile-extend-5g-partnership-to-advance-ai-powered-networks/",
+    "title": "Nokia and Taiwan Mobile extend 5G partnership to advance AI-powered networks",
+    "processed_date": "2026-08-01"
+  },
+  "04fd1dc70af1d4109c9da304ce1fedd2": {
+    "url": "https://nextgalliance.org/technology-roadmap-working-group-semantic-communications/",
+    "title": "Technology Roadmap Working Group: Semantic Communications",
+    "processed_date": "2026-08-01"
+  },
+  "af1ea6bc549f4ebe88fe07b2a05abc4a": {
+    "url": "https://nextgalliance.org/6gs-value-proposition-takes-shape-inside-the-first-nga-xgmf-6g-forum-trilateral-workshop/",
+    "title": "6G\u2019s Value Proposition Takes Shape: Inside the First NGA\u2013XGMF\u20136G Forum Trilateral Workshop",
+    "processed_date": "2026-08-01"
+  },
+  "69fd3ebb37b72ee02e2173559eb8bc33": {
+    "url": "https://smart-networks.europa.eu/6g-versus-venture-accelerator-deadline-has-been-extended-to-july-25/",
+    "title": "6G-VERSUS Venture Accelerator deadline has been extended to July 25!",
+    "processed_date": "2026-08-01"
+  },
+  "a1f52b11b0fe6b3311b5574b87162b45": {
+    "url": "https://smart-networks.europa.eu/register-for-the-6g-path-webinar-on-farming-smart-agriculture/",
+    "title": "Register for the 6G-PATH Webinar on Farming & Smart Agriculture",
+    "processed_date": "2026-08-01"
+  },
+  "c24bd7779eec19ff3ed56078cba371a4": {
+    "url": "https://smart-networks.europa.eu/6g-path-launches-training-series-with-session-on-slice-management/",
+    "title": "6G-PATH Launches Training Series with Session on Slice Management",
+    "processed_date": "2026-08-01"
+  },
+  "c817c67b40b25ef4ac8c93fc0ba263bf": {
+    "url": "https://www.fierce-network.com/wireless/ntia-tees-44-ghz-band-6g-study",
+    "title": "<a href=\"https://www.fierce-network.com/wireless/ntia-tees-44-ghz-band-6g-study\" hreflang=\"en\">NTIA tees up 4.4 GHz band for 6G study</a>",
+    "processed_date": "2026-08-01"
+  },
+  "5d4c2d802a3f2b35e8d938b435c97d6d": {
+    "url": "https://www.fierce-network.com/wireless/us-calls-allies-rally-around-6g",
+    "title": "<a href=\"https://www.fierce-network.com/wireless/us-calls-allies-rally-around-6g\" hreflang=\"en\">US calls on allies to rally around 6G</a>",
+    "processed_date": "2026-08-01"
+  },
+  "93328558b715d8ea82deda97d21980a0": {
+    "url": "https://www.lightreading.com/ai-machine-learning/leidos-coreweave-to-accelerate-delivery-of-ai-capabilities-for-defense-national-security-and-intelligence-missions",
+    "title": "Leidos, CoreWeave to accelerate delivery of AI capabilities for defense, national security and intelligence missions",
+    "processed_date": "2026-08-01"
+  },
+  "f461c418d505ebc8b297f6640ca2d7a7": {
+    "url": "https://www.lightreading.com/6g/nokia-weighs-nvidia-for-6g-radios-in-spectral-scrap-vs-ericsson",
+    "title": "Nokia weighs Nvidia for 6G radios in 'spectral' scrap vs. Ericsson",
+    "processed_date": "2026-08-01"
   }
 }
