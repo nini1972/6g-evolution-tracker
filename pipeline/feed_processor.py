@@ -75,6 +75,7 @@ def get_ai_summary(
     """
     Get an AI-powered summary and 6G impact score from Gemini.
     Returns a parsed dict on success, None on failure.
+    Includes automatic fallback models in case of transient 503/429/404 errors.
     """
     if not client or not model:
         return None
@@ -85,12 +86,24 @@ def get_ai_summary(
         summary=summary,
     )
 
-    try:
-        response = client.models.generate_content(model=model, contents=prompt)
-        return parse_ai_response(response.text.strip(), title)
-    except Exception as e:
-        print(f"  ⚠️ AI Summary failed for '{title[:30]}...': {e}")
-        return None
+    candidate_models = [model]
+    for fallback in ["gemini-2.5-flash", "gemini-2.5-flash-lite"]:
+        if fallback not in candidate_models:
+            candidate_models.append(fallback)
+
+    for m in candidate_models:
+        try:
+            response = client.models.generate_content(model=m, contents=prompt)
+            return parse_ai_response(response.text.strip(), title)
+        except Exception as e:
+            err_str = str(e)
+            if any(code in err_str for code in ("503", "429", "404", "UNAVAILABLE")):
+                logger.warning("gemini_model_fallback", attempted=m, error=err_str)
+                continue
+            print(f"  ⚠️ AI Summary failed for '{title[:30]}...': {e}")
+            return None
+
+    return None
 
 
 async def get_ai_summary_async(

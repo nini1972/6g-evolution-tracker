@@ -2,13 +2,31 @@
 FastMCP Server for 6G Evolution Intelligence
 Exposes 6G tracker data as MCP tools for AI agents (Claude, ChatGPT, etc.)
 """
-from mcp.server.fastmcp import FastMCP
 import json
-from pathlib import Path
-from typing import Optional, List
 from collections import Counter
+from pathlib import Path
+from typing import List, Optional
 
-mcp = FastMCP("6g-intelligence-mcp", json_response=True)
+# Multi-version MCP SDK compatibility (supports mcp 1.x FastMCP, mcp 2.x MCPServer, and standalone fastmcp)
+try:
+    from mcp.server.fastmcp import FastMCP
+
+    mcp = FastMCP("6g-intelligence-mcp", json_response=True)
+except (ModuleNotFoundError, TypeError):
+    try:
+        from mcp.server.mcpserver import MCPServer
+
+        mcp = MCPServer("6g-intelligence-mcp")
+    except (ModuleNotFoundError, TypeError):
+        try:
+            from fastmcp import FastMCP
+
+            mcp = FastMCP("6g-intelligence-mcp")
+        except ModuleNotFoundError:
+            raise ImportError(
+                "Neither mcp (v1/v2) nor fastmcp is available. "
+                "Install with: pip install 'mcp>=1.22.0,<2.0.0'"
+            )
 
 # Resolve the digest file relative to this module so the server works
 # regardless of the working directory it is started from.

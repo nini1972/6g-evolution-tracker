@@ -38,7 +38,7 @@ LOG_FILE = str(DIGESTS_DIR / f"6g_digest_{DATE}.md")
 
 # 🤖 Gemini AI Config
 client = genai.Client(api_key=os.getenv("GOOGLE_API_KEY"))
-model = "gemini-3-flash-preview"
+model = os.getenv("GEMINI_MODEL", "gemini-2.5-flash")
 
 
 # ---------------------------------------------------------------------------
