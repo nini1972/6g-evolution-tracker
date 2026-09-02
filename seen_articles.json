@@ -1,39 +1,4 @@
 {
-  "9a63558dc4ea91bea691b85d260ac30d": {
-    "url": "https://www.nokia.com/newsroom/nokia-provides-recast-comparative-segment-results-for-2025-and-2024-reflecting-new-operating-and-financial-reporting-structure/",
-    "title": "Nokia provides recast comparative segment results for 2025 and 2024 reflecting new operating and financial reporting structure",
-    "processed_date": "2026-02-03"
-  },
-  "9af14ea57d0595a0e90a138d460f949e": {
-    "url": "https://www.nokia.com/newsroom/nokia-corporation-financial-report-for-q4-2025-and-full-year-2025/",
-    "title": "Nokia Corporation Financial Report for Q4 2025 and full year 2025",
-    "processed_date": "2026-02-03"
-  },
-  "3a71de1bde9f5615c01cdc86639b92e9": {
-    "url": "https://www.nokia.com/newsroom/nokia-and-hypertec-group-to-power-breakthrough-research-across-health-climate-and-ai-with-sharcnets-nibi-supercomputer-at-the-university-of-waterloo/",
-    "title": "Nokia and Hypertec Group to Power Breakthrough Research Across Health, Climate and AI with SHARCNET\u2019s Nibi Supercomputer at the University of Waterloo",
-    "processed_date": "2026-02-03"
-  },
-  "68a5d3e147f3504a16d576ff8d1f0ae1": {
-    "url": "https://arxiv.org/abs/2602.01102",
-    "title": "Resilience Optimization in 6G and Beyond Integrated Satellite-Terrestrial Networks: A Deep Reinforcement Learning Approach",
-    "processed_date": "2026-02-03"
-  },
-  "907dc4c6f68b1e3bb5be0b072c6e1a64": {
-    "url": "https://arxiv.org/abs/2602.01180",
-    "title": "Energy-efficient Software-defined 5G/6G Multimedia IoV: PID controller-based approach",
-    "processed_date": "2026-02-03"
-  },
-  "1b3fdd4e8b7087cb9c9388a47f1e47c0": {
-    "url": "https://arxiv.org/abs/2508.17778",
-    "title": "AgentRAN: An Agentic AI Architecture for Autonomous Control of Open 6G Networks",
-    "processed_date": "2026-02-03"
-  },
-  "bcced3ac3dde75e416a5c89bfc21940f": {
-    "url": "https://www.rcrwireless.com/20260202/test-measurement/agentic-ai-meets-intent-based-networking-a-new-era-of-network-automation",
-    "title": "Agentic AI meets intent-based networking: A new era of network automation",
-    "processed_date": "2026-02-03"
-  },
   "d8a2483902699c034b31515d1c9f0e2d": {
     "url": "https://www.nokia.com/newsroom/nokia-and-telia-to-collaborate-on-ai-ran-use-cases-mwc26/",
     "title": "Nokia and Telia to collaborate on AI-RAN use cases #MWC26",
@@ -423,5 +388,60 @@
     "url": "https://www.lightreading.com/6g/nokia-weighs-nvidia-for-6g-radios-in-spectral-scrap-vs-ericsson",
     "title": "Nokia weighs Nvidia for 6G radios in 'spectral' scrap vs. Ericsson",
     "processed_date": "2026-08-01"
+  },
+  "838c417d678ee8c4263a1983af0b5301": {
+    "url": "https://www.nokia.com/newsroom/nokia-opens-new-research-and-development-center-in-saudi-arabia-to-accelerate-ai-powered-network-automation/",
+    "title": "Nokia opens new research and development center in Saudi Arabia to accelerate AI-powered network automation",
+    "processed_date": "2026-09-02"
+  },
+  "e85c322b78dbe8c543e108b92d1900f5": {
+    "url": "https://www.nokia.com/newsroom/indosat-ooredoo-group-nokia-and-nvidia-launch-zankore-by-indosat-ready-to-serve-the-region-with-full-stack-ai-infra-platform/",
+    "title": "Indosat, Ooredoo Group, Nokia, and NVIDIA launch Zankore by Indosat, ready to serve the region with full stack AI infra platform",
+    "processed_date": "2026-09-02"
+  },
+  "ae6ad210a135d60cf22f951b22a29c2d": {
+    "url": "https://arxiv.org/abs/2609.00284",
+    "title": "WiSDoM: Wireless Sparse Decision Transformer with Mixture-of-Experts for Multi-Task Mobile Network Optimization",
+    "processed_date": "2026-09-02"
+  },
+  "7c0864b44535c3b9d888c1df730697ba": {
+    "url": "https://arxiv.org/abs/2606.27466",
+    "title": "Toward AI-Native 6G Air Interface: A 3GPP Perspective on Protocol Framework",
+    "processed_date": "2026-09-02"
+  },
+  "cc69cb36600ebbf3a2e69283c6afd10f": {
+    "url": "https://arxiv.org/abs/2603.03146",
+    "title": "Channel-Adaptive Edge AI: Maximizing Inference Throughput by Adapting Computational Complexity to Channel States",
+    "processed_date": "2026-09-02"
+  },
+  "d74678629233ed14f07f1ffed26bdcb5": {
+    "url": "https://smart-networks.europa.eu/eu-taiwan-6g-joint-workshop-advancing-eu-taiwan-collaboration-through-technical-exchange/",
+    "title": "EU-Taiwan 6G Joint Workshop \u2013 Advancing EU-Taiwan Collaboration through Technical Exchange",
+    "processed_date": "2026-09-02"
+  },
+  "0c82a421892062b3739b52f02421fc8c": {
+    "url": "https://www.fierce-network.com/wireless/opinion-engineers-craft-6g-its-marketers-job-sell-it",
+    "title": "<a href=\"https://www.fierce-network.com/wireless/opinion-engineers-craft-6g-its-marketers-job-sell-it\" hreflang=\"en\">Engineers craft 6G. It\u2019s marketers job to sell it </a>",
+    "processed_date": "2026-09-02"
+  },
+  "6d10ab7862cb0663f6f4995af06f95f3": {
+    "url": "https://www.fierce-network.com/newswire/calix-names-juergen-lindner-cmo",
+    "title": "<a href=\"https://www.fierce-network.com/newswire/calix-names-juergen-lindner-cmo\" hreflang=\"en\">Calix names Juergen Lindner as CMO</a>",
+    "processed_date": "2026-09-02"
+  },
+  "4b9f4e6c4696c08bee021e26f546c22b": {
+    "url": "https://www.fierce-network.com/wireless/qualcomm-keeps-china-its-6g-sights-0",
+    "title": "<a href=\"https://www.fierce-network.com/wireless/qualcomm-keeps-china-its-6g-sights-0\" hreflang=\"en\"> Qualcomm keeps China in its 6G sights </a>",
+    "processed_date": "2026-09-02"
+  },
+  "6174c3836302204c7332a3d114103bcc": {
+    "url": "https://www.mobileworldlive.com/5g/coai-chief-bullish-india-will-have-edge-on-rivals-in-6g-era/",
+    "title": "COAI chief bullish India will have edge on rivals in 6G era",
+    "processed_date": "2026-09-02"
+  },
+  "b7e6349a595b1c0908a6eb3d352d386e": {
+    "url": "https://www.lightreading.com/6g/unpacking-6g-with-omdia-s-gabriel-brown",
+    "title": "Unpacking 6G with Omdia's Gabriel Brown",
+    "processed_date": "2026-09-02"
   }
 }

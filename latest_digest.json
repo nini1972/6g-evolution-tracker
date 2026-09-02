@@ -1,724 +1,126 @@
 {
-  "date": "2026-08-01",
+  "date": "2026-09-02",
   "articles": [
     {
-      "article_id": "e189c93c50f55072f044d47f751d761b",
+      "article_id": "838c417d678ee8c4263a1983af0b5301",
       "source": "Nokia",
-      "title": "Nokia defines the next era of radio with the industry\u2019s first AI-native RAN platform",
-      "link": "https://www.nokia.com/newsroom/nokia-defines-the-next-era-of-radio-with-the-industrys-first-ai-native-ran-platform/",
+      "title": "Nokia opens new research and development center in Saudi Arabia to accelerate AI-powered network automation",
+      "link": "https://www.nokia.com/newsroom/nokia-opens-new-research-and-development-center-in-saudi-arabia-to-accelerate-ai-powered-network-automation/",
       "score": 6,
-      "ai_insights": {
-        "is_6g_relevant": true,
-        "source_region": "EU",
-        "summary": "Nokia has launched the industry's first commercial AI-RAN platform, developed in collaboration with NVIDIA. This platform marks a strategic shift toward software-defined, AI-native architectures that decouple radio innovation from hardware cycles. It is designed to support 4G, 5G, and future 6G workloads, promising up to 100% spectral efficiency gains by 2028 and a transition to subscription-based network software models.",
-        "overall_6g_importance": 9,
-        "6g_topics": [
-          "AI-native RAN",
-          "network automation",
-          "cloud-edge integration",
-          "Open RAN",
-          "sustainability"
-        ],
-        "impact_dimensions": {
-          "research_intensity": 4,
-          "standardization_influence": 4,
-          "industrial_deployment": 5,
-          "spectrum_policy_signal": 3,
-          "ecosystem_maturity": 5
-        },
-        "time_horizon": "near-term",
-        "world_power_impact": {
-          "US": 4,
-          "EU": 5,
-          "China": 3,
-          "Japan": 3,
-          "Korea": 3,
-          "India": 2
-        },
-        "emerging_concepts": [
-          "AI-native network architecture",
-          "GPU-powered baseband",
-          "Software-defined radio innovation",
-          "Merchant silicon for RAN acceleration",
-          "Subscription-based radio capacity"
-        ],
-        "key_evidence": [
-          "Supports 4G, 5G and future 6G workloads on a common platform.",
-          "Targeting 100% spectral efficiency gains by 2028 through AI-driven radio innovations.",
-          "Commercial availability set for 2027 with pilots beginning in late 2024.",
-          "Partnership leverages NVIDIA accelerated computing and Marvell merchant silicon.",
-          "Compliant with Open RAN standards, supporting multi-vendor cloud-native deployments."
-        ],
-        "standardization_context": {
-          "tdoc_refs": [],
-          "work_items": [
-            "FS_NR_AI_ML_air"
-          ],
-          "target_release": "Rel-19",
-          "working_groups": [
-            "RAN1",
-            "RAN2",
-            "RAN3"
-          ]
-        },
-        "impact_score": 9
-      },
-      "source_region": "EU",
-      "summary": "<p><span>Nokia today announced the industry\u2019s first commercial AI-RAN platform, marking one of the most significant shifts in radio network architecture in decades. As AI becomes the dominant workload in mobile networks, telecommunication providers need more capacity, stronger economics and faster innovation without relying on traditional hardware upgrade cycles. Nokia\u2019s AI-RAN platform helps telecommunication providers unlock significantly more uplink and downlink capacity from the spectrum and radio infrastructure they already own, providing a practical path to AI-native networks while improving network economics and accelerating innovation at software speed.</span></p><p><span>Built on Nokia\u2019s AI-native network architecture and NVIDIA\u2019s accelerated computing, Nokia\u2019s AI-RAN platform delivers a step change in network performance and economics. The AI-RAN platform has already shown more than 20% spectral efficiency gains through AI-driven radio innovations. The company is on track to deliver 50% spectral gains by 2027 and more than 100% by 2028, helping telecommunication providers carry significantly more traffic in dense cells while reducing cost per bit and improving customer experience.</span></p><p><span>Through a new software subscription model, telecommunication providers can benefit from AI innovation, new features and performance enhancements without relying on hardware refresh cycles. Nokia\u2019s AI-RAN solutions will enter pilot deployments at the end of this year and be commercially available in 2027, with a roadmap that leverages NVIDIA\u2019s programmable merchant silicon platforms.</span></p><p><span><strong>One AI-native platform. Three paths to adoption</strong></span></p><p><span>Recognizing the diversity of telecommunication providers\u2019 network strategies and installed RAN bases, Nokia\u2019s AI-RAN platform is built on a common software-defined architecture powered by Nokia\u2019s anyRAN software and NVIDIA\u2019s accelerated computing. Supporting 4G, 5G and future network evolution, it provides three hardware platform options, including an expansion card for existing AirScale deployments and a Cloud RAN alternative. Fully compliant with Open RAN standards, the platform supports open, interoperable multi-vendor deployments while giving operators the flexibility to choose the hardware and cloud environments that best meet their needs. These hardware platform options allow telecommunication providers to modernize at their own pace while preserving existing infrastructure investments, benefiting from a common software roadmap and accelerating innovation at software speed. Telecommunication providers can adopt AI-RAN in stages using the approach that best matches their deployment strategy, capacity requirements and installed base.</span></p><p><span><strong>Build on existing investments</strong></span></p><p><span style=\"margin: 0px; padding: 0px; text-align: left;\">For existing Nokia customers, Nokia is introducing the new GPU-powered&nbsp;AirScale&nbsp;capacity plug-in unit as the most efficient path forward.&nbsp;Designed for&nbsp;Nokia\u2019s&nbsp;installed&nbsp;AirScale&nbsp;base, the solution integrates&nbsp;NVIDIA\u2019s&nbsp;accelerated&nbsp;computing into existing network infrastructure, enabling a significant capacity step-change through a simple upgrade path while preserving existing network investments.&nbsp;This&nbsp;approach is also&nbsp;supported by AI-accelerated merchant silicon from Marvell as part of Nokia\u2019s broader ecosystem approach to software-defined AI-RAN architectures.&nbsp;Telecommunication providers&nbsp;can introduce&nbsp;advanced AI&nbsp;capabilities, continuously improve performance through&nbsp;software&nbsp;and extend the value of deployed infrastructure.&nbsp;&nbsp;</span></p><p><span><strong>Scale AI-native capacity anywhere</strong></span></p><p><span>For telecommunication providers seeking maximum deployment flexibility and performance, Nokia is introducing the industry\u2019s first GPU-powered standalone AI-RAN node. It brings AI-accelerated RAN performance to any network environment and supports 4G, 5G and future 6G workloads on a common platform. The solution can be deployed as a standalone node, in clustered configurations or alongside AirScale as a single logical base station, providing operators with a highly flexible path to scale AI-native networks while preserving deployment choice.</span></p><p><span><strong>Enabling cloud-native AI-RAN</strong></span></p><p><span>For telecommunication providers embracing cloud-native architectures, Nokia is introducing GPU-powered AI-RAN COTS server solutions delivered through ecosystem partners. The platforms enable an open and secure supply chain while supporting deployment on industry-standard accelerated computing infrastructure, combining cloud-native flexibility with the performance requirements of AI-native radio networks.&nbsp;</span></p><p><span><strong>Innovation at software speed</strong></span></p><p><span>Nokia\u2019s AI-RAN marks a fundamental shift from hardware-defined radio networks to software-defined platforms that continuously improve through software and AI innovation. Through Nokia\u2019s new subscription-based commercial model, telecommunication providers gain ongoing access to advanced AI algorithms, spectral efficiency enhancements, network optimization capabilities and future AI-native features that can be activated through software. This approach allows them to benefit from continuous innovation while maximizing long-term returns on infrastructure investments, enabling improved TCO and performance at no hardware premium. Rather than waiting for the next hardware cycle, networks can continuously enhance performance, efficiency, security and resilience as new capabilities become available.</span></p><p><span>By combining AI-accelerated computing, advanced AI algorithms and an open ecosystem approach, Nokia is helping telecommunication providers unlock greater capacity, stronger economics and continuous innovation while building the foundation for future network evolution.</span></p><p><span><strong>Multimedia, technical information and related news</strong></span></p><p><span>Product page: </span><a href=\"https://www.nokia.com/radio-access/baseband/\"><span>AirScale baseband solutions</span></a></p><p><span>Product page: </span><a href=\"https://www.nokia.com/radio-access/ai-ran/\"><span>AI-RAN</span></a></p><p><span>Press release: </span><a href=\"https://www.nokia.com/newsroom/nokia-accelerates-ai-ran-momentum-with-new-partnerships-driving-path-to-ai-native-6g-mwc26/\"><span>Nokia accelerates AI-RAN momentum with new partnerships driving path to AI-Native 6G&nbsp;</span></a><span>&nbsp;</span></p>",
-      "date": "2026-07-15"
+      "ai_insights": null,
+      "source_region": "Other",
+      "summary": "<p><span>Nokia today announced the opening of its new research and development center in Riyadh, focused on developing AI-powered network automation software. The center will create software that enables communications networks to self-configure, self-heal, optimize performance, reduce energy consumption and operate with greater autonomy.</span></p><p><span>The center will specialize in Service Management and Orchestration (SMO), Self-Organizing Networks (SON), Autopilot and rApps for automation and energy efficiency. Its teams will develop AI-driven capabilities for communications service providers and enterprises in Saudi Arabia, while exploring the development of AI-native 6G technologies, and contributing \u201cMade in Saudi\u201d software innovations for Nokia customers worldwide.</span></p><p><span>The launch follows an agreement announced earlier this year between His Excellency the Minister of Communications and Information Technology of Saudi Arabia and Nokia President and CEO Justin Hotard. The collaboration reflects the Kingdom's ambitions under Saudi Vision 2030 to build a leading economy powered by innovation, local talent and advanced research capabilities.</span></p><p><span>Aligned with the Kingdom's digital transformation agenda, the center will create high-value engineering and research roles while offering advanced training programs, boot camps, and AI and automation certifications for Saudi talent. The initiative supports national objectives to build local expertise, strengthen innovation capacity and increase the country's contribution to the global technology ecosystem.</span></p><p><span><strong>Multimedia, technical information, and related news</strong></span></p><p><span>Webpage: </span><a href=\"https://www.nokia.com/autonomous-networks/\"><span>Autonomous networks</span></a></p><p><span>Webpage: </span><a href=\"https://www.nokia.com/mobile-networks/ran/ai-ran/\"><span>AI-RAN</span></a></p>",
+      "date": "2026-09-01"
     },
     {
-      "article_id": "e506de6fb5c730eb8307b7819eba5f68",
+      "article_id": "e85c322b78dbe8c543e108b92d1900f5",
       "source": "Nokia",
-      "title": "Nokia Corporation Report for Q2 and Half Year 2026",
-      "link": "https://www.nokia.com/newsroom/nokia-corporation-report-for-q2-and-half-year-2026/",
+      "title": "Indosat, Ooredoo Group, Nokia, and NVIDIA launch Zankore by Indosat, ready to serve the region with full stack AI infra platform",
+      "link": "https://www.nokia.com/newsroom/indosat-ooredoo-group-nokia-and-nvidia-launch-zankore-by-indosat-ready-to-serve-the-region-with-full-stack-ai-infra-platform/",
       "score": 3,
-      "ai_insights": {
-        "is_6g_relevant": true,
-        "source_region": "EU",
-        "summary": "Nokia's Q2 2026 report signals a strategic pivot toward the 'AI supercycle,' highlighting the launch of the industry's first commercial AI-RAN platform which serves as a software-defined bridge to 6G. The company is aggressively securing the 6G physical layer supply chain through US-based Indium Phosphide semiconductor manufacturing and expanding optical capacity to meet demand for 2027-2028 and beyond.",
-        "overall_6g_importance": 8,
-        "6g_topics": [
-          "AI-native RAN",
-          "cloud-edge integration",
-          "network automation",
-          "standardization",
-          "spectrum & policy"
-        ],
-        "impact_dimensions": {
-          "research_intensity": 3,
-          "standardization_influence": 4,
-          "industrial_deployment": 5,
-          "spectrum_policy_signal": 3,
-          "ecosystem_maturity": 4
-        },
-        "time_horizon": "mid-term",
-        "world_power_impact": {
-          "US": 4,
-          "EU": 5,
-          "China": 2,
-          "Japan": 1,
-          "Korea": 1,
-          "India": 1
-        },
-        "emerging_concepts": [
-          "AI-RAN platform",
-          "Software-defined 6G upgrade path",
-          "Indium Phosphide semiconductor manufacturing",
-          "AI supercycle connectivity",
-          "100% spectral efficiency gain"
-        ],
-        "key_evidence": [
-          "Launched the industry\u2019s first commercial AI-RAN platform providing a software upgrade path to 6G.",
-          "Targeting more than 100% spectral efficiency gains by 2028 through AI-integrated RAN.",
-          "Acquisition of NXP's Chandler Semiconductor Fabrication campus to convert to Indium Phosphide production for 6G-ready optical components.",
-          "AI & Cloud customer segment sales grew 105% year-on-year, driven by data center and AI infrastructure demand.",
-          "Investment to increase US advanced test and packaging capacity by 10x to support 2027 and 2028 demand cycles."
-        ],
-        "standardization_context": {
-          "tdoc_refs": [],
-          "work_items": [],
-          "target_release": "",
-          "working_groups": []
-        },
-        "impact_score": 8
-      },
-      "source_region": "EU",
-      "summary": "<p>Nokia Corporation<br />Half Year financial report<br />23 July 2026 at 08:00 EEST</p>  <p><b>Nokia Corporation Report for Q2 and Half Year 2026</b></p>  <p><b>Solid Q2 fueled by growing AI & Cloud demand</b></p>  <ul><li>Q2 <b>net sales</b> grew 9% y-o-y on a constant currency basis (+8% reported).</li><li><b>Network Infrastructure</b> net sales grew 12% y-o-y on a constant currency basis, led by <b>Optical Networks</b> growing 20% and <b>IP Networks</b> growing 16%. Net sales to <b>AI & Cloud</b> customers grew 105%.</li><li><b>Mobile Infrastructure</b> net sales grew with a stable year-on-year profit contribution driven by product mix.</li><li>Q2 <b>comparable gross margin</b> expanded 70bps y-o-y to 46.0%. <b>Reported gross margin</b> rose 60bps to 44.6%.</li><li>Q2 <b>comparable operating margin</b> increased 70bps y-o-y to 9.0%. <b>Reported operating margin</b> declined 430bps to (1.0)% due to a faster pace of restructuring.</li><li>Q2 <b>comparable diluted EPS</b> for the period of EUR 0.07; <b>reported diluted EPS</b> for the period of EUR 0.00.</li><li>Nokia has reclassified two businesses previously in its Portfolio Businesses segment into discontinued operations.</li><li>Operationally, <b>Nokia's full year outlook is unchanged</b>. The presentation of these two businesses as discontinued operations has led to a EUR 0.1 billion technical revision to the full year comparable operating profit range. Nokia's outlook is now for EUR 2.1 to 2.6 billion of comparable operating profit.</li></ul>  <p>\"Q2 demonstrates our strategy is delivering results. Since we set out our plan late last year, Team Nokia has focused on maximizing our opportunity in the AI supercycle. I am encouraged by the execution and progress we have made in a short period of time. We enter the second half with momentum and remain on track to deliver somewhat above the midpoint of our comparable operating profit guidance.</p>  <p>In Q2, our AI & Cloud order intake was EUR 2.8 billion, while sales more than doubled year-on-year. The strength was broad-based, as we secured long-term orders in both Optical Networks and IP Networks. We expect around half of these orders to convert to revenue over the next twelve months. Demand remains strong, while supply continues to be the main industry constraint, prompting our customers to place longer-term orders.</p>  <p>As AI evolves, trusted connectivity becomes even more critical and we are delivering market leading innovation that helps customers differentiate and capture value in this new era. Last week we launched the industry\u2019s first commercial AI-RAN platform, which will help customers unlock more from their networks, including more than 100% spectral efficiency gains by 2028. These benefits will be tangible in 5G networks and the platform provides a software upgrade path to 6G. This innovation is one example of how we unlock value for our customers and generate returns for our shareholders.\"</p>  <p><b>Justin Hotard</b>, President and CEO</p>  <p>This is a summary of the Nokia Corporation Report for Q2 and Half Year 2026 published today. Nokia only publishes a summary of its financial reports in stock exchange releases. The summary focuses on Nokia Group's financial information as well as on Nokia's outlook. The detailed, segment-level discussion will be available in the complete financial report hosted at <a href=\"https://www.nokia.com/financials\" rel=\"noreferrer noopener\" target=\"_blank\" title=\"\"><u>www.nokia.com/financials</u></a>. Investors should not solely rely on summaries of Nokia's financial reports and should also review the complete reports with tables.</p>  <p><b>FINANCIAL RESULTS</b></p> <table style=\"border-collapse: collapse;\"><tr><td style=\"width: 253.01px; text-align: left; vertical-align: middle; border-top: solid #000000 1pt; border-bottom: solid #000000 1pt;\">EUR million (except for EPS in EUR)</td><td style=\"width: 57px; text-align: right; vertical-align: middle; border-top: solid #000000 1pt; border-bottom: solid #000000 1pt;\"><b>Q2'26</b></td><td style=\"width: 57px; text-align: right; vertical-align: middle; border-top: solid #000000 1pt; border-bottom: solid #000000 1pt;\">Q2'25</td><td style=\"width: 65px; text-align: right; vertical-align: middle; border-top: solid #000000 1pt; border-bottom: solid #000000 1pt;\">YoY change</td><td style=\"width: 57px; text-align: right; vertical-align: middle; border-top: solid #000000 1pt; border-bottom: solid #000000 1pt;\"><b>Q1-Q2'26</b></td><td style=\"width: 57px; text-align: right; vertical-align: middle; border-top: solid #000000 1pt; border-bottom: solid #000000 1pt;\">Q1-Q2'25</td><td style=\"width: 65px; text-align: right; vertical-align: middle; border-top: solid #000000 1pt; border-bottom: solid #000000 1pt;\">YoY change</td></tr><tr><td style=\"width: 253.01px; text-align: left; vertical-align: middle; border-top: solid #000000 1pt; border-bottom: solid #000000 1pt;\"><b>Reported results</b></td><td style=\"width: 57px; border-top: solid #000000 1pt; border-bottom: solid #000000 1pt;\"> </td><td style=\"width: 57px; border-top: solid #000000 1pt; border-bottom: solid #000000 1pt;\"> </td><td style=\"width: 65px; border-top: solid #000000 1pt; border-bottom: solid #000000 1pt;\"> </td><td style=\"width: 57px; border-top: solid #000000 1pt; border-bottom: solid #000000 1pt;\"> </td><td style=\"width: 57px; border-top: solid #000000 1pt; border-bottom: solid #000000 1pt;\"> </td><td style=\"width: 65px; border-top: solid #000000 1pt; border-bottom: solid #000000 1pt;\"> </td></tr><tr><td style=\"width: 253.01px; text-align: left; vertical-align: middle; border-top: solid #000000 1pt;\">Net sales</td><td style=\"width: 57px; text-align: right; vertical-align: middle; border-top: solid #000000 1pt;\"><b>4 815</b></td><td style=\"width: 57px; text-align: right; vertical-align: middle; border-top: solid #000000 1pt;\">4 443</td><td style=\"width: 65px; text-align: right; vertical-align: middle; border-top: solid #000000 1pt;\">8%</td><td style=\"width: 57px; text-align: right; vertical-align: middle; border-top: solid #000000 1pt;\"><b>9 248</b></td><td style=\"width: 57px; text-align: right; vertical-align: middle; border-top: solid #000000 1pt;\">8 743</td><td style=\"width: 65px; text-align: right; vertical-align: middle; border-top: solid #000000 1pt;\">6%</td></tr><tr><td style=\"width: 253.01px; text-align: left; vertical-align: middle;\">Gross margin %</td><td style=\"width: 57px; text-align: right; vertical-align: middle;\"><b>44.6%</b></td><td style=\"width: 57px; text-align: right; vertical-align: middle;\">44.0%</td><td style=\"width: 65px; text-align: right; vertical-align: middle;\">60bps</td><td style=\"width: 57px; text-align: right; vertical-align: middle;\"><b>44.6%</b></td><td style=\"width: 57px; text-align: right; vertical-align: middle;\">43.0%</td><td style=\"width: 65px; text-align: right; vertical-align: middle;\">160bps</td></tr><tr><td style=\"width: 253.01px; text-align: left; vertical-align: middle;\">Operating (loss)/profit</td><td style=\"width: 57px; text-align: right; vertical-align: middle;\"><b>(50)</b></td><td style=\"width: 57px; text-align: right; vertical-align: middle;\">147</td><td style=\"width: 65px;\"> </td><td style=\"width: 57px; text-align: right; vertical-align: middle;\"><b>33</b></td><td style=\"width: 57px; text-align: right; vertical-align: middle;\">151</td><td style=\"width: 65px; text-align: right; vertical-align: middle;\">(78)%</td></tr><tr><td style=\"width: 253.01px; text-align: left; vertical-align: middle;\">Operating margin %</td><td style=\"width: 57px; text-align: right; vertical-align: middle;\"><b>(1.0)%</b></td><td style=\"width: 57px; text-align: right; vertical-align: middle;\">3.3%</td><td style=\"width: 65px; text-align: right; vertical-align: middle;\">(430)bps</td><td style=\"width: 57px; text-align: right; vertical-align: middle;\"><b>0.4%</b></td><td style=\"width: 57px; text-align: right; vertical-align: middle;\">1.7%</td><td style=\"width: 65px; text-align: right; vertical-align: middle;\">(130)bps</td></tr><tr><td style=\"width: 253.01px; text-align: left; vertical-align: middle;\">Profit from continuing operations</td><td style=\"width: 57px; text-align: right; vertical-align: middle;\"><b>27</b></td><td style=\"width: 57px; text-align: right; vertical-align: middle;\">99</td><td style=\"width: 65px; text-align: right; vertical-align: middle;\">(73)%</td><td style=\"width: 57px; text-align: right; vertical-align: middle;\"><b>131</b></td><td style=\"width: 57px; text-align: right; vertical-align: middle;\">60</td><td style=\"width: 65px; text-align: right; vertical-align: middle;\">118%</td></tr><tr><td style=\"width: 253.01px; text-align: left; vertical-align: middle;\">Loss from discontinued operations</td><td style=\"width: 57px; text-align: right; vertical-align: middle;\"><b>(22)</b></td><td style=\"width: 57px; text-align: right; vertical-align: middle;\">(3)</td><td style=\"width: 65px;\"> </td><td style=\"width: 57px; text-align: right; vertical-align: middle;\"><b>(39)</b></td><td style=\"width: 57px; text-align: right; vertical-align: middle;\">(23)</td><td style=\"width: 65px;\"> </td></tr><tr><td style=\"width: 253.01px; text-align: left; vertical-align: middle;\">Profit for the period</td><td style=\"width: 57px; text-align: right; vertical-align: middle;\"><b>5</b></td><td style=\"width: 57px; text-align: right; vertical-align: middle;\">96</td><td style=\"width: 65px; text-align: right; vertical-align: middle;\">(95)%</td><td style=\"width: 57px; text-align: right; vertical-align: middle;\"><b>92</b></td><td style=\"width: 57px; text-align: right; vertical-align: middle;\">36</td><td style=\"width: 65px; text-align: right; vertical-align: middle;\">156%</td></tr><tr><td style=\"width: 253.01px; text-align: left; vertical-align: middle;\">EPS for the period, diluted</td><td style=\"width: 57px; text-align: right; vertical-align: middle;\"><b>0.00</b></td><td style=\"width: 57px; text-align: right; vertical-align: middle;\">0.02</td><td style=\"width: 65px; text-align: right; vertical-align: middle;\">(100)%</td><td style=\"width: 57px; text-align: right; vertical-align: middle;\"><b>0.02</b></td><td style=\"width: 57px; text-align: right; vertical-align: middle;\">0.01</td><td style=\"width: 65px; text-align: right; vertical-align: middle;\">100%</td></tr><tr><td style=\"width: 253.01px; text-align: left; vertical-align: middle; border-bottom: solid #000000 1pt;\">Net cash and interest-bearing financial investments</td><td style=\"width: 57px; text-align: right; vertical-align: middle; border-bottom: solid #000000 1pt;\"><b>2 776</b></td><td style=\"width: 57px; text-align: right; vertical-align: middle; border-bottom: solid #000000 1pt;\">2 879</td><td style=\"width: 65px; text-align: right; vertical-align: middle; border-bottom: solid #000000 1pt;\">(4)%</td><td style=\"width: 57px; text-align: right; vertical-align: middle; border-bottom: solid #000000 1pt;\"><b>2 776</b></td><td style=\"width: 57px; text-align: right; vertical-align: middle; border-bottom: solid #000000 1pt;\">2 879</td><td style=\"width: 65px; text-align: right; vertical-align: middle; border-bottom: solid #000000 1pt;\">(4)%</td></tr><tr><td style=\"width: 253.01px; text-align: left; vertical-align: middle; border-top: solid #000000 1pt; border-bottom: solid #000000 1pt;\"><b>Comparable results</b></td><td style=\"width: 57px; border-top: solid #000000 1pt; border-bottom: solid #000000 1pt;\"> </td><td style=\"width: 57px; border-top: solid #000000 1pt; border-bottom: solid #000000 1pt;\"> </td><td style=\"width: 65px; border-top: solid #000000 1pt; border-bottom: solid #000000 1pt;\"> </td><td style=\"width: 57px; border-top: solid #000000 1pt; border-bottom: solid #000000 1pt;\"><b> </b></td><td style=\"width: 57px; border-top: solid #000000 1pt; border-bottom: solid #000000 1pt;\"> </td><td style=\"width: 65px; border-top: solid #000000 1pt; border-bottom: solid #000000 1pt;\"> </td></tr><tr><td style=\"width: 253.01px; text-align: left; vertical-align: middle; border-top: solid #000000 1pt;\">Net sales</td><td style=\"width: 57px; text-align: right; vertical-align: middle; border-top: solid #000000 1pt;\"><b>4 815</b></td><td style=\"width: 57px; text-align: right; vertical-align: middle; border-top: solid #000000 1pt;\">4 448</td><td style=\"width: 65px; text-align: right; vertical-align: middle; border-top: solid #000000 1pt;\">8%</td><td style=\"width: 57px; text-align: right; vertical-align: middle; border-top: solid #000000 1pt;\"><b>9 251</b></td><td style=\"width: 57px; text-align: right; vertical-align: middle; border-top: solid #000000 1pt;\">8 748</td><td style=\"width: 65px; text-align: right; vertical-align: middle; border-top: solid #000000 1pt;\">6%</td></tr><tr><td style=\"width: 253.01px; vertical-align: middle; text-align: left; padding-left: 10px;\">Constant currency and portfolio YoY change</td><td style=\"width: 57px;\"> </td><td style=\"width: 57px;\"> </td><td style=\"width: 65px; text-align: right; vertical-align: middle;\">        9%        </td><td style=\"width: 57px;\"> </td><td style=\"width: 57px;\"> </td><td style=\"width: 65px; text-align: right; vertical-align: middle;\">        7%        </td></tr><tr><td style=\"width: 253.01px; text-align: left; vertical-align: middle;\">Gross margin %</td><td style=\"width: 57px; text-align: right; vertical-align: middle;\"><b>46.0%</b></td><td style=\"width: 57px; text-align: right; vertical-align: middle;\">45.3%</td><td style=\"width: 65px; text-align: right; vertical-align: middle;\">70bps</td><td style=\"width: 57px; text-align: right; vertical-align: middle;\"><b>46.0%</b></td><td style=\"width: 57px; text-align: right; vertical-align: middle;\">44.1%</td><td style=\"width: 65px; text-align: right; vertical-align: middle;\">190bps</td></tr><tr><td style=\"width: 253.01px; text-align: left; vertical-align: middle;\">Operating profit</td><td style=\"width: 57px; text-align: right; vertical-align: middle;\"><b>434</b></td><td style=\"width: 57px; text-align: right; vertical-align: middle;\">367</td><td style=\"width: 65px; text-align: right; vertical-align: middle;\">18%</td><td style=\"width: 57px; text-align: right; vertical-align: middle;\"><b>735</b></td><td style=\"width: 57px; text-align: right; vertical-align: middle;\">576</td><td style=\"width: 65px; text-align: right; vertical-align: middle;\">28%</td></tr><tr><td style=\"width: 253.01px; text-align: left; vertical-align: middle;\">Operating margin %</td><td style=\"width: 57px; text-align: right; vertical-align: middle;\"><b>9.0%</b></td><td style=\"width: 57px; text-align: right; vertical-align: middle;\">8.3%</td><td style=\"width: 65px; text-align: right; vertical-align: middle;\">70bps</td><td style=\"width: 57px; text-align: right; vertical-align: middle;\"><b>7.9%</b></td><td style=\"width: 57px; text-align: right; vertical-align: middle;\">6.6%</td><td style=\"width: 65px; text-align: right; vertical-align: middle;\">130bps</td></tr><tr><td style=\"width: 253.01px; text-align: left; vertical-align: middle;\">Profit for the period</td><td style=\"width: 57px; text-align: right; vertical-align: middle;\"><b>414</b></td><td style=\"width: 57px; text-align: right; vertical-align: middle;\">252</td><td style=\"width: 65px; text-align: right; vertical-align: middle;\">64%</td><td style=\"width: 57px; text-align: right; vertical-align: middle;\"><b>726</b></td><td style=\"width: 57px; text-align: right; vertical-align: middle;\">426</td><td style=\"width: 65px; text-align: right; vertical-align: middle;\">70%</td></tr><tr><td style=\"width: 253.01px; text-align: left; vertical-align: middle; border-bottom: solid #000000 1pt;\">EPS for the period, diluted</td><td style=\"width: 57px; text-align: right; vertical-align: middle; border-bottom: solid #000000 1pt;\"><b>0.07</b></td><td style=\"width: 57px; text-align: right; vertical-align: middle; border-bottom: solid #000000 1pt;\">0.04</td><td style=\"width: 65px; text-align: right; vertical-align: middle; border-bottom: solid #000000 1pt;\">75%</td><td style=\"width: 57px; text-align: right; vertical-align: middle; border-bottom: solid #000000 1pt;\"><b>0.13</b></td><td style=\"width: 57px; text-align: right; vertical-align: middle; border-bottom: solid #000000 1pt;\">0.08</td><td style=\"width: 65px; text-align: right; vertical-align: middle; border-bottom: solid #000000 1pt;\">63%</td></tr></table><p><br /></p><table style=\"border-collapse: collapse;\"><tr><td style=\"width: 181px; text-align: left; vertical-align: middle; border-top: solid #000000 1pt; border-bottom: solid #000000 1pt;\"><b>Segment results</b></td><td colspan=\"2\" style=\"width: 144px; text-align: center; vertical-align: middle; border-top: solid #000000 1pt; border-bottom: solid #000000 1pt;\">Network<br />Infrastructure</td><td colspan=\"2\" style=\"width: 144px; text-align: center; vertical-align: middle; border-top: solid #000000 1pt; border-bottom: solid #000000 1pt;\">Mobile<br />Infrastructure</td><td colspan=\"2\" style=\"width: 144px; text-align: center; vertical-align: middle; border-top: solid #000000 1pt; border-bottom: solid #000000 1pt;\">Portfolio<br />Businesses</td></tr><tr><td style=\"width: 181px; text-align: left; vertical-align: middle; border-top: solid #000000 1pt; border-bottom: solid #000000 1pt;\">EUR million</td><td style=\"width: 72px; text-align: right; vertical-align: middle; border-bottom: solid #000000 1pt;\"><b>Q2'26</b></td><td style=\"width: 72px; text-align: right; vertical-align: middle; border-top: solid #000000 1pt; border-bottom: solid #000000 1pt;\">Q2'25</td><td style=\"width: 72px; text-align: right; vertical-align: middle; border-bottom: solid #000000 1pt;\"><b>Q2'26</b></td><td style=\"width: 72px; text-align: right; vertical-align: middle; border-top: solid #000000 1pt; border-bottom: solid #000000 1pt;\">Q2'25</td><td style=\"width: 72px; text-align: right; vertical-align: middle; border-bottom: solid #000000 1pt;\"><b>Q2'26</b></td><td style=\"width: 72px; text-align: right; vertical-align: middle; border-top: solid #000000 1pt; border-bottom: solid #000000 1pt;\">Q2'25</td></tr><tr><td style=\"width: 181px; text-align: left; vertical-align: middle; border-top: solid #000000 1pt;\">Net sales</td><td style=\"width: 72px; text-align: right; vertical-align: middle; border-top: solid #000000 1pt;\"><b>2 037</b></td><td style=\"width: 72px; text-align: right; vertical-align: middle; border-top: solid #000000 1pt;\">1 825</td><td style=\"width: 72px; text-align: right; vertical-align: middle; border-top: solid #000000 1pt;\"><b>2 680</b></td><td style=\"width: 72px; text-align: right; vertical-align: middle; border-top: solid #000000 1pt;\">2 531</td><td style=\"width: 72px; text-align: right; vertical-align: middle; border-top: solid #000000 1pt;\"><b>94</b></td><td style=\"width: 72px; text-align: right; vertical-align: middle; border-top: solid #000000 1pt;\">89</td></tr><tr><td style=\"width: 181px; text-align: left; vertical-align: middle;\">YoY change</td><td style=\"width: 72px; text-align: right; vertical-align: middle;\"><b>12%</b></td><td style=\"width: 72px;\"> </td><td style=\"width: 72px; text-align: right; vertical-align: middle;\"><b>6%</b></td><td style=\"width: 72px;\"> </td><td style=\"width: 72px; text-align: right; vertical-align: middle;\"><b>6%</b></td><td style=\"width: 72px;\"> </td></tr><tr><td style=\"width: 181px; text-align: left; vertical-align: middle;\">Constant currency YoY change</td><td style=\"width: 72px; text-align: right; vertical-align: middle;\"><b>12%</b></td><td style=\"width: 72px;\"> </td><td style=\"width: 72px; text-align: right; vertical-align: middle;\"><b>7%</b></td><td style=\"width: 72px;\"> </td><td style=\"width: 72px; text-align: right; vertical-align: middle;\"><b>6%</b></td><td style=\"width: 72px;\"> </td></tr><tr><td style=\"width: 181px; text-align: left; vertical-align: middle;\">Gross margin %</td><td style=\"width: 72px; text-align: right; vertical-align: middle;\"><b>42.7%</b></td><td style=\"width: 72px; text-align: right; vertical-align: middle;\">40.3%</td><td style=\"width: 72px; text-align: right; vertical-align: middle;\"><b>49.3%</b></td><td style=\"width: 72px; text-align: right; vertical-align: middle;\">50.0%</td><td style=\"width: 72px; text-align: right; vertical-align: middle;\"><b>28.7%</b></td><td style=\"width: 72px; text-align: right; vertical-align: middle;\">16.9%</td></tr><tr><td style=\"width: 181px; text-align: left; vertical-align: middle;\">Operating profit/(loss)</td><td style=\"width: 72px; text-align: right; vertical-align: middle;\"><b>166</b></td><td style=\"width: 72px; text-align: right; vertical-align: middle;\">117</td><td style=\"width: 72px; text-align: right; vertical-align: middle;\"><b>310</b></td><td style=\"width: 72px; text-align: right; vertical-align: middle;\">310</td><td style=\"width: 72px; text-align: right; vertical-align: middle;\">0</td><td style=\"width: 72px; text-align: right; vertical-align: middle;\">(11)</td></tr><tr><td style=\"width: 181px; text-align: left; vertical-align: middle; border-bottom: solid #000000 1pt;\">Operating margin %</td><td style=\"width: 72px; text-align: right; vertical-align: middle; border-bottom: solid #000000 1pt;\"><b>8.1%</b></td><td style=\"width: 72px; text-align: right; vertical-align: middle; border-bottom: solid #000000 1pt;\">6.4%</td><td style=\"width: 72px; text-align: right; vertical-align: middle; border-bottom: solid #000000 1pt;\"><b>11.6%</b></td><td style=\"width: 72px; text-align: right; vertical-align: middle; border-bottom: solid #000000 1pt;\">12.2%</td><td style=\"width: 72px; text-align: right; vertical-align: middle; border-bottom: solid #000000 1pt;\"><b>0.0%</b></td><td style=\"width: 72px; text-align: right; vertical-align: middle; border-bottom: solid #000000 1pt;\">(12.4)%</td></tr></table> <p><b>OUTLOOK</b></p> <table style=\"border-collapse: collapse;\"><tr><td style=\"width: 215px; border-bottom: solid #000000 1pt;\"> </td><td style=\"width: 398.01px; text-align: left; vertical-align: middle; border-bottom: solid #000000 1pt;\"><b>Full Year 2026</b></td></tr><tr><td style=\"width: 215px; text-align: left; vertical-align: middle; border-top: solid #000000 1pt; border-bottom: solid #000000 1pt;\">Comparable operating profit<sup>(1),(2)</sup></td><td style=\"width: 398.01px; text-align: left; vertical-align: middle; border-top: solid #000000 1pt; border-bottom: solid #000000 1pt;\">EUR 2.1 billion to EUR 2.6 billion (technical revision from EUR 2.0 billion to 2.5 billion)</td></tr></table> <p><sup>1 </sup>Please refer to Alternative performance measures section in Nokia Corporation Report for Q2 and Half Year 2026 for a full explanation of how this term is defined.<br /><sup>2 </sup>Outlook is based on a EUR:USD rate of 1.14 for the remainder of 2026.</p>  <p>Operationally, Nokia's outlook is unchanged for full year 2026. However, a change in the presentation of two businesses (Fixed Wireless Access CPE and Enterprise Campus Edge) which are now treated as discontinued operations revises the comparable operating profit outlook by EUR 0.1 billion. As a result Nokia's comparable operating profit guidance range is now EUR 2.1 to 2.6 billion (was EUR 2.0 to 2.5 billion).</p>  <p>The outlook and the underlying outlook assumptions are forward-looking statements subject to a number of risks and uncertainties as described or referred to in the Risk Factors section later in this release.</p>  <p>Along with Nokia's official outlook target provided above, Nokia provides the below assumptions that support the group level financial outlook for 2026.</p> <table style=\"border-collapse: collapse;\"><tr><td style=\"width: 187px; border-bottom: solid #000000 1pt;\"> </td><td style=\"width: 160px; text-align: center; vertical-align: middle; border-bottom: solid #000000 1pt;\"><b>Full year 2026</b></td><td style=\"width: 266px; text-align: left; vertical-align: middle; border-bottom: solid #000000 1pt;\"><b>Comment</b></td></tr><tr><td style=\"width: 187px; text-align: left; vertical-align: middle; border-top: solid #000000 1pt; border-bottom: solid #000000 1pt;\">H2 seasonality</td><td style=\"width: 160px; border-top: solid #000000 1pt; border-bottom: solid #000000 1pt;\"> </td><td style=\"width: 266px; text-align: left; vertical-align: middle; border-top: solid #000000 1pt; border-bottom: solid #000000 1pt;\"><b>Net sales:</b> Nokia assumes a 3% to 7% q-o-q increase in net sales in Q3.<br /><b>Comparable operating profit:</b> Nokia assumes comparable operating profit will be largely flat from Q2 into Q3 due to the phasing of software revenue recognition. Nokia then expects a meaningful increase in Q4.</td></tr><tr><td style=\"width: 187px; text-align: left; vertical-align: middle; border-top: solid #000000 1pt; border-bottom: solid #000000 1pt;\">Network Infrastructure net sales growth<sup>(1)</sup></td><td style=\"width: 160px; text-align: center; vertical-align: middle; border-top: solid #000000 1pt; border-bottom: solid #000000 1pt;\">12 - 14%</td><td style=\"width: 266px; text-align: left; vertical-align: middle; border-top: solid #000000 1pt; border-bottom: solid #000000 1pt;\">This incorporates an assumption for combined IP and Optical Networks to grow 18-20% in 2026.</td></tr><tr><td style=\"width: 187px; text-align: left; vertical-align: middle; border-top: solid #000000 1pt; border-bottom: solid #000000 1pt;\">Comparable financial income and expenses</td><td style=\"width: 160px; text-align: center; vertical-align: middle; border-top: solid #000000 1pt; border-bottom: solid #000000 1pt;\">Positive EUR 150 to 250 million</td><td style=\"width: 266px; border-top: solid #000000 1pt; border-bottom: solid #000000 1pt;\"> </td></tr><tr><td style=\"width: 187px; text-align: left; vertical-align: middle; border-top: solid #000000 1pt; border-bottom: solid #000000 1pt;\">Comparable income tax rate</td><td style=\"width: 160px; text-align: center; vertical-align: middle; border-top: solid #000000 1pt; border-bottom: solid #000000 1pt;\">~26-27%</td><td style=\"width: 266px; text-align: left; vertical-align: middle; border-top: solid #000000 1pt; border-bottom: solid #000000 1pt;\">Nokia's effective tax rate remains sensitive to geographic mix.</td></tr><tr><td style=\"width: 187px; text-align: left; vertical-align: middle; border-top: solid #000000 1pt; border-bottom: solid #000000 1pt;\">Cash outflows related to income taxes</td><td style=\"width: 160px; text-align: center; vertical-align: middle; border-top: solid #000000 1pt; border-bottom: solid #000000 1pt;\">EUR 500 million</td><td style=\"width: 266px; border-top: solid #000000 1pt; border-bottom: solid #000000 1pt;\"> </td></tr><tr><td style=\"width: 187px; text-align: left; vertical-align: middle; border-top: solid #000000 1pt; border-bottom: solid #000000 1pt;\">Capital expenditures</td><td style=\"width: 160px; text-align: center; vertical-align: middle; border-top: solid #000000 1pt; border-bottom: solid #000000 1pt;\">EUR 800 - 900 million<br />(update)</td><td style=\"width: 266px; text-align: left; vertical-align: middle; border-top: solid #000000 1pt; border-bottom: solid #000000 1pt;\">Reduced assumption primarily due to changes in real estate plans. Nokia continues to invest in expanding Optical manufacturing capacity.</td></tr><tr><td style=\"width: 187px; text-align: left; vertical-align: middle; border-top: solid #000000 1pt; border-bottom: solid #000000 1pt;\">Free cash flow conversion from comparable operating profit</td><td style=\"width: 160px; text-align: center; vertical-align: middle; border-top: solid #000000 1pt; border-bottom: solid #000000 1pt;\">55% to 75%</td><td style=\"width: 266px; text-align: left; vertical-align: middle; border-top: solid #000000 1pt; border-bottom: solid #000000 1pt;\">FCF conversion will be influenced by customer payment timing, evolution of regional demand and capex timing.</td></tr><tr><td style=\"width: 187px; text-align: left; vertical-align: middle; border-top: solid #000000 1pt; border-bottom: solid #000000 1pt;\">Restructuring and associated charges related to cost savings programs</td><td style=\"width: 160px; text-align: center; vertical-align: middle; border-top: solid #000000 1pt; border-bottom: solid #000000 1pt;\">EUR 800 million<br />(update)</td><td style=\"width: 266px; text-align: left; vertical-align: middle; border-top: solid #000000 1pt; border-bottom: solid #000000 1pt;\">Nokia has provided an update on its restructuring actions below.</td></tr><tr><td style=\"width: 187px; text-align: left; vertical-align: middle; border-top: solid #000000 1pt; border-bottom: solid #000000 1pt;\">Restructuring and associated cash outflows </td><td style=\"width: 160px; text-align: center; vertical-align: middle; border-top: solid #000000 1pt; border-bottom: solid #000000 1pt;\">EUR 700 - 800 million<br />(update)</td><td style=\"width: 266px; text-align: left; vertical-align: middle; border-top: solid #000000 1pt; border-bottom: solid #000000 1pt;\">Restructuring and related outflows relating to all Nokia restructuring programs (previous assumption based only on 2023-2026 program).</td></tr></table> <p><sup>1 </sup>Net sales growth assumption is on a constant currency and portfolio basis.</p>  <p><b>RESTRUCTURING UPDATE</b></p>  <p><b>Acceleration of restructuring actions</b><br />Consistent with Nokia\u2019s objective of increasing agility and reallocating resource toward growth opportunities, the company has accelerated certain restructuring actions. In total, this means that Nokia now expects related charges of EUR 800 million in 2026.</p>  <ul><li><b>2023 - 2026 restructuring program:</b> In Oct 2023, Nokia initiated a program to achieve between EUR 800 million and 1 200 million in gross cost savings by the end of 2026. Nokia is currently tracking to achieve the high-end of that range and continues to expect EUR 250 million of restructuring charges in 2026 related to the conclusion of the program.</li><li><b>Simplifying Nokia\u2019s operating structure in China:</b> In January, Nokia announced that having taken full ownership of its joint venture in China it would integrate the operations into its global operating model. At the time this was expected to take 2-3 years with integration charges of between EUR 350 and 400 million and the expectation to deliver EUR 200 million in cost savings. Nokia now expects to recognize EUR 350 million of the planned integration charges by the end of 2026 as we target to complete the integration within 2 years.</li><li><b>Additional restructuring actions primarily in Europe:</b> As a further step in simplifying Nokia\u2019s operating model and allocating resources towards growth opportunities, the company has already initiated additional restructuring programs primarily in Europe. These programs are expected to lead to restructuring charges of EUR 200 million in 2026.</li></ul>  <p><b>SHAREHOLDER DISTRIBUTION</b></p>  <p><b>Dividend</b></p>  <p>Under the authorization by the Annual General Meeting held on 9 April 2026, the Board of Directors may resolve on the distribution of an aggregate maximum of EUR 0.14 per share to be paid in respect of financial year 2025. The authorization will be used to distribute dividend and/or assets from the reserve for invested unrestricted equity in four installments during the authorization period unless the Board decides otherwise for a justified reason.</p>  <p>On 23 July 2026, the Board resolved to distribute a dividend of EUR 0.04 per share. The dividend record date is 28 July 2026 and the dividend will be paid on 6 August 2026. The actual dividend payment date outside Finland will be determined by the practices of the intermediary banks transferring the dividend payments.</p>  <p>Following this announced distribution, the Board\u2019s remaining distribution authorization is a maximum of EUR 0.06 per share.</p>  <p><b>ADDITIONAL TOPICS</b></p>  <p><b>Businesses moved to discontinued operations</b><br />In Q2 2026, Nokia classified its Fixed Wireless Access CPE and Enterprise Campus Edge businesses as discontinued operations. Nokia reached an agreement to sell its Fixed Wireless Access CPE business to Inseego and Nokia also deems it highly probable it will reach an agreement to sell Enterprise Campus Edge business. Nokia is today publishing a separate release that provides a recast of Nokia's financial results for each quarter in 2025 and Q1 2026. If Nokia had not treated these businesses as discontinued operations in Q2 2026, net sales would have been EUR 66 million higher and comparable operating profit would have been EUR 13 million lower.</p>  <p><b>Nokia acquires further U.S. optical manufacturing capacity</b><br />Nokia continues to expand its long-term optical component manufacturing plans. Nokia remains on track with its new San Jose Fab to begin ramping production later in Q4 2026 and announced during Q2 2026 an investment to increase its advanced test and packaging capacity in Pennsylvania by 10x beginning in Q3 2026. These investments support the demand expected in 2027 and 2028.<br />As part of its long-term capacity planning, Nokia has entered into a definitive agreement to acquire NXP's Chandler Semiconductor Fabrication campus in Arizona. Subject to the receipt of certain regulatory approvals, Nokia will initially lease manufacturing capacity in a portion of the facility on the site starting in early 2027 and will convert the site to Indium Phosphide semiconductor production for optical components. Nokia will then acquire the full site, with the transaction expected to close in Q1 2029. The transaction further strengthens Nokia's in-house compound semiconductor manufacturing capabilities through the addition of a highly experienced team with deep industry expertise. It also adds U.S.-based Indium Phosphide semiconductor manufacturing capacity at a time when secure and scalable domestic supply is becoming increasingly important for the broader U.S. technology ecosystem and the AI supercycle build out.</p>  <p><b>RISK FACTORS</b></p>  <p>Nokia and its businesses are exposed to a number of risks and uncertainties which include but are not limited to:</p>  <ul><li>Competitive intensity, which is expected to continue at a high level as some competitors seek to take share;</li><li>Changes in customer network investments related to their ability to monetize the network or opportunities related to AI and data center growth;</li><li>Our ability to ensure competitiveness of our product roadmaps and costs through additional R&amp;D investments;</li><li>Our ability to procure or manufacture certain components (e.g. semiconductors), the costs thereof and our ability to align our inventory levels and supplier commitments with customer demand</li><li>Disturbance in the global supply chain;</li><li>Impact of inflation, increased global macro-uncertainty, major currency fluctuations, changes in tariffs and higher interest rates;</li><li>Potential economic impact and disruption of global pandemics;</li><li>War or other geopolitical conflicts, disruptions and potential costs thereof;</li><li>Other macroeconomic, industry and competitive developments;</li><li>Timing and value of new, renewed and existing patent licensing agreements with licensees;</li><li>Results in technology licensing; costs to protect and enforce our intellectual property rights; on-going litigation with respect to licensing and regulatory landscape for patent licensing;</li><li>The outcomes of on-going and potential disputes and litigation;</li><li>Our ability to execute, complete, successfully integrate and realize the expected benefits from transactions;</li><li>Timing of completions and acceptances of certain projects;</li><li>Our product and regional mix;</li><li>Uncertainty in forecasting income tax expenses and cash outflows, over the long-term, as they are also subject to possible changes due to business mix, the timing of patent licensing cash flow and changes in tax legislation, including potential tax reforms in various countries and OECD initiatives;</li><li>Our ability to utilize our Finnish deferred tax assets and their recognition on our balance sheet;</li><li>Our ability to meet our sustainability and other ESG targets, including our targets relating to greenhouse gas emissions;</li></ul>  <p>as well the risk factors specified under Forward-looking statements of this release, and our 2025 annual report on Form 20-F published on 5 March 2026 under Operating and financial review and prospects-Risk factors.</p>  <p><b>FORWARD-LOOKING STATEMENTS</b></p>  <p>Certain statements herein that are not historical facts are forward-looking statements. These forward-looking statements reflect Nokia's current expectations and views of future developments and include statements regarding: A) expectations, plans, benefits or outlook related to our strategies, projects, programs, product launches, growth management, licenses, sustainability and other ESG targets, operational key performance indicators and decisions on market exits; B) expectations, plans or benefits related to future performance of our businesses (including the expected impact, timing and duration of potential global pandemics, geopolitical conflicts and the general or regional macroeconomic conditions on our businesses, our supply chain, the timing of market changes or turning points in demand and our customers\u2019 businesses) and any future dividends and other distributions of profit; C) expectations and targets regarding financial performance and results of operations, including market share, prices, net sales, income, margins, cash flows, cost savings, the timing of receivables, operating expenses, provisions, impairments, tariffs, taxes, currency exchange rates, hedging, investment funds, inflation, product cost reductions, competitiveness, value creation, revenue generation in any specific region, and licensing income and payments; D) our ability to execute, expectations, plans or benefits related to transactions, investments and changes in organizational structure and operating model; E) impact on revenue with respect to litigation/renewal discussions; and F) any statements preceded by or including \"anticipate\", \u201ccontinue\u201d, \u201cbelieve\u201d, \u201cenvisage\u201d, \u201cexpect\u201d, \u201caim\u201d, \u201cwill\u201d, \u201ctarget\u201d, \u201cmay\u201d, \u201cwould\u201d, \u201ccould\u201c, \"see\", \u201cplan\u201d, \u201censure\u201d or similar expressions. These forward-looking statements are subject to a number of risks and uncertainties, many of which are beyond our control, which could cause our actual results to differ materially from such statements. These statements are based on management\u2019s best assumptions and beliefs in light of the information currently available to them. These forward-looking statements are only predictions based upon our current expectations and views of future events and developments and are subject to risks and uncertainties that are difficult to predict because they relate to events and depend on circumstances that will occur in the future. Factors, including risks and uncertainties that could cause these differences, include those risks and uncertainties identified in the Risk Factors above.</p>  <p><b>ANALYST WEBCAST</b></p>  <ul><li>Please note that Nokia's webcast time has changed and will begin on 23 July 2026 at 3.00 p.m. Finnish time (EEST). The webcast will last approximately 60 minutes.</li><li>The webcast will be a presentation followed by a Q&amp;A session. Presentation slides will be available for download at <a href=\"https://www.nokia.com/financials\" rel=\"noreferrer noopener\" target=\"_blank\" title=\"\"><u>www.nokia.com/financials</u></a>.</li><li>A link to the webcast will be available at <a href=\"https://www.nokia.com/financials\" rel=\"noreferrer noopener\" target=\"_blank\" title=\"\"><u>www.nokia.com/financials</u></a>.</li><li>Media representatives can listen in via the link, or alternatively call +44 20 3428 1399. Conference ID is 050-573-800.</li></ul>  <p><b>FINANCIAL CALENDAR </b></p>  <p>\u2022 Nokia plans to publish its third quarter and January-September 2026 results on 22 October 2026.</p>  <p><b>About Nokia</b></p>  <p>Nokia is a global leader in connectivity for the AI era. With expertise across fixed, mobile, and transport networks, we\u2019re advancing connectivity to secure a brighter world.</p>  <p><b>Inquiries:</b></p>  <p>Nokia<br />Communications<br />Phone: +358 10 448 4900<br />Email: <a href=\"mailto:press.services@nokia.com\" rel=\"noreferrer noopener\" target=\"_blank\" title=\"press.services@nokia.com\">press.services@nokia.com</a><br />Maria Vaismaa, Vice President, Corporate Communications</p>  <p>Nokia<br />Investor Relations<br />Phone: +358 931 580 507<br />Email: <a href=\"mailto:investor.relations@nokia.com\" rel=\"noreferrer noopener\" target=\"_blank\" title=\"investor.relations@nokia.com\">investor.relations@nokia.com</a></p> <p id=\"gnw_attachments_section-header\">    <strong>Attachment</strong></p><ul id=\"gnw_attachments_section-items\">            <li>        <a href=\"https://ml-eu.globenewswire.com/Resource/Download/3f0c9c33-04b4-4498-b6d8-f6705ef358a8\" rel=\"noreferrer noopener\" target=\"_blank\" title=\"2026_Q2_Nokia_ Earnings_release_English\">2026_Q2_Nokia_ Earnings_release_English</a>      </li>      </ul> <br /><img alt=\"\" src=\"https://ml-eu.globenewswire.com/media/MDM2MDExYWMtM2NiZC00ZTdkLTgyODUtMDAyMWM4NzBjMzQyLTEwMTE2MTUtMjAyNi0wNy0yMy1lbg==/tiny/Nokia-Oyj.png\" />",
-      "date": "2026-07-23"
+      "ai_insights": null,
+      "source_region": "Other",
+      "summary": "<p><span>Indosat Ooredoo Hutchison (Indosat or IOH) launched Zankore by Indosat, and is collaborating with Ooredoo Group, Nokia, and NVIDIA, to build the next generation of AI infrastructure for a global market, with Asia-Pacific as its launchpad.</span></p><p><span>The collaboration is designed to meet the region's rapidly growing demand for secure and scalable AI computing, while advancing Indonesia's position as a regional AI hub. With a deployment target of 1 gigawatt (GW) of NVIDIA DSX AI Factory capacity, Zankore by Indosat lays the foundation for one of the region\u2019s largest AI infrastructure platforms which will enable the next phase of agentic and enterprise AI adoption at scale.</span></p><p><span>Zankore by Indosat is building one of Southeast Asia\u2019s largest AI factory platforms for the nation, using NVIDIA DSX, the reference architecture, platform and ecosystem playbook for designing and operating AI factories. DSX brings accelerated computing, networking, power, cooling and operations together as one system to maximize useful AI output from every available megawatt. Zankore will deliver approximately 200 megawatts (MW) of AI capacity in the first half of 2027, powered by NVIDIA GB300 NVL72. The platform will also incorporate NVIDIA DSX MaxLPS, which dynamically optimizes power across the GPU fleet to recover stranded power and increase compute capacity within the available facility power envelope. MaxLPS is designed to enable up to 40% more compute within the same power budget, increasing Zankore\u2019s capacity to serve customers and generate revenue.</span></p><p><span>This partnership brings together distinct expertise from each partner. Ooredoo Group provides long-term capital, and regional scale as lead investor and platform sponsor. Indosat brings trusted market leadership, digital infrastructure, and execution capabilities to accelerate AI adoption in Indonesia. NVIDIA powers the platform with accelerated computing, AI software, next-generation GPU access, and its global AI ecosystem, while Nokia delivers AI-native networking for secure, high-performance AI infrastructure. Together, the partners combine global technology with regional scale and local execution to accelerate AI innovation across Asia-Pacific.</span></p><p><span>To support its long-term growth, Zankore by Indosat has established the Board of Directors, bringing together representatives from its principal shareholders and independent leadership. The Board of Directors comprises Aziz Aluthman Fakhroo and Thomas Chevanne representing Ooredoo Group as lead investor, Vikram Sinha and Vishal Gupta representing Indosat Ooredoo Hutchison, and Arijit Ranjan Sarker as Independent Director, with Ulf Ewaldsson serving as Chief Executive Officer. Together, the Board of Directors and CEO provide strategic oversight, leadership, and governance as Zankore scales its AI infrastructure platform across Southeast Asia.</span></p><p><span>As AI reshapes industries and economies, Zankore by Indosat provides the integrated AI platform that Southeast Asia needs to compete in the AI era. Built for hyperscalers, enterprises, governments, and AI innovators, it enables the region to accelerate innovation and unlocks new opportunities for sustainable economic growth.</span></p><p><span>Citi acted as the exclusive financial advisor to Indosat on this transaction. FTI Capital Advisors acted as financial advisor to Ooredoo Group.</span></p>",
+      "date": "2026-08-06"
     },
     {
-      "article_id": "f11d0b8c15c5b045735eceb8d02b302b",
-      "source": "Nokia",
-      "title": "Nokia and Taiwan Mobile extend 5G partnership to advance AI-powered networks",
-      "link": "https://www.nokia.com/newsroom/nokia-and-taiwan-mobile-extend-5g-partnership-to-advance-ai-powered-networks/",
-      "score": 3,
-      "ai_insights": {
-        "is_6g_relevant": true,
-        "source_region": "EU",
-        "summary": "Nokia and Taiwan Mobile have expanded their 5G partnership to transition toward AI-native mobile networks. The collaboration focuses on deploying AI-driven RAN solutions, including AI-RAN and MantaRay SON, to enhance network automation, sustainability, and resilience. This move represents a significant commercial step in implementing the foundational architectural shifts\u2014specifically AI-native infrastructure\u2014required for the transition from 5G-Advanced to 6G (IMT-2030).",
-        "overall_6g_importance": 7,
-        "6g_topics": [
-          "AI-native RAN",
-          "network automation",
-          "sustainability",
-          "cloud-edge integration"
-        ],
-        "impact_dimensions": {
-          "research_intensity": 2,
-          "standardization_influence": 3,
-          "industrial_deployment": 5,
-          "spectrum_policy_signal": 2,
-          "ecosystem_maturity": 4
-        },
-        "time_horizon": "near-term",
-        "world_power_impact": {
-          "US": 1,
-          "EU": 4,
-          "China": 2,
-          "Japan": 2,
-          "Korea": 2,
-          "India": 1
-        },
-        "emerging_concepts": [
-          "AI-native mobile networks",
-          "AI-RAN",
-          "AI for GeoStrategy",
-          "Network for AI (Infrastructure)",
-          "Predictive Hardware Analytics (PHWA)"
-        ],
-        "key_evidence": [
-          "Nokia to accelerate the evolution toward AI-native mobile networks across Taiwan.",
-          "Deployment includes 'AI-RAN' solutions specifically designed to support traffic generated by AI applications.",
-          "MantaRay SON uses AI algorithms to automate operations and enhance performance in real-time.",
-          "Introduction of 'AI for GeoStrategy' for self-healing and dynamic adaptation to extreme scenarios.",
-          "Focus on AI-driven energy management to meet ESG targets through traffic-aware optimization."
-        ],
-        "standardization_context": {
-          "tdoc_refs": [],
-          "work_items": [],
-          "target_release": "Rel-18",
-          "working_groups": [
-            "RAN1",
-            "RAN2",
-            "RAN3"
-          ]
-        },
-        "impact_score": 7
-      },
-      "source_region": "EU",
-      "summary": "<p><span>Nokia today announced it has signed a 5G expansion agreement with Taiwan Mobile to accelerate the evolution toward AI-native mobile networks across Taiwan. The agreement reinforces Nokia\u2019s role as a trusted long-term partner and supports Taiwan Mobile\u2019s goals of enhancing network performance, automation, and sustainability.</span></p><p><span>Under the agreement, Nokia will deploy its latest AirScale portfolio, including next-generation baseband and radio solutions, alongside advanced software capabilities to enhance Taiwan Mobile\u2019s existing network infrastructure and enable new 5G services and monetization opportunities. The partnership builds on the companies' shared vision of integrating artificial intelligence across mobile networks to create highly automated, resilient and energy-efficient networks capable of supporting the increasing AI traffic.</span></p><p><span><strong>Driving AI across the network lifecycle</strong></span></p><p><span>The deployment introduces a comprehensive set of AI-driven capabilities spanning network intelligence, infrastructure, sustainability and resilience:</span></p><ul><li><span>AI for Network (Intelligence): Nokia will introduce AI-powered software that enables real-time automation and predictive analytics, enhancing operational efficiency and enabling closed-loop network assurance. The agreement includes Predictive Hardware Analytics (PHWA) service and our self-organizing networks solution, MantaRay SON, which uses AI algorithms to automate operations and enhance performance.</span></li><li><span>Network for AI (Infrastructure): Nokia\u2019s next-generation baseband and advanced radio solutions will increase network capacity and uplink performance to meet the demands of new traffic profiles generated by AI applications while delivering superior user experiences.</span></li><li><span>AI for Energy (Sustainability): Advanced AI-powered energy management algorithms will enable traffic-aware optimization and proactive power savings, helping Taiwan Mobile reduce energy consumption and meet its ESG targets.</span></li><li><span>AI for GeoStrategy (Resilience): AI-enabled self-healing and traffic steering capabilities will strengthen network resilience, allowing the network to dynamically adapt to changing conditions and maintain service continuity, including in extreme scenarios.</span></li></ul><p><span><strong>Enabling automation, performance, and new services</strong></span></p><p><span>The new deal will expand 5G capacity and optimize network performance through the deployment of advanced radios and next-generation baseband solutions. These upgrades will support enhanced throughput, improved spectrum efficiency and the delivery of premium user experiences. In parallel, the integration of AI-driven network management and automation solutions will enable predictive maintenance, reduce operational complexity and lower total cost of ownership while supporting the introduction of new 5G capabilities such as slicing and RedCap.</span></p><p><span><strong>Supporting sustainability and long-term network evolution</strong></span></p><p><span>Nokia\u2019s energy-efficient hardware combined with AI-driven software will help Taiwan Mobile reduce power consumption and enable more sustainable network operations. This supports the operator\u2019s ambition to build a low-carbon, high-efficiency network while improving overall operational performance.</span></p><p><span><strong>Multimedia, technical information and related news</strong></span></p><p><span>Product Page: </span><a href=\"https://www.nokia.com/radio-access/baseband/\"><span>AirScale Baseband Solutions</span></a></p><p><span>Product Page: </span><a href=\"https://www.nokia.com/mobile-networks/ran-operations/network-management-son/\"><span>MantaRay SON</span></a></p><p><span>Product Page: </span><a href=\"https://www.nokia.com/radio-access/ai-ran/\"><span>AI-RAN</span></a></p>",
-      "date": "2026-07-14"
+      "article_id": "7c0864b44535c3b9d888c1df730697ba",
+      "source": "ArXiv CS Networking",
+      "title": "Toward AI-Native 6G Air Interface: A 3GPP Perspective on Protocol Framework",
+      "link": "https://arxiv.org/abs/2606.27466",
+      "score": 6,
+      "ai_insights": null,
+      "source_region": "Other",
+      "summary": "arXiv:2606.27466v2 Announce Type: replace \nAbstract: Artificial intelligence (AI) is expected to play an important role in the sixth-generation (6G) air interface design, but making the air interface truly AI-native requires more than applying learning algorithms to individual radio functions. The deeper challenge is architectural: once AI influences how the user equipment and network interpret, predict, and adapt radio behavior, the air interface must provide common protocol semantics for coordinating such intelligence across vendors and deployments. This article presents a 3rd generation partnership project (3GPP) oriented perspective on the protocol framework for AI-native 6G air interface. We argue that standardization should preserve implementation freedom by avoiding prescription of model architectures, training methods, or model weights. Instead, 6G should define the protocol framework needed for interoperable AI operation, including how AI-enabled functions are configured, validated, activated, monitored, and safely reverted to conventional operation. Neural receiver assisted reference signal adaptation is used as a case study to concretely show this broader architectural shift.",
+      "date": "2026-09-02"
     },
     {
-      "article_id": "04fd1dc70af1d4109c9da304ce1fedd2",
-      "source": "Next G Alliance",
-      "title": "Technology Roadmap Working Group: Semantic Communications",
-      "link": "https://nextgalliance.org/technology-roadmap-working-group-semantic-communications/",
+      "article_id": "ae6ad210a135d60cf22f951b22a29c2d",
+      "source": "ArXiv CS Networking",
+      "title": "WiSDoM: Wireless Sparse Decision Transformer with Mixture-of-Experts for Multi-Task Mobile Network Optimization",
+      "link": "https://arxiv.org/abs/2609.00284",
       "score": 3,
-      "ai_insights": {
-        "is_6g_relevant": true,
-        "source_region": "US",
-        "summary": "The ATIS Next G Alliance (NGA) Technology Roadmap Working Group convened a panel of industry and academic experts to define the role of Semantic Communications (SemCom) in the 6G era. The group focuses on transitioning from traditional data transmission to meaning-based communication, involving major players like InterDigital, Ericsson, and Nokia.",
-        "overall_6g_importance": 8,
-        "6g_topics": [
-          "semantic communications",
-          "AI-native RAN",
-          "standardization",
-          "network automation"
-        ],
-        "impact_dimensions": {
-          "research_intensity": 5,
-          "standardization_influence": 3,
-          "industrial_deployment": 1,
-          "spectrum_policy_signal": 1,
-          "ecosystem_maturity": 2
-        },
-        "time_horizon": "mid-term",
-        "world_power_impact": {
-          "US": 5,
-          "EU": 3,
-          "China": 2,
-          "Japan": 1,
-          "Korea": 1,
-          "India": 1
-        },
-        "emerging_concepts": [
-          "Semantic Communications (SemCom)",
-          "Goal-oriented communications",
-          "Meaning-based transmission",
-          "Knowledge representation for 6G"
-        ],
-        "key_evidence": [
-          "The panel was hosted by the ATIS Next G Alliance (NGA) Technology Roadmap Working Group.",
-          "Participants included major vendors (Ericsson, Nokia, InterDigital) and top-tier US research universities (Virginia Tech, Ohio State).",
-          "The focus is specifically on the future of communications in the 6G era.",
-          "The effort aims to build a strategic roadmap for North American 6G leadership in semantic technologies."
-        ],
-        "standardization_context": {
-          "tdoc_refs": [],
-          "work_items": [],
-          "target_release": "Rel-20",
-          "working_groups": [
-            "Next G Alliance Technology Roadmap Working Group"
-          ]
-        },
-        "impact_score": 8
-      },
-      "source_region": "US",
-      "summary": "<p>The Semantic Communications Panel, hosted by the ATIS Next G Alliance (NGA) Technology Roadmap Working Group in early summer 2026, convened experts from industry and academia to discuss the future of semantic communications (SemCom) in the 6G era. The panel built on contributions spanning the last year from InterDigital, Ericsson, Nokia, Virginia Tech, Ohio State [&#8230;]</p>\n<p>The post <a href=\"https://nextgalliance.org/technology-roadmap-working-group-semantic-communications/\">Technology Roadmap Working Group: Semantic Communications</a> appeared first on <a href=\"https://nextgalliance.org\">Next G Alliance</a>.</p>",
-      "date": "2026-07-22"
+      "ai_insights": null,
+      "source_region": "Other",
+      "summary": "arXiv:2609.00284v1 Announce Type: new \nAbstract: Emerging 6G wireless networks are expected to operate across diverse deployment scenarios, where variations in network topology, user mobility, traffic demand, and radio conditions challenge the scalability of conventional radio resource management (RRM). While offline reinforcement learning (RL) methods have demonstrated strong decision-making capabilities, learning a single policy that performs consistently across heterogeneous wireless environments remains difficult due to conflicting optimization objectives and limited model specialization. These challenges become particularly pronounced in coordinated multipoint (CoMP) transmission, where selecting the optimal serving-cell combination requires sequential decision-making under evolving network conditions. This paper presents the Wireless Sparse Decision Transformer with Mixture of Experts (WiSDoM), a sparse multi-task offline RL framework for adaptive multi-cell selection. WiSDoM combines Decision Transformers (DTs) with a Mixture-of-Experts (MoE) architecture that dynamically activates specialized experts according to task characteristics. This MoE mechanism improves model capacity without proportionally increasing inference cost, mitigates negative transfer, and enables expert specialization across tasks. WiSDoM is trained jointly on diverse network configurations spanning multiple base station and user equipment densities, mobility levels, and scheduler policies. Experimental results show that WiSDoM consistently outperforms heuristic methods, single-task models, and conventional multi-task DTs, improving quality of experience (QoE) by up to 55% while activating approximately one-third of the parameters of its dense counterpart during inference. Furthermore, WiSDoM exhibits strong task generalization and efficiently adapts to unseen wireless scenarios through few-shot prompting without retraining or fine-tuning.",
+      "date": "2026-09-02"
     },
     {
-      "article_id": "af1ea6bc549f4ebe88fe07b2a05abc4a",
-      "source": "Next G Alliance",
-      "title": "6G\u2019s Value Proposition Takes Shape: Inside the First NGA\u2013XGMF\u20136G Forum Trilateral Workshop",
-      "link": "https://nextgalliance.org/6gs-value-proposition-takes-shape-inside-the-first-nga-xgmf-6g-forum-trilateral-workshop/",
+      "article_id": "cc69cb36600ebbf3a2e69283c6afd10f",
+      "source": "ArXiv CS Networking",
+      "title": "Channel-Adaptive Edge AI: Maximizing Inference Throughput by Adapting Computational Complexity to Channel States",
+      "link": "https://arxiv.org/abs/2603.03146",
       "score": 3,
-      "ai_insights": {
-        "is_6g_relevant": true,
-        "source_region": "US",
-        "summary": "This article reports on the inaugural trilateral workshop between the Next G Alliance (US), XG Mobile Forum (Japan), and 6G Forum (Korea). Held in Dallas, the event focused on establishing a shared 6G value proposition, identifying '6G Day-1' use cases, and coordinating technology advancements across the three regions to influence global standardization and deployment.",
-        "overall_6g_importance": 9,
-        "6g_topics": [
-          "standardization",
-          "spectrum & policy",
-          "sustainability",
-          "AI-native RAN",
-          "ISAC",
-          "device ecosystem",
-          "cloud-edge integration"
-        ],
-        "impact_dimensions": {
-          "research_intensity": 3,
-          "standardization_influence": 5,
-          "industrial_deployment": 2,
-          "spectrum_policy_signal": 4,
-          "ecosystem_maturity": 4
-        },
-        "time_horizon": "mid-term",
-        "world_power_impact": {
-          "US": 5,
-          "EU": 2,
-          "China": 1,
-          "Japan": 5,
-          "Korea": 5,
-          "India": 2
-        },
-        "emerging_concepts": [
-          "6G Day-1",
-          "Trilateral harmonization",
-          "Value-proposition driven design",
-          "5G-to-6G transition optimization",
-          "Cross-regional alliance mapping"
-        ],
-        "key_evidence": [
-          "Hosted the first trilateral workshop in Dallas involving NGA (North America), XGMF (Japan), and 6G Forum (Korea).",
-          "Focus was specifically on '6G Day-1 and Beyond' to define initial commercial requirements.",
-          "The collaboration aims to synthesize lessons learned from 5G to ensure 6G success.",
-          "Technical discussions covered innovations necessary for the 6G future across multiple regional interests."
-        ],
-        "standardization_context": {
-          "tdoc_refs": [],
-          "work_items": [],
-          "target_release": "Rel-21",
-          "working_groups": [
-            "RAN1",
-            "SA2"
-          ]
-        },
-        "impact_score": 9
-      },
-      "source_region": "US",
-      "summary": "<p>The Next G Alliance (NGA) recently hosted its first Trilateral Workshop in Dallas with the XG Mobile Forum (XGMF) (Japan) and 6G\u00a0 Forum (Korea), focused on \u201c6G Day-1 and Beyond.\u201d Discussion ranged from lessons learned in 5G to 6G Day-1 and beyond.\u00a0 Innovations Advancing the 6G Future The event covered 6G technologies based on advancements [&#8230;]</p>\n<p>The post <a href=\"https://nextgalliance.org/6gs-value-proposition-takes-shape-inside-the-first-nga-xgmf-6g-forum-trilateral-workshop/\">6G&#8217;s Value Proposition Takes Shape: Inside the First NGA\u2013XGMF\u20136G Forum Trilateral Workshop</a> appeared first on <a href=\"https://nextgalliance.org\">Next G Alliance</a>.</p>",
-      "date": "2026-07-15"
+      "ai_insights": null,
+      "source_region": "Other",
+      "summary": "arXiv:2603.03146v2 Announce Type: replace-cross \nAbstract: \\emph{Integrated communication and computation} (IC$^2$) has emerged as a new paradigm for enabling efficient edge inference in sixth-generation (6G) networks. However, the design of IC$^2$ technologies is hindered by the lack of a tractable theoretical framework for characterizing \\emph{end-to-end} (E2E) inference performance. The metric is highly complicated as it needs to account for both channel distortion and artificial intelligence (AI) model architecture and computational complexity. In this work, we address this challenge by developing a tractable analytical model for E2E inference accuracy and leveraging it to design a \\emph{channel-adaptive AI} algorithm that maximizes inference throughput, referred to as the edge processing rate (EPR), under latency and accuracy constraints. Specifically, we consider an edge inference system in which a server deploys a backbone model with early exit, which enables flexible computational complexity, to perform inference on data features transmitted by a mobile device. The proposed accuracy model characterizes high-dimensional feature distributions in the angular domain using a Mixture of von Mises (MvM) distribution. This leads to a desired closed-form expression for inference accuracy as a function of quantization bit-width and model traversal depth, which represents channel distortion and computational complexity, respectively. Building upon this accuracy model, we formulate and solve the EPR maximization problem under joint latency and accuracy constraints, leading to a channel-adaptive AI algorithm that achieves full IC$^2$ integration. The proposed algorithm jointly adapts transmit-side feature compression and receive-side model complexity according to channel conditions to maximize overall efficiency and inference throughput. Experimental results demonstrate its superior performance as compared with fixed-complexity counterparts.",
+      "date": "2026-09-02"
     },
     {
-      "article_id": "69fd3ebb37b72ee02e2173559eb8bc33",
+      "article_id": "d74678629233ed14f07f1ffed26bdcb5",
       "source": "SNS JU",
-      "title": "6G-VERSUS Venture Accelerator deadline has been extended to July 25!",
-      "link": "https://smart-networks.europa.eu/6g-versus-venture-accelerator-deadline-has-been-extended-to-july-25/",
-      "score": 3,
-      "ai_insights": {
-        "is_6g_relevant": true,
-        "source_region": "EU",
-        "summary": "The SNS JU has extended the application deadline for the 6G-VERSUS Venture Accelerator, an initiative designed to support EU-based startups developing solutions in 5G, 6G, AI, and IoT. This program aims to catalyze the European 6G ecosystem by bridging the gap between research and commercialization.",
-        "overall_6g_importance": 4,
-        "6g_topics": [
-          "AI-native RAN",
-          "device ecosystem",
-          "cloud-edge integration",
-          "network automation",
-          "sustainability"
-        ],
-        "impact_dimensions": {
-          "research_intensity": 2,
-          "standardization_influence": 1,
-          "industrial_deployment": 3,
-          "spectrum_policy_signal": 0,
-          "ecosystem_maturity": 4
-        },
-        "time_horizon": "near-term",
-        "world_power_impact": {
-          "US": 0,
-          "EU": 4,
-          "China": 0,
-          "Japan": 0,
-          "Korea": 0,
-          "India": 0
-        },
-        "emerging_concepts": [
-          "Venture-driven 6G innovation",
-          "6G startup acceleration",
-          "6G-VERSUS ecosystem"
-        ],
-        "key_evidence": [
-          "The 6G-VERSUS Venture Accelerator deadline is extended to July 25.",
-          "The program specifically targets EU-based startups.",
-          "Areas of focus include 5G, 6G, AI, and IoT solutions.",
-          "Managed under the framework of the Smart Networks and Services Joint Undertaking (SNS JU)."
-        ],
-        "standardization_context": {
-          "tdoc_refs": [],
-          "work_items": [],
-          "target_release": "",
-          "working_groups": []
-        },
-        "impact_score": 4
-      },
-      "source_region": "EU",
-      "summary": "<p>More time to apply! The deadline for the 6G-VERSUS Venture Accelerator has been extended to July 25. Are you an EU-based startup developing innovative solutions in 5G, 6G, AI, IoT, [&#8230;]</p>\n<p>The post <a href=\"https://smart-networks.europa.eu/6g-versus-venture-accelerator-deadline-has-been-extended-to-july-25/\">6G-VERSUS Venture Accelerator deadline has been extended to July 25!</a> appeared first on <a href=\"https://smart-networks.europa.eu\">SNS JU</a>.</p>",
-      "date": "2026-07-16"
+      "title": "EU-Taiwan 6G Joint Workshop \u2013 Advancing EU-Taiwan Collaboration through Technical Exchange",
+      "link": "https://smart-networks.europa.eu/eu-taiwan-6g-joint-workshop-advancing-eu-taiwan-collaboration-through-technical-exchange/",
+      "score": 6,
+      "ai_insights": null,
+      "source_region": "Other",
+      "summary": "<p>&#160; Europe and Taiwan are both moving from 6G research towards large-scale validation, and both bring complementary strengths to that transition, from advanced semiconductors and photonics to AI-native network design, [&#8230;]</p>\n<p>The post <a href=\"https://smart-networks.europa.eu/eu-taiwan-6g-joint-workshop-advancing-eu-taiwan-collaboration-through-technical-exchange/\">EU-Taiwan 6G Joint Workshop &#8211; Advancing EU-Taiwan Collaboration through Technical Exchange</a> appeared first on <a href=\"https://smart-networks.europa.eu\">SNS JU</a>.</p>",
+      "date": "2026-09-02"
     },
     {
-      "article_id": "a1f52b11b0fe6b3311b5574b87162b45",
-      "source": "SNS JU",
-      "title": "Register for the 6G-PATH Webinar on Farming & Smart Agriculture",
-      "link": "https://smart-networks.europa.eu/register-for-the-6g-path-webinar-on-farming-smart-agriculture/",
-      "score": 3,
-      "ai_insights": {
-        "is_6g_relevant": true,
-        "source_region": "EU",
-        "summary": "The European Smart Networks and Services Joint Undertaking (SNS JU) is conducting a webinar series under the 6G-PATH project, specifically focusing on the 'Farming & Smart Agriculture' vertical. The event highlights the integration of 6G technologies into primary industries through sub-granted pilot projects, emphasizing the EU's strategy of testing 6G use cases in real-world environments.",
-        "overall_6g_importance": 6,
-        "6g_topics": [
-          "sustainability",
-          "NTN",
-          "zero-energy devices",
-          "cloud-edge integration",
-          "network automation"
-        ],
-        "impact_dimensions": {
-          "research_intensity": 3,
-          "standardization_influence": 2,
-          "industrial_deployment": 4,
-          "spectrum_policy_signal": 1,
-          "ecosystem_maturity": 3
-        },
-        "time_horizon": "mid-term",
-        "world_power_impact": {
-          "US": 1,
-          "EU": 4,
-          "China": 1,
-          "Japan": 1,
-          "Korea": 1,
-          "India": 1
-        },
-        "emerging_concepts": [
-          "6G-enabled precision farming",
-          "Vertical-specific 6G testbeds",
-          "Sub-granted 6G pilot ecosystems",
-          "Cross-sector 6G pathfinding"
-        ],
-        "key_evidence": [
-          "The webinar is part of the 5th 6G-PATH Webinar Series dedicated to Farming & Smart Agriculture.",
-          "Features presentations from three 6G-PATH sub-granted projects, indicating a decentralized research and funding model.",
-          "Organized by SNS JU, the primary European body for IMT-2030 development."
-        ],
-        "standardization_context": {
-          "tdoc_refs": [],
-          "work_items": [],
-          "target_release": "Rel-20",
-          "working_groups": []
-        },
-        "impact_score": 6
-      },
-      "source_region": "EU",
-      "summary": "<p>Join the\u00a05th webinar\u00a0in the\u00a06G-PATH Webinar Series, dedicated to\u00a0Farming &#38; Smart Agriculture, one of the project\u2019s key verticals. 23 July 2026 11:00 CEST The webinar will feature presentations from three\u00a06G-PATH sub-granted [&#8230;]</p>\n<p>The post <a href=\"https://smart-networks.europa.eu/register-for-the-6g-path-webinar-on-farming-smart-agriculture/\">Register for the 6G-PATH Webinar on Farming &#038; Smart Agriculture</a> appeared first on <a href=\"https://smart-networks.europa.eu\">SNS JU</a>.</p>",
-      "date": "2026-07-16"
-    },
-    {
-      "article_id": "c24bd7779eec19ff3ed56078cba371a4",
-      "source": "SNS JU",
-      "title": "6G-PATH Launches Training Series with Session on Slice Management",
-      "link": "https://smart-networks.europa.eu/6g-path-launches-training-series-with-session-on-slice-management/",
-      "score": 3,
-      "ai_insights": {
-        "is_6g_relevant": true,
-        "source_region": "EU",
-        "summary": "The 6G-PATH project, part of Europe's Smart Networks and Services Joint Undertaking (SNS JU), has launched a multi-year training initiative (2024\u20132026) to bridge the gap between 6G research and industrial application. The series, starting with 'Slice Management' in collaboration with Fraunhofer FOKUS, aims to mature the European 6G ecosystem by providing technical deep-dives and knowledge transfer to third-party stakeholders and the broader industry.",
-        "overall_6g_importance": 6,
-        "6g_topics": [
-          "network automation",
-          "standardization",
-          "cloud-edge integration",
-          "security & trust fabrics"
-        ],
-        "impact_dimensions": {
-          "research_intensity": 4,
-          "standardization_influence": 3,
-          "industrial_deployment": 2,
-          "spectrum_policy_signal": 1,
-          "ecosystem_maturity": 5
-        },
-        "time_horizon": "near-term",
-        "world_power_impact": {
-          "US": 1,
-          "EU": 5,
-          "China": 1,
-          "Japan": 1,
-          "Korea": 1,
-          "India": 1
-        },
-        "emerging_concepts": [
-          "Next-generation Slice Management",
-          "6G Pilots and Trials (6G-PATH)",
-          "Industrial technical dissemination",
-          "Third-party training ecosystems"
-        ],
-        "key_evidence": [
-          "The 6G-PATH project launched a 'Tutorials and Third-Party Training' series consisting of five sessions.",
-          "The program is scheduled to run through the end of 2026.",
-          "The inaugural session focuses on Slice Management, a core competency for flexible 6G networking.",
-          "The initiative is supported by SNS JU and Fraunhofer FOKUS."
-        ],
-        "standardization_context": {
-          "tdoc_refs": [],
-          "work_items": [],
-          "target_release": "",
-          "working_groups": []
-        },
-        "impact_score": 6
-      },
-      "source_region": "EU",
-      "summary": "<p>The\u00a06G-PATH\u00a0project, in collaboration with\u00a0Fraunhofer FOKUS, is launching its\u00a0\u201cTutorials and Third-Party Training\u201d series, consisting of five dedicated sessions running until the end of 2026. The first session will focus on\u00a0Slice Management\u00a0and [&#8230;]</p>\n<p>The post <a href=\"https://smart-networks.europa.eu/6g-path-launches-training-series-with-session-on-slice-management/\">6G-PATH Launches Training Series with Session on Slice Management</a> appeared first on <a href=\"https://smart-networks.europa.eu\">SNS JU</a>.</p>",
-      "date": "2026-07-16"
-    },
-    {
-      "article_id": "c817c67b40b25ef4ac8c93fc0ba263bf",
+      "article_id": "0c82a421892062b3739b52f02421fc8c",
       "source": "Fierce Wireless",
-      "title": "<a href=\"https://www.fierce-network.com/wireless/ntia-tees-44-ghz-band-6g-study\" hreflang=\"en\">NTIA tees up 4.4 GHz band for 6G study</a>",
-      "link": "https://www.fierce-network.com/wireless/ntia-tees-44-ghz-band-6g-study",
+      "title": "<a href=\"https://www.fierce-network.com/wireless/opinion-engineers-craft-6g-its-marketers-job-sell-it\" hreflang=\"en\">Engineers craft 6G. It\u2019s marketers job to sell it </a>",
+      "link": "https://www.fierce-network.com/wireless/opinion-engineers-craft-6g-its-marketers-job-sell-it",
       "score": 3,
-      "ai_insights": {
-        "is_6g_relevant": true,
-        "source_region": "US",
-        "summary": "The U.S. National Telecommunications and Information Administration (NTIA) has received executive clearance to begin formal studies on the 4.4 GHz band. This initiative aims to evaluate the band's suitability for commercial wireless carriers as they transition toward 6G technology, signaling a strategic move by the U.S. to secure critical mid-band spectrum for future mobile generations.",
-        "overall_6g_importance": 8,
-        "6g_topics": [
-          "spectrum & policy"
-        ],
-        "impact_dimensions": {
-          "research_intensity": 2,
-          "standardization_influence": 3,
-          "industrial_deployment": 1,
-          "spectrum_policy_signal": 5,
-          "ecosystem_maturity": 2
-        },
-        "time_horizon": "mid-term",
-        "world_power_impact": {
-          "US": 5,
-          "EU": 2,
-          "China": 3,
-          "Japan": 2,
-          "Korea": 2,
-          "India": 1
-        },
-        "emerging_concepts": [
-          "4.4 GHz mid-band 6G",
-          "Spectrum clearing for next-gen networks",
-          "Carrier-centric 6G spectrum allocation"
-        ],
-        "key_evidence": [
-          "NTIA announced plans to study the 4.4 GHz band specifically for 6G.",
-          "The Trump Administration has cleared these plans, indicating high-level political support for 6G spectrum readiness.",
-          "The study focuses on wireless carriers' use of the band to ensure future network capacity."
-        ],
-        "standardization_context": {
-          "tdoc_refs": [],
-          "work_items": [],
-          "target_release": "",
-          "working_groups": []
-        },
-        "impact_score": 8
-      },
-      "source_region": "US",
-      "summary": "The National Telecommunications and Information Administration (NTIA) today announced that the Trump Administration has cleared plans to study the 4.4 GHz band for wireless carriers to use in 6G.",
-      "date": "2026-08-01"
+      "ai_insights": null,
+      "source_region": "Other",
+      "summary": "Can the wireless industry separate the standards from a consumer-facing approach and quit its reliance on the next \u201cG\u201d to shape its messaging?",
+      "date": "2026-09-02"
     },
     {
-      "article_id": "5d4c2d802a3f2b35e8d938b435c97d6d",
+      "article_id": "6d10ab7862cb0663f6f4995af06f95f3",
       "source": "Fierce Wireless",
-      "title": "<a href=\"https://www.fierce-network.com/wireless/us-calls-allies-rally-around-6g\" hreflang=\"en\">US calls on allies to rally around 6G</a>",
-      "link": "https://www.fierce-network.com/wireless/us-calls-allies-rally-around-6g",
+      "title": "<a href=\"https://www.fierce-network.com/newswire/calix-names-juergen-lindner-cmo\" hreflang=\"en\">Calix names Juergen Lindner as CMO</a>",
+      "link": "https://www.fierce-network.com/newswire/calix-names-juergen-lindner-cmo",
       "score": 3,
-      "ai_insights": {
-        "is_6g_relevant": true,
-        "source_region": "US",
-        "summary": "The US government, alongside 10 allied nations, has established a set of shared principles for 6G development. This diplomatic and policy-driven initiative focuses on ensuring that future wireless standards are secure, resilient, open, and developed through transparent, consensus-based international processes, effectively creating a 'trusted' alternative to technologies from non-allied nations.",
-        "overall_6g_importance": 9,
-        "6g_topics": [
-          "security & trust fabrics",
-          "standardization",
-          "Open RAN",
-          "spectrum & policy",
-          "sustainability"
-        ],
-        "impact_dimensions": {
-          "research_intensity": 2,
-          "standardization_influence": 5,
-          "industrial_deployment": 1,
-          "spectrum_policy_signal": 4,
-          "ecosystem_maturity": 3
-        },
-        "time_horizon": "mid-term",
-        "world_power_impact": {
-          "US": 5,
-          "EU": 4,
-          "China": 2,
-          "Japan": 4,
-          "Korea": 4,
-          "India": 3
-        },
-        "emerging_concepts": [
-          "Joint Statement of Principles",
-          "Trusted 6G Ecosystem",
-          "Security-by-design",
-          "Interoperable Vendor Diversity",
-          "Consensus-based standardization"
-        ],
-        "key_evidence": [
-          "US Department of State led a coalition of 10 nations to align on 6G principles.",
-          "The initiative emphasizes the need for 6G to be developed by 'trusted' vendors to protect national security.",
-          "Policy and security groundwork is being prioritized well ahead of technical commercialization.",
-          "The statement explicitly supports open and interoperable interfaces such as Open RAN.",
-          "Signatories include the UK, Australia, Canada, Czech Republic, Finland, France, Japan, South Korea, and Sweden."
-        ],
-        "standardization_context": {
-          "tdoc_refs": [],
-          "work_items": [],
-          "target_release": "Rel-21",
-          "working_groups": [
-            "SA2",
-            "RAN1",
-            "RAN2"
-          ]
-        },
-        "impact_score": 9
-      },
-      "source_region": "US",
-      "summary": "The message from industry: 6G may sound early, but the policy, standards and security groundwork is happening now.",
-      "date": "2026-08-01"
+      "ai_insights": null,
+      "source_region": "Other",
+      "summary": "Juergen brings deep expertise in product, go-to-market, and business transformation as Calix extends the value of its AI-native platform for service providers and adjacent markets.",
+      "date": "2026-09-02"
     },
     {
-      "article_id": "93328558b715d8ea82deda97d21980a0",
-      "source": "Light Reading",
-      "title": "Leidos, CoreWeave to accelerate delivery of AI capabilities for defense, national security and intelligence missions",
-      "link": "https://www.lightreading.com/ai-machine-learning/leidos-coreweave-to-accelerate-delivery-of-ai-capabilities-for-defense-national-security-and-intelligence-missions",
+      "article_id": "4b9f4e6c4696c08bee021e26f546c22b",
+      "source": "Fierce Wireless",
+      "title": "<a href=\"https://www.fierce-network.com/wireless/qualcomm-keeps-china-its-6g-sights-0\" hreflang=\"en\"> Qualcomm keeps China in its 6G sights </a>",
+      "link": "https://www.fierce-network.com/wireless/qualcomm-keeps-china-its-6g-sights-0",
       "score": 3,
-      "ai_insights": {
-        "is_6g_relevant": true,
-        "source_region": "US",
-        "summary": "Leidos and CoreWeave have partnered to provide secure, AI-native infrastructure specifically for US defense and national security missions. This collaboration focuses on integrating high-performance AI computing with secure mission architectures, a foundational requirement for the AI-native and secure fabrics envisioned in 6G.",
-        "overall_6g_importance": 6,
-        "6g_topics": [
-          "AI-native RAN",
-          "security & trust fabrics",
-          "cloud-edge integration",
-          "network automation"
-        ],
-        "impact_dimensions": {
-          "research_intensity": 2,
-          "standardization_influence": 1,
-          "industrial_deployment": 4,
-          "spectrum_policy_signal": 0,
-          "ecosystem_maturity": 4
-        },
-        "time_horizon": "near-term",
-        "world_power_impact": {
-          "US": 4,
-          "EU": 1,
-          "China": 1,
-          "Japan": 1,
-          "Korea": 1,
-          "India": 1
-        },
-        "emerging_concepts": [
-          "AI-native platform",
-          "Mission-ready AI capacity",
-          "Secure AI architecture",
-          "Sovereign defense AI cloud"
-        ],
-        "key_evidence": [
-          "CoreWeave to provide an AI-native platform for national security missions.",
-          "Leidos to lead mission integration and secure architecture for the partnership.",
-          "Collaboration aims to accelerate the delivery of AI capabilities to defense and intelligence agencies.",
-          "Focus on high-performance compute (HPC) environments for sensitive national security workloads."
-        ],
-        "standardization_context": {
-          "tdoc_refs": [],
-          "work_items": [],
-          "target_release": "",
-          "working_groups": []
-        },
-        "impact_score": 6
-      },
-      "source_region": "US",
-      "summary": "New collaboration to deliver secure, mission-ready AI capacity and services for national security; CoreWeave to provide AI-native platform, Leidos to lead mission integration, secure architecture. #pressrelease",
-      "date": "2026-07-30"
+      "ai_insights": null,
+      "source_region": "Other",
+      "summary": "Qualcomm executives were asked to comment on China\u2019s role in the 6G standardization process. Their answer was predictable.",
+      "date": "2026-09-02"
     },
     {
-      "article_id": "f461c418d505ebc8b297f6640ca2d7a7",
-      "source": "Light Reading",
-      "title": "Nokia weighs Nvidia for 6G radios in 'spectral' scrap vs. Ericsson",
-      "link": "https://www.lightreading.com/6g/nokia-weighs-nvidia-for-6g-radios-in-spectral-scrap-vs-ericsson",
+      "article_id": "6174c3836302204c7332a3d114103bcc",
+      "source": "Mobile World Live",
+      "title": "COAI chief bullish India will have edge on rivals in 6G era",
+      "link": "https://www.mobileworldlive.com/5g/coai-chief-bullish-india-will-have-edge-on-rivals-in-6g-era/",
       "score": 3,
-      "ai_insights": {
-        "is_6g_relevant": true,
-        "source_region": "EU",
-        "summary": "Nokia is evaluating the integration of Nvidia's GPUs into future 6G massive MIMO radio units to bolster AI-RAN capabilities. This strategic consideration highlights a growing architectural rift in the 6G supply chain: Nokia's openness to general-purpose accelerated computing (Nvidia) versus Ericsson's preference for customized silicon (ASICs), impacting the future of spectral efficiency and network flexibility.",
-        "overall_6g_importance": 8,
-        "6g_topics": [
-          "AI-native RAN",
-          "cloud-edge integration",
-          "network automation",
-          "Open RAN",
-          "spectrum & policy"
-        ],
-        "impact_dimensions": {
-          "research_intensity": 4,
-          "standardization_influence": 3,
-          "industrial_deployment": 4,
-          "spectrum_policy_signal": 2,
-          "ecosystem_maturity": 3
-        },
-        "time_horizon": "mid-term",
-        "world_power_impact": {
-          "US": 4,
-          "EU": 4,
-          "China": 2,
-          "Japan": 2,
-          "Korea": 2,
-          "India": 1
-        },
-        "emerging_concepts": [
-          "AI-RAN",
-          "GPU-based Layer 1 processing",
-          "Spectral scrap",
-          "Cloud-native Massive MIMO",
-          "General-purpose hardware vs. ASIC in 6G"
-        ],
-        "key_evidence": [
-          "Nokia is undecided but actively weighing Nvidia's GPUs for future 6G massive MIMO radio units.",
-          "Nokia claims Nvidia GPUs offer major benefits in AI-RAN, potentially providing more flexibility than traditional ASICs.",
-          "Ericsson remains more skeptical of GPUs in the radio unit, focusing on energy efficiency and custom silicon.",
-          "The debate centers on whether GPUs can handle the 'heavy lifting' of 6G Layer 1 processing without excessive power consumption.",
-          "Nvidia's 'Aerial' platform is positioned as a key contender for the 6G software-defined RAN stack."
-        ],
-        "standardization_context": {
-          "tdoc_refs": [],
-          "work_items": [],
-          "target_release": "Rel-21",
-          "working_groups": [
-            "RAN1",
-            "RAN4"
-          ]
-        },
-        "impact_score": 8
-      },
-      "source_region": "EU",
-      "summary": "Nokia says it is undecided about using Nvidia's GPUs in future massive MIMO radio units but claims they have major benefits in AI-RAN.",
-      "date": "2026-07-28"
+      "ai_insights": null,
+      "source_region": "Other",
+      "summary": "<p>INTERVIEW: The director general of the Cellular Operators Association of India argued the country is better placed than some global rivals to become a 6G leader, but conceded there could be some \u201cslippages\u201d on the road to a commercial launch in 2030.</p>\n<p>The post <a href=\"https://www.mobileworldlive.com/5g/coai-chief-bullish-india-will-have-edge-on-rivals-in-6g-era/\">COAI chief bullish India will have edge on rivals in 6G era</a> appeared first on <a href=\"https://www.mobileworldlive.com\">Mobile World Live</a>.</p>",
+      "date": "2026-08-28"
+    },
+    {
+      "article_id": "b7e6349a595b1c0908a6eb3d352d386e",
+      "source": "Light Reading",
+      "title": "Unpacking 6G with Omdia's Gabriel Brown",
+      "link": "https://www.lightreading.com/6g/unpacking-6g-with-omdia-s-gabriel-brown",
+      "score": 3,
+      "ai_insights": null,
+      "source_region": "Other",
+      "summary": "Omdia's Gabriel Brown joined the Signal Strength podcast to discuss and dissect Qualcomm's '6G Leadership Day,' which dug into emerging use cases, potential moneymakers and anticipated product timelines.",
+      "date": "2026-08-31"
     }
   ],
   "standardization": {
@@ -728,7 +130,7 @@
       "in_progress": 25,
       "postponed": 5,
       "progress_percentage": 33.3,
-      "last_updated": "2026-08-01",
+      "last_updated": "2026-09-02",
       "data_source": "sample",
       "work_items_by_group": {
         "RAN1": {
@@ -772,7 +174,7 @@
       {
         "meeting_id": "Templates",
         "working_group": "RAN1",
-        "date": "2026-08-01",
+        "date": "2026-09-02",
         "location": "TBD",
         "key_agreements": [],
         "tdoc_references": [],
@@ -782,7 +184,7 @@
       {
         "meeting_id": "Tdoc_index",
         "working_group": "RAN1",
-        "date": "2026-08-01",
+        "date": "2026-09-02",
         "location": "TBD",
         "key_agreements": [],
         "tdoc_references": [],
@@ -792,7 +194,7 @@
       {
         "meeting_id": "TSGR1_AH",
         "working_group": "RAN1",
-        "date": "2026-08-01",
+        "date": "2026-09-02",
         "location": "TBD",
         "key_agreements": [],
         "tdoc_references": [],
@@ -802,7 +204,7 @@
       {
         "meeting_id": "drafting_meetings",
         "working_group": "SA2",
-        "date": "2026-08-01",
+        "date": "2026-09-02",
         "location": "TBD",
         "key_agreements": [],
         "tdoc_references": [],
@@ -812,7 +214,7 @@
       {
         "meeting_id": "_Doc_List_Archive",
         "working_group": "SA2",
-        "date": "2026-08-01",
+        "date": "2026-09-02",
         "location": "TBD",
         "key_agreements": [],
         "tdoc_references": [],
@@ -822,7 +224,7 @@
       {
         "meeting_id": "TSGS2_99_Xiamen",
         "working_group": "SA2",
-        "date": "2026-08-01",
+        "date": "2026-09-02",
         "location": "TBD",
         "key_agreements": [],
         "tdoc_references": [],
