@@ -198,7 +198,7 @@ function renderExecutiveBriefing(briefing) {
     if (!container || !content || !briefing) return;
 
     container.style.display = 'block';
-    content.innerHTML = briefing; // Assuming markdown-to-html or plain HTML
+    content.innerHTML = briefing;
 }
 
 function renderArticles(articles) {
@@ -225,7 +225,7 @@ function renderArticles(articles) {
 
         return `
             <div class="article-card" onclick="window.open('${escapeHtml(safeLink)}', '_blank')">
-                <div class="source-tag">${escapeHtml(article.source)}</div>
+                <div class="source-tag">${regionFlag} ${escapeHtml(article.source)}</div>
                 <h3>${escapeHtml(article.title)}</h3>
                 <p class="article-summary">${escapeHtml(summary)}</p>
                 <div class="article-footer">
@@ -236,6 +236,7 @@ function renderArticles(articles) {
         `;
     }).join('');
 }
+
 function renderMomentumPanel(momentumData, historicalMemory) {
     const container = document.getElementById('momentum-content');
     if (!container) return;
@@ -266,17 +267,18 @@ function renderMomentumCards(momentumData, container) {
 
     const cards = momentumData.map(entry => {
         const flag = getRegionFlag(entry.region);
+        const scoreVal = typeof entry.momentum_score === 'number' ? entry.momentum_score.toFixed(1) : escapeHtml(String(entry.momentum_score));
         return `
             <div class="momentum-card">
                 <div class="momentum-header">
                     <span class="region-flag">${flag}</span>
-                    <span class="region-name">${entry.region}</span>
+                    <span class="region-name">${escapeHtml(entry.region)}</span>
                 </div>
-                <div class="momentum-score">Score: <strong>${entry.momentum_score.toFixed(1)}</strong></div>
-                <div class="momentum-quarter">${entry.time_window}</div>
+                <div class="momentum-score">Score: <strong>${scoreVal}</strong></div>
+                <div class="momentum-quarter">${escapeHtml(entry.time_window)}</div>
                 <div class="momentum-breakdown">
-                    <div>Res: ${entry.research_intensity}</div>
-                    <div>Std: ${entry.standardization_influence}</div>
+                    <div>Res: ${escapeHtml(String(entry.research_intensity))}</div>
+                    <div>Std: ${escapeHtml(String(entry.standardization_influence))}</div>
                 </div>
             </div>
         `;
@@ -376,9 +378,6 @@ function renderTopicFrequencyChart(articles) {
     });
 }
 
-// ... existing helper functions (renderArticles, populateSourceFilter, etc.) ...
-// (Kept for completeness but assumed they follow similar patterns)
-
 function renderStandardizationPanel(stdData) {
     const container = document.getElementById('standardization-content');
     if (!container) return;
@@ -390,8 +389,8 @@ function renderStandardizationPanel(stdData) {
 
     const progress = stdData.release_21_progress;
     const meetings = stdData.recent_meetings || [];
-    const byGroup = stdData.work_items_by_group || {};
     const dataSource = progress.data_source || "live";
+    const pct = Number(progress.progress_percentage) || 0;
 
     let html = `<h3>3GPP Release 21 Progress</h3>`;
 
@@ -402,9 +401,9 @@ function renderStandardizationPanel(stdData) {
     html += `
         <div class="progress-bar-container">
             <div class="progress-bar">
-                <div class="progress-fill" style="width: ${progress.progress_percentage}%">${progress.progress_percentage}%</div>
+                <div class="progress-fill" style="width: ${pct}%">${pct}%</div>
             </div>
-            <p class="progress-stats">${progress.completed}/${progress.total_work_items} Completed</p>
+            <p class="progress-stats">${escapeHtml(String(progress.completed))}/${escapeHtml(String(progress.total_work_items))} Completed</p>
         </div>
     `;
 
@@ -414,8 +413,8 @@ function renderStandardizationPanel(stdData) {
             html += `
                 <div class="meeting-card">
                     <div class="meeting-header">
-                        <span class="meeting-wg">${m.working_group}</span>
-                        <span class="meeting-id">${m.meeting_id}</span>
+                        <span class="meeting-wg">${escapeHtml(m.working_group)}</span>
+                        <span class="meeting-id">${escapeHtml(m.meeting_id)}</span>
                     </div>
                 </div>
             `;
@@ -440,7 +439,7 @@ function renderConceptsPanel(articles) {
         container.innerHTML = '<p class="empty-state">No emerging concepts extracted this cycle.</p>';
         return;
     }
-    container.innerHTML = concepts.map(c => `<span class="concept-tag">${c}</span>`).join('');
+    container.innerHTML = concepts.map(c => `<span class="concept-tag">${escapeHtml(c)}</span>`).join('');
 }
 
 function renderEvidencePanel(articles) {
@@ -456,7 +455,7 @@ function renderEvidencePanel(articles) {
         container.innerHTML = '<p class="empty-state">No key evidence extracted this cycle.</p>';
         return;
     }
-    container.innerHTML = evidence.map(e => `<div class="evidence-card">• ${e}</div>`).join('');
+    container.innerHTML = evidence.map(e => `<div class="evidence-card">• ${escapeHtml(e)}</div>`).join('');
 }
 
 function renderFlowMatrix(matrix, matrixSnapshots) {
