@@ -108,7 +108,7 @@ def get_ai_summary(
     )
 
     candidate_models = [model]
-    for fallback in ["gemini-2.5-flash", "gemini-2.5-flash-lite"]:
+    for fallback in ["gemini-3-flash-preview", "gemini-2.5-flash", "gemini-2.5-flash-lite"]:
         if fallback not in candidate_models:
             candidate_models.append(fallback)
 

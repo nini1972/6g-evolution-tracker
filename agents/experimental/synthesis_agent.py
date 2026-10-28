@@ -46,9 +46,16 @@ class SynthesisAgent:
                     f"across {std_progress.get('total_work_items', 0)} items), and (3) Geopolitical "
                     f"Regional Signals based on these recent articles:\n{headlines}"
                 )
-                resp = self.client.models.generate_content(
-                    model=self.model, contents=prompt
-                )
+                resp = None
+                for m in dict.fromkeys([self.model, "gemini-3-flash-preview", "gemini-2.5-flash"]):
+                    try:
+                        resp = self.client.models.generate_content(
+                            model=m, contents=prompt
+                        )
+                        if resp and resp.text:
+                            break
+                    except Exception as model_err:
+                        logger.warning("synthesis_agent_model_fallback", attempted=m, error=str(model_err))
                 if resp and resp.text:
                     paragraphs = [
                         p.strip()
