@@ -7,6 +7,7 @@ from pathlib import Path
 import google.genai as genai
 import structlog
 
+from agents.experimental.synthesis_agent import SynthesisAgent
 from config.feeds import FEEDS
 from fetchers.standards_fetcher import fetch_standardization_data
 from pipeline.exporters import (
@@ -37,7 +38,8 @@ DIGESTS_DIR = Path("digests")
 LOG_FILE = str(DIGESTS_DIR / f"6g_digest_{DATE}.md")
 
 # 🤖 Gemini AI Config
-client = genai.Client(api_key=os.getenv("GOOGLE_API_KEY"))
+_api_key = os.getenv("GOOGLE_API_KEY", "").strip()
+client = genai.Client(api_key=_api_key) if _api_key else None
 model = os.getenv("GEMINI_MODEL", "gemini-2.5-flash")
 
 
@@ -87,7 +89,7 @@ async def main_async() -> None:
     """Main async execution function."""
     print("🚀 6G Sentinel started its monthly sweep.\n")
 
-    if not model:
+    if not client or not model:
         print("⚠️  Warning: GOOGLE_API_KEY not found in environment.")
         print("   AI insights and Rigorous Filtering are DISABLED.")
     else:
@@ -142,18 +144,33 @@ async def main_async() -> None:
         # Always update the rolling recent-articles history first so we have a
         # fallback for quiet cycles (all articles already cached).
         recent_articles = update_recent_articles(all_processed)
+        articles_for_dashboard = all_processed if all_processed else recent_articles
+
+        synthesizer = SynthesisAgent(client, model)
+        briefing_html = synthesizer.synthesize(
+            articles_for_dashboard, standardization_data
+        )
 
         if all_processed:
-            export_to_json(all_processed, DATE, standardization_data)
+            export_to_json(
+                all_processed,
+                DATE,
+                standardization_data,
+                executive_briefing=briefing_html,
+            )
             current_matrix = generate_source_target_matrix(all_processed)
             aggregate_momentum(all_processed)
             update_historical_intelligence(standardization_data, current_matrix, DATE)
         else:
-            # Quiet cycle: no new articles this run.  Use the historical window
+            # Quiet cycle: no new articles this run. Use the historical window
             # so that concepts, evidence, and topic-frequency panels remain
             # populated on the dashboard instead of showing empty states.
-            articles_for_dashboard = recent_articles
-            export_to_json(articles_for_dashboard, DATE, standardization_data)
+            export_to_json(
+                articles_for_dashboard,
+                DATE,
+                standardization_data,
+                executive_briefing=briefing_html,
+            )
 
         # Persist cache
         save_cache(cache)

@@ -54,12 +54,16 @@ def export_to_json(
     date: str,
     standardization_data: Optional[dict] = None,
     output_file: str = "latest_digest.json",
+    executive_briefing: Optional[str] = None,
 ) -> None:
     """Export all processed entries to a JSON file for the dashboard."""
     output_data: dict = {"date": date, "articles": all_entries}
 
     if standardization_data:
         output_data["standardization"] = standardization_data
+
+    if executive_briefing:
+        output_data["executive_briefing"] = executive_briefing
 
     try:
         with open(output_file, "w", encoding="utf-8") as f:

@@ -55,12 +55,19 @@ def test_export_to_json_creates_file(tmp_path):
     assert len(data["articles"]) == 1
 
 
-def test_export_to_json_includes_standardization(tmp_path):
+def test_export_to_json_includes_standardization_and_briefing(tmp_path):
     out = str(tmp_path / "digest.json")
     std = {"release_21_progress": {"progress_percentage": 42}}
-    export_to_json([], "2026-01-01", standardization_data=std, output_file=out)
+    export_to_json(
+        [],
+        "2026-01-01",
+        standardization_data=std,
+        output_file=out,
+        executive_briefing="<div>Briefing</div>",
+    )
     data = json.loads(Path(out).read_text())
     assert "standardization" in data
+    assert data["executive_briefing"] == "<div>Briefing</div>"
 
 
 # ---------------------------------------------------------------------------

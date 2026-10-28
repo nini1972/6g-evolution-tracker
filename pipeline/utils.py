@@ -3,11 +3,32 @@ Pure utility functions for the 6G Evolution Tracker pipeline.
 These have no heavy dependencies and can be imported in isolation (e.g., for tests).
 """
 import hashlib
+import html
 import json
+import re
 from datetime import datetime, timedelta
 from typing import Optional
 
+from bs4 import BeautifulSoup
+
 from config.feeds import HIGH_PRIORITY, HIGH_PRIORITY_INTL, MEDIUM_PRIORITY, MEDIUM_PRIORITY_INTL
+
+
+def clean_html(raw_text: Optional[str]) -> str:
+    """Strip HTML tags, decode HTML entities, and normalize whitespace."""
+    if not raw_text:
+        return ""
+    text = str(raw_text)
+    if "<" in text and ">" in text:
+        try:
+            soup = BeautifulSoup(text, "html.parser")
+            for tag in soup(["script", "style"]):
+                tag.decompose()
+            text = soup.get_text(separator=" ", strip=True)
+        except Exception:
+            text = re.sub(r"<[^>]+>", " ", text)
+    text = html.unescape(text)
+    return re.sub(r"\s+", " ", text).strip()
 
 
 def hash_url(url: str) -> str:
@@ -35,7 +56,9 @@ def relevance_score(entry) -> int:
     AI screening stage.
     """
     score = 0
-    text = (entry.get("title", "") + " " + entry.get("summary", ""))
+    title = clean_html(entry.get("title", ""))
+    summary = clean_html(entry.get("summary", ""))
+    text = f"{title} {summary}"
     text_lower = text.lower()
     # English high/medium keywords (case-insensitive)
     for keyword in HIGH_PRIORITY:

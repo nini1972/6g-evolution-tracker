@@ -1,12 +1,35 @@
-"""Unit tests for pipeline.utils and pipeline.feed_processor helpers."""
+"""Unit tests for pipeline.utils, pipeline.feed_processor, and fetcher helpers."""
 import pytest
 from datetime import datetime, timedelta
 from unittest.mock import MagicMock
 
-from pipeline.utils import hash_url, is_recent, relevance_score, parse_ai_response
+from pipeline.utils import (
+    clean_html,
+    hash_url,
+    is_recent,
+    relevance_score,
+    parse_ai_response,
+)
+from pipeline.markdown_logger import log_to_markdown
+from fetchers.standards_fetcher import _extract_meeting_number
+from fetchers.playwright_fetcher import PlaywrightFetcher
 
 # Alias for the test that expects the private name
 _parse_ai_response = parse_ai_response
+
+
+# ---------------------------------------------------------------------------
+# clean_html
+# ---------------------------------------------------------------------------
+
+def test_clean_html_strips_tags_and_unescapes():
+    raw = '<p><span>Nokia &#8211; <b>6G</b> &amp; AI-RAN</span></p>'
+    assert clean_html(raw) == "Nokia – 6G & AI-RAN"
+
+
+def test_clean_html_handles_anchor_in_title():
+    raw = '<a href="https://www.fierce-network.com/6g" hreflang="en">Engineers craft 6G</a>'
+    assert clean_html(raw) == "Engineers craft 6G"
 
 
 # ---------------------------------------------------------------------------
@@ -138,14 +161,9 @@ def test_relevance_score_cjk_no_false_positive():
 
 
 def test_relevance_score_intl_keywords_not_lowercased():
-    """Multilingual matching uses the original text, not a lowercased copy.
-
-    Lowercasing CJK text is a no-op, but this test guards against a future
-    refactor that accidentally normalises the text before CJK matching.
-    """
+    """Multilingual matching uses the original text, not a lowercased copy."""
     entry = {"title": "6세대 기술", "summary": ""}
     score_original = relevance_score(entry)
-    # Force the same text through as lowercase (Python lower() on Korean is a no-op)
     entry_lower = {"title": "6세대 기술".lower(), "summary": ""}
     assert relevance_score(entry_lower) == score_original
 
@@ -189,3 +207,64 @@ def test_parse_ai_response_string_bool_false():
 def test_parse_ai_response_invalid_json_raises():
     with pytest.raises(Exception):
         _parse_ai_response("not json at all", "test")
+
+
+# ---------------------------------------------------------------------------
+# log_to_markdown (portable dict support)
+# ---------------------------------------------------------------------------
+
+def test_log_to_markdown_uses_portable_dict_score_and_ai_insights(tmp_path):
+    log_path = str(tmp_path / "digest.md")
+    entries = [
+        {
+            "title": "<p>6G AI-RAN Breakthrough</p>",
+            "link": "https://example.com/6g-ai-ran",
+            "score": 6,
+            "ai_insights": {"summary": "Clean AI summary.", "impact_score": 9},
+            "date": "2026-10-28",
+        }
+    ]
+    log_to_markdown("Nokia", entries, log_path, "2026-10-28")
+    content = (tmp_path / "digest.md").read_text(encoding="utf-8")
+    assert "### [6G AI-RAN Breakthrough](https://example.com/6g-ai-ran)" in content
+    assert "**Relevance Score:** 6 (AI Impact: 9) | 📅 2026-10-28" in content
+    assert "Clean AI summary." in content
+
+
+# ---------------------------------------------------------------------------
+# 3GPP meeting directory filtering & numeric sorting
+# ---------------------------------------------------------------------------
+
+def test_extract_meeting_number_filters_non_meetings_and_sorts_numerically():
+    dirs = [
+        "Templates",
+        "Tdoc_index",
+        "TSGR1_AH",
+        "drafting_meetings",
+        "_Doc_List_Archive",
+        "TSGS2_99_Xiamen",
+        "TSGS2_165",
+        "TSGR1_114b",
+    ]
+    valid = [d for d in dirs if _extract_meeting_number(d) > 0]
+    sorted_dirs = sorted(valid, key=_extract_meeting_number, reverse=True)
+    assert sorted_dirs == ["TSGS2_165", "TSGR1_114b", "TSGS2_99_Xiamen"]
+
+
+# ---------------------------------------------------------------------------
+# PlaywrightFetcher._is_blocked false-positive prevention
+# ---------------------------------------------------------------------------
+
+def test_playwright_is_blocked_allows_valid_rss_with_blocked_keywords():
+    fetcher = PlaywrightFetcher()
+    rss_xml = """<?xml version="1.0" encoding="UTF-8"?>
+    <rss version="2.0"><channel><title>Ericsson Blog</title>
+    <item><title>How Cloudflare and 6G prevent blocked connections and captcha fatigue</title></item>
+    </channel></rss>"""
+    assert fetcher._is_blocked(rss_xml, status_code=200) is False
+
+
+def test_playwright_is_blocked_detects_cloudflare_challenge():
+    fetcher = PlaywrightFetcher()
+    challenge_html = "<html><head><title>Attention Required! | Cloudflare</title></head><body>Ray ID: 12345</body></html>"
+    assert fetcher._is_blocked(challenge_html, status_code=403) is True

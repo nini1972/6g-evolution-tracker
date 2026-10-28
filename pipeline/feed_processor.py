@@ -3,6 +3,7 @@ Feed processor for the 6G Evolution Tracker.
 Handles RSS feed fetching, keyword relevance filtering, and async AI enrichment.
 """
 import asyncio
+import time
 from datetime import datetime
 from typing import Optional
 from urllib.parse import urljoin
@@ -13,13 +14,20 @@ from bs4 import BeautifulSoup
 
 import google.genai as genai
 
+from config.feeds import SOURCE_LANGUAGE
 from config.prompts import ANALYSIS_PROMPT_TEMPLATE
 from fetchers.hybrid_fetcher import HybridFetcher
-from pipeline.utils import hash_url, is_recent, parse_ai_response, relevance_score
-from config.feeds import SOURCE_LANGUAGE
+from pipeline.utils import (
+    clean_html,
+    hash_url,
+    is_recent,
+    parse_ai_response,
+    relevance_score,
+)
 
 # Re-export for backwards compatibility so callers importing from feed_processor still work
 __all__ = [
+    "clean_html",
     "hash_url",
     "is_recent",
     "relevance_score",
@@ -40,9 +48,19 @@ logger = structlog.get_logger()
 
 # ⚙️ Configuration
 RELEVANCE_THRESHOLD = 2
+MAX_CONCURRENT_AI_CALLS = 5
+_ai_semaphore: Optional[asyncio.Semaphore] = None
 
 # Global fetcher instance (shared across the run)
 _fetcher: Optional[HybridFetcher] = None
+
+
+def _get_ai_semaphore() -> asyncio.Semaphore:
+    """Return a loop-safe semaphore limiting concurrent Gemini API calls."""
+    global _ai_semaphore
+    if _ai_semaphore is None:
+        _ai_semaphore = asyncio.Semaphore(MAX_CONCURRENT_AI_CALLS)
+    return _ai_semaphore
 
 
 async def get_fetcher() -> HybridFetcher:
@@ -69,7 +87,7 @@ def get_ai_summary(
     title: str,
     summary: str,
     site_name: str,
-    client: genai.Client,
+    client: Optional[genai.Client],
     model: str,
 ) -> Optional[dict]:
     """
@@ -80,10 +98,13 @@ def get_ai_summary(
     if not client or not model:
         return None
 
+    clean_title = clean_html(title)
+    clean_summary = clean_html(summary)
+
     prompt = ANALYSIS_PROMPT_TEMPLATE.format(
         site_name=site_name,
-        title=title,
-        summary=summary,
+        title=clean_title,
+        summary=clean_summary,
     )
 
     candidate_models = [model]
@@ -91,16 +112,26 @@ def get_ai_summary(
         if fallback not in candidate_models:
             candidate_models.append(fallback)
 
-    for m in candidate_models:
+    for idx, m in enumerate(candidate_models):
         try:
-            response = client.models.generate_content(model=m, contents=prompt)
-            return parse_ai_response(response.text.strip(), title)
+            response = client.models.generate_content(
+                model=m,
+                contents=prompt,
+                config={"response_mime_type": "application/json"},
+            )
+            if response and response.text:
+                return parse_ai_response(response.text.strip(), clean_title)
         except Exception as e:
             err_str = str(e)
-            if any(code in err_str for code in ("503", "429", "404", "UNAVAILABLE")):
+            if any(
+                code in err_str
+                for code in ("503", "429", "404", "UNAVAILABLE", "RESOURCE_EXHAUSTED")
+            ):
                 logger.warning("gemini_model_fallback", attempted=m, error=err_str)
+                if "429" in err_str or "RESOURCE_EXHAUSTED" in err_str:
+                    time.sleep(1.5 * (idx + 1))
                 continue
-            print(f"  ⚠️ AI Summary failed for '{title[:30]}...': {e}")
+            print(f"  ⚠️ AI Summary failed for '{clean_title[:30]}...': {e}")
             return None
 
     return None
@@ -110,13 +141,14 @@ async def get_ai_summary_async(
     title: str,
     summary: str,
     site_name: str,
-    client: genai.Client,
+    client: Optional[genai.Client],
     model: str,
 ) -> Optional[dict]:
-    """Async wrapper for :func:`get_ai_summary` using a thread pool."""
-    return await asyncio.to_thread(
-        get_ai_summary, title, summary, site_name, client, model
-    )
+    """Async wrapper for :func:`get_ai_summary` bounded by a concurrency semaphore."""
+    async with _get_ai_semaphore():
+        return await asyncio.to_thread(
+            get_ai_summary, title, summary, site_name, client, model
+        )
 
 
 # ---------------------------------------------------------------------------
@@ -225,7 +257,7 @@ async def process_feeds(
     feeds_data: dict,
     cache: dict,
     date: str,
-    client: genai.Client,
+    client: Optional[genai.Client],
     model: str,
 ) -> tuple[list, int]:
     """
@@ -237,11 +269,6 @@ async def process_feeds(
 
     for source, feed in feeds_data.items():
         candidate_entries = []
-        # Sources registered in SOURCE_LANGUAGE bypass the English keyword threshold;
-        # the AI's is_6g_relevant gate acts as their sole relevance filter.
-        # The newly added feeds (Samsung, SK Telecom, NEC, ETRI Journal) are
-        # English-language, so they are correctly NOT in SOURCE_LANGUAGE and use the
-        # normal keyword scoring path.
         should_bypass_keyword_filter = source in SOURCE_LANGUAGE
 
         for entry in feed.entries:
@@ -252,6 +279,11 @@ async def process_feeds(
                 continue
             if not is_recent(entry):
                 continue
+
+            # Sanitize HTML in title and summary upfront
+            entry["title"] = clean_html(entry.get("title", ""))
+            entry["summary"] = clean_html(entry.get("summary", ""))
+
             score = relevance_score(entry)
             if should_bypass_keyword_filter or score >= RELEVANCE_THRESHOLD:
                 entry["_relevance_score"] = score
@@ -280,11 +312,20 @@ async def process_feeds(
 
         relevant_entries = []
         for entry, ai_insights in zip(candidate_entries, ai_results):
-            # Reject articles flagged as non-6G by the AI
+            article_url = entry.get("link", "")
+            url_hash = hash_url(article_url)
+
+            # Reject articles flagged as non-6G by the AI (still cache as seen so we don't re-query)
             if ai_insights and not ai_insights.get("is_6g_relevant", True):
                 print(
                     f"  🚫 AI rejected as irrelevant: {entry.get('title', '')[:50]}"
                 )
+                cache[url_hash] = {
+                    "url": article_url,
+                    "title": entry.get("title", ""),
+                    "processed_date": date,
+                    "rejected": True,
+                }
                 continue
 
             if ai_insights:
@@ -295,12 +336,14 @@ async def process_feeds(
             entry["_ai_insights"] = ai_insights
             relevant_entries.append(entry)
 
-            article_url = entry.get("link", "")
-            cache[hash_url(article_url)] = {
-                "url": article_url,
-                "title": entry.get("title", ""),
-                "processed_date": date,
-            }
+            # Only persist to seen_articles cache if AI succeeded or AI is intentionally disabled.
+            # This prevents transient API failures from permanently caching articles with ai_insights=None.
+            if ai_insights is not None or client is None:
+                cache[url_hash] = {
+                    "url": article_url,
+                    "title": entry.get("title", ""),
+                    "processed_date": date,
+                }
             new_count += 1
 
         if not relevant_entries:

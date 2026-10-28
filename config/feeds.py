@@ -14,7 +14,7 @@ FEEDS = {
     # === Research & Academia ===
     "MDPI Engineering": "https://www.mdpi.com/rss",
     "IEEE Spectrum": "https://spectrum.ieee.org/feeds/feed.rss",
-    "ArXiv CS Networking": "https://export.arxiv.org/rss/cs.NI",
+    "ArXiv CS Networking": "https://rss.arxiv.org/rss/cs.NI",
     "ETRI Journal": "https://onlinelibrary.wiley.com/feed/22337326/most-recent",  # Korea: Electronics and Telecom Research Institute
 
     # === Regional Initiatives & Alliances ===
