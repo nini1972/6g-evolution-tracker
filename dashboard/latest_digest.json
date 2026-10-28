@@ -1,82 +1,214 @@
 {
-  "date": "2026-10-01",
+  "date": "2026-10-28",
   "articles": [
     {
-      "article_id": "1bbdb617d0f8589f5b46e318dddff60d",
+      "article_id": "72b66d85e93e1bcad256f3984e4f0cee",
       "source": "Nokia",
-      "title": "Nokia accelerates AI-RAN adoption as global operators embrace AI-native network evolution on NVIDIA platforms",
-      "link": "https://www.nokia.com/newsroom/nokia-accelerates-ai-ran-adoption-as-global-operators-embrace-ai-native-network-evolution-on-nvidia-platforms/",
+      "title": "Nokia and SoftBank Corp. agree to conduct commercial AI-RAN field trial in Japan",
+      "link": "https://www.nokia.com/newsroom/nokia-and-softbank-corp-agree-to-conduct-commercial-ai-ran-field-trial-in-japan/",
       "score": 6,
       "ai_insights": null,
       "source_region": "Other",
-      "summary": "<p><span>Nokia today announced growing global momentum for AI-RAN, with operators across North America, Europe, Asia-Pacific and the Middle East advancing AI-RAN from early evaluation to lab and live field trials, accelerating the evolution toward AI-native 6G networks. Expanding engagement with A1 Group, Chunghwa Telecom, du, e&, Mobily, stc, TPG Telecom, and Zain Saudi demonstrates how AI-RAN is rapidly moving from industry vision to commercial reality. In addition, trials with operators previously announced, including NTT DOCOMO, INC., continue to progress steadily.</span></p><p><span>The announcement builds on Nokia\u2019s recent AI-RAN milestones, including the launch of the industry\u2019s first commercial AI-native RAN platform; evaluations with T-Mobile, SoftBank and Indosat Ooredoo Hutchison; a growing number of OEM partners; and expanded collaboration with NVIDIA on AI-RAN platform and software development tools. Together, these developments are transforming radio networks into programmable platforms supporting both connectivity and AI workloads; they are also accelerating the development of an open AI-RAN ecosystem and demonstrating the readiness of AI-RAN technologies for commercial deployment.</span></p><p><span>Nokia\u2019s AI-RAN platform has already delivered more than 20% improvements in spectral efficiency through AI-powered radio innovations and is advancing toward further spectral efficiency gains through a continuous software innovation roadmap extending through 2027 and 2028. This enables operators to increase capacity, improve network economics and create new service opportunities by extracting greater value from existing spectrum and infrastructure investments, reducing reliance on traditional hardware refresh cycles.</span></p><p><span>As AI applications drive new traffic patterns, increased uplink demand and growing requirements for distributed computing, operators are seeking new ways to improve network capacity, spectral efficiency and monetization opportunities. Nokia\u2019s AI-RAN platform combines its AI-native anyRAN software with NVIDIA Aerial RAN Computer to help operators unlock greater performance from existing spectrum assets, enabling software-defined architecture for 5G with a software upgrade path to 6G and laying the foundation for future AI-native networks.</span></p><p><span><strong>Multimedia, technical information, and related news</strong></span></p><p><span>Webpage: </span><a href=\"https://www.nokia.com/mobile-networks/ran/ai-ran/\"><span>AI-RAN</span></a></p>",
-      "date": "2026-09-16"
+      "summary": "Espoo, Finland \u2013 Nokia today announced an agreement with SoftBank Corp. to conduct a commercial AI-RAN field trial in Japan in 2027. The planned deployment will use Nokia\u2019s anyRAN software on SoftBank\u2019s AITRAS, its core platform for AI-RAN, with NVIDIA Aerial RAN Computer (ARC), in conjunction with the AITRAS Orchestrator. The companies plan to validate AI-RAN technology in a commercial network environment under commercial traffic conditions. The upcoming field trial will assess key AI-RAN capabilities in a live commercial network environment and represents an important step in SoftBank\u2019s efforts to commercialize AI-RAN. It will also advance Nokia\u2019s AI-RAN commercialization roadmap by moving the technology from laboratory development toward real-world deployment. The planned trial will combine Nokia\u2019s AI-native anyRAN Cloud RAN software on a SoftBank AITRAS platform with NVIDIA\u2019s ARC platform and the AITRAS Orchestrator. The accelerated computing platform incorporates an NVIDIA Grace CPU, NVIDIA RTX PRO 4500 GPU and NVIDIA ConnectX-8 networking, providing the computing and high-bandwidth, low-latency connectivity needed to run commercial RAN workloads on cloud-native infrastructure. The AITRAS Orchestrator will support the orchestration of AI and RAN workloads within the trial environment, while NVIDIA\u2019s programmable accelerated computing platform and NVIDIA CUDA ecosystem provide a software-defined foundation for continued AI-RAN innovation and an evolution path toward AI-native 6G. The trial will also demonstrate how Nokia's AI-native anyRAN software can operate within the SoftBank AITRAS platform architecture, highlighting deployment flexibility beyond traditional RAN implementations. As demand for generative, agentic and physical AI applications continues to grow, operators require networks that can efficiently support increasing data volumes while enabling new AI-driven services closer to the end user. By combining Nokia\u2019s AI-native RAN software with NVIDIA accelerated computing, AI-RAN brings radio and AI workloads onto a common platform, helping operators improve infrastructure utilization, accelerate innovation and unlock new revenue opportunities. The agreement builds on Nokia and SoftBank\u2019s ongoing collaboration in AI-RAN, supported by NVIDIA\u2019s accelerated computing node. The planned field trial will bring together Nokia\u2019s AI-native RAN software with SoftBank\u2019s AITRAS platform including the AITRAS Orchestrator to test AI-RAN under commercial traffic conditions. The collaboration will explore how AI and RAN workloads can be orchestrated on a common platform while preserving carrier-grade RAN operational requirements. Integration between Nokia MantaRay and the AITRAS Orchestrator will help enable coordinated management of AI and RAN resources, creating a foundation for future AI-native network architectures. The trial will contribute to the broader industry transition toward AI-native network architectures and explore how operators can introduce new capabilities faster while supporting emerging AI applications at the network edge. The planned trial will also explore AI-RAN\u2019s potential to support richer AI-driven experiences, lower-latency services and new applications powered by real-time intelligence. Future use cases could include physical AI, immersive digital experiences, robotics and autonomous systems that require close interaction between AI and connectivity.",
+      "date": "2026-10-20"
     },
     {
-      "article_id": "374cdb539b5cb7cc2cd4d71f5fb72f46",
-      "source": "IEEE Spectrum",
-      "title": "A New IEEE STEM Book Series for Tweens from TryEngineering",
-      "link": "https://spectrum.ieee.org/ieee-stem-books-tweens-tryengineering",
+      "article_id": "8d924140a923bab7b11e57e2f5b42221",
+      "source": "Nokia",
+      "title": "Nokia Corporation Interim Report for Q3 2026",
+      "link": "https://www.nokia.com/newsroom/nokia-corporation-interim-report-for-q3-2026/",
       "score": 3,
       "ai_insights": null,
       "source_region": "Other",
-      "summary": "<img src=\"https://spectrum.ieee.org/media-library/a-grid-of-six-book-covers-related-to-engineering-topics-such-as-semiconductors-artificial-intelligence-and-communication-techno.jpg?id=67874961&amp;width=1245&amp;height=700&amp;coordinates=0%2C187%2C0%2C188\" /><br /><br /><p><a href=\"https://tryengineering.org\" rel=\"noopener noreferrer\" target=\"_blank\">IEEE TryEngineering</a> is dedicated to inspiring intellectual curiosity in children.</p><p>The technologies shaping our world, including in the realms of artificial intelligence, electric vehicles, and ocean exploration, are evolving rapidly. Helping young learners understand the concepts is essential to preparing the next generation of problem-solvers, creators, and engineers.</p><p>TryEngineering has introduced a STEM <a href=\"https://lernerbooks.com/series/11453-tomorrow-s-technology-with-tryengineering-powered-by-ieee\" rel=\"noopener noreferrer\" target=\"_blank\">book series</a> for youngsters ages 8 to 12 through the <a href=\"https://lernerbooks.com/\" rel=\"noopener noreferrer\" target=\"_blank\">Lerner Publishing Group</a>.</p><p>The series, Tomorrow\u2019s Technology With TryEngineering, Powered by IEEE, makes complex topics more approachable and engaging, with each book combining age-appropriate explanations, real-world examples, and design challenges that encourage curiosity and critical thinking. The series is based on ebooks and videos available at <a href=\"https://tryengineering.org\" rel=\"noopener noreferrer\" target=\"_blank\">tryengineering.org</a>.</p><p>For the series, TryEngineering partnered with several other IEEE groups including the <a href=\"https://www.comsoc.org/\" rel=\"noopener noreferrer\" target=\"_blank\">Communications</a>, <a href=\"https://www.computer.org/\" rel=\"noopener noreferrer\" target=\"_blank\">Computer</a>, and <a href=\"https://ieeeoes.org/\" rel=\"noopener noreferrer\" target=\"_blank\">Oceanic Engineering</a> societies and the <a href=\"https://tec.ieee.org/\" rel=\"noopener noreferrer\" target=\"_blank\">Transportation Electrification Council</a>.</p><p>Whether used in the classroom, a library, or at home, the books can help pupils connect STEM concepts to the technologies they encounter every day, including computers and smartphones. </p><h2>Six topics in the collection</h2><p>Here are the books in the new collection: </p><p><a href=\"https://bookshop.org/p/books/artificial-intelligence-the-future-of-smart-technology/8cdfa07415b03879?ean=9798348027483&amp;next=t\" rel=\"noopener noreferrer\" target=\"_blank\"><em><em>Artificial Intelligence: The Future of Smart Technology</em></em></a> explores the systems behind streaming services, search engines, and health care. Readers learn how AI works while exploring <a href=\"https://spectrum.ieee.org/two-new-ai-ethics-certifications\" target=\"_self\">ethical concerns</a> such as bias, deepfakes, hallucinations, and privacy. Pupils can better understand one of the most influential technologies of our time as it evolves.</p><p><a href=\"https://bookshop.org/p/books/communication-technology-from-morse-code-to-smartphones/ec3c6bb41873ba8c?ean=9798348027513&amp;next=t\" rel=\"noopener noreferrer\" target=\"_blank\"><em><em>Communication Technology: From Morse Code to Smartphones</em></em></a> teaches readers about smoke signals, semaphore towers, telephones, and wireless networks. The pupils can gain an understanding of how engineers are changing communications technology through innovations such as <a href=\"https://spectrum.ieee.org/ieee-5g-and-6g-training\" target=\"_self\">6G</a> and space-based networks. The book highlights career opportunities in the aerospace and telecommunications fields.</p><p><a href=\"https://bookshop.org/p/books/electric-vehicles-powering-the-future-of-transportation/c29e8242f9f003fc?ean=9798348027537&amp;next=t\" rel=\"noopener noreferrer\" target=\"_blank\"><em><em>Electric Vehicles: Powering the Future of Transportation</em></em></a> covers how <a href=\"https://spectrum.ieee.org/autonomous-vehicles-motion-planner-llm\" target=\"_self\">e-cars</a>, <a href=\"https://spectrum.ieee.org/e-bike-regulations\" target=\"_self\">e-bikes</a>, e-scooters, and electrified trains are transforming the way people travel. Readers can discover how hybrid and fully electric vehicles operate and how the <a href=\"https://spectrum.ieee.org/ces-2026-solid-state-batteries\" target=\"_self\">batteries</a> that power them work. They also can learn about the roles engineers play in developing smarter transit systems.</p><p><a href=\"https://bookshop.org/p/books/ocean-engineering-protecting-our-ocean-environments/e9454f53aea5d291?ean=9798348042868&amp;next=t\" rel=\"noopener noreferrer\" target=\"_blank\"><em><em>Ocean Engineering: Protecting Our Ocean Environments</em></em></a> highlights the vital ecosystem role played by the world\u2019s <a href=\"https://spectrum.ieee.org/ocean-thermal-energy-conversion\" target=\"_self\">oceans</a>, which require careful stewardship. play in our ecosystem. Readers can learn how engineers study the underwater world using submersibles and <a href=\"https://spectrum.ieee.org/tidal-energy-underwater-kite-power\" target=\"_self\">floats</a>, how they address <a href=\"https://spectrum.ieee.org/sound-waves\" target=\"_self\">pollution</a>, and how they protect marine environments.</p><p><a href=\"https://bookshop.org/p/books/semiconductors-the-building-blocks-of-modern-electronics/518644292f273130?ean=9798348027506&amp;next=t\" rel=\"noopener noreferrer\" target=\"_blank\"><em><em>Semiconductors: The Building Blocks of Modern Electronics</em></em></a> focuses on the technology behind nearly every electronic tool we use. <a href=\"https://spectrum.ieee.org/the-long-strange-trip-from-silica-to-smartphone\" target=\"_self\">Microchips</a> power smartphones, computers, and countless other products, all thanks to <a href=\"https://spectrum.ieee.org/topic/semiconductors/\" target=\"_self\">semiconductors</a>. Readers can learn about insulators and conductors, how microchips are manufactured, and why semiconductor engineering is a fertile field for innovation.</p><p><a href=\"https://bookshop.org/p/books/signal-power-the-hidden-waves-behind-modern-tech/3ead706c1ee8b5a7?ean=9798348042851&amp;next=t\" rel=\"noopener noreferrer\" target=\"_blank\"><em><em>Signal Power: The Hidden Waves Behind Modern Tech</em></em></a> explores how engineers analyze and manipulate signals to make technologies work more effectively. Whether it is a phone call reaching the correct person despite background noise or a <a href=\"https://spectrum.ieee.org/ability-neurotech-bci-human-trial\" target=\"_self\">medical device</a> monitoring a patient, signal processing plays crucial roles in modern life. The book introduces different wave types, the signal processing workflow, and careers in the field.</p><p>The book series can help children understand the technologies shaping the world around them while encouraging them to think like engineers and innovators. By connecting STEM concepts to real-world applications, the series can make learning more meaningful and engaging.</p><p>The Tomorrow\u2019s Technology With TryEngineering series is available through <a href=\"https://www.amazon.com/s?k=%22tryengineering%22\" rel=\"noopener noreferrer\" target=\"_blank\">Amazon</a>, <a href=\"https://bookshop.org/beta-search?bkshp-astro=t&amp;keywords=%22tryengineering%22\" rel=\"noopener noreferrer\" target=\"_blank\">Bookshop</a>, and <a href=\"https://lernerbooks.com/shop/search_results?q=IEEE\" rel=\"noopener noreferrer\" target=\"_blank\">Lerner</a>. More about the collection may be found <a href=\"https://tryengineering.org/home/stem-childrens-book-series/\" rel=\"noopener noreferrer\" target=\"_blank\">here</a>.</p>",
-      "date": "2026-09-28"
+      "summary": "Nokia Corporation Interim report 22 October 2026 at 08:00 EEST Nokia Corporation Interim Report for Q3 2026 Nokia delivers strong net sales and profit growth Q3 net sales grew 9% y-o-y on a constant currency basis (+10% reported). Network Infrastructure net sales grew 15% y-o-y on a constant currency basis, led by IP Networks growing 43% and Optical Networks 18%. Group net sales to AI & Cloud customers grew 123% and order intake 118%. Mobile Infrastructure net sales grew 5% y-o-y, in part due to acceleration of revenue from Q4 into Q3. The segment benefited from product mix, commercial discipline and continued execution of the cost reduction program. Q3 comparable gross margin was largely stable y-o-y at 44.6%. Reported gross margin declined 220bps to 42.2%. Q3 comparable operating margin increased 220bps y-o-y to 11.7% benefiting from revenue growth and operating efficiency. Reported operating margin declined 160bps to 3.8% due to accelerated restructuring and integration cost. Q3 comparable diluted EPS from continued operations of EUR 0.09; reported diluted EPS from continued operations of EUR 0.03. Nokia's full year financial outlook is unchanged. \"Team Nokia continues to deliver on our commitments as we execute against our strategy. In Q3, we grew net sales by 9% and improved comparable operating margin by 220 basis points. We continue to simplify our portfolio, and we are on track to complete the Infinera integration by the end of 2026, one year ahead of plan with EUR 200 million of net synergies. In AI & Cloud, net sales more than doubled year-over-year and we secured EUR 1.5 billion in new orders. Our strong order backlog also positions us for future growth. We expect our combined Optical and IP Networks businesses to grow between 25% and 30% in 2027. Nokia\u2019s strengths are uniquely suited to meet growing demands for AI infrastructure that is larger, more distributed and hyperconnected. We are investing where we can differentiate and co-innovate with hyperscalers. Our partnership with Google in support of their EUR 13 billion investment in Finland is an example of how our optical and IP networks provide the critical connectivity AI infrastructure requires. AI-native networks are moving into the physical world, and our AI-RAN platform is being developed to deliver the performance needed for this market. Together with T-Mobile and NVIDIA, we completed the world\u2019s first AI-RAN call in a live operator network in line with the commitment we announced last year. As we move towards commercial deployment the features and spectral efficiency delivered by our platform are uniquely differentiated in the market. Overall, growth is accelerating, operating leverage is becoming more visible and I\u2019m confident in the long-term shareholder value Team Nokia is creating.\" Justin Hotard , President and CEO This is a summary of the Nokia Corporation Interim Report for Q3 2026 published today. Nokia only publishes a summary of its financial reports in stock exchange releases. The summary focuses on Nokia Group's financial information as well as on Nokia's outlook. The detailed, segment-level discussion will be available in the complete financial report hosted at www.nokia.com/financials . Investors should not solely rely on summaries of Nokia's financial reports and should also review the complete reports with tables. FINANCIAL RESULTS EUR million (except for EPS in EUR) Q3'26 Q3'25 YoY change Q1-Q3'26 Q1-Q3'25 YoY change Reported results Net sales 5 154 4 700 10% 14 402 13 443 7% Gross margin % 42.2% 44.4% (220)bps 43.7% 43.5% 20bps Operating profit 196 252 (22)% 229 403 (43)% Operating margin % 3.8% 5.4% (160)bps 1.6% 3.0% (140)bps Profit from continuing operations 176 90 96% 307 150 105% Loss from discontinued operations (21) (10) (59) (34) Profit for the period 156 80 95% 248 116 114% EPS from continuing operations, diluted 0.03 0.01 200% 0.05 0.02 150% Net cash and interest-bearing financial investments 2 584 3 001 (14)% 2 584 3 001 (14)% Comparable results Net sales 5 154 4 705 10% 14 405 13 453 7% Constant currency and portfolio YoY change 9% 7% Gross margin % 44.6% 44.8% (20)bps 45.5% 44.4% 110bps Operating profit 605 448 35% 1 340 1 024 31% Operating margin % 11.7% 9.5% 220bps 9.3% 7.6% 170bps Profit from continuing operations 498 334 49% 1 223 760 61% EPS from continuing operations, diluted 0.09 0.06 50% 0.21 0.13 62% Segment results Network Infrastructure Mobile Infrastructure Portfolio Businesses EUR million Q3'26 Q3'25 Q3'26 Q3'25 Q3'26 Q3'25 Net sales 2 158 1 850 2 902 2 755 96 97 YoY change 17% 5% (1)% Constant currency YoY change 15% 5% (2)% Gross margin % 41.2% 42.7% 47.5% 47.3% 31.3% 18.6% Operating profit/(loss) 216 143 420 355 3 (4) Operating margin % 10.0% 7.7% 14.5% 12.9% 3.1% (4.1)% OUTLOOK Full Year 2026 Comparable operating profit (1),(2) EUR 2.1 billion to EUR 2.6 billion 1 Please refer to Alternative performance measures section in Nokia Corporation Interim Report for Q3 2026 for a full explanation of how this term is defined. 2 Outlook is based on a EUR:USD rate of 1.14 for the remainder of 2026. The outlook and the underlying outlook assumptions are forward-looking statements subject to a number of risks and uncertainties as described or referred to in the Risk Factors section later in this release. Along with Nokia's official outlook target provided above, Nokia provides the below assumptions that support the group level financial outlook for 2026. Full year 2026 Comment Q4 seasonality Nokia assumes a 20% to 24% q-o-q increase in net sales in Q4. Comparable operating profit: Nokia assumes a typically strong q-o-q increase in operating profit in Q4 to deliver full year operating profit above the mid-point of our comparable operating profit outlook. Network Infrastructure net sales growth (1) 12 - 14% This incorporates an updated assumption for combined Optical and IP Networks to grow somewhat above Nokia's prior 18-20% assumption in 2026. Comparable financial income and expenses Positive EUR 300 to 400 million (update) Strong income from Nokia's venture fund investments is leading to an increase in the outlook assumption for 2026. Comparable income tax rate ~26% (update) Nokia's effective tax rate remains sensitive to geographic mix. Cash outflows related to income taxes EUR 500 million Capital expenditures EUR 750 - 850 million (update) Reduced assumption partially due to some changes in real estate plans and the timing of some of the cash impact of manufacturing investments moving to 2027. Nokia's optical manufacturing expansion plans remain on-track, this only relates to timing of some cash payments. Free cash flow conversion from comparable operating profit 35% to 55% (update) Nokia is lowering its FCF conversion assumption due to investments the company is making in working capital during 2026 to secure supply and support the growth opportunity in 2027 along with accelerated restructuring. Nokia is now planning to invest an additional EUR 400 million in working capital this year. Restructuring and associated charges related to cost savings programs EUR 1 100 million (update) Nokia has increased the scale of some of its restructuring programs as it accelerates efforts to simplify the company's operations and location strategy and increase operating leverage in the business going forward. Restructuring and associated cash outflows EUR 800 - 900 million (update) Restructuring and related cash outflows relating to all Nokia restructuring programs. 1 Net sales growth assumption is on a constant currency and portfolio basis. SHAREHOLDER DISTRIBUTION Dividend Under the authorization by the Annual General Meeting held on 9 April 2026, the Board of Directors may resolve on the distribution of an aggregate maximum of EUR 0.14 per share to be paid in respect of financial year 2025. The authorization will be used to distribute dividend and/or assets from the reserve for invested unrestricted equity in four installments during the authorization period unless the Board decides otherwise for a justified reason. On 22 October 2026, the Board resolved to distribute a dividend of EUR 0.03 per share. The dividend record date is 27 October 2026 and the dividend will be paid on 5 November 2026. The actual dividend payment date outside Finland will be determined by the practices of the intermediary banks transferring the dividend payments. Following this announced distribution, the Board\u2019s remaining distribution authorization is a maximum of EUR 0.03 per share. RISK FACTORS Nokia and its businesses are exposed to a number of risks and uncertainties which include but are not limited to: Competitive intensity, which is expected to continue at a high level as some competitors seek to take share; Changes in customer network investments related to their ability to monetize the network or opportunities related to AI and data center growth; Our ability to ensure competitiveness of our product roadmaps and costs through additional R&D investments; Our ability to procure or manufacture certain components (e.g. semiconductors), the costs thereof and our ability to align our inventory levels and supplier commitments with customer demand Disturbance in the global supply chain; Impact of inflation, increased global macro-uncertainty, major currency fluctuations, changes in tariffs and higher interest rates; Potential economic impact and disruption of global pandemics; War or other geopolitical conflicts, disruptions and potential costs thereof; Other macroeconomic, industry and competitive developments; Timing and value of new, renewed and existing patent licensing agreements with licensees; Results in technology licensing; costs to protect and enforce our intellectual property rights; on-going litigation with respect to licensing and regulatory landscape for patent licensing; The outcomes of on-going and potential disputes and litigation; Our ability to execute, complete, successfully integrate and realize the expected benefits from transactions; Timing of completions and acceptances of certain projects; Our product and regional mix; Uncertainty in forecasting income tax expenses and cash outflows, over the long-term, as they are also subject to possible changes due to business mix, the timing of patent licensing cash flow and changes in tax legislation, including potential tax reforms in various countries and OECD initiatives; Our ability to utilize our Finnish deferred tax assets and their recognition on our balance sheet; Our ability to meet our sustainability and other ESG targets, including our targets relating to greenhouse gas emissions; as well the risk factors specified under Forward-looking statements of this release, and our 2025 annual report on Form 20-F published on 5 March 2026 under Operating and financial review and prospects-Risk factors. FORWARD-LOOKING STATEMENTS Certain statements herein that are not historical facts are forward-looking statements. These forward-looking statements reflect Nokia's current expectations and views of future developments and include statements regarding: A) expectations, plans, benefits or outlook related to our strategies, projects, programs, products, growth management, licenses, operational key performance indicators and decisions on market exits; B) expectations, plans or benefits related to future performance of our businesses (including the expected impact, timing and duration of geopolitical conflicts and the general or regional macroeconomic conditions on our businesses, our supply chain, the timing of market changes or turning points in demand and our customers\u2019 businesses) and any future dividends and other distributions of profit; C) expectations and targets regarding financial performance and results of operations, including market share, prices, net sales, income, margins, cash flows, cost savings, the timing of receivables, operating expenses, provisions, impairments, tariffs, taxes, currency exchange rates, hedging, investment funds, inflation, product cost reductions, competitiveness, value creation, revenue generation in any specific region, and licensing income and payments; D) our ability to execute, expectations, plans or benefits related to transactions, investments and changes in organizational structure and operating model; E) impact on revenue with respect to litigation/renewal discussions; and F) any statements preceded by or including \"anticipate\", \u201ccontinue\u201d, \u201cbelieve\u201d, \u201cenvisage\u201d, \u201cexpect\u201d, \u201caim\u201d, \u201cwill\u201d, \u201ctarget\u201d, \u201cmay\u201d, \u201cwould\u201d, \u201ccould\u201c, \"see\", \u201cplan\u201d, \u201censure\u201d or similar expressions. These forward-looking statements are subject to a number of risks and uncertainties, many of which are beyond our control, which could cause our actual results to differ materially from such statements. These statements are based on management\u2019s best assumptions and beliefs in light of the information currently available to them. These forward-looking statements are only predictions based upon our current expectations and views of future events and developments and are subject to risks and uncertainties that are difficult to predict because they relate to events and depend on circumstances that will occur in the future. Factors, including risks and uncertainties that could cause these differences, include those risks and uncertainties identified in the Risk Factors above. ANALYST WEBCAST Nokia's webcast will begin on 22 October 2026 at 3.00 p.m. Finnish time (EEST). The webcast will last approximately 60 minutes. The webcast will be a presentation followed by a Q&A session. Presentation slides will be available for download at www.nokia.com/financials . A link to the webcast will be available at www.nokia.com/financials . Media representatives may join the conference call via the link, where dial-in details are also available. FINANCIAL CALENDAR Nokia plans to publish its fourth quarter and full year 2026 results on 28 January 2027. About Nokia Nokia is a global leader in connectivity infrastructure, enabling the AI supercycle. We build networks that connect intelligence and deliver a comprehensive connectivity solution across fixed, mobile, IP, optical, core, and data center networks. With security by design, AI-driven innovation, and AI-optimized architecture, Nokia delivers trusted infrastructure that enables AI to scale and advances connectivity to secure a brighter world. Inquiries: Nokia Communications Phone: +358 10 448 4900 Email: press.services@nokia.com Maria Vaismaa, Vice President, Corporate Communications Nokia Investor Relations Phone: +358 931 580 507 Email: investor.relations@nokia.com Attachment 2026_Q3_Nokia_ Earnings_release_English",
+      "date": "2026-10-22"
     },
     {
-      "article_id": "b013893c6d2d964e785cb3b3cf36837a",
+      "article_id": "f1a8e150f7eaf457ced2b8ceb17a9a5d",
+      "source": "Nokia",
+      "title": "Nokia advances AI-RAN toward commercial deployment and physical AI, launches sovereign agentic AI platform for telco autonomy with NVIDIA",
+      "link": "https://www.nokia.com/newsroom/nokia-advances-ai-ran-toward-commercial-deployment-and-physical-ai-launches-sovereign-agentic-ai-platform-for-telco-autonomy-with-nvidia/",
+      "score": 3,
+      "ai_insights": null,
+      "source_region": "Other",
+      "summary": "Nokia today announced the next step in how it is bringing AI-native networks to commercial reality with NVIDIA, with new capabilities that apply AI within radio processing, support intelligence close to where data is generated and extend governed AI agents for cross-domain network operations.",
+      "date": "2026-10-21"
+    },
+    {
+      "article_id": "2cc0ffcdc5cfb347d6676cf4de75dba3",
       "source": "ArXiv CS Networking",
-      "title": "Sequence Models for Layer-3 Protocol Emulation",
-      "link": "https://arxiv.org/abs/2609.37697",
+      "title": "ML-OLLA: Link Adaptation for Real-Time Traffic in 5G/6G NTN Systems",
+      "link": "https://arxiv.org/abs/2610.36147",
       "score": 3,
       "ai_insights": null,
       "source_region": "Other",
-      "summary": "arXiv:2609.37697v1 Announce Type: new \nAbstract: This article investigates whether Layer-3 radio-protocol behavior can be represented by compact sequence models suitable for deployment inside the RAN. We introduce the RRC sequence engine (RSE), a hybrid architecture in which a sequence model predicts protocol-dependent message structure while deterministic components retain control over security-sensitive or configured fields and over transport containers. Using NR protocol traces, we show that protocol-aware tokenization, cross-stack context, and explicit placeholders matter more than general-sequence model scale. A purpose-built 11M-parameter Mamba engine achieves 0.90 exact match on the evaluated next-generation Node B (gNB)-side test set with a median generation latency of 115 ms, sufficient for some timers of Layer-3, outperforming a fine-tuned 0.6B-parameter model. We discuss applications in testing, simulation, deployment specialization, and future trainable 6G control planes, as well as the validation, latency, robustness, and security challenges that remain before operational use.",
-      "date": "2026-09-30"
+      "summary": "arXiv:2610.36147v1 Announce Type: new Abstract: Reliable low-latency connectivity for real-time applications is a key requirement for 5G and future 6G non-terrestrial networks. Low Earth Orbit satellites enable global coverage but impose long propagation delays, rapid channel variations, and delayed feedback, which challenge conventional link adaptation algorithms designed for terrestrial networks. To address this problem, the paper proposes a Multi-Level Outer-Loop Link Adaptation (ML-OLLA) algorithm that assigns a dedicated target block error rate and an independent adaptation process for each transmission attempt. With ML-OLLA, early transmission attempts use higher-rate modulation and coding schemes (MCSs), while later ones use more robust MCSs. The core contribution of this work is a low-complexity data-driven parameter selection method that determines ML-OLLA parameters. Numerical results obtained with ns-3 show that the proposed ML-OLLA algorithm increases the system capacity by up to four times and reduces the minimum supported latency budget. In particular, for the 99.9% reliability target, ML-OLLA reduces the minimum supported latency budget from 60 ms to 40 ms compared with the baseline OLLA.",
+      "date": "2026-10-28"
     },
     {
-      "article_id": "bd18b2732b450df875c8096dfa191d31",
-      "source": "Next G Alliance",
-      "title": "From Sustainability as a 6G Design Principle to 3GPP Priorities",
-      "link": "https://nextgalliance.org/from-sustainability-as-a-6g-design-principle-to-3gpp-priorities/",
+      "article_id": "b62078a0fbcc29ee842e00eb6766c250",
+      "source": "SNS JU",
+      "title": "\u20ac22 million to turn Europe\u2019s 6G research into industrial innovation",
+      "link": "https://smart-networks.europa.eu/e22-million-to-turn-europes-6g-research-into-industrial-innovation/",
       "score": 6,
       "ai_insights": null,
       "source_region": "Other",
-      "summary": "<p>The IMT-2030 vision positions sustainability as a key design principle for 6G, centered on improving energy efficiency, lowering lifecycle environmental impacts, and advancing circular economy practices. Building on the energy-efficiency focus of 5G, 6G provides an opportunity to broaden sustainability into a core design principle, spanning network architecture, deployment, operation, lifecycle impact, and broader environmental [&#8230;]</p>\n<p>The post <a href=\"https://nextgalliance.org/from-sustainability-as-a-6g-design-principle-to-3gpp-priorities/\">From Sustainability as a 6G Design Principle to 3GPP Priorities</a> appeared first on <a href=\"https://nextgalliance.org\">Next G Alliance</a>.</p>",
-      "date": "2026-09-04"
+      "summary": "Five selected proposals to strengthen Europe\u2019s leadership in AI-native 6G, large-scale experimentation, connected devices and international partnerships. Riga, 22 October 2026 \u2013 At Techritory 2026, the European Smart Networks and [\u2026] The post \u20ac22 million to turn Europe\u2019s 6G research into industrial innovation appeared first on SNS JU .",
+      "date": "2026-10-22"
     },
     {
-      "article_id": "56bea5dae0f5ea48ab1df5ccfd0df940",
+      "article_id": "9d375a92577fd2b7d5062ba37b29e244",
       "source": "SNS JU",
-      "title": "SNS JU Call 4 & 5 Projects Introduction Webinars",
-      "link": "https://smart-networks.europa.eu/sns-ju-call-4-5-projects-introduction-webinars/",
+      "title": "iTrust6G Final Webinar",
+      "link": "https://smart-networks.europa.eu/itrust6g-final-webinar/",
       "score": 3,
       "ai_insights": null,
       "source_region": "Other",
-      "summary": "<p>The European Smart Networks and Services Joint Undertaking (SNS JU) is a Public-Private Partnership that aims to facilitate and develop industrial leadership in Europe in 5G and 6G networks and [&#8230;]</p>\n<p>The post <a href=\"https://smart-networks.europa.eu/sns-ju-call-4-5-projects-introduction-webinars/\">SNS JU Call 4 &#038; 5 Projects Introduction Webinars</a> appeared first on <a href=\"https://smart-networks.europa.eu\">SNS JU</a>.</p>",
+      "summary": "Join us for the iTrust6G Final Webinar: Project Innovations and Achievements and discover how we are helping shape the future of trustworthy, resilient, and secure 6G networks. iTrust6G project has [\u2026] The post iTrust6G Final Webinar appeared first on SNS JU .",
+      "date": "2026-10-27"
+    },
+    {
+      "article_id": "9c98f724f97817f055f5c54b2920c763",
+      "source": "SNS JU",
+      "title": "6G-PATH Training Session 4: Secure API Access + Policy Enforcement",
+      "link": "https://smart-networks.europa.eu/6g-path-training-session-4-secure-api-access-policy-enforcement/",
+      "score": 3,
+      "ai_insights": null,
+      "source_region": "Other",
+      "summary": "The fourth session of the 6G-PATH T5.3 Tutorials & Third-Party Training series takes place online on Tuesday, 27 October 2026, 15:00\u201316:00 CET. It focuses on security and policy enforcement and [\u2026] The post 6G-PATH Training Session 4: Secure API Access + Policy Enforcement appeared first on SNS JU .",
+      "date": "2026-10-26"
+    },
+    {
+      "article_id": "944dc79273418258382a290d2b68edde",
+      "source": "SNS JU",
+      "title": "SUSTAIN-6G Webinar: (A methodology for) Defining 6G Sustainability Requirements from a Value/KVI Perspective",
+      "link": "https://smart-networks.europa.eu/sustain-6g-webinar-a-methodology-for-defining-6g-sustainability-requirements-from-a-value-kvi-perspective/",
+      "score": 3,
+      "ai_insights": null,
+      "source_region": "Other",
+      "summary": "How can sustainability principles be translated into measurable indicators that influence the design of future 6G systems? In this public webinar, which will be organised on Thursday 12 November 2026 [\u2026] The post SUSTAIN-6G Webinar: (A methodology for) Defining 6G Sustainability Requirements from a Value/KVI Perspective appeared first on SNS JU .",
+      "date": "2026-10-21"
+    },
+    {
+      "article_id": "87928620463975b67b68874d09a36b9a",
+      "source": "SNS JU",
+      "title": "6G-DALI Hackathon \u2013 Connect, Experiment and Share through the 6G Data Space",
+      "link": "https://smart-networks.europa.eu/6g-dali-hackathon-connect-experiment-and-share-through-the-6g-data-space/",
+      "score": 3,
+      "ai_insights": null,
+      "source_region": "Other",
+      "summary": "Event: 6G-DALI Hackathon \u2013 Connect, Experiment and Share through the 6G Data Space Conference: IEEE CloudNet 2026 Location: Athens, Greece Organisers: 6G-DALI project, in collaboration with NATWORK Event announcement: https://6gdali.eu/6g-dali-hackathon-connect-experiment-and-share-through-the-6g-data-space/ [\u2026] The post 6G-DALI Hackathon \u2013 Connect, Experiment and Share through the 6G Data Space appeared first on SNS JU .",
+      "date": "2026-10-15"
+    },
+    {
+      "article_id": "246c031e0e8ef46f185a85cff728581a",
+      "source": "SNS JU",
+      "title": "6G KVIs \u2013 SNS Projects Target Values and Survey Results 2026 \u2013 New SNS JU White Paper (October 2026)",
+      "link": "https://smart-networks.europa.eu/6g-kvis-sns-projects-target-values-and-survey-results-2026-new-sns-ju-white-paper-october-2026/",
+      "score": 3,
+      "ai_insights": null,
+      "source_region": "Other",
+      "summary": "6G KVIs \u2013 SNS Projects Target Values and Survey Results 2026 \u2013 New SNS JU White Paper (October 2026) The Smart Networks and Services Joint Undertaking (SNS JU) Test, Measurement, [\u2026] The post 6G KVIs \u2013 SNS Projects Target Values and Survey Results 2026 \u2013 New SNS JU White Paper (October 2026) appeared first on SNS JU .",
+      "date": "2026-10-13"
+    },
+    {
+      "article_id": "c3099283c9bdec266a0124904f48514a",
+      "source": "SNS JU",
+      "title": "6G-Cloud Uncovered: Service-Oriented RAN and Network of Networks in Action",
+      "link": "https://smart-networks.europa.eu/6g-cloud-uncovered-service-oriented-ran-and-network-of-networks-in-action/",
+      "score": 3,
+      "ai_insights": null,
+      "source_region": "Other",
+      "summary": "How can future 6G networks become more flexible, programmable and capable of operating across heterogeneous network and cloud domains? On 13 October 2026 at 14:00 CEST, the 6G-Cloud project invites [\u2026] The post 6G-Cloud Uncovered: Service-Oriented RAN and Network of Networks in Action appeared first on SNS JU .",
+      "date": "2026-10-02"
+    },
+    {
+      "article_id": "0e85c86bc2497ce7cc3803bbc636f6b8",
+      "source": "SNS JU",
+      "title": "SNS JU Call 4 & 5 Projects Introduction Webinar",
+      "link": "https://smart-networks.europa.eu/sns-ju-call-4-5-projects-introduction-webinar/",
+      "score": 3,
+      "ai_insights": null,
+      "source_region": "Other",
+      "summary": "The European Smart Networks and Services Joint Undertaking (SNS JU) is a Public-Private Partnership that aims to facilitate and develop industrial leadership in Europe in 5G and 6G networks and [\u2026] The post SNS JU Call 4 & 5 Projects Introduction Webinar appeared first on SNS JU .",
       "date": "2026-09-30"
     },
     {
-      "article_id": "52f1b62d55eb1defaef953730c980267",
-      "source": "SNS JU",
-      "title": "6G PATH Webinar: \u2018From Research Outputs to Real-World Impact\u2019 on the 29th September 2026",
-      "link": "https://smart-networks.europa.eu/6g-path-webinar-from-research-outputs-to-real-world-impact-on-the-29th-september-2026/",
-      "score": 3,
+      "article_id": "56ff8a784cb2fc8ad4dfb189a592c430",
+      "source": "SK Telecom News",
+      "title": "\uc5d0\uc774\ub2f7 \uc804\ud654\uc5d0 KISA \uc74c\uc131\uc2a4\ud338 \uc2e0\uace0 \uae30\ub2a5\uc774 \ucd94\uac00\ub418\uc5c8\uc2b5\ub2c8\ub2e4",
+      "link": "https://news.sktelecom.com/231872",
+      "score": 2,
       "ai_insights": null,
       "source_region": "Other",
-      "summary": "<p>29 September 2026 &#124; 14:00\u201315:30 UK time &#124; Online The 6G-PATH project is hosting a webinar exploring how research and innovation projects can identify, assess and communicate their wider impact. [&#8230;]</p>\n<p>The post <a href=\"https://smart-networks.europa.eu/6g-path-webinar-from-research-outputs-to-real-world-impact-on-the-29th-september-2026/\">6G PATH Webinar: &#8216;From Research Outputs to Real-World Impact&#8217; on the 29th September 2026</a> appeared first on <a href=\"https://smart-networks.europa.eu\">SNS JU</a>.</p>",
-      "date": "2026-09-23"
+      "summary": "SK\ud154\ub808\ucf64\uc774 \ud55c\uad6d\uc778\ud130\ub137\uc9c4\ud765\uc6d0(KISA)\uc640 \ud611\ub825\ud574 \uc5d0\uc774\ub2f7(A.) \uc804\ud654\uc5d0 \u2018\uc74c\uc131\uc2a4\ud338 \uc2e0\uace0\u2019 \uae30\ub2a5\uc744 \uc774\ub3d9\ud1b5\uc2e0\uc0ac \uc911 \ucd5c\ucd08\ub85c \uc801\uc6a9\ud588\uc2b5\ub2c8\ub2e4. \uadf8\ub3d9\uc548 \uc2a4\ud338 \uc804\ud654\ub97c \ubc1b\uc740 \ud654\uba74\uc5d0\uc11c \ubc14\ub85c \uc2e0\uace0\ud558\ub294 \uac04\ud3b8 \uc2e0\uace0 \uc11c\ube44\uc2a4\ub294 \uc77c\ubd80 \ub2e8\ub9d0 \uc81c\uc870\uc0ac\uc758 \uae30\ubcf8 \uc804\ud654 \uc571\uc5d0\uc11c\ub9cc \uc81c\uacf5\ub410\uc73c\ub098, \uc774\ubc88\uc5d0 The post \uc5d0\uc774\ub2f7 \uc804\ud654\uc5d0 KISA \uc74c\uc131\uc2a4\ud338 \uc2e0\uace0 \uae30\ub2a5\uc774 \ucd94\uac00\ub418\uc5c8\uc2b5\ub2c8\ub2e4 first appeared on SK\ud154\ub808\ucf64 \ub274\uc2a4\ub8f8 .",
+      "date": "2026-10-12"
     },
     {
-      "article_id": "80ad0d5e3b891c5f3f48bfea9b1dceef",
-      "source": "Samsung Newsroom",
-      "title": "Samsung and Verizon Complete Successful ISAC Trial Over Virtualized Network at Global Sports Event",
-      "link": "https://news.samsung.com/global/samsung-and-verizon-complete-successful-isac-trial-over-virtualized-network-at-global-sports-event",
+      "article_id": "67b08003602a9065b1d92db18f53cda8",
+      "source": "RCR Wireless",
+      "title": "Satellite land-grab, tower premiums, 6G money problems (Telco Diary)",
+      "link": "https://rcrwireless.com/20261028/opinion/satellite-land-grab-tower-premiums-6g-money-problems-telco-diary",
       "score": 3,
       "ai_insights": null,
       "source_region": "Other",
-      "summary": "Samsung Electronics and Verizon have successfully completed an Integrated Sensing and Communication (ISAC) trial at a major international soccer fan event in Dallas, Texas, enabling real-time sensing-driven intelligence across a virtualized network. This landmark milestone represents one of the industry\u2019s first practical implementations of a key technology for 6G, signaling how operators are leveraging software-driven [\u2026]",
-      "date": "2026-09-14"
+      "summary": "From the newsletter (October 28; sign-up or follow if you want it sooner): Amazon Leo\u2019s $11.5bn Globalstar deal intensifies the direct-to-device satellite race, while Bell Canada\u2019s tower valuation highlights infrastructure\u2019s\u2026",
+      "date": "2026-10-28"
+    },
+    {
+      "article_id": "2bbf0e1fe798544d4e6c30d3d78234aa",
+      "source": "RCR Wireless",
+      "title": "Monetizing 6G: sensing first, gigabits second",
+      "link": "https://rcrwireless.com/20261027/6g/monetizing-6g-sensing-business-case",
+      "score": 3,
+      "ai_insights": null,
+      "source_region": "Other",
+      "summary": "Sensing, physical AI and spectrum lead the 6G business case In sum \u2013 what to know: 6G monetization will depend on selling business outcomes and intelligent automation rather than connectivity\u2026",
+      "date": "2026-10-27"
+    },
+    {
+      "article_id": "ecf5d1be962a7e37c5894cc66cecf58d",
+      "source": "RCR Wireless",
+      "title": "AI needs more than incremental 6G fixes, says Verizon \u2013 as uplink ratio shifts 1:1, LA28 looms",
+      "link": "https://rcrwireless.com/20261027/carriers/ai-needs-more-than-incremental-6g-fixes-says-verizon-as-uplink-ratio-shifts-11-la28-looms",
+      "score": 3,
+      "ai_insights": null,
+      "source_region": "Other",
+      "summary": "Verizon CTO Yago Tenorio says 6G needs an architectural rethink to handle AI-driven uplink demand, avoid repeating 5G\u2019s standardization mistakes, and embed autonomous network operations and commercial use cases from\u2026",
+      "date": "2026-10-27"
+    },
+    {
+      "article_id": "d22f0c720b5c085d7115cc672edc1921",
+      "source": "Fierce Wireless",
+      "title": "HPE unifies visibility of wired, wireless and SASE solutions",
+      "link": "https://www.fierce-network.com/newswire/hpe-unifies-visibility-wired-wireless-and-sase-solutions",
+      "score": 3,
+      "ai_insights": null,
+      "source_region": "Other",
+      "summary": "HPE unifies EdgeConnect, HPE Mist and HPE Aruba Central under an AI-native framework, delivering end-to-end network and security visibility from edge to cloud.",
+      "date": "2026-10-28"
+    },
+    {
+      "article_id": "a161cabec9cdc16f49e1d11a6d9de385",
+      "source": "Light Reading",
+      "title": "Eurobites: KPN plays the 'sovereign' card on email service",
+      "link": "https://www.lightreading.com/security/eurobites-kpn-plays-the-sovereign-card-on-email-service",
+      "score": 3,
+      "ai_insights": null,
+      "source_region": "Other",
+      "summary": "Also in today's EMEA regional roundup: O2, Nokia test AI-RAN in London; Ofcom counts the customer complaints; DNA climbs aboard the 6G-Rocket.",
+      "date": "2026-10-26"
+    },
+    {
+      "article_id": "6f782ccb18fd9d4ea716bcd14bb2c6fb",
+      "source": "Light Reading",
+      "title": "Verizon revamps FWA with mmWave 'breakthrough' to match fiber speeds",
+      "link": "https://www.lightreading.com/fixed-wireless-access/verizon-revamps-fwa-with-mmwave-breakthrough-to-match-fiber-speeds",
+      "score": 2,
+      "ai_insights": null,
+      "source_region": "Other",
+      "summary": "Verizon reveals 1-Gig FWA service using millimeter wave to add 10 to 15 million high-speed broadband premises as overall Q3 subscriber growth surges.",
+      "date": "2026-10-26"
     }
   ],
   "standardization": {
@@ -86,7 +218,7 @@
       "in_progress": 25,
       "postponed": 5,
       "progress_percentage": 33.3,
-      "last_updated": "2026-10-01",
+      "last_updated": "2026-10-28",
       "data_source": "sample",
       "work_items_by_group": {
         "RAN1": {
@@ -128,60 +260,60 @@
     },
     "recent_meetings": [
       {
-        "meeting_id": "Templates",
+        "meeting_id": "TSGR1_128",
         "working_group": "RAN1",
-        "date": "2026-10-01",
-        "location": "TBD",
+        "date": "2026-10-28",
+        "location": "3GPP",
         "key_agreements": [],
         "tdoc_references": [],
         "sentiment": "neutral",
         "data_source": "live"
       },
       {
-        "meeting_id": "Tdoc_index",
+        "meeting_id": "TSGR1_128b",
         "working_group": "RAN1",
-        "date": "2026-10-01",
-        "location": "TBD",
+        "date": "2026-10-28",
+        "location": "3GPP",
         "key_agreements": [],
         "tdoc_references": [],
         "sentiment": "neutral",
         "data_source": "live"
       },
       {
-        "meeting_id": "TSGR1_AH",
+        "meeting_id": "TSGR1_127",
         "working_group": "RAN1",
-        "date": "2026-10-01",
-        "location": "TBD",
+        "date": "2026-10-28",
+        "location": "3GPP",
         "key_agreements": [],
         "tdoc_references": [],
         "sentiment": "neutral",
         "data_source": "live"
       },
       {
-        "meeting_id": "drafting_meetings",
+        "meeting_id": "TSGS2_179_Incheon_2027-02",
         "working_group": "SA2",
-        "date": "2026-10-01",
-        "location": "TBD",
+        "date": "2026-10-28",
+        "location": "Incheon 2027-02",
         "key_agreements": [],
         "tdoc_references": [],
         "sentiment": "neutral",
         "data_source": "live"
       },
       {
-        "meeting_id": "_Doc_List_Archive",
+        "meeting_id": "TSGS2_178-AH-e_Electronic_2027-01",
         "working_group": "SA2",
-        "date": "2026-10-01",
-        "location": "TBD",
+        "date": "2026-10-28",
+        "location": "Electronic 2027-01",
         "key_agreements": [],
         "tdoc_references": [],
         "sentiment": "neutral",
         "data_source": "live"
       },
       {
-        "meeting_id": "TSGS2_99_Xiamen",
+        "meeting_id": "TSGS2_178_Calgary_2026-11",
         "working_group": "SA2",
-        "date": "2026-10-01",
-        "location": "TBD",
+        "date": "2026-10-28",
+        "location": "Calgary 2026-11",
         "key_agreements": [],
         "tdoc_references": [],
         "sentiment": "neutral",
@@ -225,5 +357,6 @@
         "progress": 14.3
       }
     }
-  }
+  },
+  "executive_briefing": "\n        <div class=\"briefing-card\">\n            <h3>Strategic Overview</h3>\n            <p>Across <strong>19</strong> tracked signals this cycle, the 6G landscape is increasingly shaped by <strong>AI-native RAN, sub-THz, ISAC, NTN, standardization</strong>.</p>\n            <h3>Standardization Velocity</h3>\n            <p>3GPP Release 21 progress currently stands at <strong>33.3%</strong> (45 tracked work items across RAN &amp; SA working groups).</p>\n            <h3>Geopolitical Signals</h3>\n            <p>Cross-regional activity highlights intensifying collaboration across North America, Europe, and Asia-Pacific on AI-RAN architecture, spectrum allocation, and IMT-2030 timelines.</p>\n        </div>\n        "
 }
