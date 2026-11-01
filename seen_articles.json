@@ -1,64 +1,4 @@
 {
-  "0e71031f7f44197d8e407b7784d3e7a8": {
-    "url": "https://www.nokia.com/newsroom/inseego-to-acquire-nokias-fixed-wireless-access-business-to-create-a-global-wireless-broadband-leader/",
-    "title": "Inseego to acquire Nokia's Fixed Wireless Access business to create a global wireless broadband leader",
-    "processed_date": "2026-05-03"
-  },
-  "09698dad6fcbb075bfb7002fe4f244dd": {
-    "url": "https://www.nokia.com/newsroom/nokia-and-orange-advance-airan-innovation-with-nvidia/",
-    "title": "Nokia and Orange advance AI\u2011RAN innovation with NVIDIA",
-    "processed_date": "2026-05-03"
-  },
-  "2a5b999f8e2ed2d6ed0c5f4eacfae9ee": {
-    "url": "https://www.thalesgroup.com/en/news-centre/press-releases/denmark-has-selected-european-samp/t-ng-most-advanced-mobile-ground-air",
-    "title": "Denmark has selected the European SAMP/T NG, the most advanced mobile ground-to-air defence system to ensure the airspace protection",
-    "processed_date": "2026-05-03"
-  },
-  "9f933739294b1680d3fa3c8cb8d3207c": {
-    "url": "https://nextgalliance.org/technology-roadmap-working-group-digital-twin-panel/",
-    "title": "Technology Roadmap Working Group: Digital Twin Panel",
-    "processed_date": "2026-05-03"
-  },
-  "4fad176643d71a02df012ef9ed70fb98": {
-    "url": "https://nextgalliance.org/from-6g-study-to-market-focus-insights-from-the-next-g-alliance-use-case-prioritization-2/",
-    "title": "From 6G Study to Market Focus: Insights from the Next G Alliance Use Case Prioritization",
-    "processed_date": "2026-05-03"
-  },
-  "cf1032b9a3891c2a3640d9437d5b21b6": {
-    "url": "https://smart-networks.europa.eu/sns-ju-launches-2026-call-for-microelectronics-to-secure-europes-6g-future/",
-    "title": "SNS JU Launches 2026 Call for Microelectronics to Secure Europe\u2019s 6G Future",
-    "processed_date": "2026-05-03"
-  },
-  "83acc7235318c5db667380daa1b07a30": {
-    "url": "https://smart-networks.europa.eu/tracking-impact-in-europes-6g-ecosystem-inside-the-sns-ju-tracker-suite/",
-    "title": "Tracking Impact in Europe\u2019s 6G Ecosystem: Inside the SNS JU Trackers Suite",
-    "processed_date": "2026-05-03"
-  },
-  "807132cc7355e0f1a9b84315df4f6a17": {
-    "url": "https://smart-networks.europa.eu/sns-ju-6g-path-6g-sandbox-and-fidal-projects-webinar-series-topic-2-education-media-entertainment/",
-    "title": "SNS JU 6G-PATH, 6G-SANDBOX, and FIDAL projects Webinar Series \u2013 Topic 2: Education, Media & Entertainment",
-    "processed_date": "2026-05-03"
-  },
-  "3ec02077ae6472b2fe7ba2a19ca8096a": {
-    "url": "https://6gworld.com/evaluating-6g-phy-evolution-what-the-industry-is-really-trying-to-solve/",
-    "title": "Evaluating 6G PHY Evolution: What the Industry Is Really Trying to Solve",
-    "processed_date": "2026-05-03"
-  },
-  "36c725bab72565048f2f1f3c0ac3d1a4": {
-    "url": "https://www.mobileworldlive.com/ai-cloud/openai-circles-target-ai-telco-shake-up/",
-    "title": "OpenAI, Circles target AI telco shake-up",
-    "processed_date": "2026-05-03"
-  },
-  "238eb6b9aa5bfbf888e6e45227dac3bb": {
-    "url": "https://onlinelibrary.wiley.com/doi/10.4218/etrij.2025-0033?af=R",
-    "title": "Group reflection\u2010based reconfigurable intelligent surfaces assisted 6G wireless networks",
-    "processed_date": "2026-05-03"
-  },
-  "e584e048483518941b4e47a8348ed966": {
-    "url": "https://www.gsma.com/newsroom/press-release/gsma-report-urges-japan-to-take-bold-action-to-convert-technical-excellence-into-global-digital-leadership/",
-    "title": "GSMA\u00a0Report Urges\u00a0Japan\u00a0to\u00a0Take Bold Action to Convert Technical Excellence into Global Digital Leadership",
-    "processed_date": "2026-05-03"
-  },
   "2a918a59c385975cff585aad33773eba": {
     "url": "https://www.nokia.com/newsroom/nokia-launches-ai-networking-lab-to-drive-co-innovation-with-partners-and-accelerate-next-era-of-ai-native-data-center-networking/",
     "title": "Nokia launches AI networking lab to drive co-innovation with partners and accelerate next era of AI-native data center networking",
@@ -373,5 +313,90 @@
     "url": "https://news.samsung.com/global/samsung-and-verizon-complete-successful-isac-trial-over-virtualized-network-at-global-sports-event",
     "title": "Samsung and Verizon Complete Successful ISAC Trial Over Virtualized Network at Global Sports Event",
     "processed_date": "2026-10-01"
+  },
+  "8d924140a923bab7b11e57e2f5b42221": {
+    "url": "https://www.nokia.com/newsroom/nokia-corporation-interim-report-for-q3-2026/",
+    "title": "Nokia Corporation Interim Report for Q3 2026",
+    "processed_date": "2026-11-01"
+  },
+  "f1a8e150f7eaf457ced2b8ceb17a9a5d": {
+    "url": "https://www.nokia.com/newsroom/nokia-advances-ai-ran-toward-commercial-deployment-and-physical-ai-launches-sovereign-agentic-ai-platform-for-telco-autonomy-with-nvidia/",
+    "title": "Nokia advances AI-RAN toward commercial deployment and physical AI, launches sovereign agentic AI platform for telco autonomy with NVIDIA",
+    "processed_date": "2026-11-01"
+  },
+  "72b66d85e93e1bcad256f3984e4f0cee": {
+    "url": "https://www.nokia.com/newsroom/nokia-and-softbank-corp-agree-to-conduct-commercial-ai-ran-field-trial-in-japan/",
+    "title": "Nokia and SoftBank Corp. agree to conduct commercial AI-RAN field trial in Japan",
+    "processed_date": "2026-11-01"
+  },
+  "9d375a92577fd2b7d5062ba37b29e244": {
+    "url": "https://smart-networks.europa.eu/itrust6g-final-webinar/",
+    "title": "iTrust6G Final Webinar",
+    "processed_date": "2026-11-01"
+  },
+  "9c98f724f97817f055f5c54b2920c763": {
+    "url": "https://smart-networks.europa.eu/6g-path-training-session-4-secure-api-access-policy-enforcement/",
+    "title": "6G-PATH Training Session 4: Secure API Access + Policy Enforcement",
+    "processed_date": "2026-11-01"
+  },
+  "b62078a0fbcc29ee842e00eb6766c250": {
+    "url": "https://smart-networks.europa.eu/e22-million-to-turn-europes-6g-research-into-industrial-innovation/",
+    "title": "\u20ac22 million to turn Europe\u2019s 6G research into industrial innovation",
+    "processed_date": "2026-11-01"
+  },
+  "944dc79273418258382a290d2b68edde": {
+    "url": "https://smart-networks.europa.eu/sustain-6g-webinar-a-methodology-for-defining-6g-sustainability-requirements-from-a-value-kvi-perspective/",
+    "title": "SUSTAIN-6G Webinar: (A methodology for) Defining 6G Sustainability Requirements from a Value/KVI Perspective",
+    "processed_date": "2026-11-01"
+  },
+  "87928620463975b67b68874d09a36b9a": {
+    "url": "https://smart-networks.europa.eu/6g-dali-hackathon-connect-experiment-and-share-through-the-6g-data-space/",
+    "title": "6G-DALI Hackathon \u2013 Connect, Experiment and Share through the 6G Data Space",
+    "processed_date": "2026-11-01"
+  },
+  "246c031e0e8ef46f185a85cff728581a": {
+    "url": "https://smart-networks.europa.eu/6g-kvis-sns-projects-target-values-and-survey-results-2026-new-sns-ju-white-paper-october-2026/",
+    "title": "6G KVIs \u2013 SNS Projects Target Values and Survey Results 2026 \u2013 New SNS JU White Paper (October 2026)",
+    "processed_date": "2026-11-01"
+  },
+  "c3099283c9bdec266a0124904f48514a": {
+    "url": "https://smart-networks.europa.eu/6g-cloud-uncovered-service-oriented-ran-and-network-of-networks-in-action/",
+    "title": "6G-Cloud Uncovered: Service-Oriented RAN and Network of Networks in Action",
+    "processed_date": "2026-11-01"
+  },
+  "43d6a372e10dd92c1fa3306e0abd1e26": {
+    "url": "https://rcrwireless.com/20261029/networks/direct-to-device-orange-kyivstar",
+    "title": "Direct-to-device leaves the lab as Orange, Skylo and Kyivstar sell continuity",
+    "processed_date": "2026-11-01"
+  },
+  "d60034a4b1c3c8b888a6f034d4ee81dc": {
+    "url": "https://rcrwireless.com/20261029/6g/building-the-6g-standard",
+    "title": "Building the 6G standard: Narrowing the path to Release 21",
+    "processed_date": "2026-11-01"
+  },
+  "67b08003602a9065b1d92db18f53cda8": {
+    "url": "https://rcrwireless.com/20261028/opinion/satellite-land-grab-tower-premiums-6g-money-problems-telco-diary",
+    "title": "Satellite land-grab, tower premiums, 6G money problems (Telco Diary)",
+    "processed_date": "2026-11-01"
+  },
+  "39494145b9c45f0bb6e9eb8f3a2d7464": {
+    "url": "https://www.lightreading.com/fixed-wireless-access/uk-mmwave-vendor-cbng-collapses-after-losing-verizon-deal",
+    "title": "UK mmWave vendor CBNG collapses after losing Verizon deal",
+    "processed_date": "2026-11-01"
+  },
+  "5b3ec0c2802cb94a61ee5d394b72ba2b": {
+    "url": "https://www.lightreading.com/6g/t-mobile-we-ll-be-first-with-6g-and-no-to-spacex-mvno",
+    "title": "T-Mobile: We'll be first with 6G, and no to SpaceX MVNO",
+    "processed_date": "2026-11-01"
+  },
+  "6f782ccb18fd9d4ea716bcd14bb2c6fb": {
+    "url": "https://www.lightreading.com/fixed-wireless-access/verizon-revamps-fwa-with-mmwave-breakthrough-to-match-fiber-speeds",
+    "title": "Verizon revamps FWA with mmWave 'breakthrough' to match fiber speeds",
+    "processed_date": "2026-11-01"
+  },
+  "a161cabec9cdc16f49e1d11a6d9de385": {
+    "url": "https://www.lightreading.com/security/eurobites-kpn-plays-the-sovereign-card-on-email-service",
+    "title": "Eurobites: KPN plays the 'sovereign' card on email service",
+    "processed_date": "2026-11-01"
   }
 }
