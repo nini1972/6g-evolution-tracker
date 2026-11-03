@@ -6,7 +6,7 @@ Add or remove entries here without touching core pipeline logic.
 
 FEEDS = {
     # === Telecom Equipment Vendors ===
-    "Ericsson": "https://www.ericsson.com/en/blog/rss",
+    "Ericsson": "https://feeds.feedburner.com/ericsson/feeds/newscenter",
     "Nokia": "https://www.nokia.com/newsroom/feed/en-us/",
     "Thales": "https://www.thalesgroup.com/en/rss.xml",
     "NEC Global": "https://www.nec.com/en/press/rss.xml",          # Japan: NEC R&D and enterprise tech
@@ -14,7 +14,7 @@ FEEDS = {
     # === Research & Academia ===
     "MDPI Engineering": "https://www.mdpi.com/rss",
     "IEEE Spectrum": "https://spectrum.ieee.org/feeds/feed.rss",
-    "ArXiv CS Networking": "https://rss.arxiv.org/rss/cs.NI",
+    "ArXiv CS Networking": "https://export.arxiv.org/api/query?search_query=cat:cs.NI+AND+all:6G&sortBy=submittedDate&sortOrder=descending&max_results=25",
     "ETRI Journal": "https://onlinelibrary.wiley.com/feed/22337326/most-recent",  # Korea: Electronics and Telecom Research Institute
 
     # === Regional Initiatives & Alliances ===

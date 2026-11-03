@@ -12,7 +12,7 @@ class SynthesisAgent:
     Identifies trends, regional shifts, and standardization bottlenecks.
     """
 
-    def __init__(self, gemini_client=None, model: str = "gemini-2.5-flash"):
+    def __init__(self, gemini_client=None, model: str = "gemini-3-flash-preview"):
         self.client = gemini_client
         self.model = model
 
@@ -47,7 +47,7 @@ class SynthesisAgent:
                     f"Regional Signals based on these recent articles:\n{headlines}"
                 )
                 resp = None
-                for m in dict.fromkeys([self.model, "gemini-3-flash-preview", "gemini-2.5-flash"]):
+                for m in dict.fromkeys(["gemini-3-flash-preview" if self.model.startswith("gemini-2.5-") else self.model, "gemini-3-flash-preview", "gemini-2.5-flash"]):
                     try:
                         resp = self.client.models.generate_content(
                             model=m, contents=prompt

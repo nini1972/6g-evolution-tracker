@@ -221,7 +221,7 @@ class PlaywrightFetcher(BaseFetcher):
         if self._looks_like_feed_xml(content):
             return False
 
-        if status_code in (401, 403, 429, 503):
+        if status_code >= 400:
             return True
 
         # Inspect only <title> and short challenge bodies to avoid matching normal article words

@@ -40,7 +40,12 @@ LOG_FILE = str(DIGESTS_DIR / f"6g_digest_{DATE}.md")
 # 🤖 Gemini AI Config
 _api_key = os.getenv("GOOGLE_API_KEY", "").strip()
 client = genai.Client(api_key=_api_key) if _api_key else None
-model = os.getenv("GEMINI_MODEL", "gemini-2.5-flash")
+_raw_model = os.getenv("GEMINI_MODEL", "gemini-3-flash-preview").strip()
+model = (
+    "gemini-3-flash-preview"
+    if not _raw_model or _raw_model.startswith("gemini-2.5-")
+    else _raw_model
+)
 
 
 # ---------------------------------------------------------------------------
