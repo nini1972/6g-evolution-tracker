@@ -398,5 +398,155 @@
     "url": "https://www.lightreading.com/security/eurobites-kpn-plays-the-sovereign-card-on-email-service",
     "title": "Eurobites: KPN plays the 'sovereign' card on email service",
     "processed_date": "2026-11-01"
+  },
+  "63afbff255761aa8c42a6d6783d6f052": {
+    "url": "https://www.ericsson.com/en/news/2026/11/telia_sweden_and_ericsson_collaborate_on_the_path_to_6g",
+    "title": "Telia Sweden and Ericsson collaborate on the path to 6G",
+    "processed_date": "2026-11-03"
+  },
+  "a72ca28c5b907d8adcd7ca78353c2b93": {
+    "url": "https://www.ericsson.com/en/news/2026/10/sweden-launches-national-arena-for-5g-6g-and-ai-innovation",
+    "title": "From Lab to Life: Sweden launches national arena for 5G, 6G and AI innovation",
+    "processed_date": "2026-11-03"
+  },
+  "65ba5224b54daf4762d9f6ca1c1e3147": {
+    "url": "https://www.ericsson.com/en/press-releases/2/2026/singtel-and-ericsson-deepen-partnership-to-scale-5g-innovation-and-build-ai-native-networks-for-consumers-and-enterprises-in-singapore",
+    "title": "Singtel and Ericsson deepen partnership to scale 5G innovation and build AI-native networks for consumers and enterprises in Singapore",
+    "processed_date": "2026-11-03"
+  },
+  "99c60c300881c5f05dbff2e7cda9f29e": {
+    "url": "https://arxiv.org/abs/2611.02913v1",
+    "title": "Multipartite FSO/QKD with N-GHZ States for Scalable Secure Group Key Distribution",
+    "processed_date": "2026-11-03"
+  },
+  "204668d9a262132393e5efe91671fbb3": {
+    "url": "https://arxiv.org/abs/2610.41836v1",
+    "title": "6G-Enabled Cooperative Connected and Automated Mobility: Are We There Yet?",
+    "processed_date": "2026-11-03"
+  },
+  "5a4e76f692a415749ea731aa8c504c66": {
+    "url": "https://arxiv.org/abs/2610.41563v1",
+    "title": "ORION: An Outcome-Driven LLM Advisor for RL-Based Multi-Domain 6G Slice Placement",
+    "processed_date": "2026-11-03"
+  },
+  "3799c3857f7f7fd4d6eb406d43b24211": {
+    "url": "https://arxiv.org/abs/2610.40306v1",
+    "title": "True 3D Holography: A Communication Service of Tomorrow and Its Requirements for a New Converged Cloud and Network Architecture on the Path to 6G",
+    "processed_date": "2026-11-03"
+  },
+  "cb887710e8665305fbb27554845bb8dd": {
+    "url": "https://arxiv.org/abs/2610.36147v1",
+    "title": "ML-OLLA: Link Adaptation for Real-Time Traffic in 5G/6G NTN Systems",
+    "processed_date": "2026-11-03"
+  },
+  "a7866e23254ce215d44d20dcd7cbb669": {
+    "url": "https://arxiv.org/abs/2610.35649v1",
+    "title": "RLNC vs Reed-Solomon in Satellite Channels: Crossover Analysis and the Bridging Property",
+    "processed_date": "2026-11-03"
+  },
+  "999ae24eaf6d3f02853a41f6752615d3": {
+    "url": "https://arxiv.org/abs/2610.34357v2",
+    "title": "6G Reasoning Agent Societies: Composition, Scaling, and Consistency-Time Laws",
+    "processed_date": "2026-11-03"
+  },
+  "4d3f22ab2cd38916614bbfeefe5ac3cf": {
+    "url": "https://arxiv.org/abs/2610.33526v1",
+    "title": "Security evaluation of 6G-oriented and O-RAN networks through targeted attacks",
+    "processed_date": "2026-11-03"
+  },
+  "4286d0cde5f3711ad8a1d25efb067b9b": {
+    "url": "https://arxiv.org/abs/2610.29236v1",
+    "title": "Energy-Efficient Timely Relevant IoT Data Retrieval with Wireless Memory Approximation",
+    "processed_date": "2026-11-03"
+  },
+  "a54b6ac07a106d9ef6eb9123c5f9262c": {
+    "url": "https://arxiv.org/abs/2610.28097v1",
+    "title": "Evict Early, Decode Efficiently: Lightweight Decoding Strategies for Low-Delay Sliding Window RLNC",
+    "processed_date": "2026-11-03"
+  },
+  "870f11cf0d198f96be4b9aab83603cdc": {
+    "url": "https://arxiv.org/abs/2610.27797v1",
+    "title": "Toward Agentic AI for the 6G Physical Layer: From Algorithm Discovery to Verified Baseband Silicon",
+    "processed_date": "2026-11-03"
+  },
+  "9ae0799c47d74493fcc44af1601333cc": {
+    "url": "https://arxiv.org/abs/2610.22848v1",
+    "title": "LLM-Guided Dual-Stage Latency Optimization for Closed-Loop 6G V2I Digital Twins",
+    "processed_date": "2026-11-03"
+  },
+  "353eb458b5ee12ab6e104353ee90f7db": {
+    "url": "https://arxiv.org/abs/2610.17296v1",
+    "title": "Towards Resilience: Slice-Driven Orchestration of Mobile IoMT in 6G-Edge-Continuum",
+    "processed_date": "2026-11-03"
+  },
+  "eecf4fe774bea267cfcf210d4a63bef5": {
+    "url": "https://arxiv.org/abs/2610.16501v1",
+    "title": "Offline-Tuned Service-Aware TN-NTN Feeder Allocation for 6G Post-Disaster Service Resilience",
+    "processed_date": "2026-11-03"
+  },
+  "6b4083d72900e3f3e557211b83a833d9": {
+    "url": "https://arxiv.org/abs/2610.13749v1",
+    "title": "RAPID: Proactive Rate Control for Enabling High Data Rate and Low Latency in 5G Edge Networks",
+    "processed_date": "2026-11-03"
+  },
+  "9663a7ebd9213fdaf0f6c57f6b481902": {
+    "url": "https://arxiv.org/abs/2610.13526v1",
+    "title": "On the Alignment Between Spectral Efficiency and Positioning Accuracy in Multi-LEO Clusters",
+    "processed_date": "2026-11-03"
+  },
+  "1b98874baa45f1495b65a3d24b374368": {
+    "url": "https://arxiv.org/abs/2610.10486v1",
+    "title": "A Compositional Perspective on Communication-Control Co-Design for Mobile Broadband Systems Beyond 6G",
+    "processed_date": "2026-11-03"
+  },
+  "73740aa906cd5dce0c06733f7b497cc2": {
+    "url": "https://arxiv.org/abs/2610.09546v1",
+    "title": "PCDT: A Predictive Cognitive Digital Twin Framework for Intelligent and Autonomous 6G Network Ecosystems",
+    "processed_date": "2026-11-03"
+  },
+  "6c30734939b01e578f5f5aa35564f023": {
+    "url": "https://arxiv.org/abs/2610.08352v1",
+    "title": "6G NeXt - Towards 6G Split Computing Network Applications: Use Cases and Architecture",
+    "processed_date": "2026-11-03"
+  },
+  "29cb7c183b5d292224a9080916a9c846": {
+    "url": "https://arxiv.org/abs/2610.07889v1",
+    "title": "ONDT: A Modular and Virtualized O-RAN Digital Twin for xApp/rApp Closed-Loop Experimentatio",
+    "processed_date": "2026-11-03"
+  },
+  "c50df761a6138f39ff95b266672fda10": {
+    "url": "https://arxiv.org/abs/2610.06295v1",
+    "title": "Graph Neural Network-Driven Deep Reinforcement Learning for Scalable RIS Allocation",
+    "processed_date": "2026-11-03"
+  },
+  "c20a0d7270f1559fedc539f0ba037cb5": {
+    "url": "https://arxiv.org/abs/2610.05694v1",
+    "title": "6G as It Is Actually Being Built: Insights from Early 3GPP Standardization",
+    "processed_date": "2026-11-03"
+  },
+  "543af50cc4f8f480a3bdb24557e425ae": {
+    "url": "https://arxiv.org/abs/2610.05673v1",
+    "title": "LocAttMamba: A Low-Complexity Mamba Framework with Attention-Based Multi-AP Fusion for Indoor Localization",
+    "processed_date": "2026-11-03"
+  },
+  "3885a9700ece70f3ed241b27a9eeb38a": {
+    "url": "https://arxiv.org/abs/2610.05651v2",
+    "title": "Distributed Quantum-Assisted Robust AoII Minimization in Satellite-Ground Integrated Edge Networks",
+    "processed_date": "2026-11-03"
+  },
+  "388cf1e8fc79875fea3d5a35f191dc5a": {
+    "url": "https://smart-networks.europa.eu/five-sns-ju-sibling-projects-unite-to-amplify-the-impact-of-european-6g-research/",
+    "title": "Five SNS JU sibling projects unite to amplify the impact of European 6G research",
+    "processed_date": "2026-11-03"
+  },
+  "1ecb7d4d023673ecdcc37ca234e2d840": {
+    "url": "https://www.mobileworldlive.com/network-tech/telia-ericsson-broaden-6g-research/",
+    "title": "Telia, Ericsson broaden 6G research",
+    "processed_date": "2026-11-03"
+  },
+  "b8c1e0e2cdc5e44d936389af04811b39": {
+    "url": "https://www.lightreading.com/business-transformation/eurobites-vmo2-planning-mass-layoffs-reports",
+    "title": "Eurobites: VMO2 planning mass layoffs \u2013 reports",
+    "processed_date": "2026-11-03"
   }
 }

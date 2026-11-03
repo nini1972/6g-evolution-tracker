@@ -1,5 +1,297 @@
 [
   {
+    "article_id": "63afbff255761aa8c42a6d6783d6f052",
+    "source": "Ericsson",
+    "title": "Telia Sweden and Ericsson collaborate on the path to 6G",
+    "link": "https://www.ericsson.com/en/news/2026/11/telia_sweden_and_ericsson_collaborate_on_the_path_to_6g",
+    "score": 3,
+    "ai_insights": {
+      "is_6g_relevant": true,
+      "source_region": "EU",
+      "summary": "Ericsson and Telia have established a strategic partnership to collaborate on 6G research and development, aiming to solidify Sweden's position as a leader in the future European telecommunications landscape. The partnership focuses on aligning technical roadmaps and exploring pre-standardization concepts to influence the global IMT-2030 trajectory.",
+      "overall_6g_importance": 7,
+      "6g_topics": [
+        "standardization",
+        "network automation",
+        "sustainability",
+        "spectrum & policy",
+        "AI-native RAN"
+      ],
+      "impact_dimensions": {
+        "research_intensity": 3,
+        "standardization_influence": 4,
+        "industrial_deployment": 1,
+        "spectrum_policy_signal": 3,
+        "ecosystem_maturity": 3
+      },
+      "time_horizon": "mid-term",
+      "world_power_impact": {
+        "US": 1,
+        "EU": 5,
+        "China": 1,
+        "Japan": 1,
+        "Korea": 1,
+        "India": 1
+      },
+      "emerging_concepts": [
+        "European frontrunner positioning",
+        "vendor-operator 6G synergy",
+        "regional technology sovereignty",
+        "pre-standardization collaboration"
+      ],
+      "key_evidence": [
+        "Telia and Ericsson CEOs pledged to collaborate on the path to 6G",
+        "The collaboration aims to position Sweden as a European frontrunner in next-generation technology",
+        "High-level strategic alignment between a major global vendor and a Tier 1 regional operator"
+      ],
+      "standardization_context": {
+        "tdoc_refs": [],
+        "work_items": [],
+        "target_release": "Rel-21",
+        "working_groups": [
+          "RAN1",
+          "SA2"
+        ]
+      },
+      "impact_score": 7
+    },
+    "source_region": "EU",
+    "summary": "Telia President and CEO, Patrik Hofbauer, joined Ericsson President and CEO, Per Narvinger, at the Ericsson Studio in Stockholm today as the companies pledged to collaborate on the path to 6G to position Sweden as a European frontrunner.",
+    "date": "2026-11-02"
+  },
+  {
+    "article_id": "99c60c300881c5f05dbff2e7cda9f29e",
+    "source": "ArXiv CS Networking",
+    "title": "Multipartite FSO/QKD with N-GHZ States for Scalable Secure Group Key Distribution",
+    "link": "https://arxiv.org/abs/2611.02913v1",
+    "score": 3,
+    "ai_insights": {
+      "is_6g_relevant": true,
+      "source_region": "Other",
+      "summary": "This research addresses the scalability limits of point-to-point Quantum Key Distribution (QKD) by proposing a High-Altitude Platform (HAP)-assisted multipartite architecture for 6G. It utilizes N-GHZ-state protocols and Time Division Multiple Access (TDMA) over Free-Space Optical (FSO) channels to enable secure group key distribution resilient to quantum-computing threats.",
+      "overall_6g_importance": 7,
+      "6g_topics": [
+        "security & trust fabrics",
+        "NTN",
+        "quantum-safe networking"
+      ],
+      "impact_dimensions": {
+        "research_intensity": 5,
+        "standardization_influence": 2,
+        "industrial_deployment": 1,
+        "spectrum_policy_signal": 2,
+        "ecosystem_maturity": 2
+      },
+      "time_horizon": "long-term",
+      "world_power_impact": {
+        "US": 4,
+        "EU": 4,
+        "China": 5,
+        "Japan": 3,
+        "Korea": 3,
+        "India": 2
+      },
+      "emerging_concepts": [
+        "N-GHZ-state QKD protocols",
+        "HAP-assisted multipartite QKD",
+        "TDMA-based group key establishment",
+        "Optimal beam-waist control for FSO",
+        "Quantum-safe group communications"
+      ],
+      "key_evidence": [
+        "Proposed architecture integrates N-GHZ-state protocols with TDMA over FSO channels for 6G group keys.",
+        "System utilizes High-Altitude Platforms (HAP) to enhance coverage and link viability for quantum distribution.",
+        "Simulation results show significant improvement in group secret key rate (SKR) compared to conventional bipartite QKD.",
+        "The framework addresses realistic physical-layer impairments of FSO links using a Qiskit-based simulation.",
+        "Reduction in overall network execution delay for group key establishment in large-scale 6G networks."
+      ],
+      "standardization_context": {
+        "tdoc_refs": [],
+        "work_items": [],
+        "target_release": "",
+        "working_groups": []
+      },
+      "impact_score": 7
+    },
+    "source_region": "Other",
+    "summary": "The emergence of sixth-generation (6G) wireless networks is driving the need for secure group key generation mechanisms resilient to quantum-computing attacks. Conventional quantum key distribution (QKD) protocols are designed for point-to-point communication and are therefore not directly applicable to group key establishment. To address this limitation, this paper proposes a scalable High-Altitude Platform (HAP)-assisted multipartite QKD network architecture that integrates $N$-GHZ-state protocols with a Time Division Multiple Access (TDMA) scheme over free-space optical (FSO) channels. The performance of the proposed system is evaluated using a Qiskit-based simulation framework that incorporates realistic physical-layer impairments of FSO links. Simulation results demonstrate that the proposed architecture significantly improves the group secret key rate (SKR) compared to conventional bipartite approaches, while effectively reducing overall network execution delay. In addition, the analysis reveals the impact of channel impairments and provides practical design insights, such as optimal beam-waist control. The proposed framework demonstrates the potential of HAP-assisted multipartite QKD as an effective security solution for future large-scale 6G wireless networks supporting secure group communications.",
+    "date": "2026-11-02"
+  },
+  {
+    "article_id": "388cf1e8fc79875fea3d5a35f191dc5a",
+    "source": "SNS JU",
+    "title": "Five SNS JU sibling projects unite to amplify the impact of European 6G research",
+    "link": "https://smart-networks.europa.eu/five-sns-ju-sibling-projects-unite-to-amplify-the-impact-of-european-6g-research/",
+    "score": 3,
+    "ai_insights": {
+      "is_6g_relevant": true,
+      "source_region": "EU",
+      "summary": "Five major European 6G research projects (6G-OPTICON, AGENTIC6G, MAGIC6G, PROSPERO, and SIXG) under the SNS JU framework have launched a formal collaboration initiative (Stream B-01-01) to synchronize R&D efforts, share findings, and strengthen the European Union's collective influence on global 6G standards.",
+      "overall_6g_importance": 8,
+      "6g_topics": [
+        "AI-native RAN",
+        "network automation",
+        "security & trust fabrics",
+        "standardization",
+        "cloud-edge integration"
+      ],
+      "impact_dimensions": {
+        "research_intensity": 5,
+        "standardization_influence": 4,
+        "industrial_deployment": 2,
+        "spectrum_policy_signal": 2,
+        "ecosystem_maturity": 3
+      },
+      "time_horizon": "mid-term",
+      "world_power_impact": {
+        "US": 2,
+        "EU": 5,
+        "China": 2,
+        "Japan": 2,
+        "Korea": 2,
+        "India": 2
+      },
+      "emerging_concepts": [
+        "Sibling project collaboration",
+        "SNS JU Stream B alignment",
+        "Cross-consortium R&D synergy",
+        "European 6G technological sovereignty"
+      ],
+      "key_evidence": [
+        "Formal launch of Call 4 & 5 Stream B-01-01 collaboration initiative",
+        "Participation of five specific EU-funded projects: 6G-OPTICON, AGENTIC6G, MAGIC6G, PROSPERO, and SIXG",
+        "Direct oversight and funding by the Smart Networks and Services Joint Undertaking (SNS JU)",
+        "Strategy focused on amplifying the impact of European 6G research through targeted collaboration meetings"
+      ],
+      "standardization_context": {
+        "tdoc_refs": [],
+        "work_items": [],
+        "target_release": "Rel-21",
+        "working_groups": [
+          "RAN1",
+          "RAN2",
+          "SA2"
+        ]
+      },
+      "impact_score": 8
+    },
+    "source_region": "EU",
+    "summary": "6G-OPTICON, AGENTIC6G, MAGIC6G, PROSPERO and SIXG launch a Call 4 & 5 Stream B-01-01 collaboration initiative for targeted collaboration Stream B-01-01 Sibling Projects First Collaboration Meeting The five projects funded [\u2026] The post Five SNS JU sibling projects unite to amplify the impact of European 6G research appeared first on SNS JU .",
+    "date": "2026-11-02"
+  },
+  {
+    "article_id": "1ecb7d4d023673ecdcc37ca234e2d840",
+    "source": "Mobile World Live",
+    "title": "Telia, Ericsson broaden 6G research",
+    "link": "https://www.mobileworldlive.com/network-tech/telia-ericsson-broaden-6g-research/",
+    "score": 3,
+    "ai_insights": {
+      "is_6g_relevant": true,
+      "source_region": "EU",
+      "summary": "Telia and Ericsson have transitioned their 6G research from laboratory environments to real-world field trials in Sweden. This strategic expansion aims to validate next-generation technologies in practical settings and secure a leadership position for Sweden and the European ecosystem in the IMT-2030 development cycle.",
+      "overall_6g_importance": 7,
+      "6g_topics": [
+        "network automation",
+        "sustainability",
+        "spectrum & policy",
+        "ISAC",
+        "cloud-edge integration"
+      ],
+      "impact_dimensions": {
+        "research_intensity": 4,
+        "standardization_influence": 3,
+        "industrial_deployment": 1,
+        "spectrum_policy_signal": 2,
+        "ecosystem_maturity": 2
+      },
+      "time_horizon": "mid-term (2028\u20132032)",
+      "world_power_impact": {
+        "US": 2,
+        "EU": 5,
+        "China": 1,
+        "Japan": 2,
+        "Korea": 2,
+        "India": 1
+      },
+      "emerging_concepts": [
+        "field-based 6G validation",
+        "national 6G competitiveness",
+        "lab-to-field transition",
+        "European 6G sovereignty"
+      ],
+      "key_evidence": [
+        "Telia and Ericsson commenced field trials of 6G technology outside the laboratory.",
+        "The initiative is explicitly designed to put Sweden at the forefront of next-generation systems.",
+        "The collaboration represents a broadening of existing 6G research partnerships into environmental testing."
+      ],
+      "standardization_context": {
+        "tdoc_refs": [],
+        "work_items": [],
+        "target_release": "Rel-20",
+        "working_groups": [
+          "RAN1",
+          "SA2"
+        ]
+      },
+      "impact_score": 7
+    },
+    "source_region": "EU",
+    "summary": "Telia and Ericsson broke 6G development out of the laboratory, commencing field trials of technology the companies believe could put Sweden at the forefront of the next-generation systems. The post Telia, Ericsson broaden 6G research appeared first on Mobile World Live .",
+    "date": "2026-11-02"
+  },
+  {
+    "article_id": "b8c1e0e2cdc5e44d936389af04811b39",
+    "source": "Light Reading",
+    "title": "Eurobites: VMO2 planning mass layoffs \u2013 reports",
+    "link": "https://www.lightreading.com/business-transformation/eurobites-vmo2-planning-mass-layoffs-reports",
+    "score": 3,
+    "ai_insights": {
+      "is_6g_relevant": true,
+      "source_region": "EU",
+      "summary": "Telia and Ericsson have initiated 6G research trials within the EMEA region, signaling early European efforts to transition from theoretical 6G concepts to practical laboratory and field testing.",
+      "overall_6g_importance": 4,
+      "6g_topics": [
+        "network automation",
+        "AI-native RAN",
+        "sustainability"
+      ],
+      "impact_dimensions": {
+        "research_intensity": 3,
+        "standardization_influence": 2,
+        "industrial_deployment": 1,
+        "spectrum_policy_signal": 1,
+        "ecosystem_maturity": 2
+      },
+      "time_horizon": "mid-term",
+      "world_power_impact": {
+        "US": 0,
+        "EU": 3,
+        "China": 0,
+        "Japan": 0,
+        "Korea": 0,
+        "India": 0
+      },
+      "emerging_concepts": [
+        "6G field trials",
+        "Joint operator-vendor research",
+        "EMEA regional 6G leadership"
+      ],
+      "key_evidence": [
+        "Telia conducts 6G trials with Ericsson"
+      ],
+      "standardization_context": {
+        "tdoc_refs": [],
+        "work_items": [],
+        "target_release": "",
+        "working_groups": []
+      },
+      "impact_score": 4
+    },
+    "source_region": "EU",
+    "summary": "Also in today's EMEA regional roundup: Telia conducts 6G trials with Ericsson; Telef\u00f3nica offloads call centers in Germany; TIM invests in unified comms.",
+    "date": "2026-11-02"
+  },
+  {
     "article_id": "39494145b9c45f0bb6e9eb8f3a2d7464",
     "source": "Light Reading",
     "title": "UK mmWave vendor CBNG collapses after losing Verizon deal",
@@ -50,6 +342,129 @@
     },
     "source_region": "EU",
     "summary": "Cambridge, UK-based CBNG has gone into administration, affecting about 75 jobs, in the wake of Verizon's decision to not use its millimeter wave product for 5G fixed wireless access.",
+    "date": "2026-10-30"
+  },
+  {
+    "article_id": "204668d9a262132393e5efe91671fbb3",
+    "source": "ArXiv CS Networking",
+    "title": "6G-Enabled Cooperative Connected and Automated Mobility: Are We There Yet?",
+    "link": "https://arxiv.org/abs/2610.41836v1",
+    "score": 3,
+    "ai_insights": {
+      "is_6g_relevant": true,
+      "source_region": "Other",
+      "summary": "This survey paper analyzes the integration of 6G communication networks with Connected, Cooperative, and Automated Mobility (CCAM). It investigates key use cases, performance indicators, and the integration of sensing, computing, and AI/ML to support intelligent transportation systems. The article specifically addresses scalability, interoperability, and the regulatory landscape necessary for the transition from current V2X to future 6G-enabled CCAM ecosystems.",
+      "overall_6g_importance": 7,
+      "6g_topics": [
+        "AI-native RAN",
+        "ISAC",
+        "network automation",
+        "standardization",
+        "cloud-edge integration"
+      ],
+      "impact_dimensions": {
+        "research_intensity": 5,
+        "standardization_influence": 3,
+        "industrial_deployment": 2,
+        "spectrum_policy_signal": 1,
+        "ecosystem_maturity": 2
+      },
+      "time_horizon": "mid-term",
+      "world_power_impact": {
+        "US": 3,
+        "EU": 4,
+        "China": 4,
+        "Japan": 3,
+        "Korea": 3,
+        "India": 2
+      },
+      "emerging_concepts": [
+        "Cooperative Perception",
+        "Collective Awareness",
+        "Resilient CCAM Ecosystems",
+        "Large-scale Dynamic Scalability",
+        "Integration of Communication, Sensing, and Computing"
+      ],
+      "key_evidence": [
+        "Identifies 6G as the key enabler for future intelligent transportation systems requiring seamless integration of sensing and automation.",
+        "Highlights AI and Machine Learning as fundamental building blocks for CCAM ecosystems.",
+        "Identifies major research challenges in interoperability and real-time operation in highly dynamic mobile environments.",
+        "Evaluates standardization and regulatory developments relevant to large-scale 6G deployment."
+      ],
+      "standardization_context": {
+        "tdoc_refs": [],
+        "work_items": [],
+        "target_release": "Rel-20",
+        "working_groups": [
+          "RAN1",
+          "SA2",
+          "SA6"
+        ]
+      },
+      "impact_score": 7
+    },
+    "source_region": "Other",
+    "summary": "Connected, cooperative, and automated mobility (CCAM) is a key enabler of future intelligent transportation systems, requiring seamless integration of communication, sensing, computing, and automation technologies. This paper surveys the state of the art in CCAM, focusing on key use cases and performance indicators, enabling technologies, system architectures, and standardization and regulatory developments relevant to large-scale deployment. Particular attention is given to cooperative perception, collective awareness, artificial intelligence and machine learning as fundamental building blocks of future CCAM ecosystems. The paper further identifies major research challenges related to scalability, interoperability, and real-time operation in highly dynamic mobile environments. Finally, it outlines future research directions toward achieving large-scale, safe, and resilient CCAM systems supported by next-generation communication networks.",
+    "date": "2026-10-30"
+  },
+  {
+    "article_id": "5a4e76f692a415749ea731aa8c504c66",
+    "source": "ArXiv CS Networking",
+    "title": "ORION: An Outcome-Driven LLM Advisor for RL-Based Multi-Domain 6G Slice Placement",
+    "link": "https://arxiv.org/abs/2610.41563v1",
+    "score": 3,
+    "ai_insights": {
+      "is_6g_relevant": true,
+      "source_region": "Other",
+      "summary": "ORION is a hierarchical orchestrator for 6G multi-domain network slicing that utilizes LLM agents to translate service intents into placement plans. It addresses the NP-hard problem of VNF placement across administrative domains by combining a multi-agent Reinforcement Learning (RL) coordinator with an outcome-driven episodic memory. This memory records the feasibility of past placement attempts to refine future LLM-generated plans, moving beyond simple scalar rewards to improve slice admission rates.",
+      "overall_6g_importance": 7,
+      "6g_topics": [
+        "network automation",
+        "AI-native RAN",
+        "cloud-edge integration"
+      ],
+      "impact_dimensions": {
+        "research_intensity": 5,
+        "standardization_influence": 3,
+        "industrial_deployment": 2,
+        "spectrum_policy_signal": 0,
+        "ecosystem_maturity": 2
+      },
+      "time_horizon": "mid-term (2028\u20132032)",
+      "world_power_impact": {
+        "US": 3,
+        "EU": 3,
+        "China": 4,
+        "Japan": 2,
+        "Korea": 2,
+        "India": 2
+      },
+      "emerging_concepts": [
+        "Outcome-driven episodic memory",
+        "LLM-based network advisor",
+        "Intent-to-placement translation",
+        "Hierarchical RL-LLM coordination",
+        "Deployment-feasibility feedback loops"
+      ],
+      "key_evidence": [
+        "ORION improves admission rates by 4.6\u201311.5 percentage points over planners without episodic memory.",
+        "Identifies the 'plan layer' as the decisive performance lever in multi-domain 6G slicing.",
+        "Replaces standard scalar rewards with verified deployment feasibility outcomes to close the adaptation loop.",
+        "Uses importance-based retention in memory to outperform first-in-first-out storage methods."
+      ],
+      "standardization_context": {
+        "tdoc_refs": [],
+        "work_items": [],
+        "target_release": "Rel-21",
+        "working_groups": [
+          "SA2",
+          "SA6"
+        ]
+      },
+      "impact_score": 7
+    },
+    "source_region": "Other",
+    "summary": "Deploying 6G network slices across administrative domains requires an online decision for each arriving request: which domain hosts each virtual network function, how traffic crosses domain boundaries, and whether the slice is admitted. This joint decision problem is NP-hard under continuous arrivals. Experiments on a parametrized family of multi-domain topologies show that no fixed planning strategy dominates across all regimes: the performance ranking reverses between topology classes, and feasible placements exist for most rejected requests but remain undiscovered. These findings identify the plan layer as the decisive performance lever. We introduce ORION, a hierarchical orchestrator in which two LLM agents translate service intents into structured requests and generate abstract placement plans. A cooperative multi-agent RL coordinator selects the cross-domain partition, treating the plan as a persistent soft prior, while per-domain agents place the functions. ORION main contribution lies at the plan layer: an outcome-driven episodic memory that records, for each completed attempt, the network-condition profile, the proposed plan, and its verified feasibility outcome. The memory feeds verified successes and labelled failures back to the planner, thereby closing the adaptation loop using deployment feasibility rather than a scalar reward assigned to the planner's own proposals. To isolate the effect of the plan quality, we evaluate the planner on held-out topology families while keeping the downstream selection and execution mechanisms fixed. Under this controlled setting, the proposed memory improves admission by $4.6$--$11.5$ percentage points over the same planner without memory, while importance-based retention accounts for most of the improvement over a first-in-first-out store.",
     "date": "2026-10-30"
   },
   {
@@ -223,6 +638,67 @@
     },
     "source_region": "US",
     "summary": "T-Mobile reports Q3 earnings and says it aims to be first with 6G in the US. It also continues to rule out an MVNO deal with SpaceX's Starlink.",
+    "date": "2026-10-29"
+  },
+  {
+    "article_id": "3799c3857f7f7fd4d6eb406d43b24211",
+    "source": "ArXiv CS Networking",
+    "title": "True 3D Holography: A Communication Service of Tomorrow and Its Requirements for a New Converged Cloud and Network Architecture on the Path to 6G",
+    "link": "https://arxiv.org/abs/2610.40306v1",
+    "score": 3,
+    "ai_insights": {
+      "is_6g_relevant": true,
+      "source_region": "EU",
+      "summary": "This research paper explores the architectural requirements for delivering true 3D holographic communication as a primary 6G use case. It emphasizes the necessity of a converged cloud-network architecture and distributed computing, specifically focusing on the 'split computing' paradigm to handle the massive processing power required for immersive holographic services.",
+      "overall_6g_importance": 8,
+      "6g_topics": [
+        "cloud-edge integration",
+        "network automation",
+        "semantic communications"
+      ],
+      "impact_dimensions": {
+        "research_intensity": 5,
+        "standardization_influence": 3,
+        "industrial_deployment": 1,
+        "spectrum_policy_signal": 1,
+        "ecosystem_maturity": 2
+      },
+      "time_horizon": "long-term",
+      "world_power_impact": {
+        "US": 3,
+        "EU": 5,
+        "China": 3,
+        "Japan": 3,
+        "Korea": 4,
+        "India": 2
+      },
+      "emerging_concepts": [
+        "True 3D Holography",
+        "Split Computing",
+        "Distributed Backbone Computing Infrastructure",
+        "Converged Cloud and Network Architecture",
+        "6G NeXt Project"
+      ],
+      "key_evidence": [
+        "Research project 6G NeXt identifies true 3D holography as a critical future use case requiring high processing power.",
+        "The paper argues that a high-speed distributed backbone computing infrastructure is inevitable for holographic communication.",
+        "The architecture proposes a tight integration between processing facilities and wireless networks to achieve low-latency immersive experiences.",
+        "Split computing is introduced as a method to distribute the computational load of holographic rendering across the network."
+      ],
+      "standardization_context": {
+        "tdoc_refs": [],
+        "work_items": [],
+        "target_release": "Rel-21",
+        "working_groups": [
+          "SA2",
+          "RAN1",
+          "SA6"
+        ]
+      },
+      "impact_score": 8
+    },
+    "source_region": "EU",
+    "summary": "Research project 6G NeXt is considering true 3D holography as a use case, setting requirements on the communication as well as the computing infrastructure. In a future holographic communication service, clients are widely spread in the network and cooperatively interact with each other. Especially for holographic communication high processing power is required as well. This makes a high-speed distributed backbone computing infrastructure, which realizes the concept of split computing, inevitable. Furthermore, tight integration between processing facilities and wireless networks is required in order to provide an immersive user experience. This paper illustrates true 3D holographic communication and its requirements. Afterward, an appropriate solution approach is elaborated. Here, novel technological approaches are discussed based on a proposed overall communication and computing architecture.",
     "date": "2026-10-29"
   },
   {
@@ -565,6 +1041,313 @@
     "date": "2026-10-26"
   },
   {
+    "article_id": "a72ca28c5b907d8adcd7ca78353c2b93",
+    "source": "Ericsson",
+    "title": "From Lab to Life: Sweden launches national arena for 5G, 6G and AI innovation",
+    "link": "https://www.ericsson.com/en/news/2026/10/sweden-launches-national-arena-for-5g-6g-and-ai-innovation",
+    "score": 3,
+    "ai_insights": {
+      "is_6g_relevant": true,
+      "source_region": "EU",
+      "summary": "Ericsson has announced the launch of 'Digital Arena Sweden,' a national initiative designed to accelerate the transition of 5G, 6G, and AI technologies from research environments to real-world industrial and societal applications.",
+      "overall_6g_importance": 7,
+      "6g_topics": [
+        "AI-native RAN",
+        "network automation",
+        "industrial deployment",
+        "sustainability",
+        "cloud-edge integration"
+      ],
+      "impact_dimensions": {
+        "research_intensity": 4,
+        "standardization_influence": 3,
+        "industrial_deployment": 5,
+        "spectrum_policy_signal": 2,
+        "ecosystem_maturity": 4
+      },
+      "time_horizon": "mid-term",
+      "world_power_impact": {
+        "US": 2,
+        "EU": 5,
+        "China": 2,
+        "Japan": 1,
+        "Korea": 1,
+        "India": 1
+      },
+      "emerging_concepts": [
+        "Digital Arena Sweden",
+        "Lab-to-Life innovation cycle",
+        "National testbed synergy",
+        "Cross-sectoral 6G applications"
+      ],
+      "key_evidence": [
+        "The Digital Arena Sweden initiative connects advanced technology with real-world challenges.",
+        "Specifically targets the innovation pipeline for 5G, 6G, and AI.",
+        "Aims to create a national arena for collaboration across Sweden's technology ecosystem.",
+        "Ericsson serves as a primary industrial driver for the project."
+      ],
+      "standardization_context": {
+        "tdoc_refs": [],
+        "work_items": [],
+        "target_release": null,
+        "working_groups": []
+      },
+      "impact_score": 7
+    },
+    "source_region": "EU",
+    "summary": "The new Digital Arena Sweden initiative will connect advanced technology with real-world challenges across the country.",
+    "date": "2026-10-26"
+  },
+  {
+    "article_id": "cb887710e8665305fbb27554845bb8dd",
+    "source": "ArXiv CS Networking",
+    "title": "ML-OLLA: Link Adaptation for Real-Time Traffic in 5G/6G NTN Systems",
+    "link": "https://arxiv.org/abs/2610.36147v1",
+    "score": 3,
+    "ai_insights": {
+      "is_6g_relevant": true,
+      "source_region": "Other",
+      "summary": "The article proposes Multi-Level Outer-Loop Link Adaptation (ML-OLLA), a data-driven algorithm designed to optimize link adaptation in 5G and 6G Non-Terrestrial Networks (NTN). It specifically addresses the challenges of high propagation delay and rapid channel variation in LEO satellite systems to support real-time, low-latency applications.",
+      "overall_6g_importance": 7,
+      "6g_topics": [
+        "NTN",
+        "AI-native RAN",
+        "network automation"
+      ],
+      "impact_dimensions": {
+        "research_intensity": 4,
+        "standardization_influence": 3,
+        "industrial_deployment": 2,
+        "spectrum_policy_signal": 1,
+        "ecosystem_maturity": 2
+      },
+      "time_horizon": "mid-term",
+      "world_power_impact": {
+        "US": 4,
+        "EU": 4,
+        "China": 4,
+        "Japan": 3,
+        "Korea": 3,
+        "India": 3
+      },
+      "emerging_concepts": [
+        "ML-OLLA (Multi-Level Outer-Loop Link Adaptation)",
+        "Data-driven parameter selection for NTN",
+        "Independent adaptation processes per transmission attempt",
+        "LEO-specific latency budget optimization"
+      ],
+      "key_evidence": [
+        "Increases system capacity by up to four times compared to baseline OLLA.",
+        "Reduces minimum supported latency budget from 60 ms to 40 ms for real-time traffic.",
+        "Targets 99.9% reliability for low-latency connectivity in satellite environments.",
+        "Uses higher-rate modulation and coding schemes (MCSs) for early transmission attempts.",
+        "Addresses LEO-specific challenges: long propagation delays and delayed feedback."
+      ],
+      "standardization_context": {
+        "tdoc_refs": [],
+        "work_items": [
+          "NR_NTN_solutions",
+          "FS_NR_NTN_Rel19"
+        ],
+        "target_release": "Rel-20",
+        "working_groups": [
+          "RAN1",
+          "RAN2"
+        ]
+      },
+      "impact_score": 7
+    },
+    "source_region": "Other",
+    "summary": "Reliable low-latency connectivity for real-time applications is a key requirement for 5G and future 6G non-terrestrial networks. Low Earth Orbit satellites enable global coverage but impose long propagation delays, rapid channel variations, and delayed feedback, which challenge conventional link adaptation algorithms designed for terrestrial networks. To address this problem, the paper proposes a Multi-Level Outer-Loop Link Adaptation (ML-OLLA) algorithm that assigns a dedicated target block error rate and an independent adaptation process for each transmission attempt. With ML-OLLA, early transmission attempts use higher-rate modulation and coding schemes (MCSs), while later ones use more robust MCSs. The core contribution of this work is a low-complexity data-driven parameter selection method that determines ML-OLLA parameters. Numerical results obtained with ns-3 show that the proposed ML-OLLA algorithm increases the system capacity by up to four times and reduces the minimum supported latency budget. In particular, for the 99.9% reliability target, ML-OLLA reduces the minimum supported latency budget from 60 ms to 40 ms compared with the baseline OLLA.",
+    "date": "2026-10-26"
+  },
+  {
+    "article_id": "a7866e23254ce215d44d20dcd7cbb669",
+    "source": "ArXiv CS Networking",
+    "title": "RLNC vs Reed-Solomon in Satellite Channels: Crossover Analysis and the Bridging Property",
+    "link": "https://arxiv.org/abs/2610.35649v1",
+    "score": 3,
+    "ai_insights": {
+      "is_6g_relevant": true,
+      "source_region": "Other",
+      "summary": "This research analyzes Forward Error Correction (FEC) strategies for 6G Non-Terrestrial Networks (NTN), specifically comparing Reed-Solomon (RS) coding with Random Linear Network Coding (RLNC). It introduces the 'bridging property' of RLNC, demonstrating its resilience in high-loss, high-latency satellite environments where traditional RS codes collapse. The study uses a physically derived satellite channel model based on orbital geometry to prove that RLNC and RS+RLNC hybrids offer superior reliability for 6G satellite backhaul and remote connectivity.",
+      "overall_6g_importance": 7,
+      "6g_topics": [
+        "NTN",
+        "standardization",
+        "network automation"
+      ],
+      "impact_dimensions": {
+        "research_intensity": 4,
+        "standardization_influence": 3,
+        "industrial_deployment": 2,
+        "spectrum_policy_signal": 1,
+        "ecosystem_maturity": 2
+      },
+      "time_horizon": "mid-term",
+      "world_power_impact": {
+        "US": 4,
+        "EU": 4,
+        "China": 4,
+        "Japan": 3,
+        "Korea": 3,
+        "India": 3
+      },
+      "emerging_concepts": [
+        "Bridging property of RLNC",
+        "Rate-normalised crossover threshold (p*)",
+        "RS+RLNC hybrid coding",
+        "Geometry-derived satellite channel modeling",
+        "Continuous operation in failure regions"
+      ],
+      "key_evidence": [
+        "RLNC operates continuously through all failure regions while RS code rates collapse above a crossover threshold p*.",
+        "At a code rate of 0.800, the crossover threshold p* is approximately 0.21.",
+        "Under a derived satellite channel with 166-minute mean burst duration, RS(255,204) is impractical despite an average loss rate of only 1%.",
+        "An RS+RLNC hybrid reduces overhead by 19% relative to pure RLNC at BER=10^-3.",
+        "RLNC requires 15.5 Mbit to recover all 1000 packets in the specified satellite model."
+      ],
+      "standardization_context": {
+        "tdoc_refs": [],
+        "work_items": [],
+        "target_release": "Rel-21",
+        "working_groups": [
+          "RAN1",
+          "RAN2"
+        ]
+      },
+      "impact_score": 7
+    },
+    "source_region": "Other",
+    "summary": "Satellite communication systems are increasingly relied upon for connectivity in remote areas and are expected to play a pivotal role in 6G networks, operating under high round-trip times and packet loss where forward error correction is essential. This work evaluates Reed-Solomon (RS) coding, Random Linear Network Coding (RLNC), and a combined RS+RLNC hybrid over a three-hop satellite channel whose loss statistics are derived from orbital geometry and link-budget calculations rather than assumed, comparing RS and RLNC at matched code rates of 0.800. The central finding is the \\emph{bridging property} of RLNC: every RS code rate collapses above a crossover threshold $p^*$, while RLNC operates continuously through all failure regions with overhead growing as $1/(1-p)$. At rate~0.800, $p^* \\approx 0.21$. Under the derived satcom channel with mean burst duration 166~minutes, RS$(255,204)$ is impractical despite an average loss rate of 1%, while RLNC requires 15.5~Mbit to recover all 1000 packets. An RS+RLNC hybrid reduces overhead by 19% relative to pure RLNC at BER$=10^{-3}$. To the authors' knowledge, this is the first analytical derivation of the rate-normalised crossover $p^*$ between RS and RLNC and the first experimental confirmation of the bridging property under a physically derived satellite channel model.",
+    "date": "2026-10-26"
+  },
+  {
+    "article_id": "999ae24eaf6d3f02853a41f6752615d3",
+    "source": "ArXiv CS Networking",
+    "title": "6G Reasoning Agent Societies: Composition, Scaling, and Consistency-Time Laws",
+    "link": "https://arxiv.org/abs/2610.34357v2",
+    "score": 3,
+    "ai_insights": {
+      "is_6g_relevant": true,
+      "source_region": "Other",
+      "summary": "This research explores the mathematical foundations of 6G control planes governed by societies of LLM-based reasoning agents. It introduces the use of cellular sheaf theory to model agent interactions and establishes three fundamental laws\u2014Composition, Scaling, and Consistency-Time\u2014to quantify how hallucinations propagate and how topological constraints affect the latency and trust of autonomous network decision-making.",
+      "overall_6g_importance": 8,
+      "6g_topics": [
+        "AI-native RAN",
+        "semantic communications",
+        "security & trust fabrics",
+        "network automation",
+        "cloud-edge integration"
+      ],
+      "impact_dimensions": {
+        "research_intensity": 5,
+        "standardization_influence": 2,
+        "industrial_deployment": 1,
+        "spectrum_policy_signal": 0,
+        "ecosystem_maturity": 2
+      },
+      "time_horizon": "long-term",
+      "world_power_impact": {
+        "US": 4,
+        "EU": 3,
+        "China": 4,
+        "Japan": 3,
+        "Korea": 3,
+        "India": 2
+      },
+      "emerging_concepts": [
+        "6G Reasoning Agent Societies",
+        "Cellular Sheaf Modeling",
+        "Cognitive Signal-to-Noise Ratio (SNR)",
+        "Consistency-Time Laws",
+        "Hidden Total Correlation Blind Spots"
+      ],
+      "key_evidence": [
+        "Hidden total correlation in agent societies masks up to 23% of joint divergence, leading to trust inflation.",
+        "Topology-induced signal cancellation overstates cognitive SNR by 1.14 dB, slowing valid consensus convergence.",
+        "Consistency time for agent reconciliation breaches 1s near-real-time budgets at n=13 agents on polynomial topologies.",
+        "Radius-3 local audits can bound consistency time to approximately 300 ms, staying within 6G latency requirements.",
+        "The timing error from omitted correlations is one-sided and capped by the worst-measured link."
+      ],
+      "standardization_context": {
+        "tdoc_refs": [],
+        "work_items": [],
+        "target_release": "Rel-21",
+        "working_groups": [
+          "SA2",
+          "SA6",
+          "RAN3"
+        ]
+      },
+      "impact_score": 8
+    },
+    "source_region": "Other",
+    "summary": "Emerging 6G control planes would compose Large Language Model (LLM) agents that exchange interpreted conclusions, so hallucinations can propagate even over error-free transport. Recent architectures audit each message locally against the sender's observation mask, but isolated audits miss collective behavior. Modeling the agent society as a cellular sheaf, we establish three laws valid on arbitrary topologies. First, the composition law: network-wide divergence exceeds the sum of per-agent audit scores by exactly their hidden total correlation. This blind spot masks up to 23% of joint divergence and, because the declared signal cancels in the cognitive signal-to-noise ratio (SNR), overstates it by $1.14$ dB purely through topology; the resulting trust inflation preserves valid consensus states but slows convergence. Second, the scaling law: reconciliation decouples across metric counters, so the worst-connected dimension sets the pace. Consistency time grows for a society size $n$ as $\u03a9(n^{2/d})$ on polynomial-growth topologies of degree $d$, and paths breach a $1$ s near-real-time budget at $n^\\ast=13$ agents, whereas expanders ($\u0398(1)$) and radius-3 local audits ($O(1)$, $\\approx300$ ms) stay bounded. Third, the consistency-time law: the timing error from omitted correlations is one-sided and capped by the worst-measured link. These laws, validated on simulated topologies and deployed LLM societies, give provable worst-case latency ceilings for near-real-time operation.",
+    "date": "2026-10-25"
+  },
+  {
+    "article_id": "4d3f22ab2cd38916614bbfeefe5ac3cf",
+    "source": "ArXiv CS Networking",
+    "title": "Security evaluation of 6G-oriented and O-RAN networks through targeted attacks",
+    "link": "https://arxiv.org/abs/2610.33526v1",
+    "score": 3,
+    "ai_insights": {
+      "is_6g_relevant": true,
+      "source_region": "EU",
+      "summary": "The research provides a security evaluation of 6G-oriented O-RAN architectures, focusing on vulnerabilities within the F1 midhaul interface. It demonstrates a successful attack chain involving the disruption of legitimate O-DU associations and the insertion of a rogue O-DU to intercept user-plane traffic, specifically within an Electric Vehicle (EV) charging infrastructure context.",
+      "overall_6g_importance": 7,
+      "6g_topics": [
+        "security & trust fabrics",
+        "Open RAN",
+        "network automation",
+        "cloud-edge integration"
+      ],
+      "impact_dimensions": {
+        "research_intensity": 4,
+        "standardization_influence": 3,
+        "industrial_deployment": 2,
+        "spectrum_policy_signal": 1,
+        "ecosystem_maturity": 3
+      },
+      "time_horizon": "mid-term",
+      "world_power_impact": {
+        "US": 4,
+        "EU": 5,
+        "China": 3,
+        "Japan": 3,
+        "Korea": 3,
+        "India": 2
+      },
+      "emerging_concepts": [
+        "Rogue O-DU association",
+        "F1 midhaul interface vulnerability",
+        "6G-oriented O-RAN testbeds",
+        "Automated threat surface analysis",
+        "OCPP-integrated 6G security"
+      ],
+      "key_evidence": [
+        "Demonstrates an attack disrupting legitimate O-DU association by exploiting the lack of transport-layer protection on the F1 interface.",
+        "Successfully intercepts user-plane traffic using a rogue O-DU configured with observed network parameters.",
+        "Utilizes a virtualized 6G-oriented testbed based on Open5GS, srsRAN, and FlexRIC.",
+        "Connects 6G security vulnerabilities directly to critical infrastructure, specifically EV charging via OCPP 1.6."
+      ],
+      "standardization_context": {
+        "tdoc_refs": [],
+        "work_items": [],
+        "target_release": "Rel-19",
+        "working_groups": [
+          "RAN3",
+          "SA3"
+        ]
+      },
+      "impact_score": 7
+    },
+    "source_region": "EU",
+    "summary": "The sixth generation (6G) of networks is supported by increased bandwidth, automation through the use of O-RAN technologies. Simultaneously though autonomous operation leads to an extensive threat surface and sophisticated attacks. Understanding the attack impact, the Tactics, Techniques and Procedures that are used by attackers is extremely challenging, but however is crucial for developing defense and mitigation strategies against them. This paper evaluates a targeted attack chain against a virtualized, 6G-oriented O-RAN testbed in which the F1 midhaul interface is accessible to an attacker and transport-layer protection is not enabled. The attack disrupts the legitimate O-DU association, introduces a rogue O-DU using observed configuration parameters, and intercepts user-plane traffic. The attack was evaluated in a fully virtualized testbed based on Open5GS, the srsRAN Project, FlexRIC, and an Electric Vehicle (EV) charging infrastructure based on OCPP 1.6.",
+    "date": "2026-10-24"
+  },
+  {
     "article_id": "8d924140a923bab7b11e57e2f5b42221",
     "source": "Nokia",
     "title": "Nokia Corporation Interim Report for Q3 2026",
@@ -806,6 +1589,69 @@
     "date": "2026-10-21"
   },
   {
+    "article_id": "4286d0cde5f3711ad8a1d25efb067b9b",
+    "source": "ArXiv CS Networking",
+    "title": "Energy-Efficient Timely Relevant IoT Data Retrieval with Wireless Memory Approximation",
+    "link": "https://arxiv.org/abs/2610.29236v1",
+    "score": 3,
+    "ai_insights": {
+      "is_6g_relevant": true,
+      "source_region": "Other",
+      "summary": "This research addresses the energy-freshness trade-off in 6G IoT by proposing a framework for remote wireless memory approximation. It utilizes an edge server to manage lightweight neural network parameters and standby DRAM refresh energy on IoT devices, significantly reducing power consumption while maintaining data relevance (Age of Information).",
+      "overall_6g_importance": 6,
+      "6g_topics": [
+        "zero-energy devices",
+        "AI-native RAN",
+        "sustainability",
+        "cloud-edge integration",
+        "network automation"
+      ],
+      "impact_dimensions": {
+        "research_intensity": 4,
+        "standardization_influence": 2,
+        "industrial_deployment": 1,
+        "spectrum_policy_signal": 1,
+        "ecosystem_maturity": 2
+      },
+      "time_horizon": "mid-term",
+      "world_power_impact": {
+        "US": 3,
+        "EU": 3,
+        "China": 3,
+        "Japan": 2,
+        "Korea": 2,
+        "India": 2
+      },
+      "emerging_concepts": [
+        "Wireless Memory Approximation",
+        "Remote Memory Activation",
+        "Timely Relevant IoT Retrieval",
+        "DRAM Refresh Energy Optimization",
+        "Pull-based Edge Filtering"
+      ],
+      "key_evidence": [
+        "Storing lightweight neural networks in DRAM consumes significant refresh energy during device standby.",
+        "The framework jointly selects activation timing, refresh period, model size, and transmission thresholds.",
+        "Expected freshness and energy consumption are derived in closed form over erasure channels.",
+        "The proposed scheme consumes less energy than an always-on baseline under the same freshness constraints.",
+        "Focused on 6G edge networks where data freshness and energy efficiency are critical constraints."
+      ],
+      "standardization_context": {
+        "tdoc_refs": [],
+        "work_items": [],
+        "target_release": "Rel-20",
+        "working_groups": [
+          "RAN1",
+          "RAN2"
+        ]
+      },
+      "impact_score": 6
+    },
+    "source_region": "Other",
+    "summary": "Collecting relevant data from Internet of Things devices under freshness and energy constraints is a key challenge in 6G edge networks. A lightweight neural network on the device filters irrelevant observations, but storing it in dynamic random access memory consumes refresh energy during standby. This letter proposes a pull-based framework where an edge server remotely activates and approximates memory and jointly selects the activation timing, refresh period, model size, and transmission threshold. We derive the expected freshness and energy over erasure channels in closed form and show that the scheme consumes less energy than an always-on baseline under the same freshness constraint.",
+    "date": "2026-10-21"
+  },
+  {
     "article_id": "72b66d85e93e1bcad256f3984e4f0cee",
     "source": "Nokia",
     "title": "Nokia and SoftBank Corp. agree to conduct commercial AI-RAN field trial in Japan",
@@ -866,6 +1712,256 @@
     "source_region": "EU",
     "summary": "Espoo, Finland \u2013 Nokia today announced an agreement with SoftBank Corp. to conduct a commercial AI-RAN field trial in Japan in 2027. The planned deployment will use Nokia\u2019s anyRAN software on SoftBank\u2019s AITRAS, its core platform for AI-RAN, with NVIDIA Aerial RAN Computer (ARC), in conjunction with the AITRAS Orchestrator. The companies plan to validate AI-RAN technology in a commercial network environment under commercial traffic conditions. The upcoming field trial will assess key AI-RAN capabilities in a live commercial network environment and represents an important step in SoftBank\u2019s efforts to commercialize AI-RAN. It will also advance Nokia\u2019s AI-RAN commercialization roadmap by moving the technology from laboratory development toward real-world deployment. The planned trial will combine Nokia\u2019s AI-native anyRAN Cloud RAN software on a SoftBank AITRAS platform with NVIDIA\u2019s ARC platform and the AITRAS Orchestrator. The accelerated computing platform incorporates an NVIDIA Grace CPU, NVIDIA RTX PRO 4500 GPU and NVIDIA ConnectX-8 networking, providing the computing and high-bandwidth, low-latency connectivity needed to run commercial RAN workloads on cloud-native infrastructure. The AITRAS Orchestrator will support the orchestration of AI and RAN workloads within the trial environment, while NVIDIA\u2019s programmable accelerated computing platform and NVIDIA CUDA ecosystem provide a software-defined foundation for continued AI-RAN innovation and an evolution path toward AI-native 6G. The trial will also demonstrate how Nokia's AI-native anyRAN software can operate within the SoftBank AITRAS platform architecture, highlighting deployment flexibility beyond traditional RAN implementations. As demand for generative, agentic and physical AI applications continues to grow, operators require networks that can efficiently support increasing data volumes while enabling new AI-driven services closer to the end user. By combining Nokia\u2019s AI-native RAN software with NVIDIA accelerated computing, AI-RAN brings radio and AI workloads onto a common platform, helping operators improve infrastructure utilization, accelerate innovation and unlock new revenue opportunities. The agreement builds on Nokia and SoftBank\u2019s ongoing collaboration in AI-RAN, supported by NVIDIA\u2019s accelerated computing node. The planned field trial will bring together Nokia\u2019s AI-native RAN software with SoftBank\u2019s AITRAS platform including the AITRAS Orchestrator to test AI-RAN under commercial traffic conditions. The collaboration will explore how AI and RAN workloads can be orchestrated on a common platform while preserving carrier-grade RAN operational requirements. Integration between Nokia MantaRay and the AITRAS Orchestrator will help enable coordinated management of AI and RAN resources, creating a foundation for future AI-native network architectures. The trial will contribute to the broader industry transition toward AI-native network architectures and explore how operators can introduce new capabilities faster while supporting emerging AI applications at the network edge. The planned trial will also explore AI-RAN\u2019s potential to support richer AI-driven experiences, lower-latency services and new applications powered by real-time intelligence. Future use cases could include physical AI, immersive digital experiences, robotics and autonomous systems that require close interaction between AI and connectivity.",
     "date": "2026-10-20"
+  },
+  {
+    "article_id": "65ba5224b54daf4762d9f6ca1c1e3147",
+    "source": "Ericsson",
+    "title": "Singtel and Ericsson deepen partnership to scale 5G innovation and build AI-native networks for consumers and enterprises in Singapore",
+    "link": "https://www.ericsson.com/en/press-releases/2/2026/singtel-and-ericsson-deepen-partnership-to-scale-5g-innovation-and-build-ai-native-networks-for-consumers-and-enterprises-in-singapore",
+    "score": 3,
+    "ai_insights": {
+      "is_6g_relevant": true,
+      "source_region": "EU",
+      "summary": "Singtel and Ericsson have entered a five-year strategic partnership focused on evolving Singapore's 5G infrastructure into AI-native networks. This collaboration aims to scale 5G-Advanced capabilities and integrate artificial intelligence into the core network architecture, establishing the foundational technology stack required for the transition to 6G.",
+      "overall_6g_importance": 6,
+      "6g_topics": [
+        "AI-native RAN",
+        "network automation",
+        "cloud-edge integration",
+        "sustainability"
+      ],
+      "impact_dimensions": {
+        "research_intensity": 2,
+        "standardization_influence": 3,
+        "industrial_deployment": 5,
+        "spectrum_policy_signal": 1,
+        "ecosystem_maturity": 4
+      },
+      "time_horizon": "near-term",
+      "world_power_impact": {
+        "US": 2,
+        "EU": 4,
+        "China": 2,
+        "Japan": 1,
+        "Korea": 1,
+        "India": 1
+      },
+      "emerging_concepts": [
+        "AI-native networks",
+        "Intelligent connectivity",
+        "Programmable infrastructure",
+        "Autonomous network operations"
+      ],
+      "key_evidence": [
+        "Five-year strategic partnership to advance Singapore's 5G capabilities and scale innovation.",
+        "Specific focus on accelerating the adoption of AI-native applications.",
+        "Emphasis on delivering reliable, intelligent connectivity for both consumer and enterprise sectors.",
+        "Strategic alignment between a Tier-1 operator (Singtel) and a leading vendor (Ericsson) to pilot 6G-era architectural concepts."
+      ],
+      "standardization_context": {
+        "tdoc_refs": [],
+        "work_items": [],
+        "target_release": "Rel-19",
+        "working_groups": [
+          "RAN1",
+          "SA2"
+        ]
+      },
+      "impact_score": 6
+    },
+    "source_region": "EU",
+    "summary": "Singtel and Ericsson today announced a five-year strategic partnership to advance Singapore's 5G capabilities, accelerate the adoption of AI-native applications and deliver more reliable, intelligent connectivity for businesses and consumers.",
+    "date": "2026-10-20"
+  },
+  {
+    "article_id": "a54b6ac07a106d9ef6eb9123c5f9262c",
+    "source": "ArXiv CS Networking",
+    "title": "Evict Early, Decode Efficiently: Lightweight Decoding Strategies for Low-Delay Sliding Window RLNC",
+    "link": "https://arxiv.org/abs/2610.28097v1",
+    "score": 3,
+    "ai_insights": {
+      "is_6g_relevant": true,
+      "source_region": "Other",
+      "summary": "This research focuses on optimizing Sliding Window Random Linear Network Coding (SW-RLNC) for 6G and Non-Terrestrial Networks (NTN). It addresses a gap in decoder-side optimization, specifically regarding decoding window management, early packet eviction, and in-order delivery. The paper proposes lightweight decoding schemes that reduce computational complexity and delivery delay, which are critical for resource-constrained 6G edge devices and high-latency satellite links.",
+      "overall_6g_importance": 7,
+      "6g_topics": [
+        "NTN",
+        "cloud-edge integration"
+      ],
+      "impact_dimensions": {
+        "research_intensity": 4,
+        "standardization_influence": 2,
+        "industrial_deployment": 1,
+        "spectrum_policy_signal": 0,
+        "ecosystem_maturity": 2
+      },
+      "time_horizon": "mid-term",
+      "world_power_impact": {
+        "US": 3,
+        "EU": 4,
+        "China": 3,
+        "Japan": 2,
+        "Korea": 2,
+        "India": 2
+      },
+      "emerging_concepts": [
+        "Sliding Window RLNC (SW-RLNC)",
+        "Decoding Window Management",
+        "Early Eviction Policies",
+        "In-order Delivery Delay Optimization",
+        "Lightweight Decoding for NTN"
+      ],
+      "key_evidence": [
+        "SW-RLNC is identified as a promising approach for low-latency 6G and non-terrestrial networks.",
+        "The paper shifts focus from encoder-side tuning to decoder-side design as a key performance driver.",
+        "It derives sufficient conditions for safe packet removal without compromising decodability or in-order guarantees.",
+        "Proposed schemes demonstrate a reduction in both decoding complexity and in-order delivery delay.",
+        "The research targets the trade-off between computational overhead and communication performance in dynamic 6G environments."
+      ],
+      "standardization_context": {
+        "tdoc_refs": [],
+        "work_items": [],
+        "target_release": "Rel-21",
+        "working_groups": [
+          "RAN1",
+          "RAN2"
+        ]
+      },
+      "impact_score": 7
+    },
+    "source_region": "Other",
+    "summary": "Random Linear Network Coding (RLNC), and in particular Sliding Window RLNC (SW-RLNC), is a promising approach for reliable, low-latency communication in dynamic environments such as 6G and non-terrestrial networks. While prior work has largely focused on encoder-side parameter tuning, such as the code rate and coding window size, decoder-side design remains comparatively underexplored despite its direct impact on end-to-end performance. This paper addresses decoding window management, namely the policies governing window-boundary updates, removal of obsolete packets, and delivery of recovered packets to upper layers, and shows that these policies critically shape the trade-off between computational complexity and decoding performance, particularly in-order delivery delay. We derive sufficient conditions under which packets can be safely removed from the decoding window without compromising decodability or violating in-order delivery guarantees, and, building on these conditions, propose two lightweight decoding window management schemes. Through extensive simulation-based evaluation across a range of channel conditions and code rates, we show that both schemes preserve decoding efficiency while substantially reducing decoding complexity, and that one additionally achieves a marked reduction in in-order delivery delay. These results establish decoding window management as a key design dimension for practical SW-RLNC systems.",
+    "date": "2026-10-20"
+  },
+  {
+    "article_id": "870f11cf0d198f96be4b9aab83603cdc",
+    "source": "ArXiv CS Networking",
+    "title": "Toward Agentic AI for the 6G Physical Layer: From Algorithm Discovery to Verified Baseband Silicon",
+    "link": "https://arxiv.org/abs/2610.27797v1",
+    "score": 3,
+    "ai_insights": {
+      "is_6g_relevant": true,
+      "source_region": "EU",
+      "summary": "This research introduces an agentic AI workflow for the 6G physical layer that automates the transition from AI-driven algorithm discovery to verified baseband silicon implementation. By utilizing LLM coding agents that interact directly with hardware constraints and measured platform facts, the system generates optimized vector assembly code for an OTFS (Orthogonal Time Frequency Space) detector portfolio. The workflow demonstrates that hardware-aware AI agents can discover implementation-specific efficiencies\u2014reducing cycle counts by 13.9%\u2014that general hardware-blind search objectives typically overlook.",
+      "overall_6g_importance": 9,
+      "6g_topics": [
+        "AI-native RAN",
+        "device ecosystem",
+        "Open RAN",
+        "cloud-edge integration"
+      ],
+      "impact_dimensions": {
+        "research_intensity": 5,
+        "standardization_influence": 3,
+        "industrial_deployment": 2,
+        "spectrum_policy_signal": 1,
+        "ecosystem_maturity": 2
+      },
+      "time_horizon": "mid-term",
+      "world_power_impact": {
+        "US": 4,
+        "EU": 5,
+        "China": 4,
+        "Japan": 3,
+        "Korea": 3,
+        "India": 2
+      },
+      "emerging_concepts": [
+        "Agentic PHY",
+        "Hardware-aware LLM agents",
+        "Automated Vector Assembly Optimization",
+        "OTFS (Orthogonal Time Frequency Space) Silicon Implementation",
+        "Closed-loop Hardware Verification Agents"
+      ],
+      "key_evidence": [
+        "LLM coding agent implements algorithms on a commercial baseband SoC and optimizes them to agent-written vector assembly.",
+        "Showcases an AI-discovered OTFS detector portfolio on the open 6G4All platform.",
+        "Yields a new detector that requires 13.9% fewer cycles than the port of the discovered detector while matching error rates.",
+        "The agent is guided by a knowledge base of measured platform facts and checked against evaluators it cannot edit.",
+        "Optimized kernels run cycle-exactly on silicon at 30-660 microseconds per frame."
+      ],
+      "standardization_context": {
+        "tdoc_refs": [],
+        "work_items": [
+          "FS_NR_AI_ML_air"
+        ],
+        "target_release": "Rel-20",
+        "working_groups": [
+          "RAN1",
+          "RAN4"
+        ]
+      },
+      "impact_score": 9
+    },
+    "source_region": "EU",
+    "summary": "6G will be designed faster than it can be built: AI-driven search already proposes physical-layer algorithms at machine speed, while carrying a single one onto embedded baseband silicon remains specialist work. That silicon imposes hard memory and numeric limits, but also exposes cost structures a GPU lacks, and a design flow that never runs on the target sees neither. We present an agentic workflow in which an LLM coding agent implements algorithms on a commercial baseband SoC, optimizes them down to agent-written vector assembly, and validates them on silicon. The agent is guided by a knowledge base of measured platform facts, checked at every step against evaluators it is instructed never to edit, and metered per phase. We showcase the workflow on an AI-discovered orthogonal time frequency space (OTFS) detector portfolio on the open 6G4All platform. It yields twelve kernels that run cycle-exactly on silicon, their optimized versions at 18k-405k cycles (30-660 $\u03bc$s) per frame. It also yields a new detector shaped by the chip's measured costs that needs 13.9% fewer cycles than the port of the discovered detector while matching its error rate, with a measured edge our evaluation cannot statistically resolve, a structure that a hardware-blind search objective had no reason to find. What is not specific to OTFS is the workflow: an LLM agent exploring an implementation space under real hardware limits, with the cost of every choice measured rather than assumed.",
+    "date": "2026-10-20"
+  },
+  {
+    "article_id": "9ae0799c47d74493fcc44af1601333cc",
+    "source": "ArXiv CS Networking",
+    "title": "LLM-Guided Dual-Stage Latency Optimization for Closed-Loop 6G V2I Digital Twins",
+    "link": "https://arxiv.org/abs/2610.22848v1",
+    "score": 3,
+    "ai_insights": {
+      "is_6g_relevant": true,
+      "source_region": "Other",
+      "summary": "This research introduces a novel framework for optimizing 6G Vehicle-to-Infrastructure (V2I) Digital Twins (DT) by addressing dual-stage communication bottlenecks. It integrates Compressed Personalized Federated Learning (CPFL) for DT reconstruction with a Large-Language-Model (LLM)-guided Multi-Agent Reinforcement Learning (MARL) approach, termed SAGE-MAPPO. The LLM acts as a semantic planner to guide traffic splitting and power allocation, optimizing both DT parameter exchange and multi-service traffic delivery to minimize end-to-end latency in dynamic 6G environments.",
+      "overall_6g_importance": 8,
+      "6g_topics": [
+        "AI-native RAN",
+        "semantic communications",
+        "network automation",
+        "cloud-edge integration"
+      ],
+      "impact_dimensions": {
+        "research_intensity": 5,
+        "standardization_influence": 3,
+        "industrial_deployment": 1,
+        "spectrum_policy_signal": 1,
+        "ecosystem_maturity": 2
+      },
+      "time_horizon": "mid-term",
+      "world_power_impact": {
+        "US": 3,
+        "EU": 3,
+        "China": 4,
+        "Japan": 3,
+        "Korea": 3,
+        "India": 2
+      },
+      "emerging_concepts": [
+        "LLM-guided MARL (SAGE-MAPPO)",
+        "Compressed Personalized Federated Learning (CPFL)",
+        "Closed-loop V2I Digital Twins",
+        "Semantic-Aware Guidance-Enhanced Multi-Agent Proximal Policy Optimization",
+        "Dual-stage E2E latency optimization"
+      ],
+      "key_evidence": [
+        "The framework utilizes an LLM as a training-time semantic planner to provide high-level traffic splitting and power allocation guidance.",
+        "Proposed CPFL-enabled V2I DT jointly predicts Path Loss and QoE-oriented Key Performance Indicators.",
+        "Stage I minimizes UL/DL latency for compressed backbone parameters; Stage II minimizes service-aware latency for traffic.",
+        "Simulation results show the framework significantly reduces E2E latency for both DT reconstruction and multi-service traffic delivery.",
+        "SAGE-MAPPO supports cross-stage policy reuse, accelerating convergence in dynamic 6G V2I scenarios."
+      ],
+      "standardization_context": {
+        "tdoc_refs": [],
+        "work_items": [
+          "FS_NR_AI_ML_air",
+          "FS_V2X_6G"
+        ],
+        "target_release": "Rel-20",
+        "working_groups": [
+          "RAN1",
+          "RAN2",
+          "SA2"
+        ]
+      },
+      "impact_score": 8
+    },
+    "source_region": "Other",
+    "summary": "Wireless Digital Twins are emerging as a key enabler for predictive network control in 6G Vehicle-to-Infrastructure (V2I) systems. However, closed-loop V2I DTs face two dual-stage communication bottlenecks arising from model parameter exchange for V2I DT reconstruction and multi-service V2I traffic delivery after each reconstruction. This paper proposes a closed-loop dual-stage End-to-End (E2E) latency optimization framework that integrates Compressed Personalized Federated Learning with a unified Large-Language-Model-guided Multi-Agent Reinforcement Learning approach. A CPFL-enabled decision-oriented V2I DT is first constructed by jointly predicting Path Loss (PL) and Quality-of-Experience (QoE)-oriented Key Performance Indicators (KPIs). Then the framework comprises two temporally coupled but latency-wise distinct optimization stages: Stage I minimizes the joint Uplink (UL) and Downlink (DL) E2E transmission latency of compressed shared backbone's parameters, and Stage II minimizes the service-aware E2E latency of multi-service V2I traffic. As the two stages share aligned agent roles and action space, we develop a unified Semantic-Aware Guidance-Enhanced Multi-Agent Proximal Policy Optimization framework, in which the LLM acts as a training-time semantic planner that provides high-level traffic splitting and power allocation guidance to reduce inefficient exploration, while the MARL agents execute feasible low-level actions. Simulation results demonstrate that the proposed framework enables efficient V2I DT reconstruction and significantly reduces both E2E latency for DT reconstruction and multi-service V2I traffic. The proposed SAGE-MAPPO supports cross-stage policy reuse by sequentially solving the two stages within each DT update cycle, which accelerates convergence relative to the existing baselines and facilitates timely DT updates in dynamic V2I scenarios.",
+    "date": "2026-10-16"
   },
   {
     "article_id": "87928620463975b67b68874d09a36b9a",
@@ -1003,20 +2099,384 @@
     "date": "2026-10-12"
   },
   {
-    "article_id": "c3099283c9bdec266a0124904f48514a",
-    "source": "SNS JU",
-    "title": "6G-Cloud Uncovered: Service-Oriented RAN and Network of Networks in Action",
-    "link": "https://smart-networks.europa.eu/6g-cloud-uncovered-service-oriented-ran-and-network-of-networks-in-action/",
+    "article_id": "353eb458b5ee12ab6e104353ee90f7db",
+    "source": "ArXiv CS Networking",
+    "title": "Towards Resilience: Slice-Driven Orchestration of Mobile IoMT in 6G-Edge-Continuum",
+    "link": "https://arxiv.org/abs/2610.17296v1",
     "score": 3,
     "ai_insights": {
       "is_6g_relevant": true,
-      "source_region": "EU",
-      "summary": "The 6G-Cloud project under the SNS JU umbrella focuses on transforming 6G architectures into flexible, programmable environments using a Service-Oriented RAN approach and the 'Network of Networks' concept to bridge heterogeneous cloud and connectivity domains.",
+      "source_region": "Other",
+      "summary": "This research proposes a resource-slicing-based orchestration framework for Mobile Internet of Medical Things (IoMT) within a 6G-edge-continuum. It addresses the limitations of current methods by integrating 5G network slicing with resource-aware orchestration (CPU, memory, storage) and mobility-aware task offloading to ensure service continuity and resilience for critical healthcare services like remote surgery.",
       "overall_6g_importance": 7,
       "6g_topics": [
         "cloud-edge integration",
         "network automation",
-        "Open RAN",
+        "security & trust fabrics"
+      ],
+      "impact_dimensions": {
+        "research_intensity": 4,
+        "standardization_influence": 2,
+        "industrial_deployment": 2,
+        "spectrum_policy_signal": 1,
+        "ecosystem_maturity": 2
+      },
+      "time_horizon": "mid-term",
+      "world_power_impact": {
+        "US": 3,
+        "EU": 4,
+        "China": 3,
+        "Japan": 3,
+        "Korea": 3,
+        "India": 2
+      },
+      "emerging_concepts": [
+        "6G-Edge-Continuum",
+        "Slice-Driven Orchestration",
+        "Resource-aware Slicing",
+        "Mobility-aware Task Offloading",
+        "IoMT Resilience"
+      ],
+      "key_evidence": [
+        "Integrates 5G network slicing (NS), resource-aware orchestration, and mobility-aware task offloading into a single system",
+        "Framework considers CPU capacity, memory availability, and storage alongside traditional communication metrics",
+        "Demonstrates improved user acceptance and reduced request blocking in diverse IoMT scenarios via SimPy simulation",
+        "Targets mission-critical healthcare such as remote diagnostics and computer-assisted surgery"
+      ],
+      "standardization_context": {
+        "tdoc_refs": [],
+        "work_items": [],
+        "target_release": "Rel-20",
+        "working_groups": [
+          "SA2",
+          "SA6"
+        ]
+      },
+      "impact_score": 7
+    },
+    "source_region": "Other",
+    "summary": "Emerging healthcare services, such as real-time diagnostics, remote health monitoring and computer-assisted surgery, require stringent Quality of Service (QoS) guarantees while operating under limited and heterogeneous edge resources. Existing Internet of Medical Things (IoMT) orchestration methods primarily focus on communication metrics such as latency and bandwidth, while overlooking edge resource constraints and dynamic adaptation to workload and user mobility. This paper presents a novel resource-slicing-based adaptive orchestration framework that integrates 5G network slicing (NS), resource-aware orchestration, and mobility-aware task offloading into a single adaptive system. IoMT services are assigned to distinct 5G network slices while jointly considering CPU capacity, memory availability and amount of storage, enabling more efficient service placement and execution. In addition, the system supports user mobility and dynamic task offloading to maintain service continuity under changing network conditions. SimPy-based simulation demonstrates that the proposed method enhances service deployment efficiency, reduces request blocking, and improves user acceptance while maintaining reliable performance across diverse IoMT scenarios.",
+    "date": "2026-10-12"
+  },
+  {
+    "article_id": "eecf4fe774bea267cfcf210d4a63bef5",
+    "source": "ArXiv CS Networking",
+    "title": "Offline-Tuned Service-Aware TN-NTN Feeder Allocation for 6G Post-Disaster Service Resilience",
+    "link": "https://arxiv.org/abs/2610.16501v1",
+    "score": 3,
+    "ai_insights": {
+      "is_6g_relevant": true,
+      "source_region": "Other",
+      "summary": "The paper investigates 6G network resilience during terrestrial network (TN) failures by utilizing non-terrestrial networks (NTN) as a fallback. It specifically addresses the feeder link bottleneck that occurs when users migrate to NTN. It proposes an offline-tuned, service-priority-aware orchestration method using the Cross-Entropy Method (CEM) to optimize feeder capacity allocation, significantly improving emergency service continuity in disaster scenarios.",
+      "overall_6g_importance": 7,
+      "6g_topics": [
+        "NTN",
+        "AI-native RAN",
+        "network automation",
+        "sustainability"
+      ],
+      "impact_dimensions": {
+        "research_intensity": 4,
+        "standardization_influence": 2,
+        "industrial_deployment": 1,
+        "spectrum_policy_signal": 1,
+        "ecosystem_maturity": 2
+      },
+      "time_horizon": "mid-term",
+      "world_power_impact": {
+        "US": 3,
+        "EU": 3,
+        "China": 3,
+        "Japan": 2,
+        "Korea": 2,
+        "India": 2
+      },
+      "emerging_concepts": [
+        "TN-NTN Feeder Allocation",
+        "Offline-Tuned Service-Aware Orchestration",
+        "Emergency-Weighted Continuity Metric (Cemg)",
+        "Cross-Entropy Method (CEM) for Parameter Tuning",
+        "Post-Disaster Service Resilience"
+      ],
+      "key_evidence": [
+        "Proposed policy increases emergency-weighted continuity metric from 0.399 to 0.666 at a 180-Mbps feeder link capacity.",
+        "Identifies NTN feeder links as a critical bottleneck during mass user migration from failed terrestrial base stations.",
+        "Utilizes a lightweight Cross-Entropy Method (CEM) for offline parameter tuning instead of active online AI controllers.",
+        "Gains from the proposed policy are most significant in severe failure/total TN outage scenarios.",
+        "Tuning feeder-weights provided measurable gains, while tuned offload and user ranking did not show incremental benefits."
+      ],
+      "standardization_context": {
+        "tdoc_refs": [],
+        "work_items": [],
+        "target_release": "Rel-20",
+        "working_groups": [
+          "RAN2",
+          "RAN3",
+          "SA2"
+        ]
+      },
+      "impact_score": 7
+    },
+    "source_region": "Other",
+    "summary": "Terrestrial network (TN) failures during disasters can overload surviving base stations (BSs) and disrupt emergency services. A non-terrestrial network (NTN) provides fallback, but its feeder link can become a bottleneck as users migrate. This paper studies post-disaster network resilience through service-priority-aware orchestration of constrained NTN feeder capacity in a post-failure snapshot. A lightweight Cross-Entropy Method (CEM) tunes feeder, offload, and user-ranking parameters offline, not as an online artificial intelligence (AI) controller. A Python system-level simulator sweeps operating regions under abstract TN-NTN link and queueing models. Gains depend on failure severity. At a 180-Mbps feeder under total TN outage, the proposed policy increases the absolute emergency-weighted continuity metric Cemg from 0.399 to 0.666 relative to the matched rule baseline with uniform feeder scaling (paired gain: 0.267; 95% bootstrap CI: [0.264, 0.271]); mild damage can reduce aggregate continuity. Offline CEM feeder-weight tuning further improves severe-failure continuity over fixed service priorities, whereas tuned offload and user ranking provide no detectable incremental gain.",
+    "date": "2026-10-12"
+  },
+  {
+    "article_id": "6b4083d72900e3f3e557211b83a833d9",
+    "source": "ArXiv CS Networking",
+    "title": "RAPID: Proactive Rate Control for Enabling High Data Rate and Low Latency in 5G Edge Networks",
+    "link": "https://arxiv.org/abs/2610.13749v1",
+    "score": 3,
+    "ai_insights": {
+      "is_6g_relevant": true,
+      "source_region": "US",
+      "summary": "This research introduces RAPID, a proactive transport layer rate control protocol specifically designed for private 5G edge networks to meet 6G-tier requirements for tactile Internet and eXtended Reality (XR). By shifting away from reactive congestion control (packet loss/delay) toward a model that regulates send rates based on Physical Resource Block (PRB) utilization, the solution achieves massive latency reductions (up to 72x) essential for IMT-2030 performance targets.",
+      "overall_6g_importance": 7,
+      "6g_topics": [
+        "cloud-edge integration",
+        "network automation",
+        "device ecosystem"
+      ],
+      "impact_dimensions": {
+        "research_intensity": 4,
+        "standardization_influence": 3,
+        "industrial_deployment": 3,
+        "spectrum_policy_signal": 1,
+        "ecosystem_maturity": 2
+      },
+      "time_horizon": "near-term",
+      "world_power_impact": {
+        "US": 4,
+        "EU": 3,
+        "China": 3,
+        "Japan": 2,
+        "Korea": 3,
+        "India": 2
+      },
+      "emerging_concepts": [
+        "Proactive Rate Control",
+        "PRB Utilization-based Transport",
+        "Tactile Internet transport protocols",
+        "Bottleneck-aware Edge Networking"
+      ],
+      "key_evidence": [
+        "RAPID flows achieved one-way delay improvements of 72x and 55x compared to TCP Cubic.",
+        "The protocol maintains a target Physical Resource Block (PRB) utilization to balance data rate and latency.",
+        "Experiments conducted in a multi-UE scenario showed negligible packet loss with modest goodput reductions (16-27%).",
+        "The solution specifically addresses 6G use cases such as tactile Internet and XR which require simultaneous high data rate and low latency."
+      ],
+      "standardization_context": {
+        "tdoc_refs": [],
+        "work_items": [],
+        "target_release": "Rel-19",
+        "working_groups": [
+          "RAN2",
+          "SA2"
+        ]
+      },
+      "impact_score": 7
+    },
+    "source_region": "US",
+    "summary": "Many 6G use cases such as tactile Internet and eXtended reality applications would simultaneously require a high data rate and low latency wireless connectivity.It is increasingly being realized that the current transport protocols relying on packet loss and delay are insufficient to satisfy the data rate and latency requirements of such applications. To address this problem, we propose RAPID, a transport layer solution designed for private 5G edge networks, where the bottleneck is located at the base station. We show that by regulating the send rate to maintain a target physical resource block utilization, we can achieve high data rate, low latency communication. We design a simple yet effective policy that adapts to the dynamic nature of wireless channel conditions. In a multi-UE scenario with two RAPID flows and one TCP Cubic flow, our testbed results show that RAPID flows achieve significant improvements in one-way delay, i.e., 72x and 55x lower compared to TCP Cubic, with negligible packet loss at the cost of modest goodput reductions of 16% and 27%, respectively.",
+    "date": "2026-10-09"
+  },
+  {
+    "article_id": "9663a7ebd9213fdaf0f6c57f6b481902",
+    "source": "ArXiv CS Networking",
+    "title": "On the Alignment Between Spectral Efficiency and Positioning Accuracy in Multi-LEO Clusters",
+    "link": "https://arxiv.org/abs/2610.13526v1",
+    "score": 3,
+    "ai_insights": {
+      "is_6g_relevant": true,
+      "source_region": "Other",
+      "summary": "This research analyzes the trade-offs between Spectral Efficiency (SE) and positioning accuracy (Position Error Bound) within multi-LEO satellite clusters in 6G Non-Terrestrial Networks. It identifies that Doppler-based positioning is highly compatible with communication-optimized cluster configurations, whereas Time-of-Arrival (TOA) based positioning is not, suggesting a strategic direction for Integrated Sensing and Communication (ISAC) in satellite environments.",
+      "overall_6g_importance": 7,
+      "6g_topics": [
+        "ISAC",
+        "NTN",
+        "cloud-edge integration"
+      ],
+      "impact_dimensions": {
+        "research_intensity": 5,
+        "standardization_influence": 3,
+        "industrial_deployment": 1,
+        "spectrum_policy_signal": 1,
+        "ecosystem_maturity": 2
+      },
+      "time_horizon": "mid-term (2028\u20132032)",
+      "world_power_impact": {
+        "US": 4,
+        "EU": 4,
+        "China": 4,
+        "Japan": 2,
+        "Korea": 2,
+        "India": 3
+      },
+      "emerging_concepts": [
+        "Multi-LEO cooperative processing",
+        "Doppler-based PEB correlation",
+        "Spectral Efficiency-Positioning Alignment",
+        "Direct-to-device uplink joint processing",
+        "Satellite cluster optimization for ISAC"
+      ],
+      "key_evidence": [
+        "Spectral Efficiency exhibits a strong negative correlation of -0.72 with Doppler-based Position Error Bound (PEB).",
+        "Correlation between Spectral Efficiency and TOA-based PEB is notably weaker, ranging between -0.37 and -0.55.",
+        "Findings suggest that communication-oriented LEO clusters are largely compatible with Doppler-based positioning.",
+        "The study considers clusters of seven satellites jointly processing user signals for 6G NTN scenarios."
+      ],
+      "standardization_context": {
+        "tdoc_refs": [],
+        "work_items": [],
+        "target_release": "Rel-20",
+        "working_groups": [
+          "RAN1",
+          "RAN2"
+        ]
+      },
+      "impact_score": 7
+    },
+    "source_region": "Other",
+    "summary": "Low Earth Orbit (LEO) satellite constellations are expected to play a key role in future 6G Non-Terrestrial Networks (NTNs), where dense deployments enable cooperative multi-satellite processing for communication and positioning. While existing works have addressed communication and localization objectives separately, the correlation and alignment between these objectives remain largely unexplored. In this paper, we investigate the correlation between Spectral Efficiency (SE) and positioning accuracy in cooperative multi-LEO satellite clusters. We consider an uplink direct-to-device scenario in which multiple satellites jointly process user signals and evaluate cluster performance using SE and Position Error Bound (PEB) metrics. We derive Time-of-Arrival (TOA)-based and Doppler-based PEBs, while communication performance is quantified through the achievable SE under joint signal processing. Using realistic LEO constellation simulations, we demonstrate that for clusters of seven satellites, SE exhibits a strong negative correlation with Doppler-based PEB (correlation coefficient of $-0.72$). In contrast, its correlation with TOA-based PEB is notably weaker, ranging between $-0.55$ and $-0.37$. These findings suggest that communication-oriented LEO clusters are largely compatible with Doppler-based positioning, but not necessarily with TOA-based positioning.",
+    "date": "2026-10-09"
+  },
+  {
+    "article_id": "1b98874baa45f1495b65a3d24b374368",
+    "source": "ArXiv CS Networking",
+    "title": "A Compositional Perspective on Communication-Control Co-Design for Mobile Broadband Systems Beyond 6G",
+    "link": "https://arxiv.org/abs/2610.10486v1",
+    "score": 3,
+    "ai_insights": {
+      "is_6g_relevant": true,
+      "source_region": "Other",
+      "summary": "This article explores a shift from traditional optimization-driven co-design to a compositional perspective for 'Beyond 6G' (B6G) networks. It focuses on the integration of communication and control subsystems, specifically addressing modularity, requirement propagation, and design-space feasibility in complex environments like wireless-assisted robotics.",
+      "overall_6g_importance": 7,
+      "6g_topics": [
+        "network automation",
+        "cloud-edge integration",
+        "semantic communications",
+        "AI-native RAN"
+      ],
+      "impact_dimensions": {
+        "research_intensity": 5,
+        "standardization_influence": 2,
+        "industrial_deployment": 1,
+        "spectrum_policy_signal": 1,
+        "ecosystem_maturity": 2
+      },
+      "time_horizon": "long-term",
+      "world_power_impact": {
+        "US": 3,
+        "EU": 3,
+        "China": 3,
+        "Japan": 4,
+        "Korea": 4,
+        "India": 2
+      },
+      "emerging_concepts": [
+        "Compositional co-design",
+        "Communication-control co-design (CoCoCo)",
+        "Design-space feasibility analysis",
+        "Formal theory of co-design",
+        "Wireless-assisted robotic control"
+      ],
+      "key_evidence": [
+        "Identifies challenges in modular subsystem representation and requirement propagation in B6G.",
+        "Proposes a composition-driven methodology based on formal co-design theory.",
+        "Highlights the complementarity between optimization-driven and composition-driven approaches.",
+        "Uses a robotic control case-study to validate the proposed architecture for B6G broadband."
+      ],
+      "standardization_context": {
+        "tdoc_refs": [],
+        "work_items": [],
+        "target_release": "Beyond Release 21",
+        "working_groups": [
+          "SA2",
+          "RAN2"
+        ]
+      },
+      "impact_score": 7
+    },
+    "source_region": "Other",
+    "summary": "Anticipated applications of beyond sixth-generation (B6G) mobile broadband networks will require the co-design of communication and control subsystems within the network architecture. Existing co-design approaches are predominantly optimization-driven, integrating subsystems through joint optimization problems. While this approach is effective in relatively simple systems, such formulations present challenges in (i) modular subsystem representations, (ii) tracing the propagation of requirements across subsystems, and (iii) systematically analyzing design-space feasibility, particularly as the number and complexity of interacting subsystems increase. In this article, we present a compositional perspective on co-design based on the formal theory of co-design. We examine how the notion of composition introduced by this theory can address the challenges of the conventional optimization-driven approach. Building on this perspective, we propose a composition-driven methodology for communication-control co-design in B6G networks and illustrate it through a wireless-assisted robotic control case-study. We then discuss how the composition-driven and optimization-driven co-design approaches can complement each other and why this complementarity may be beneficial for B6G networks. Finally, we identify key research challenges and future directions toward the practical adoption of the proposed methodology.",
+    "date": "2026-10-07"
+  },
+  {
+    "article_id": "73740aa906cd5dce0c06733f7b497cc2",
+    "source": "ArXiv CS Networking",
+    "title": "PCDT: A Predictive Cognitive Digital Twin Framework for Intelligent and Autonomous 6G Network Ecosystems",
+    "link": "https://arxiv.org/abs/2610.09546v1",
+    "score": 3,
+    "ai_insights": {
+      "is_6g_relevant": true,
+      "source_region": "Other",
+      "summary": "This research introduces the Predictive Cognitive Digital Twin (PCDT) framework, designed to evolve 6G network management from reactive, synchronized replicas to proactive, autonomous ecosystems. By maintaining a persistent traffic world model and utilizing predictive cognition, the framework anticipates SLA risks and allocates resources before performance degradation occurs, significantly improving efficiency and reducing operational costs compared to traditional reactive models.",
+      "overall_6g_importance": 7,
+      "6g_topics": [
+        "AI-native RAN",
+        "network automation",
+        "sustainability",
+        "cloud-edge integration"
+      ],
+      "impact_dimensions": {
+        "research_intensity": 4,
+        "standardization_influence": 2,
+        "industrial_deployment": 2,
+        "spectrum_policy_signal": 1,
+        "ecosystem_maturity": 2
+      },
+      "time_horizon": "mid-term",
+      "world_power_impact": {
+        "US": 3,
+        "EU": 3,
+        "China": 4,
+        "Japan": 3,
+        "Korea": 3,
+        "India": 2
+      },
+      "emerging_concepts": [
+        "Predictive Cognitive Digital Twin (PCDT)",
+        "Persistent Traffic World Model",
+        "Intent-aware mechanism",
+        "Proactive resource control",
+        "Cognitive control loops"
+      ],
+      "key_evidence": [
+        "PCDT reduces Mean Absolute Error (MAE) by 43% and RMSE by 32% compared to the best reactive control baseline.",
+        "The framework reduces mean allocated capacity by 50% relative to zero-violation threshold heuristics.",
+        "Reduces reconfiguration churn by 56% and total operating cost by 50%.",
+        "Closes the loop from observation to predictive cognition to proactive resource control for 6G."
+      ],
+      "standardization_context": {
+        "tdoc_refs": [],
+        "work_items": [],
+        "target_release": "Rel-20",
+        "working_groups": [
+          "SA2",
+          "RAN3"
+        ]
+      },
+      "impact_score": 7
+    },
+    "source_region": "Other",
+    "summary": "Future 6G networks are expected to operate as intelligent and autonomous ecosystems where monitoring, prediction, and control are integrated into continuous self-optimization loops. However, many digital-twin-based network management approaches still act mainly as synchronized replicas of the network. They observe the state, report degradation, and trigger corrective action only after performance risk has appeared. This leaves a gap between the vision of a cognitive digital twin (CDT) and the behavior of conventional reactive control loops. In this paper, we propose a Predictive Cognitive Digital Twin (PCDT) framework that closes the loop from observation to predictive cognition to proactive resource control. PCDT maintains a persistent traffic world model, forecasts near-future load, and allocates capacity for the predicted horizon peak before a Service Level Agreement (SLA) violation occurs. Evaluated on a real-world traffic trace, PCDT achieves the lowest allocation error among all benchmarked baseline frameworks, reducing MAE by 43% and RMSE by 32% relative to the best baseline (reactive control). Relative to the threshold heuristic, the only baseline with zero violations, PCDT reduces mean allocated capacity by 50%, reconfiguration churn by 56%, and total operating cost by 50%, indicating substantially more efficient performance. These results show the proposed framework advances the digital twin (DT) operation mechanism from a passive representation towards a cognitive, proactive control, and \"intent-aware\" mechanism aligned with autonomous 6G network vision.",
+    "date": "2026-10-07"
+  },
+  {
+    "article_id": "6c30734939b01e578f5f5aa35564f023",
+    "source": "ArXiv CS Networking",
+    "title": "6G NeXt - Towards 6G Split Computing Network Applications: Use Cases and Architecture",
+    "link": "https://arxiv.org/abs/2610.08352v1",
+    "score": 3,
+    "ai_insights": {
+      "is_6g_relevant": true,
+      "source_region": "EU",
+      "summary": "This article outlines the 6G NeXt research project's approach to split computing and distributed network architectures. It specifically addresses the extreme requirements of holographic communications and autonomous drone safety, proposing a tight integration between compute facilities and the wireless network to provide necessary QoS for 6G applications.",
+      "overall_6g_importance": 8,
+      "6g_topics": [
+        "cloud-edge integration",
+        "network automation",
+        "device ecosystem",
         "standardization"
       ],
       "impact_dimensions": {
@@ -1036,239 +2496,280 @@
         "India": 1
       },
       "emerging_concepts": [
-        "Service-Oriented RAN",
-        "Network of Networks",
-        "Programmable 6G Domains",
-        "Heterogeneous Cloud Orchestration"
+        "Split Computing",
+        "6G NeXt Architecture",
+        "Holographic Communication Infrastructure",
+        "Distributed Backbone Computing",
+        "Compute-Network Convergence"
       ],
       "key_evidence": [
-        "The 6G-Cloud project aims to make future networks more flexible and programmable.",
-        "Operations will span across heterogeneous network and cloud domains.",
-        "The project specifically highlights Service-Oriented RAN as a core architectural pillar.",
-        "SNS JU event scheduled for October 2026 indicates a critical phase for 6G architectural validation."
+        "The 6G NeXt project focuses on holographic communications and drone anti-collision systems as primary 6G use cases.",
+        "The architecture requires a high-speed distributed backbone to support split-computing workloads.",
+        "Processing power needs for holographic data necessitate a shift from edge-only to distributed backbone computing.",
+        "The study emphasizes a tight integration between processing facilities and wireless networks for QoS guarantees."
       ],
       "standardization_context": {
         "tdoc_refs": [],
         "work_items": [],
-        "target_release": "Rel-20",
+        "target_release": "Rel-21",
         "working_groups": [
           "SA2",
+          "SA6",
+          "RAN3"
+        ]
+      },
+      "impact_score": 8
+    },
+    "source_region": "EU",
+    "summary": "The definition of the sixth generation mobile communication is in the full swing. Mobile communication aims for the convergence of physical, human and digital world. Research project 6G NeXt is considering two demanding use cases, holographic communications and drones anti-collision system, which set heterogeneous requirements on the communication as well as the computing infrastructure. In both use cases, the clients are widely spread in the network and are cooperatively interacting with each other. Especially for holographic communication, also high processing power is required. This makes a high-speed distributed backbone computing infrastructure, which realises the concept of split-computing, inevitable. Furthermore, tight integration between processing facilities and wireless network is required in order to provide adequate quality of service to the users. This paper illustrates the use case scenarios and their requirements. Afterwards, an appropriate solution approach to realise those is elaborated. Here, the novel technological approaches are discussed based on the developed overall communication and computing architecture.",
+    "date": "2026-10-06"
+  },
+  {
+    "article_id": "29cb7c183b5d292224a9080916a9c846",
+    "source": "ArXiv CS Networking",
+    "title": "ONDT: A Modular and Virtualized O-RAN Digital Twin for xApp/rApp Closed-Loop Experimentatio",
+    "link": "https://arxiv.org/abs/2610.07889v1",
+    "score": 3,
+    "ai_insights": {
+      "is_6g_relevant": true,
+      "source_region": "EU",
+      "summary": "This article presents the O-RAN Digital Twin (ONDT), a cloud-native, modular framework developed under the EU's SNS SUNRISE-6G project. ONDT is designed to facilitate the risk-free validation of AI/ML-driven closed-loop control algorithms (xApps and rApps) by providing an isolated, reproducible environment that integrates with industry RIC platforms and emulation tools.",
+      "overall_6g_importance": 7,
+      "6g_topics": [
+        "AI-native RAN",
+        "network automation",
+        "Open RAN",
+        "cloud-edge integration",
+        "standardization"
+      ],
+      "impact_dimensions": {
+        "research_intensity": 4,
+        "standardization_influence": 3,
+        "industrial_deployment": 2,
+        "spectrum_policy_signal": 1,
+        "ecosystem_maturity": 3
+      },
+      "time_horizon": "mid-term",
+      "world_power_impact": {
+        "US": 3,
+        "EU": 5,
+        "China": 1,
+        "Japan": 1,
+        "Korea": 1,
+        "India": 1
+      },
+      "emerging_concepts": [
+        "O-RAN Digital Twin (ONDT)",
+        "Closed-Loop Experimentation",
+        "Automated xApp/rApp Onboarding",
+        "AI/ML-driven Network Optimization",
+        "Virtualized Experimentation Workflows"
+      ],
+      "key_evidence": [
+        "Developed as a 6G enabler within the EU-funded SNS SUNRISE-6G project.",
+        "Utilizes Juniper RIC platforms and Keysight RICtest emulation for experimental validation.",
+        "Enables automated Key Performance Metric (KPM) collection and dataset generation for AI training.",
+        "Provides a modular, virtualized, and cloud-native environment to reduce operational risks in live network optimization.",
+        "Demonstrates end-to-end workflows for cell ON/OFF control and closed-loop validation."
+      ],
+      "standardization_context": {
+        "tdoc_refs": [],
+        "work_items": [],
+        "target_release": "Rel-19",
+        "working_groups": [
           "RAN3"
         ]
       },
       "impact_score": 7
     },
     "source_region": "EU",
-    "summary": "How can future 6G networks become more flexible, programmable and capable of operating across heterogeneous network and cloud domains? On 13 October 2026 at 14:00 CEST, the 6G-Cloud project invites [\u2026] The post 6G-Cloud Uncovered: Service-Oriented RAN and Network of Networks in Action appeared first on SNS JU .",
-    "date": "2026-10-02"
+    "summary": "Open Radio Access Network (O-RAN) architectures extend programmability in next-generation cellular networks through Near-Real-Time and Non-Real-Time RAN Intelligent Controllers (RICs), enabling AI/ML-driven xApps and rApps to optimize network behavior dynamically. However, validating automated closed-loop control algorithms in live environments presents significant operational risks and deployment costs. To address this challenge, this paper introduces the O-RAN Digital Twin (ONDT), a modular, virtualized, and cloud-native experimentation framework developed as a 6G enabler within the SNS SUNRISE-6G project. We present the ONDT architecture and its end-to-end experimentation workflows, showing how the framework automates O-RAN-compliant rApp/xApp onboarding, RAN scenario configuration and initialization, Key Performance Metric (KPM) collection, and closed-loop control validation. Experimental validation using Juniper RIC platforms and the Keysight RICtest emulation framework demonstrates ONDT ability to provide an isolated and reproducible environment for KPM monitoring, cell ON/OFF control, automated dataset generation, and rApp/xApp validation.",
+    "date": "2026-10-06"
   },
   {
-    "article_id": "b013893c6d2d964e785cb3b3cf36837a",
+    "article_id": "c20a0d7270f1559fedc539f0ba037cb5",
     "source": "ArXiv CS Networking",
-    "title": "Sequence Models for Layer-3 Protocol Emulation",
-    "link": "https://arxiv.org/abs/2609.37697",
-    "score": 3,
-    "ai_insights": null,
+    "title": "6G as It Is Actually Being Built: Insights from Early 3GPP Standardization",
+    "link": "https://arxiv.org/abs/2610.05694v1",
+    "score": 5,
+    "ai_insights": {
+      "is_6g_relevant": true,
+      "source_region": "Other",
+      "summary": "An analysis of 3GPP's early 6G standardization trajectory, detailing the transition from Release 20 study items to Release 21 normative specifications. The article highlights architectural shifts where AI, sensing, and non-terrestrial access become fundamental primitives rather than peripheral features, emphasizing industrial deployability and multi-vendor testability.",
+      "overall_6g_importance": 9,
+      "6g_topics": [
+        "AI-native RAN",
+        "ISAC",
+        "NTN",
+        "standardization",
+        "spectrum & policy",
+        "network automation",
+        "cloud-edge integration"
+      ],
+      "impact_dimensions": {
+        "research_intensity": 4,
+        "standardization_influence": 5,
+        "industrial_deployment": 4,
+        "spectrum_policy_signal": 4,
+        "ecosystem_maturity": 3
+      },
+      "time_horizon": "mid-term",
+      "world_power_impact": {
+        "US": 5,
+        "EU": 5,
+        "China": 5,
+        "Japan": 5,
+        "Korea": 5,
+        "India": 4
+      },
+      "emerging_concepts": [
+        "AI as a primitive spanning every stage",
+        "NTN as a substrate rather than an overlay",
+        "Connectivity/Computing/Sensing triangular objective",
+        "AI workflow standardization vs model standardization",
+        "Deployability and site reuse over waveform innovation"
+      ],
+      "key_evidence": [
+        "Release-20 study phase is underway across RAN, SA, and CT TSGs as of June 2026.",
+        "The timeline for first normative 6G specifications has been set for Release 21.",
+        "Non-terrestrial access has officially crossed from an optional overlay to a core network substrate.",
+        "Spectrum access and site reuse are identified as tighter constraints for 6G than physical layer/waveform changes.",
+        "Testability across vendors is a decisive criterion for the survival of proposed 6G techniques in committee."
+      ],
+      "standardization_context": {
+        "tdoc_refs": [],
+        "work_items": [],
+        "target_release": "Release 21",
+        "working_groups": [
+          "RAN",
+          "SA",
+          "CT"
+        ]
+      },
+      "impact_score": 9
+    },
     "source_region": "Other",
-    "summary": "arXiv:2609.37697v1 Announce Type: new \nAbstract: This article investigates whether Layer-3 radio-protocol behavior can be represented by compact sequence models suitable for deployment inside the RAN. We introduce the RRC sequence engine (RSE), a hybrid architecture in which a sequence model predicts protocol-dependent message structure while deterministic components retain control over security-sensitive or configured fields and over transport containers. Using NR protocol traces, we show that protocol-aware tokenization, cross-stack context, and explicit placeholders matter more than general-sequence model scale. A purpose-built 11M-parameter Mamba engine achieves 0.90 exact match on the evaluated next-generation Node B (gNB)-side test set with a median generation latency of 115 ms, sufficient for some timers of Layer-3, outperforming a fine-tuned 0.6B-parameter model. We discuss applications in testing, simulation, deployment specialization, and future trainable 6G control planes, as well as the validation, latency, robustness, and security challenges that remain before operational use.",
-    "date": "2026-09-30"
+    "summary": "As mobile communications cross the threshold from 5G to 6G, the 3GPP has entered a decisive phase. Following the Technical Specification Group (TSG) plenary meetings of June 2026 and the associated 6G workshop in Singapore, the Release-20 study phase is now well underway across all three TSGs: Radio Access Network (RAN), Service and System Aspects (SA), and Core Network and Terminals (CT). Concurrently, the timeline for the first normative 6G specifications in Release 21 has been established. Rather than offering another technology vision, or a chronological account of committee progress, this article asks what the first body of agreed 6G material tells us. We review service requirements, system architecture, the emerging radio interface, native AI, ISAC, non-terrestrial networks (NTN), and core-network protocols, tracing how each moves from study item toward specification. Read across the three TSGs, this material also supports seven cross-cutting lessons: AI has moved from a feature to a primitive spanning every stage, non-terrestrial access has crossed from overlay to substrate, and connectivity is now one objective among three alongside computing and sensing; the industry favors deployability over redesign, with spectrum access and site reuse, rather than waveform innovation, appearing to be the tighter constraint; and standardization targets AI workflows rather than AI models, with testability across vendors recurring as a decisive criterion for which techniques survive. Because the material spans very different stages of maturity, every item cited is tagged with its status at a single snapshot date (approved, draft, individually proposed, or vendor-demonstrated), and the lessons are offered as the authors' synthesis rather than as 3GPP positions. We close with the road toward trials and commercial launch around 2030, and with the open questions these lessons help prioritize.",
+    "date": "2026-10-05"
   },
   {
-    "article_id": "56bea5dae0f5ea48ab1df5ccfd0df940",
-    "source": "SNS JU",
-    "title": "SNS JU Call 4 & 5 Projects Introduction Webinars",
-    "link": "https://smart-networks.europa.eu/sns-ju-call-4-5-projects-introduction-webinars/",
-    "score": 3,
-    "ai_insights": null,
-    "source_region": "Other",
-    "summary": "<p>The European Smart Networks and Services Joint Undertaking (SNS JU) is a Public-Private Partnership that aims to facilitate and develop industrial leadership in Europe in 5G and 6G networks and [&#8230;]</p>\n<p>The post <a href=\"https://smart-networks.europa.eu/sns-ju-call-4-5-projects-introduction-webinars/\">SNS JU Call 4 &#038; 5 Projects Introduction Webinars</a> appeared first on <a href=\"https://smart-networks.europa.eu\">SNS JU</a>.</p>",
-    "date": "2026-09-30"
-  },
-  {
-    "article_id": "0e85c86bc2497ce7cc3803bbc636f6b8",
-    "source": "SNS JU",
-    "title": "SNS JU Call 4 & 5 Projects Introduction Webinar",
-    "link": "https://smart-networks.europa.eu/sns-ju-call-4-5-projects-introduction-webinar/",
-    "score": 3,
-    "ai_insights": null,
-    "source_region": "Other",
-    "summary": "The European Smart Networks and Services Joint Undertaking (SNS JU) is a Public-Private Partnership that aims to facilitate and develop industrial leadership in Europe in 5G and 6G networks and [\u2026] The post SNS JU Call 4 & 5 Projects Introduction Webinar appeared first on SNS JU .",
-    "date": "2026-09-30"
-  },
-  {
-    "article_id": "374cdb539b5cb7cc2cd4d71f5fb72f46",
-    "source": "IEEE Spectrum",
-    "title": "A New IEEE STEM Book Series for Tweens from TryEngineering",
-    "link": "https://spectrum.ieee.org/ieee-stem-books-tweens-tryengineering",
-    "score": 3,
-    "ai_insights": null,
-    "source_region": "Other",
-    "summary": "<img src=\"https://spectrum.ieee.org/media-library/a-grid-of-six-book-covers-related-to-engineering-topics-such-as-semiconductors-artificial-intelligence-and-communication-techno.jpg?id=67874961&amp;width=1245&amp;height=700&amp;coordinates=0%2C187%2C0%2C188\" /><br /><br /><p><a href=\"https://tryengineering.org\" rel=\"noopener noreferrer\" target=\"_blank\">IEEE TryEngineering</a> is dedicated to inspiring intellectual curiosity in children.</p><p>The technologies shaping our world, including in the realms of artificial intelligence, electric vehicles, and ocean exploration, are evolving rapidly. Helping young learners understand the concepts is essential to preparing the next generation of problem-solvers, creators, and engineers.</p><p>TryEngineering has introduced a STEM <a href=\"https://lernerbooks.com/series/11453-tomorrow-s-technology-with-tryengineering-powered-by-ieee\" rel=\"noopener noreferrer\" target=\"_blank\">book series</a> for youngsters ages 8 to 12 through the <a href=\"https://lernerbooks.com/\" rel=\"noopener noreferrer\" target=\"_blank\">Lerner Publishing Group</a>.</p><p>The series, Tomorrow\u2019s Technology With TryEngineering, Powered by IEEE, makes complex topics more approachable and engaging, with each book combining age-appropriate explanations, real-world examples, and design challenges that encourage curiosity and critical thinking. The series is based on ebooks and videos available at <a href=\"https://tryengineering.org\" rel=\"noopener noreferrer\" target=\"_blank\">tryengineering.org</a>.</p><p>For the series, TryEngineering partnered with several other IEEE groups including the <a href=\"https://www.comsoc.org/\" rel=\"noopener noreferrer\" target=\"_blank\">Communications</a>, <a href=\"https://www.computer.org/\" rel=\"noopener noreferrer\" target=\"_blank\">Computer</a>, and <a href=\"https://ieeeoes.org/\" rel=\"noopener noreferrer\" target=\"_blank\">Oceanic Engineering</a> societies and the <a href=\"https://tec.ieee.org/\" rel=\"noopener noreferrer\" target=\"_blank\">Transportation Electrification Council</a>.</p><p>Whether used in the classroom, a library, or at home, the books can help pupils connect STEM concepts to the technologies they encounter every day, including computers and smartphones. </p><h2>Six topics in the collection</h2><p>Here are the books in the new collection: </p><p><a href=\"https://bookshop.org/p/books/artificial-intelligence-the-future-of-smart-technology/8cdfa07415b03879?ean=9798348027483&amp;next=t\" rel=\"noopener noreferrer\" target=\"_blank\"><em><em>Artificial Intelligence: The Future of Smart Technology</em></em></a> explores the systems behind streaming services, search engines, and health care. Readers learn how AI works while exploring <a href=\"https://spectrum.ieee.org/two-new-ai-ethics-certifications\" target=\"_self\">ethical concerns</a> such as bias, deepfakes, hallucinations, and privacy. Pupils can better understand one of the most influential technologies of our time as it evolves.</p><p><a href=\"https://bookshop.org/p/books/communication-technology-from-morse-code-to-smartphones/ec3c6bb41873ba8c?ean=9798348027513&amp;next=t\" rel=\"noopener noreferrer\" target=\"_blank\"><em><em>Communication Technology: From Morse Code to Smartphones</em></em></a> teaches readers about smoke signals, semaphore towers, telephones, and wireless networks. The pupils can gain an understanding of how engineers are changing communications technology through innovations such as <a href=\"https://spectrum.ieee.org/ieee-5g-and-6g-training\" target=\"_self\">6G</a> and space-based networks. The book highlights career opportunities in the aerospace and telecommunications fields.</p><p><a href=\"https://bookshop.org/p/books/electric-vehicles-powering-the-future-of-transportation/c29e8242f9f003fc?ean=9798348027537&amp;next=t\" rel=\"noopener noreferrer\" target=\"_blank\"><em><em>Electric Vehicles: Powering the Future of Transportation</em></em></a> covers how <a href=\"https://spectrum.ieee.org/autonomous-vehicles-motion-planner-llm\" target=\"_self\">e-cars</a>, <a href=\"https://spectrum.ieee.org/e-bike-regulations\" target=\"_self\">e-bikes</a>, e-scooters, and electrified trains are transforming the way people travel. Readers can discover how hybrid and fully electric vehicles operate and how the <a href=\"https://spectrum.ieee.org/ces-2026-solid-state-batteries\" target=\"_self\">batteries</a> that power them work. They also can learn about the roles engineers play in developing smarter transit systems.</p><p><a href=\"https://bookshop.org/p/books/ocean-engineering-protecting-our-ocean-environments/e9454f53aea5d291?ean=9798348042868&amp;next=t\" rel=\"noopener noreferrer\" target=\"_blank\"><em><em>Ocean Engineering: Protecting Our Ocean Environments</em></em></a> highlights the vital ecosystem role played by the world\u2019s <a href=\"https://spectrum.ieee.org/ocean-thermal-energy-conversion\" target=\"_self\">oceans</a>, which require careful stewardship. play in our ecosystem. Readers can learn how engineers study the underwater world using submersibles and <a href=\"https://spectrum.ieee.org/tidal-energy-underwater-kite-power\" target=\"_self\">floats</a>, how they address <a href=\"https://spectrum.ieee.org/sound-waves\" target=\"_self\">pollution</a>, and how they protect marine environments.</p><p><a href=\"https://bookshop.org/p/books/semiconductors-the-building-blocks-of-modern-electronics/518644292f273130?ean=9798348027506&amp;next=t\" rel=\"noopener noreferrer\" target=\"_blank\"><em><em>Semiconductors: The Building Blocks of Modern Electronics</em></em></a> focuses on the technology behind nearly every electronic tool we use. <a href=\"https://spectrum.ieee.org/the-long-strange-trip-from-silica-to-smartphone\" target=\"_self\">Microchips</a> power smartphones, computers, and countless other products, all thanks to <a href=\"https://spectrum.ieee.org/topic/semiconductors/\" target=\"_self\">semiconductors</a>. Readers can learn about insulators and conductors, how microchips are manufactured, and why semiconductor engineering is a fertile field for innovation.</p><p><a href=\"https://bookshop.org/p/books/signal-power-the-hidden-waves-behind-modern-tech/3ead706c1ee8b5a7?ean=9798348042851&amp;next=t\" rel=\"noopener noreferrer\" target=\"_blank\"><em><em>Signal Power: The Hidden Waves Behind Modern Tech</em></em></a> explores how engineers analyze and manipulate signals to make technologies work more effectively. Whether it is a phone call reaching the correct person despite background noise or a <a href=\"https://spectrum.ieee.org/ability-neurotech-bci-human-trial\" target=\"_self\">medical device</a> monitoring a patient, signal processing plays crucial roles in modern life. The book introduces different wave types, the signal processing workflow, and careers in the field.</p><p>The book series can help children understand the technologies shaping the world around them while encouraging them to think like engineers and innovators. By connecting STEM concepts to real-world applications, the series can make learning more meaningful and engaging.</p><p>The Tomorrow\u2019s Technology With TryEngineering series is available through <a href=\"https://www.amazon.com/s?k=%22tryengineering%22\" rel=\"noopener noreferrer\" target=\"_blank\">Amazon</a>, <a href=\"https://bookshop.org/beta-search?bkshp-astro=t&amp;keywords=%22tryengineering%22\" rel=\"noopener noreferrer\" target=\"_blank\">Bookshop</a>, and <a href=\"https://lernerbooks.com/shop/search_results?q=IEEE\" rel=\"noopener noreferrer\" target=\"_blank\">Lerner</a>. More about the collection may be found <a href=\"https://tryengineering.org/home/stem-childrens-book-series/\" rel=\"noopener noreferrer\" target=\"_blank\">here</a>.</p>",
-    "date": "2026-09-28"
-  },
-  {
-    "article_id": "52f1b62d55eb1defaef953730c980267",
-    "source": "SNS JU",
-    "title": "6G PATH Webinar: \u2018From Research Outputs to Real-World Impact\u2019 on the 29th September 2026",
-    "link": "https://smart-networks.europa.eu/6g-path-webinar-from-research-outputs-to-real-world-impact-on-the-29th-september-2026/",
-    "score": 3,
-    "ai_insights": null,
-    "source_region": "Other",
-    "summary": "<p>29 September 2026 &#124; 14:00\u201315:30 UK time &#124; Online The 6G-PATH project is hosting a webinar exploring how research and innovation projects can identify, assess and communicate their wider impact. [&#8230;]</p>\n<p>The post <a href=\"https://smart-networks.europa.eu/6g-path-webinar-from-research-outputs-to-real-world-impact-on-the-29th-september-2026/\">6G PATH Webinar: &#8216;From Research Outputs to Real-World Impact&#8217; on the 29th September 2026</a> appeared first on <a href=\"https://smart-networks.europa.eu\">SNS JU</a>.</p>",
-    "date": "2026-09-23"
-  },
-  {
-    "article_id": "1bbdb617d0f8589f5b46e318dddff60d",
-    "source": "Nokia",
-    "title": "Nokia accelerates AI-RAN adoption as global operators embrace AI-native network evolution on NVIDIA platforms",
-    "link": "https://www.nokia.com/newsroom/nokia-accelerates-ai-ran-adoption-as-global-operators-embrace-ai-native-network-evolution-on-nvidia-platforms/",
-    "score": 6,
-    "ai_insights": null,
-    "source_region": "Other",
-    "summary": "<p><span>Nokia today announced growing global momentum for AI-RAN, with operators across North America, Europe, Asia-Pacific and the Middle East advancing AI-RAN from early evaluation to lab and live field trials, accelerating the evolution toward AI-native 6G networks. Expanding engagement with A1 Group, Chunghwa Telecom, du, e&, Mobily, stc, TPG Telecom, and Zain Saudi demonstrates how AI-RAN is rapidly moving from industry vision to commercial reality. In addition, trials with operators previously announced, including NTT DOCOMO, INC., continue to progress steadily.</span></p><p><span>The announcement builds on Nokia\u2019s recent AI-RAN milestones, including the launch of the industry\u2019s first commercial AI-native RAN platform; evaluations with T-Mobile, SoftBank and Indosat Ooredoo Hutchison; a growing number of OEM partners; and expanded collaboration with NVIDIA on AI-RAN platform and software development tools. Together, these developments are transforming radio networks into programmable platforms supporting both connectivity and AI workloads; they are also accelerating the development of an open AI-RAN ecosystem and demonstrating the readiness of AI-RAN technologies for commercial deployment.</span></p><p><span>Nokia\u2019s AI-RAN platform has already delivered more than 20% improvements in spectral efficiency through AI-powered radio innovations and is advancing toward further spectral efficiency gains through a continuous software innovation roadmap extending through 2027 and 2028. This enables operators to increase capacity, improve network economics and create new service opportunities by extracting greater value from existing spectrum and infrastructure investments, reducing reliance on traditional hardware refresh cycles.</span></p><p><span>As AI applications drive new traffic patterns, increased uplink demand and growing requirements for distributed computing, operators are seeking new ways to improve network capacity, spectral efficiency and monetization opportunities. Nokia\u2019s AI-RAN platform combines its AI-native anyRAN software with NVIDIA Aerial RAN Computer to help operators unlock greater performance from existing spectrum assets, enabling software-defined architecture for 5G with a software upgrade path to 6G and laying the foundation for future AI-native networks.</span></p><p><span><strong>Multimedia, technical information, and related news</strong></span></p><p><span>Webpage: </span><a href=\"https://www.nokia.com/mobile-networks/ran/ai-ran/\"><span>AI-RAN</span></a></p>",
-    "date": "2026-09-16"
-  },
-  {
-    "article_id": "80ad0d5e3b891c5f3f48bfea9b1dceef",
-    "source": "Samsung Newsroom",
-    "title": "Samsung and Verizon Complete Successful ISAC Trial Over Virtualized Network at Global Sports Event",
-    "link": "https://news.samsung.com/global/samsung-and-verizon-complete-successful-isac-trial-over-virtualized-network-at-global-sports-event",
-    "score": 3,
-    "ai_insights": null,
-    "source_region": "Other",
-    "summary": "Samsung Electronics and Verizon have successfully completed an Integrated Sensing and Communication (ISAC) trial at a major international soccer fan event in Dallas, Texas, enabling real-time sensing-driven intelligence across a virtualized network. This landmark milestone represents one of the industry\u2019s first practical implementations of a key technology for 6G, signaling how operators are leveraging software-driven [\u2026]",
-    "date": "2026-09-14"
-  },
-  {
-    "article_id": "bd18b2732b450df875c8096dfa191d31",
-    "source": "Next G Alliance",
-    "title": "From Sustainability as a 6G Design Principle to 3GPP Priorities",
-    "link": "https://nextgalliance.org/from-sustainability-as-a-6g-design-principle-to-3gpp-priorities/",
-    "score": 6,
-    "ai_insights": null,
-    "source_region": "Other",
-    "summary": "<p>The IMT-2030 vision positions sustainability as a key design principle for 6G, centered on improving energy efficiency, lowering lifecycle environmental impacts, and advancing circular economy practices. Building on the energy-efficiency focus of 5G, 6G provides an opportunity to broaden sustainability into a core design principle, spanning network architecture, deployment, operation, lifecycle impact, and broader environmental [&#8230;]</p>\n<p>The post <a href=\"https://nextgalliance.org/from-sustainability-as-a-6g-design-principle-to-3gpp-priorities/\">From Sustainability as a 6G Design Principle to 3GPP Priorities</a> appeared first on <a href=\"https://nextgalliance.org\">Next G Alliance</a>.</p>",
-    "date": "2026-09-04"
-  },
-  {
-    "article_id": "7c0864b44535c3b9d888c1df730697ba",
+    "article_id": "c50df761a6138f39ff95b266672fda10",
     "source": "ArXiv CS Networking",
-    "title": "Toward AI-Native 6G Air Interface: A 3GPP Perspective on Protocol Framework",
-    "link": "https://arxiv.org/abs/2606.27466",
-    "score": 6,
-    "ai_insights": null,
+    "title": "Graph Neural Network-Driven Deep Reinforcement Learning for Scalable RIS Allocation",
+    "link": "https://arxiv.org/abs/2610.06295v1",
+    "score": 3,
+    "ai_insights": {
+      "is_6g_relevant": true,
+      "source_region": "Other",
+      "summary": "This research introduces a scalable orchestration framework for Reconfigurable Intelligent Surfaces (RIS) in 6G multi-cell networks, leveraging a combination of Graph Neural Networks (GNN) and Deep Reinforcement Learning (DRL). It addresses the NP-hard problem of dynamic RIS allocation through physical topology sparsification, transforming dense channel matrices into sparse tripartite graphs to reduce computational overhead and noise while improving coverage probability in dense urban mmWave environments.",
+      "overall_6g_importance": 7,
+      "6g_topics": [
+        "AI-native RAN",
+        "network automation",
+        "spectrum & policy"
+      ],
+      "impact_dimensions": {
+        "research_intensity": 4,
+        "standardization_influence": 2,
+        "industrial_deployment": 1,
+        "spectrum_policy_signal": 2,
+        "ecosystem_maturity": 2
+      },
+      "time_horizon": "mid-term (2028\u20132032)",
+      "world_power_impact": {
+        "US": 3,
+        "EU": 4,
+        "China": 4,
+        "Japan": 3,
+        "Korea": 4,
+        "India": 3
+      },
+      "emerging_concepts": [
+        "Shared RIS orchestration",
+        "Physical topology sparsification",
+        "Sparse tripartite graph representation",
+        "Relational message-passing architecture",
+        "Linear computational scaling for RIS"
+      ],
+      "key_evidence": [
+        "Proposed GNN-DRL framework prunes dense channel matrices into sparse tripartite graphs, reducing edge density by 77%.",
+        "Framework consistently outperforms greedy heuristic baselines by up to ~12% in global coverage probability.",
+        "Architecture naturally generalizes to arbitrary network dimensions without the need for model retraining.",
+        "Structural ablation studies confirm that physical path loss allows for localized graph designs with linear computational scaling.",
+        "The system achieves faster inference speeds via GPU acceleration, making it suitable for dynamic infrastructure budget constraints."
+      ],
+      "standardization_context": {
+        "tdoc_refs": [],
+        "work_items": [],
+        "target_release": "",
+        "working_groups": [
+          "RAN1",
+          "RAN2"
+        ]
+      },
+      "impact_score": 7
+    },
     "source_region": "Other",
-    "summary": "arXiv:2606.27466v2 Announce Type: replace \nAbstract: Artificial intelligence (AI) is expected to play an important role in the sixth-generation (6G) air interface design, but making the air interface truly AI-native requires more than applying learning algorithms to individual radio functions. The deeper challenge is architectural: once AI influences how the user equipment and network interpret, predict, and adapt radio behavior, the air interface must provide common protocol semantics for coordinating such intelligence across vendors and deployments. This article presents a 3rd generation partnership project (3GPP) oriented perspective on the protocol framework for AI-native 6G air interface. We argue that standardization should preserve implementation freedom by avoiding prescription of model architectures, training methods, or model weights. Instead, 6G should define the protocol framework needed for interoperable AI operation, including how AI-enabled functions are configured, validated, activated, monitored, and safely reverted to conventional operation. Neural receiver assisted reference signal adaptation is used as a case study to concretely show this broader architectural shift.",
-    "date": "2026-09-02"
+    "summary": "Reconfigurable Intelligent Surfaces (RISs) offer a promising paradigm to mitigate blockage and extend millimeter-wave coverage in 6G multi-cell networks. However, dynamically allocating shared RIS infrastructure across competing base stations is an NP-hard problem posing severe scalability bottlenecks. In this paper, we propose a scalable framework combining Graph Neural Networks (GNNs) with Deep Reinforcement Learning (DRL) for dynamic shared RIS orchestration. By formulating allocation as a Markov Decision Process, we introduce a physical topology sparsification strategy that prunes dense channel matrices into a sparse tripartite graph. This pruning reduces edge density by 77% and removes representation noise, thereby improving global coverage probability while reducing computational complexity. Our relational message-passing architecture naturally generalizes to arbitrary network dimensions without model retraining. Furthermore, structural ablation studies reveal that physical path loss localizes surface dependencies, enabling a highly efficient localized graph design with linear computational scaling. Extensive simulations in dense urban environments demonstrate that under strict infrastructure budget constraints, the proposed GNN-DRL framework consistently outperforms greedy heuristic baselines by up to ~12% in coverage while delivering faster inference speed via GPU acceleration.",
+    "date": "2026-10-05"
   },
   {
-    "article_id": "ae6ad210a135d60cf22f951b22a29c2d",
+    "article_id": "543af50cc4f8f480a3bdb24557e425ae",
     "source": "ArXiv CS Networking",
-    "title": "WiSDoM: Wireless Sparse Decision Transformer with Mixture-of-Experts for Multi-Task Mobile Network Optimization",
-    "link": "https://arxiv.org/abs/2609.00284",
+    "title": "LocAttMamba: A Low-Complexity Mamba Framework with Attention-Based Multi-AP Fusion for Indoor Localization",
+    "link": "https://arxiv.org/abs/2610.05673v1",
     "score": 3,
-    "ai_insights": null,
+    "ai_insights": {
+      "is_6g_relevant": true,
+      "source_region": "Other",
+      "summary": "This research introduces LocAttMamba, a novel localization framework leveraging Mamba (State Space Models) and multi-head attention for 5G and 6G indoor environments. It addresses the computational bottlenecks of transformer architectures while maintaining high accuracy in Non-Line-of-Sight (NLoS) conditions, specifically targeting devices with limited power and processing budgets.",
+      "overall_6g_importance": 7,
+      "6g_topics": [
+        "AI-native RAN",
+        "ISAC",
+        "network automation",
+        "cloud-edge integration"
+      ],
+      "impact_dimensions": {
+        "research_intensity": 4,
+        "standardization_influence": 2,
+        "industrial_deployment": 2,
+        "spectrum_policy_signal": 1,
+        "ecosystem_maturity": 2
+      },
+      "time_horizon": "mid-term",
+      "world_power_impact": {
+        "US": 3,
+        "EU": 2,
+        "China": 3,
+        "Japan": 2,
+        "Korea": 2,
+        "India": 1
+      },
+      "emerging_concepts": [
+        "LocAttMamba (Mamba-based localization)",
+        "State Space Models (SSMs) for wireless",
+        "Multi-AP Fusion via attention mechanism",
+        "Per-axis uncertainty prediction",
+        "Low-complexity AI inference"
+      ],
+      "key_evidence": [
+        "LocAttMamba achieves a 1.004 m 2D positioning error on 5G datasets.",
+        "Outperforms transformer benchmarks by being 4.4 to 16 times faster.",
+        "Demonstrates near-linear complexity for processing Channel Impulse Response (CIR).",
+        "Successfully handles NLoS (Non-Line-of-Sight) scenarios using AI-based measurement dependencies.",
+        "Required the fewest multiply-accumulate operations among all evaluated models."
+      ],
+      "standardization_context": {
+        "tdoc_refs": [],
+        "work_items": [],
+        "target_release": "",
+        "working_groups": []
+      },
+      "impact_score": 7
+    },
     "source_region": "Other",
-    "summary": "arXiv:2609.00284v1 Announce Type: new \nAbstract: Emerging 6G wireless networks are expected to operate across diverse deployment scenarios, where variations in network topology, user mobility, traffic demand, and radio conditions challenge the scalability of conventional radio resource management (RRM). While offline reinforcement learning (RL) methods have demonstrated strong decision-making capabilities, learning a single policy that performs consistently across heterogeneous wireless environments remains difficult due to conflicting optimization objectives and limited model specialization. These challenges become particularly pronounced in coordinated multipoint (CoMP) transmission, where selecting the optimal serving-cell combination requires sequential decision-making under evolving network conditions. This paper presents the Wireless Sparse Decision Transformer with Mixture of Experts (WiSDoM), a sparse multi-task offline RL framework for adaptive multi-cell selection. WiSDoM combines Decision Transformers (DTs) with a Mixture-of-Experts (MoE) architecture that dynamically activates specialized experts according to task characteristics. This MoE mechanism improves model capacity without proportionally increasing inference cost, mitigates negative transfer, and enables expert specialization across tasks. WiSDoM is trained jointly on diverse network configurations spanning multiple base station and user equipment densities, mobility levels, and scheduler policies. Experimental results show that WiSDoM consistently outperforms heuristic methods, single-task models, and conventional multi-task DTs, improving quality of experience (QoE) by up to 55% while activating approximately one-third of the parameters of its dense counterpart during inference. Furthermore, WiSDoM exhibits strong task generalization and efficiently adapts to unseen wireless scenarios through few-shot prompting without retraining or fine-tuning.",
-    "date": "2026-09-02"
-  },
-  {
-    "article_id": "cc69cb36600ebbf3a2e69283c6afd10f",
-    "source": "ArXiv CS Networking",
-    "title": "Channel-Adaptive Edge AI: Maximizing Inference Throughput by Adapting Computational Complexity to Channel States",
-    "link": "https://arxiv.org/abs/2603.03146",
-    "score": 3,
-    "ai_insights": null,
-    "source_region": "Other",
-    "summary": "arXiv:2603.03146v2 Announce Type: replace-cross \nAbstract: \\emph{Integrated communication and computation} (IC$^2$) has emerged as a new paradigm for enabling efficient edge inference in sixth-generation (6G) networks. However, the design of IC$^2$ technologies is hindered by the lack of a tractable theoretical framework for characterizing \\emph{end-to-end} (E2E) inference performance. The metric is highly complicated as it needs to account for both channel distortion and artificial intelligence (AI) model architecture and computational complexity. In this work, we address this challenge by developing a tractable analytical model for E2E inference accuracy and leveraging it to design a \\emph{channel-adaptive AI} algorithm that maximizes inference throughput, referred to as the edge processing rate (EPR), under latency and accuracy constraints. Specifically, we consider an edge inference system in which a server deploys a backbone model with early exit, which enables flexible computational complexity, to perform inference on data features transmitted by a mobile device. The proposed accuracy model characterizes high-dimensional feature distributions in the angular domain using a Mixture of von Mises (MvM) distribution. This leads to a desired closed-form expression for inference accuracy as a function of quantization bit-width and model traversal depth, which represents channel distortion and computational complexity, respectively. Building upon this accuracy model, we formulate and solve the EPR maximization problem under joint latency and accuracy constraints, leading to a channel-adaptive AI algorithm that achieves full IC$^2$ integration. The proposed algorithm jointly adapts transmit-side feature compression and receive-side model complexity according to channel conditions to maximize overall efficiency and inference throughput. Experimental results demonstrate its superior performance as compared with fixed-complexity counterparts.",
-    "date": "2026-09-02"
-  },
-  {
-    "article_id": "d74678629233ed14f07f1ffed26bdcb5",
-    "source": "SNS JU",
-    "title": "EU-Taiwan 6G Joint Workshop \u2013 Advancing EU-Taiwan Collaboration through Technical Exchange",
-    "link": "https://smart-networks.europa.eu/eu-taiwan-6g-joint-workshop-advancing-eu-taiwan-collaboration-through-technical-exchange/",
-    "score": 6,
-    "ai_insights": null,
-    "source_region": "Other",
-    "summary": "<p>&#160; Europe and Taiwan are both moving from 6G research towards large-scale validation, and both bring complementary strengths to that transition, from advanced semiconductors and photonics to AI-native network design, [&#8230;]</p>\n<p>The post <a href=\"https://smart-networks.europa.eu/eu-taiwan-6g-joint-workshop-advancing-eu-taiwan-collaboration-through-technical-exchange/\">EU-Taiwan 6G Joint Workshop &#8211; Advancing EU-Taiwan Collaboration through Technical Exchange</a> appeared first on <a href=\"https://smart-networks.europa.eu\">SNS JU</a>.</p>",
-    "date": "2026-09-02"
-  },
-  {
-    "article_id": "0c82a421892062b3739b52f02421fc8c",
-    "source": "Fierce Wireless",
-    "title": "<a href=\"https://www.fierce-network.com/wireless/opinion-engineers-craft-6g-its-marketers-job-sell-it\" hreflang=\"en\">Engineers craft 6G. It\u2019s marketers job to sell it </a>",
-    "link": "https://www.fierce-network.com/wireless/opinion-engineers-craft-6g-its-marketers-job-sell-it",
-    "score": 3,
-    "ai_insights": null,
-    "source_region": "Other",
-    "summary": "Can the wireless industry separate the standards from a consumer-facing approach and quit its reliance on the next \u201cG\u201d to shape its messaging?",
-    "date": "2026-09-02"
-  },
-  {
-    "article_id": "6d10ab7862cb0663f6f4995af06f95f3",
-    "source": "Fierce Wireless",
-    "title": "<a href=\"https://www.fierce-network.com/newswire/calix-names-juergen-lindner-cmo\" hreflang=\"en\">Calix names Juergen Lindner as CMO</a>",
-    "link": "https://www.fierce-network.com/newswire/calix-names-juergen-lindner-cmo",
-    "score": 3,
-    "ai_insights": null,
-    "source_region": "Other",
-    "summary": "Juergen brings deep expertise in product, go-to-market, and business transformation as Calix extends the value of its AI-native platform for service providers and adjacent markets.",
-    "date": "2026-09-02"
-  },
-  {
-    "article_id": "4b9f4e6c4696c08bee021e26f546c22b",
-    "source": "Fierce Wireless",
-    "title": "<a href=\"https://www.fierce-network.com/wireless/qualcomm-keeps-china-its-6g-sights-0\" hreflang=\"en\"> Qualcomm keeps China in its 6G sights </a>",
-    "link": "https://www.fierce-network.com/wireless/qualcomm-keeps-china-its-6g-sights-0",
-    "score": 3,
-    "ai_insights": null,
-    "source_region": "Other",
-    "summary": "Qualcomm executives were asked to comment on China\u2019s role in the 6G standardization process. Their answer was predictable.",
-    "date": "2026-09-02"
-  },
-  {
-    "article_id": "838c417d678ee8c4263a1983af0b5301",
-    "source": "Nokia",
-    "title": "Nokia opens new research and development center in Saudi Arabia to accelerate AI-powered network automation",
-    "link": "https://www.nokia.com/newsroom/nokia-opens-new-research-and-development-center-in-saudi-arabia-to-accelerate-ai-powered-network-automation/",
-    "score": 6,
-    "ai_insights": null,
-    "source_region": "Other",
-    "summary": "<p><span>Nokia today announced the opening of its new research and development center in Riyadh, focused on developing AI-powered network automation software. The center will create software that enables communications networks to self-configure, self-heal, optimize performance, reduce energy consumption and operate with greater autonomy.</span></p><p><span>The center will specialize in Service Management and Orchestration (SMO), Self-Organizing Networks (SON), Autopilot and rApps for automation and energy efficiency. Its teams will develop AI-driven capabilities for communications service providers and enterprises in Saudi Arabia, while exploring the development of AI-native 6G technologies, and contributing \u201cMade in Saudi\u201d software innovations for Nokia customers worldwide.</span></p><p><span>The launch follows an agreement announced earlier this year between His Excellency the Minister of Communications and Information Technology of Saudi Arabia and Nokia President and CEO Justin Hotard. The collaboration reflects the Kingdom's ambitions under Saudi Vision 2030 to build a leading economy powered by innovation, local talent and advanced research capabilities.</span></p><p><span>Aligned with the Kingdom's digital transformation agenda, the center will create high-value engineering and research roles while offering advanced training programs, boot camps, and AI and automation certifications for Saudi talent. The initiative supports national objectives to build local expertise, strengthen innovation capacity and increase the country's contribution to the global technology ecosystem.</span></p><p><span><strong>Multimedia, technical information, and related news</strong></span></p><p><span>Webpage: </span><a href=\"https://www.nokia.com/autonomous-networks/\"><span>Autonomous networks</span></a></p><p><span>Webpage: </span><a href=\"https://www.nokia.com/mobile-networks/ran/ai-ran/\"><span>AI-RAN</span></a></p>",
-    "date": "2026-09-01"
-  },
-  {
-    "article_id": "b7e6349a595b1c0908a6eb3d352d386e",
-    "source": "Light Reading",
-    "title": "Unpacking 6G with Omdia's Gabriel Brown",
-    "link": "https://www.lightreading.com/6g/unpacking-6g-with-omdia-s-gabriel-brown",
-    "score": 3,
-    "ai_insights": null,
-    "source_region": "Other",
-    "summary": "Omdia's Gabriel Brown joined the Signal Strength podcast to discuss and dissect Qualcomm's '6G Leadership Day,' which dug into emerging use cases, potential moneymakers and anticipated product timelines.",
-    "date": "2026-08-31"
-  },
-  {
-    "article_id": "6174c3836302204c7332a3d114103bcc",
-    "source": "Mobile World Live",
-    "title": "COAI chief bullish India will have edge on rivals in 6G era",
-    "link": "https://www.mobileworldlive.com/5g/coai-chief-bullish-india-will-have-edge-on-rivals-in-6g-era/",
-    "score": 3,
-    "ai_insights": null,
-    "source_region": "Other",
-    "summary": "<p>INTERVIEW: The director general of the Cellular Operators Association of India argued the country is better placed than some global rivals to become a 6G leader, but conceded there could be some \u201cslippages\u201d on the road to a commercial launch in 2030.</p>\n<p>The post <a href=\"https://www.mobileworldlive.com/5g/coai-chief-bullish-india-will-have-edge-on-rivals-in-6g-era/\">COAI chief bullish India will have edge on rivals in 6G era</a> appeared first on <a href=\"https://www.mobileworldlive.com\">Mobile World Live</a>.</p>",
-    "date": "2026-08-28"
-  },
-  {
-    "article_id": "e85c322b78dbe8c543e108b92d1900f5",
-    "source": "Nokia",
-    "title": "Indosat, Ooredoo Group, Nokia, and NVIDIA launch Zankore by Indosat, ready to serve the region with full stack AI infra platform",
-    "link": "https://www.nokia.com/newsroom/indosat-ooredoo-group-nokia-and-nvidia-launch-zankore-by-indosat-ready-to-serve-the-region-with-full-stack-ai-infra-platform/",
-    "score": 3,
-    "ai_insights": null,
-    "source_region": "Other",
-    "summary": "<p><span>Indosat Ooredoo Hutchison (Indosat or IOH) launched Zankore by Indosat, and is collaborating with Ooredoo Group, Nokia, and NVIDIA, to build the next generation of AI infrastructure for a global market, with Asia-Pacific as its launchpad.</span></p><p><span>The collaboration is designed to meet the region's rapidly growing demand for secure and scalable AI computing, while advancing Indonesia's position as a regional AI hub. With a deployment target of 1 gigawatt (GW) of NVIDIA DSX AI Factory capacity, Zankore by Indosat lays the foundation for one of the region\u2019s largest AI infrastructure platforms which will enable the next phase of agentic and enterprise AI adoption at scale.</span></p><p><span>Zankore by Indosat is building one of Southeast Asia\u2019s largest AI factory platforms for the nation, using NVIDIA DSX, the reference architecture, platform and ecosystem playbook for designing and operating AI factories. DSX brings accelerated computing, networking, power, cooling and operations together as one system to maximize useful AI output from every available megawatt. Zankore will deliver approximately 200 megawatts (MW) of AI capacity in the first half of 2027, powered by NVIDIA GB300 NVL72. The platform will also incorporate NVIDIA DSX MaxLPS, which dynamically optimizes power across the GPU fleet to recover stranded power and increase compute capacity within the available facility power envelope. MaxLPS is designed to enable up to 40% more compute within the same power budget, increasing Zankore\u2019s capacity to serve customers and generate revenue.</span></p><p><span>This partnership brings together distinct expertise from each partner. Ooredoo Group provides long-term capital, and regional scale as lead investor and platform sponsor. Indosat brings trusted market leadership, digital infrastructure, and execution capabilities to accelerate AI adoption in Indonesia. NVIDIA powers the platform with accelerated computing, AI software, next-generation GPU access, and its global AI ecosystem, while Nokia delivers AI-native networking for secure, high-performance AI infrastructure. Together, the partners combine global technology with regional scale and local execution to accelerate AI innovation across Asia-Pacific.</span></p><p><span>To support its long-term growth, Zankore by Indosat has established the Board of Directors, bringing together representatives from its principal shareholders and independent leadership. The Board of Directors comprises Aziz Aluthman Fakhroo and Thomas Chevanne representing Ooredoo Group as lead investor, Vikram Sinha and Vishal Gupta representing Indosat Ooredoo Hutchison, and Arijit Ranjan Sarker as Independent Director, with Ulf Ewaldsson serving as Chief Executive Officer. Together, the Board of Directors and CEO provide strategic oversight, leadership, and governance as Zankore scales its AI infrastructure platform across Southeast Asia.</span></p><p><span>As AI reshapes industries and economies, Zankore by Indosat provides the integrated AI platform that Southeast Asia needs to compete in the AI era. Built for hyperscalers, enterprises, governments, and AI innovators, it enables the region to accelerate innovation and unlocks new opportunities for sustainable economic growth.</span></p><p><span>Citi acted as the exclusive financial advisor to Indosat on this transaction. FTI Capital Advisors acted as financial advisor to Ooredoo Group.</span></p>",
-    "date": "2026-08-06"
+    "summary": "Accurate and low-complexity indoor localization is important for location-based services in fifth generation (5G) and sixth generation (6G) networks, where positioning devices operate under limited computational budgets and non conditions. Indoor localization has been studied widely using traditional signal-level localization approaches. However, these techniques often show degraded performance in on-line-of-sight (NLoS) scenarios. Recently, artificial intelligence (AI)-based techniques, including transformers, have been applied to address these challenges. While transformer-based architectures can capture the dependencies within the measurements collected from distributed access points (APs), their high computational complexity results in a large number of multiply-accumulate operations and long inference time. In contrast, lightweight recurrent and convolutional models trade this cost for degraded accuracy. In this paper, we propose LocAttMamba, a low-complexity localization framework in which the channel impulse response (CIR) and time-based features of each AP are processed by a separate Mamba encoder with near-linear complexity, and the resulting per-AP embeddings are fused through a multi-head attention layer that weights each AP according to its importance at every time step. The framework jointly predicts the user location and its per-axis uncertainty, which is refined through a post-hoc calibration step. We evaluate the proposed framework using two real-world 5G and ultra-wideband (UWB) measurement datasets. Our numerical results reveal that LocAttMamba obtains a mean two-dimensional (2-D) positioning error of 1.004 m and 0.599 m, respectively, on 5G and UWB datasets, outperforming the second-best benchmark by 9.79% and 5.82%, while requiring the fewest multiply-accumulate operations among all evaluated models and being 4.4-16 times faster than the transformer-based benchmarks.",
+    "date": "2026-10-05"
   }
 ]

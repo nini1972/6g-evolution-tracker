@@ -1,19 +1,19 @@
 {
   "US": {
-    "US": 1256,
-    "EU": 805,
-    "China": 792,
-    "Japan": 705,
-    "Korea": 702,
-    "India": 505
+    "US": 1284,
+    "EU": 826,
+    "China": 813,
+    "Japan": 719,
+    "Korea": 723,
+    "India": 519
   },
   "EU": {
-    "US": 1225,
-    "EU": 2206,
-    "China": 983,
-    "Japan": 973,
-    "Korea": 923,
-    "India": 746
+    "US": 1413,
+    "EU": 2582,
+    "China": 1143,
+    "Japan": 1118,
+    "Korea": 1076,
+    "India": 852
   },
   "China": {
     "US": 122,
